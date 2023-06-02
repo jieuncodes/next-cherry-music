@@ -17,8 +17,7 @@ model PlayList {
   creatorId       Int
   creatorUserName String?
   createdAt       DateTime @default(now())
-  trackOfUser     User?    @relation("generatedPlayLists", fields: [userId], references: [id])
-  userId          Int?
+  updatedAt       DateTime @updatedAt
 }
 
 model User {
@@ -33,18 +32,17 @@ model User {
   likes                Like[]
   dislikes             Dislike[]
   playingPlayListQueue Track[]
-  generatedPlayLists   PlayList[] @relation("generatedPlayLists")
 }
 
 model LastFmTrack {
   id         Int     @id @default(autoincrement())
-  artist     String
+  trackId    String
   trackTitle String
+  artist     String
   albumName  String?
   albumImg   String?
   duration   Int?
   playcount  Int?
-  trackId    String
   tags       Tag[]
 }
 
