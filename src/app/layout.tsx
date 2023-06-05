@@ -1,7 +1,8 @@
 import Nav from "./components/Nav";
 import ProvidersWrapper from "./ProvidersWrapper";
 import "./globals.css";
-import Player from "./components/Player";
+import Panel from "./components/Panel";
+import Contents from "./components/Contents";
 
 export const metadata = {
   title: "Cherry Music",
@@ -17,9 +18,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ProvidersWrapper>
-          <Nav />
-          {children}
-          <Player />
+          <main>
+            <Nav />
+            <Contents />
+            <Panel />
+            {children}
+          </main>{" "}
         </ProvidersWrapper>
       </body>
     </html>
