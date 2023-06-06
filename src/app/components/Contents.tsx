@@ -1,9 +1,10 @@
 import { ContentsContainer } from "../styles/Contents";
+import Search from "./Search";
 
 export default function Contents() {
   return (
     <ContentsContainer>
-      <div></div>
+      <Search />
     </ContentsContainer>
   );
 }

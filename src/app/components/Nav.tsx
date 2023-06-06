@@ -10,7 +10,6 @@ import {
   Menu,
   NavUl,
   NavBtnSpan,
-  NavBtn,
   NavBtnIcon,
 } from "../styles/Nav";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -19,6 +18,9 @@ import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { Button } from "@nextui-org/react";
+import { Righteous } from "next/font/google";
+
+const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
 export default function Nav() {
   const { data: session } = useSession();
@@ -27,7 +29,7 @@ export default function Nav() {
   return (
     <NavContainer>
       <LogoBox>
-        <Logo>Cherry</Logo>
+        <Logo className={righteous.className}>Cherry</Logo>
       </LogoBox>
       <NavUl>
         <Menu>

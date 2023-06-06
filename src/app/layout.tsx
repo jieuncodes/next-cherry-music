@@ -3,6 +3,7 @@ import ProvidersWrapper from "./ProvidersWrapper";
 import "./globals.css";
 import Panel from "./components/Panel";
 import Contents from "./components/Contents";
+import Search from "./components/Search";
 
 export const metadata = {
   title: "Cherry Music",
@@ -21,6 +22,7 @@ export default function RootLayout({
           <main>
             <Nav />
             <Contents />
+
             <Panel />
             {children}
           </main>{" "}

@@ -4,7 +4,7 @@ export const NavContainer = tw.div`h-full w-full backdrop-opacity-10  justify-ce
 
 export const LogoBox = tw.div`w-full flex items-center justify-center top-4 text-3xl`;
 
-export const Logo = tw.span`font-bold tracking-normal font-logo`;
+export const Logo = tw.span`font-bold tracking-normal text-white`;
 
 export const NavUl = tw.ul`w-full flex flex-col top-0 pt-20`;
 
