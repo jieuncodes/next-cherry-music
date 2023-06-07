@@ -47,24 +47,42 @@ model LastFmTrack {
 }
 
 model Tag {
-  id            Int          @id @default(autoincrement())
-  name          String
+  id   Int    @id @default(autoincrement())
+  name String
+
   LastFmTrack   LastFmTrack? @relation(fields: [lastFmTrackId], references: [id])
   lastFmTrackId Int?
+  Track         Track?       @relation(fields: [trackId], references: [id])
+  trackId       Int?
 }
 
 model Track {
-  id             Int        @id @default(autoincrement())
-  trackTitle     String
-  artist         String
-  albumImageUrl  String?
-  youtubeVideoId String?
-  playlists      PlayList[]
-  User           User?      @relation(fields: [userId], references: [id])
-  userId         Int?
-  Comment        Comment[]
-  Like           Like[]
-  Dislike        Dislike[]
+  id          Int     @id @default(autoincrement())
+  name        String
+  artist      String
+  albumTitle  String?
+  albumImgUrl String
+  tags        Tag[]
+  mbid        String
+  wiki        String
+  // youtubeVideoId String?
+  // playlists  PlayList[]
+  // User       User?     @relation(fields: [userId], references: [id])
+  // userId     Int?
+  // Comment    Comment[]
+  // Like       Like[]
+  // Dislike    Dislike[]
+  // PlayList   PlayList? @relation(fields: [playListId], references: [id])
+  // playListId Int?
+  // User       User?     @relation(fields: [userId], references: [id])
+
+  PlayList   PlayList? @relation(fields: [playListId], references: [id])
+  playListId Int?
+  User       User?     @relation(fields: [userId], references: [id])
+  userId     Int?
+  Comment    Comment[]
+  Like       Like[]
+  Dislike    Dislike[]
 }
 
 model YoutubeData {

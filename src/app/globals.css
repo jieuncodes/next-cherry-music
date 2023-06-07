@@ -30,7 +30,9 @@ body {
 
   position: relative;
   overflow: hidden;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body::before {
@@ -45,8 +47,8 @@ body::before {
 
 main {
   padding: 30px 30px 30px 0;
-  width: 100vw;
-  height: 100vh;
+  min-width: 98vw;
+  min-height: 99vh;
   display: grid;
   grid-template-columns: 2fr 6fr 2.7fr;
   grid-template-rows: 1fr;

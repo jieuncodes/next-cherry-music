@@ -22,10 +22,9 @@ export default function RootLayout({
           <main>
             <Nav />
             <Contents />
-
             <Panel />
             {children}
-          </main>{" "}
+          </main>
         </ProvidersWrapper>
       </body>
     </html>
