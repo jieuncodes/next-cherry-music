@@ -1,26 +1,46 @@
-import client from "../../../libs/server/client";
-import { LastFmTopTrack } from "../../../types";
+import { supabase } from "@/lib/server/client";
+import { LastFmTopTrack } from "@/types/trackTypes";
+
+interface TrackInfo {
+  trackTitle: string;
+  artist: string;
+  albumTitle?: string;
+  albumImgUrl?: string;
+  tags?: string[];
+  wiki?: string;
+}
 
 const LAST_FM_BASE_URL = "https://ws.audioscrobbler.com/2.0";
 
 export const getAndSaveLastFmTopTracks = async () => {
   const topTracks = await fetchLastFmTopTracks();
-  topTracks.map(async (track: LastFmTopTrack) => {
-    const trackDetail = await fetchLastFmTrackDetails(
-      track.artist.name,
-      track.name
-    );
-    const trackInfo = {
-      trackTitle: track.name,
-      artist: track.artist.name,
-      albumTitle: trackDetail.album?.title,
-      albumImgUrl: trackDetail.album?.image[3]["#text"],
-      tags: trackDetail.toptags.tag,
-      wiki: trackDetail.wiki.summary,
-    };
-    await client.track.create({ data: trackInfo });
-    console.log(trackInfo.trackTitle, "saved");
-  });
+
+  const allTrackInfo: TrackInfo[] = await Promise.all(
+    topTracks.map(async (track: LastFmTopTrack) => {
+      const trackDetail = await fetchLastFmTrackDetails(
+        track.artist.name,
+        track.name
+      );
+      return {
+        trackTitle: track.name,
+        artist: track.artist.name,
+        albumTitle: trackDetail.album?.title,
+        albumImgUrl: trackDetail.album?.image[3]["#text"],
+        tags: trackDetail.toptags?.tag,
+        wiki: trackDetail.wiki?.summary,
+      };
+    })
+  );
+
+  const { data, error } = await supabase
+    .from("tracks")
+    .insert([...allTrackInfo]);
+  if (data) {
+    console.log(data, "saved");
+  }
+  if (error) {
+    console.error("There was an error inserting the track:", error);
+  }
 };
 
 export const fetchLastFmTopTracks = async () => {
