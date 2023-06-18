@@ -1,24 +1,26 @@
 "use client";
-
+import {
+  BarChart2,
+  ListMusic,
+  LogOut,
+  MessageCircle,
+  Settings,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import {
-  MenuIcon,
   MenuSpan,
   Logo,
-  LogoBox,
   NavContainer,
   Menu,
   NavUl,
   NavBtnSpan,
   NavBtnIcon,
 } from "../styles/Nav";
-import LogoutIcon from "@mui/icons-material/Logout";
-import SettingsIcon from "@mui/icons-material/Settings";
-import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
-import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { Button } from "@nextui-org/react";
 import { Righteous } from "next/font/google";
+import Image from "next/image";
+import Link from "next/link";
+import Search from "./Search";
 
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
@@ -28,42 +30,45 @@ export default function Nav() {
 
   return (
     <NavContainer>
-      <LogoBox>
+      <Link
+        href="/"
+        className="w-full flex flex-row align-middle justify-center pr-7 justify-self-start"
+      >
+        <Image
+          src="/images/logo2.png"
+          alt="logo"
+          width={37}
+          height={37}
+          className="object-contain self-center"
+        />
         <Logo className={righteous.className}>Cherry</Logo>
-      </LogoBox>
+      </Link>
+
+      <Search />
+
       <NavUl>
         <Menu>
-          <MenuIcon>
-            <SignalCellularAltIcon />
-          </MenuIcon>
+          <BarChart2 />
           <MenuSpan>Chart</MenuSpan>
         </Menu>
 
         <Menu>
-          <MenuIcon>
-            <LibraryMusicIcon />
-          </MenuIcon>
+          <ListMusic />
           <MenuSpan>Playlist</MenuSpan>
         </Menu>
 
         <Menu>
-          <MenuIcon>
-            <ChatBubbleOutlineIcon />
-          </MenuIcon>
+          <MessageCircle />
           <MenuSpan>Comments</MenuSpan>
         </Menu>
 
         <Menu>
-          <MenuIcon>
-            <SettingsIcon />
-          </MenuIcon>
+          <Settings />
           <MenuSpan>Settings</MenuSpan>
         </Menu>
       </NavUl>
       <Button light animated>
-        <NavBtnIcon>
-          <LogoutIcon />
-        </NavBtnIcon>
+        <LogOut />
         <NavBtnSpan>Log out</NavBtnSpan>
       </Button>
     </NavContainer>
