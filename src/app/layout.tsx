@@ -3,6 +3,7 @@ import ProvidersWrapper from "./ProvidersWrapper";
 import "./globals.css";
 import Panel from "./components/Panel";
 import { ContentsContainer } from "./styles/Contents";
+import PlayBar from "./components/PlayBar";
 
 export const metadata = {
   title: "Cherry Music",
@@ -20,7 +21,10 @@ export default function RootLayout({
         <ProvidersWrapper>
           <main>
             <Nav />
-            <ContentsContainer>{children}</ContentsContainer>
+            <ContentsContainer>
+              <div className="w-full h-full box-border m-6 ">{children}</div>
+              <PlayBar />
+            </ContentsContainer>
             <Panel />
           </main>
         </ProvidersWrapper>

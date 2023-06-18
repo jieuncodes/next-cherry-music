@@ -52,6 +52,7 @@ main {
   display: grid;
   grid-template-columns: 2fr 6fr 2.7fr;
   grid-template-rows: 1fr;
+
   background-color: none;
 }
 
@@ -64,5 +65,7 @@ main {
 @media (max-width: 1024px) {
   main {
     grid-template-columns: 0.3fr 10fr 0;
+    grid-template-rows: 1fr;
+
   }
 }
