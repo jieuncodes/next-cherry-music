@@ -6,17 +6,14 @@ import {
   MessageCircle,
   Settings,
 } from "lucide-react";
-import { useSession } from "next-auth/react";
 import {
   MenuSpan,
+  LogoImage,
   Logo,
   NavContainer,
   Menu,
   NavUl,
-  NavBtnSpan,
-  NavBtnIcon,
 } from "../styles/Nav";
-import { Button } from "@nextui-org/react";
 import { Righteous } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,22 +22,20 @@ import Search from "./Search";
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
 export default function Nav() {
-  const { data: session } = useSession();
-  const { user } = session || {};
-
   return (
     <NavContainer>
       <Link
         href="/"
-        className="w-full flex flex-row align-middle justify-center pr-7 justify-self-start"
+        className="w-full flex flex-row align-middle justify-center xl:pr-7 justify-self-start"
       >
-        <Image
-          src="/images/logo2.png"
-          alt="logo"
-          width={37}
-          height={37}
-          className="object-contain self-center"
-        />
+        <LogoImage>
+          <Image
+            src="/images/logo2.png"
+            alt="logo"
+            fill
+            className="object-contain self-center"
+          />
+        </LogoImage>
         <Logo className={righteous.className}>Cherry</Logo>
       </Link>
 
@@ -48,29 +43,30 @@ export default function Nav() {
 
       <NavUl>
         <Menu>
-          <BarChart2 />
+          <BarChart2 size={30} />
           <MenuSpan>Chart</MenuSpan>
         </Menu>
 
         <Menu>
-          <ListMusic />
+          <ListMusic size={30} />
           <MenuSpan>Playlist</MenuSpan>
         </Menu>
 
         <Menu>
-          <MessageCircle />
+          <MessageCircle size={30} />
           <MenuSpan>Comments</MenuSpan>
         </Menu>
 
         <Menu>
-          <Settings />
+          <Settings size={30} />
           <MenuSpan>Settings</MenuSpan>
         </Menu>
+
+        <Menu className="mt-auto">
+          <LogOut size={30} />
+          <MenuSpan>Log out</MenuSpan>
+        </Menu>
       </NavUl>
-      <Button light animated>
-        <LogOut />
-        <NavBtnSpan>Log out</NavBtnSpan>
-      </Button>
     </NavContainer>
   );
 }

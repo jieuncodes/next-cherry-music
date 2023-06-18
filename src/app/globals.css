@@ -54,3 +54,15 @@ main {
   grid-template-rows: 1fr;
   background-color: none;
 }
+
+@media (max-width: 1280px) {
+  main {
+    grid-template-columns: 0.3fr 9fr 3fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  main {
+    grid-template-columns: 0.3fr 10fr 0;
+  }
+}

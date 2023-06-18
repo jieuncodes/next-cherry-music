@@ -2,6 +2,7 @@ import Nav from "./components/Nav";
 import ProvidersWrapper from "./ProvidersWrapper";
 import "./globals.css";
 import Panel from "./components/Panel";
+import { ContentsContainer } from "./styles/Contents";
 
 export const metadata = {
   title: "Cherry Music",
@@ -19,9 +20,7 @@ export default function RootLayout({
         <ProvidersWrapper>
           <main>
             <Nav />
-            <div className="bg-zinc-100 w-full h-full rounded-l-[15px] p-[30px]">
-              {children}
-            </div>
+            <ContentsContainer>{children}</ContentsContainer>
             <Panel />
           </main>
         </ProvidersWrapper>
