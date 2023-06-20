@@ -1,9 +1,10 @@
 import Nav from "./components/Nav";
-import ProvidersWrapper from "./ProvidersWrapper";
 import "./globals.css";
 import Panel from "./components/Panel";
 import { ContentsContainer } from "./styles/Contents";
 import PlayBar from "./components/PlayBar";
+import SupabaseProvider from "@/providers/SupabaseProvider";
+import NextUiProvider from "@/providers/NextUiProvider";
 
 export const metadata = {
   title: "Cherry Music",
@@ -18,16 +19,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <ProvidersWrapper>
-          <main>
-            <Nav />
-            <ContentsContainer>
-              <div className="w-full h-full box-border m-6 ">{children}</div>
-              <PlayBar />
-            </ContentsContainer>
-            <Panel />
-          </main>
-        </ProvidersWrapper>
+        <NextUiProvider>
+          <SupabaseProvider>
+            <main>
+              <Nav />
+              <ContentsContainer>
+                <div className="w-full h-full box-border m-6 ">{children}</div>
+                <PlayBar />
+              </ContentsContainer>
+              <Panel />
+            </main>
+          </SupabaseProvider>
+        </NextUiProvider>
       </body>
     </html>
   );
