@@ -7,10 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        logo: ['"Bungee Shade"', "cursive"],
-      },
+      fontFamily: {},
       backgroundImage: {
+        "gradient-color": "linear-gradient(315deg, #9921e8 0%, #5f72be 74%)",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",

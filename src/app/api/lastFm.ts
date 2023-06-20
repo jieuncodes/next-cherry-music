@@ -36,7 +36,6 @@ export const getAndSaveLastFmTopTracks = async () => {
     .from("tracks")
     .insert([...allTrackInfo]);
   if (data) {
-    console.log(data, "saved");
   }
   if (error) {
     console.error("There was an error inserting the track:", error);

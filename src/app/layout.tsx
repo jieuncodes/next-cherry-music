@@ -4,7 +4,7 @@ import Panel from "./components/Panel";
 import { ContentsContainer } from "./styles/Contents";
 import PlayBar from "./components/PlayBar";
 import SupabaseProvider from "@/providers/SupabaseProvider";
-import NextUiProvider from "@/providers/NextUiProvider";
+import NextUIProvider from "@/providers/NextUIProvider";
 
 export const metadata = {
   title: "Cherry Music",
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <NextUiProvider>
+        <NextUIProvider>
           <SupabaseProvider>
             <main>
               <Nav />
@@ -30,7 +30,7 @@ export default function RootLayout({
               <Panel />
             </main>
           </SupabaseProvider>
-        </NextUiProvider>
+        </NextUIProvider>
       </body>
     </html>
   );

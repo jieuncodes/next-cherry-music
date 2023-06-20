@@ -1,16 +1,28 @@
 "use client";
 
-import { NextUIProvider, createTheme } from "@nextui-org/react";
+import {
+  NextUIProvider as OriginalNextUIProvider,
+  createTheme,
+} from "@nextui-org/react";
 
 const lightTheme = createTheme({
   type: "light",
-  theme: {},
+  theme: {
+    colors: {
+      gradient: "linear-gradient(315deg, #726cf8 0%, #e975a8 74%);)",
+      primary: "rgba(230,79,164)", //cherry
+    },
+  },
 });
 
-export default function NextUiProvider({
+export default function NextUIProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <NextUIProvider theme={lightTheme}>{children}</NextUIProvider>;
+  return (
+    <OriginalNextUIProvider theme={lightTheme}>
+      {children}
+    </OriginalNextUIProvider>
+  );
 }
