@@ -1,4 +1,4 @@
-import { getAndSaveLastFmTopTracks } from "../api/lastFm";
+import { getAndSaveLastFmTopTracks } from "../app/api/lastFm";
 
 export default async function TopChart() {
   const lastFmTopTracks = await getAndSaveLastFmTopTracks();

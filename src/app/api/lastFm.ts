@@ -38,7 +38,10 @@ export const getAndSaveLastFmTopTracks = async () => {
   if (data) {
   }
   if (error) {
-    console.error("There was an error inserting the track:", error);
+    console.error(
+      "There was an error inserting the                                                                track:",
+      error
+    );
   }
 };
 

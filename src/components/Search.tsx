@@ -1,5 +1,5 @@
 "use client";
-import { SearchContainer, SearchInput } from "../styles/Search";
+import { SearchContainer, SearchInput } from "@/styles/Search";
 import { Search as SearchIcon } from "lucide-react";
 
 export default function Search() {

@@ -6,6 +6,11 @@ import {
   MessageCircle,
   Settings,
 } from "lucide-react";
+
+import { Righteous } from "next/font/google";
+import Image from "next/image";
+import Link from "next/link";
+import Search from "./Search";
 import {
   MenuSpan,
   LogoImage,
@@ -13,11 +18,7 @@ import {
   NavContainer,
   Menu,
   NavUl,
-} from "../styles/Nav";
-import { Righteous } from "next/font/google";
-import Image from "next/image";
-import Link from "next/link";
-import Search from "./Search";
+} from "@/styles/Nav";
 
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
@@ -32,8 +33,10 @@ export default function Nav() {
           <Image
             src="/images/logo2.png"
             alt="logo"
-            fill
+            width={50}
+            height={50}
             className="object-contain self-center"
+            priority={true}
           />
         </LogoImage>
         <Logo className={righteous.className}>Cherry</Logo>

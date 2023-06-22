@@ -1,10 +1,12 @@
-import Nav from "./components/Nav";
 import "./globals.css";
-import Panel from "./components/Panel";
-import { ContentsContainer } from "./styles/Contents";
-import PlayBar from "./components/PlayBar";
 import SupabaseProvider from "@/providers/SupabaseProvider";
 import NextUIProvider from "@/providers/NextUIProvider";
+import RecoilProvider from "@/providers/RecoilProvider";
+import Nav from "@/components/Nav";
+import PlayBar from "@/components/PlayBar";
+import Panel from "@/components/Panel";
+import { ContentsContainer } from "@/styles/Contents";
+import ModalProvider from "@/providers/ModalProvider";
 
 export const metadata = {
   title: "Cherry Music",
@@ -17,20 +19,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="light">
       <body className="antialiased">
-        <NextUIProvider>
-          <SupabaseProvider>
-            <main>
-              <Nav />
-              <ContentsContainer>
-                <div className="w-full h-full box-border m-6 ">{children}</div>
-                <PlayBar />
-              </ContentsContainer>
-              <Panel />
-            </main>
-          </SupabaseProvider>
-        </NextUIProvider>
+        <RecoilProvider>
+          <NextUIProvider>
+            <SupabaseProvider>
+              <ModalProvider />
+              <main>
+                <Nav />
+                <ContentsContainer>
+                  <div className="w-full h-full box-border m-6 ">
+                    {children}
+                  </div>
+                  <PlayBar />
+                </ContentsContainer>
+                <Panel />
+              </main>
+            </SupabaseProvider>
+          </NextUIProvider>
+        </RecoilProvider>
       </body>
     </html>
   );
