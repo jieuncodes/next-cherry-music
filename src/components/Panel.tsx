@@ -13,7 +13,6 @@ export default function Panel() {
     <PanelContainer>
       <UserStatus>
         <Bell />
-        {/* <MoreVertical /> */}
         <Button
           startContent={<User2Icon />}
           variant="ghost"

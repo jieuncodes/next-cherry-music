@@ -6,7 +6,6 @@ import {
   MessageCircle,
   Settings,
 } from "lucide-react";
-
 import { Righteous } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,10 +18,21 @@ import {
   Menu,
   NavUl,
 } from "@/styles/Nav";
-
+import { Button } from "@nextui-org/button";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/lib/server/database.types";
+import { useRouter } from "next/navigation";
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
 export default function Nav() {
+  const supabase = createClientComponentClient<Database>();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.refresh();
+  };
+
   return (
     <NavContainer>
       <Link
@@ -65,10 +75,13 @@ export default function Nav() {
           <MenuSpan>Settings</MenuSpan>
         </Menu>
 
-        <Menu className="mt-auto">
-          <LogOut size={30} />
-          <MenuSpan>Log out</MenuSpan>
-        </Menu>
+        <Button
+          onPress={handleSignOut}
+          isIconOnly
+          startContent={<LogOut size={30} />}
+          variant="light"
+          className="text-white text-2xl mt-auto mb-2 -ml-1"
+        />
       </NavUl>
     </NavContainer>
   );

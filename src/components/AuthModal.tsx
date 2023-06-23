@@ -19,9 +19,9 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 
-interface JoinModalProps {}
+interface AuthModalProps {}
 
-const JoinModal: FC<JoinModalProps> = ({}) => {
+const AuthModal: FC<AuthModalProps> = ({}) => {
   const [isOpen, setIsOpen] = useRecoilState(authModalState);
   const { session } = useSessionContext();
   const router = useRouter();
@@ -65,4 +65,4 @@ const JoinModal: FC<JoinModalProps> = ({}) => {
   );
 };
 
-export default JoinModal;
+export default AuthModal;
