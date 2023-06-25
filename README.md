@@ -4,9 +4,9 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 
 ## Game Plan
 - [x] Basic setup
-- [ ] Auth
-- [ ] Social Login
-- [ ] Login with magic link
+- [x] Auth
+- [x] Social Login
+- [x] Login with magic link
 - [ ] Create and Add user playlist
 - [ ] Create and vote for comments
 - [ ] Vote for music
@@ -20,6 +20,10 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] Profile uploads (Avatar, nickname..)
 - [ ] User's Playlist Upload
 - [ ] State management using Recoil
+- [ ] Edit account settings
+
+
+
 - [ ] Deployment
 
 

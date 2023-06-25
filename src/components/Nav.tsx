@@ -1,6 +1,8 @@
 "use client";
 import {
   BarChart2,
+  Disc3,
+  Library,
   ListMusic,
   LogOut,
   MessageCircle,
@@ -22,6 +24,7 @@ import { Button } from "@nextui-org/button";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/server/database.types";
 import { useRouter } from "next/navigation";
+
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
 export default function Nav() {
@@ -56,10 +59,13 @@ export default function Nav() {
 
       <NavUl>
         <Menu>
-          <BarChart2 size={30} />
+          <Disc3 size={30} />
           <MenuSpan>Chart</MenuSpan>
         </Menu>
-
+        <Menu>
+          <Library size={30} />
+          <MenuSpan>Albums</MenuSpan>
+        </Menu>
         <Menu>
           <ListMusic size={30} />
           <MenuSpan>Playlist</MenuSpan>
