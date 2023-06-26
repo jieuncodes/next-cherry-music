@@ -59,32 +59,32 @@ export default function Nav() {
 
       <NavUl>
         <Menu>
-          <Disc3 size={30} />
+          <Disc3 size={25} />
           <MenuSpan>Chart</MenuSpan>
         </Menu>
         <Menu>
-          <Library size={30} />
+          <Library size={25} />
           <MenuSpan>Albums</MenuSpan>
         </Menu>
         <Menu>
-          <ListMusic size={30} />
+          <ListMusic size={25} />
           <MenuSpan>Playlist</MenuSpan>
         </Menu>
 
         <Menu>
-          <MessageCircle size={30} />
+          <MessageCircle size={25} />
           <MenuSpan>Comments</MenuSpan>
         </Menu>
 
         <Menu>
-          <Settings size={30} />
+          <Settings size={25} />
           <MenuSpan>Settings</MenuSpan>
         </Menu>
 
         <Button
           onPress={handleSignOut}
           isIconOnly
-          startContent={<LogOut size={30} />}
+          startContent={<LogOut size={25} />}
           variant="light"
           className="text-white text-2xl mt-auto mb-2 -ml-1"
         />

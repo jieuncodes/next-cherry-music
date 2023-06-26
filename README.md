@@ -21,9 +21,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] User's Playlist Upload
 - [ ] State management using Recoil
 - [ ] Edit account settings
-
-
-
+- [ ] Loading
 - [ ] Deployment
 
 

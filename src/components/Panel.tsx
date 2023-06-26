@@ -11,7 +11,6 @@ import { Avatar } from "@nextui-org/avatar";
 export default function Panel() {
   const [isOpen, setIsOpen] = useRecoilState(authModalState);
   const user = useUser();
-  console.log("user", user);
 
   return (
     <PanelContainer>

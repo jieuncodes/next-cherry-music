@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/server/client";
 import { LastFmTopTrack } from "@/types/trackTypes";
 
-interface TrackInfo {
+export interface TrackInfo {
   trackTitle: string;
   artist: string;
   albumTitle?: string;
@@ -14,7 +14,6 @@ const LAST_FM_BASE_URL = "https://ws.audioscrobbler.com/2.0";
 
 export const getAndSaveLastFmTopTracks = async () => {
   const topTracks = await fetchLastFmTopTracks();
-
   const allTrackInfo: TrackInfo[] = await Promise.all(
     topTracks.map(async (track: LastFmTopTrack) => {
       const trackDetail = await fetchLastFmTrackDetails(
@@ -38,10 +37,7 @@ export const getAndSaveLastFmTopTracks = async () => {
   if (data) {
   }
   if (error) {
-    console.error(
-      "There was an error inserting the                                                                track:",
-      error
-    );
+    console.error("There was an error inserting the track:", error);
   }
 };
 
@@ -87,6 +83,7 @@ export const fetchLastFmTrackDetails = async (
 
     const response = await fetch(url);
     const data = await response.json();
+    console.log("datadetaildalbum", data.track?.album);
     return data.track;
   } catch (error) {
     if (error instanceof Error) {

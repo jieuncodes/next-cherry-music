@@ -1,7 +1,9 @@
-import { getAndSaveLastFmTopTracks } from "../app/api/lastFm";
+import { FC } from "react";
 
-export default async function TopChart() {
-  const lastFmTopTracks = await getAndSaveLastFmTopTracks();
-  // console.log("a", lastFmTopTracks);
-  return;
-}
+interface TopChartProps {}
+
+const TopChart: FC<TopChartProps> = ({}) => {
+  return <div>TopChart</div>;
+};
+
+export default TopChart;

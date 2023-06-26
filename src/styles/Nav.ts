@@ -10,4 +10,4 @@ export const NavUl = tw.ul`xl:w-50 flex flex-col h-full text-white p-0 m-1 last:
 
 export const Menu = tw.li`w-full grid xl:grid-cols-[1fr_5fr] align-middle mb-7 grid-cols-1 2xl:mb-10`;
 
-export const MenuSpan = tw.span`font-bold tracking-normal text-2xl ml-2 hidden xl:block 2xl:text-[1.7rem]`;
+export const MenuSpan = tw.span`font-bold tracking-normal text-xl ml-2 hidden xl:block 2xl:text-[1.7rem]`;
