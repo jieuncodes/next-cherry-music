@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, Variants } from "framer-motion";
 import { Button } from "@nextui-org/button";
 import {
@@ -11,7 +11,16 @@ import {
   Plus,
 } from "lucide-react";
 import useMeasure from "react-use-measure";
-import { Buttons, CarouselBox, CarouselContainer, CarouselImg, Description, NavBtnContainer, Title } from "@/styles/Carousel";
+import {
+  Buttons,
+  CarouselBox,
+  CarouselContainer,
+  CarouselImg,
+  Description,
+  NavBtnContainer,
+  Title,
+} from "@/styles/Carousel";
+import Image from "next/image";
 
 function usePrevious(state: number) {
   const [tuple, setTuple] = useState([null, state]);
@@ -55,38 +64,9 @@ const Carousel: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    if (direction === -1 && prev === 0) {
-      setCount(carouselItems.length - 1);
-    }
-    if (direction === 1 && prev === carouselItems.length - 1) {
-      setCount(0);
-    }
-  }, [count]);
   return (
     <CarouselContainer ref={ref}>
-      <NavBtnContainer>
-        <Button
-          isIconOnly
-          variant="light"
-          startContent={<ChevronLeft />}
-          size="lg"
-          onPress={() =>
-            setCount((count - 1 + carouselItems.length) % carouselItems.length)
-          }
-          radius="full"
-        />
-        <Button
-          isIconOnly
-          variant="light"
-          startContent={<ChevronRight />}
-          size="lg"
-          onPress={() => setCount((count + 1) % carouselItems.length)}
-          radius="full"
-        />
-      </NavBtnContainer>
       <AnimatePresence custom={{ direction, width }}>
-        <CarouselImg />
         <CarouselBox
           key={count}
           variants={variants}
@@ -96,6 +76,15 @@ const Carousel: React.FC = () => {
           custom={{ direction, width }}
           transition={{ type: "linear" }}
         >
+          <Image
+            src={carouselItems[count]?.src}
+            alt="carousel image"
+            style={{ objectFit: "contain" }}
+            className="absolute right-24 mt-10 drop-shadow-md"
+            width={300}
+            height={300}
+          />
+
           <Title>{carouselItems[count]?.title}</Title>
           <Description>{carouselItems[count]?.desc}</Description>
           <Buttons>
@@ -120,6 +109,26 @@ const Carousel: React.FC = () => {
           </Buttons>
         </CarouselBox>
       </AnimatePresence>
+      <NavBtnContainer>
+        <Button
+          isIconOnly
+          variant="light"
+          startContent={<ChevronLeft />}
+          size="lg"
+          onPress={() =>
+            setCount((count - 1 + carouselItems.length) % carouselItems.length)
+          }
+          radius="full"
+        />
+        <Button
+          isIconOnly
+          variant="light"
+          startContent={<ChevronRight />}
+          size="lg"
+          onPress={() => setCount((count + 1) % carouselItems.length)}
+          radius="full"
+        />
+      </NavBtnContainer>
     </CarouselContainer>
   );
 };
