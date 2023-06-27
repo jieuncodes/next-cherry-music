@@ -24,12 +24,14 @@ import { Button } from "@nextui-org/button";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/server/database.types";
 import { useRouter } from "next/navigation";
+import { useUser } from "@supabase/auth-helpers-react";
 
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
 export default function Nav() {
   const supabase = createClientComponentClient<Database>();
   const router = useRouter();
+  const user = useUser();
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -80,14 +82,14 @@ export default function Nav() {
           <Settings size={25} />
           <MenuSpan>Settings</MenuSpan>
         </Menu>
-
-        <Button
+      {user && <Button
           onPress={handleSignOut}
           isIconOnly
           startContent={<LogOut size={25} />}
           variant="light"
           className="text-white text-2xl mt-auto mb-2 -ml-1"
-        />
+        />}
+        
       </NavUl>
     </NavContainer>
   );

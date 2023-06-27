@@ -15,6 +15,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] Responsive Design
     - [x] Shrink nav bar when md, sm window
 - [ ] Framer Motion
+    - [ ] Carousel
 - [ ] Modern data fetching usijng React-Query
 - [ ] Infinite scrolling for dynamically laoding 
 - [ ] Profile uploads (Avatar, nickname..)

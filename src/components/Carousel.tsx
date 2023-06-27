@@ -15,7 +15,6 @@ import {
   Buttons,
   CarouselBox,
   CarouselContainer,
-  CarouselImg,
   Description,
   NavBtnContainer,
   Title,
@@ -29,16 +28,14 @@ function usePrevious(state: number) {
   }
   return tuple[0];
 }
-
 const variants: Variants = {
-  enter: ({ direction, width }) => ({ x: direction * width }),
-  center: { x: 0 },
-  exit: ({ direction, width }) => ({ x: direction * -width }),
+  enter: ({ direction }) => ({ x: direction, opacity: 0 }),
+  active: { x: 0, opacity: 1, transition: { delay: 0.5 } },
+  exit: ({ direction }) => ({ x: direction, opacity: 0 }),
 };
 
 const Carousel: React.FC = () => {
   let [count, setCount] = useState(0);
-  let [ref, { width }] = useMeasure();
   let prev = usePrevious(count) || 0;
   let direction: number = count > prev ? 1 : -1;
   const carouselItems = [
@@ -65,22 +62,24 @@ const Carousel: React.FC = () => {
   ];
 
   return (
-    <CarouselContainer ref={ref}>
-      <AnimatePresence custom={{ direction, width }}>
+    <CarouselContainer>
+      <AnimatePresence custom={{ direction }}>
         <CarouselBox
           key={count}
           variants={variants}
           initial="enter"
-          animate="center"
+          animate="active"
           exit="exit"
-          custom={{ direction, width }}
-          transition={{ type: "linear" }}
+          custom={{ direction }}
+          style={{
+            flex: "none",
+          }}
         >
           <Image
             src={carouselItems[count]?.src}
             alt="carousel image"
             style={{ objectFit: "contain" }}
-            className="absolute right-24 mt-10 drop-shadow-md"
+            className="absolute right-10 -mt-10 drop-shadow-md"
             width={300}
             height={300}
           />
@@ -114,7 +113,7 @@ const Carousel: React.FC = () => {
           isIconOnly
           variant="light"
           startContent={<ChevronLeft />}
-          size="lg"
+          size="xl"
           onPress={() =>
             setCount((count - 1 + carouselItems.length) % carouselItems.length)
           }
@@ -124,7 +123,7 @@ const Carousel: React.FC = () => {
           isIconOnly
           variant="light"
           startContent={<ChevronRight />}
-          size="lg"
+          size="xl"
           onPress={() => setCount((count + 1) % carouselItems.length)}
           radius="full"
         />
