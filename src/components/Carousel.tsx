@@ -79,8 +79,8 @@ const Carousel: React.FC = () => {
     },
     {
       bgColor: "grey",
-      src: "/images/ariana.png",
-      title: "1 Ariana Grande",
+      src: "/images/tailor.png",
+      title: "Taylor Swift",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     },
     {

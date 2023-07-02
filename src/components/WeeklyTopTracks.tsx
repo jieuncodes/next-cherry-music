@@ -17,6 +17,7 @@ import {
   StyledHeader,
   TrackTitle,
 } from "@/styles/WeeklyTopTracks";
+import { ChartCard } from "./TrackCard";
 
 interface WeeklyTopTracksProps {}
 
@@ -48,35 +49,7 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
       <SectionTitle>Weekly Top Tracks</SectionTitle>
       <SectionGrid>
         {tracks.map((track) => (
-          <StyledCard>
-            <StyledHeader>
-              <div className="flex gap-5">
-                <Image
-                  alt="album image"
-                  className="object-cover rounded-md"
-                  src={track.albumImgUrl || ""}
-                  height={40}
-                  width={40}
-                />
-                <CardDetails>
-                  <TrackTitle>{track.trackTitle}</TrackTitle>
-                  <Artist>{track.artist}</Artist>
-                </CardDetails>
-              </div>
-              <Button
-                isIconOnly
-                className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 translate-x-2"
-                radius="full"
-                variant="light"
-                onPress={() => setLiked((v) => !v)}
-              >
-                <HeartIcon
-                  className={liked ? "[&>path]:stroke-transparent" : ""}
-                  fill={liked ? "currentColor" : "none"}
-                />
-              </Button>
-            </StyledHeader>
-          </StyledCard>
+          <ChartCard track={track} />
         ))}
       </SectionGrid>
     </SectionContainer>
