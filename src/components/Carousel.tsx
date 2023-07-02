@@ -15,6 +15,7 @@ import {
 } from "@/styles/Carousel";
 import Image from "next/image";
 import { Icons } from "./Icons";
+import { carouselItems } from "@/database/carouselItems";
 
 const imageVariants: Variants = {
   hidden: { x: 100, opacity: 0 },
@@ -61,40 +62,7 @@ const parentVariants: Variants = {
 const Carousel: React.FC = () => {
   let [count, setCount] = useState(0);
 
-  const carouselItems = [
-    {
-      bgColor: "pink",
-      src: "/images/ariana.png",
-      marginTop: "-2.5rem",
-      title: "0 Ariana Grande",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
-    },
-    {
-      bgColor: "grey",
-      src: "/images/tailor.png",
-      marginTop: "-5rem",
-      marginLeft: "-3rem",
-      title: "Taylor Swift",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
-    },
-    {
-      bgColor: "purple",
-      src: "/images/ariana.png",
-      marginTop: "-2.5rem",
 
-      title: "2 Ariana Grande",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
-    },
-    {
-      bgColor: "lightblue",
-
-      src: "/images/ariana.png",
-      marginTop: "-2.5rem",
-
-      title: "3 Ariana Grande",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
-    },
-  ];
 
   const variants: Variants = {
     enter: { opacity: 0, backgroundColor: carouselItems[count]?.bgColor },

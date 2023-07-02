@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Database } from "@/lib/server/database.types";
 import { Icons } from "./Icons";
 import { Buttons } from "@/styles/TrackCard";
+import Marquee from "@/animations/marquee";
 
 interface ChartCardProps {
   track: Database["public"]["Tables"]["tracks"]["Row"];
@@ -18,21 +19,21 @@ interface ChartCardProps {
 
 export const ChartCard: React.FC<ChartCardProps> = ({ track }) => {
   const [liked, setLiked] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
+  const [ishover, setIshover] = useState(false);
 
   if (!track) return null;
 
-  const iconColor = showButtons ? "white" : "currentColor";
+  const iconColor = ishover ? "white" : "currentColor";
 
   return (
     <StyledCard
-      onMouseEnter={() => setShowButtons(true)}
-      onMouseLeave={() => setShowButtons(false)}
+      onMouseEnter={() => setIshover(true)}
+      onMouseLeave={() => setIshover(false)}
       className="hover:bg-black/30"
     >
       <StyledHeader>
         <div className="relative flex gap-5 w-full ">
-          {showButtons && (
+          {ishover && (
             <>
               <Icons.play
                 color="white"
@@ -60,19 +61,20 @@ export const ChartCard: React.FC<ChartCardProps> = ({ track }) => {
           )}
           <Image
             alt="album image"
-            className={`object-cover rounded-md ${
-              showButtons ? "opacity-80" : ""
-            }`}
+            className={`object-cover rounded-md ${ishover ? "opacity-80" : ""}`}
             src={track.albumImgUrl || ""}
             height={40}
             width={40}
           />
 
           <CardDetails>
-            <TrackTitle className={showButtons ? "text-white" : ""}>
-              {track.trackTitle}
-            </TrackTitle>
-            <Artist className={showButtons ? "text-white/70" : ""}>
+            {track.trackTitle && track.trackTitle.length > 20 && ishover? (
+              <Marquee trackTitleText={track.trackTitle} />
+            ) : (
+              <TrackTitle>{track.trackTitle}</TrackTitle>
+            )}
+
+            <Artist className={ishover ? "text-white/70" : ""}>
               {track.artist}
             </Artist>
           </CardDetails>
