@@ -3,10 +3,20 @@
 import { supabase } from "@/lib/server/client";
 import { Database } from "@/lib/server/database.types";
 import { FC, useEffect, useState } from "react";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Card, CardHeader } from "@nextui-org/card";
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
 import { HeartIcon } from "lucide-react";
+import {
+  Artist,
+  CardDetails,
+  SectionContainer,
+  SectionGrid,
+  SectionTitle,
+  StyledCard,
+  StyledHeader,
+  TrackTitle,
+} from "@/styles/WeeklyTopTracks";
 
 interface WeeklyTopTracksProps {}
 
@@ -34,12 +44,12 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
   }, []);
 
   return (
-    <div className="container absolute ">
-      <span className="font-bold">Weekly Top Tracks</span>
-      <div className="mt-5 overflow-x-scroll grid grid-flow-col grid-rows-4 grid-cols-auto gap-2">
+    <SectionContainer>
+      <SectionTitle>Weekly Top Tracks</SectionTitle>
+      <SectionGrid>
         {tracks.map((track) => (
-          <Card className="w-96 h-16 shadow-none">
-            <CardHeader className="justify-between">
+          <StyledCard>
+            <StyledHeader>
               <div className="flex gap-5">
                 <Image
                   alt="album image"
@@ -48,14 +58,10 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
                   height={40}
                   width={40}
                 />
-                <div className="flex flex-col gap-1 items-start justify-center">
-                  <h4 className="text-sm font-semibold leading-none text-default-600">
-                    {track.trackTitle}
-                  </h4>
-                  <h5 className="text-sm tracking-tight text-default-400">
-                    {track.artist}
-                  </h5>
-                </div>
+                <CardDetails>
+                  <TrackTitle>{track.trackTitle}</TrackTitle>
+                  <Artist>{track.artist}</Artist>
+                </CardDetails>
               </div>
               <Button
                 isIconOnly
@@ -69,11 +75,11 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
                   fill={liked ? "currentColor" : "none"}
                 />
               </Button>
-            </CardHeader>
-          </Card>
+            </StyledHeader>
+          </StyledCard>
         ))}
-      </div>
-    </div>
+      </SectionGrid>
+    </SectionContainer>
   );
 };
 
