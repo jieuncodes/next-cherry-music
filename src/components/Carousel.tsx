@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, Variants } from "framer-motion";
 import { Button } from "@nextui-org/button";
+import { motion } from "framer-motion";
+
 import {
   ChevronRight,
   ChevronLeft,
@@ -10,7 +12,7 @@ import {
   MoreHorizontal,
   Plus,
 } from "lucide-react";
-import useMeasure from "react-use-measure";
+//todo: make all the buttons to come from the server component for the best UX.
 import {
   Buttons,
   CarouselBox,
@@ -21,91 +23,155 @@ import {
 } from "@/styles/Carousel";
 import Image from "next/image";
 
-function usePrevious(state: number) {
-  const [tuple, setTuple] = useState([null, state]);
-  if (tuple[1] !== state) {
-    setTuple([tuple[1], state]);
-  }
-  return tuple[0];
-}
-const variants: Variants = {
-  enter: ({ direction }) => ({ x: direction, opacity: 0 }),
-  active: { x: 0, opacity: 1, transition: { delay: 0.5 } },
-  exit: ({ direction }) => ({ x: direction, opacity: 0 }),
+
+const imageVariants: Variants = {
+  hidden: { x: 100, opacity: 0 },
+  show: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 1,
+    },
+  },
+  exit: {
+    x: 100,
+    opacity: 0,
+    transition: {
+      duration: 3,
+    },
+  },
+};
+const textVariants: Variants = {
+  hidden: { y: 100, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      when: "beforeChildren",
+      staggerChildren: 0.2,
+      
+    },
+  },
+  exit: { y: 100, opacity: 0, transition: { delay: 1 } },
+};
+const parentVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.2,
+    },
+  },
+  exit: { opacity: 0 },
 };
 
 const Carousel: React.FC = () => {
   let [count, setCount] = useState(0);
-  let prev = usePrevious(count) || 0;
-  let direction: number = count > prev ? 1 : -1;
+
   const carouselItems = [
     {
+      bgColor: "pink",
       src: "/images/ariana.png",
       title: "0 Ariana Grande",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     },
     {
+      bgColor: "grey",
       src: "/images/ariana.png",
       title: "1 Ariana Grande",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     },
     {
+      bgColor: "purple",
+
       src: "/images/ariana.png",
       title: "2 Ariana Grande",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     },
     {
+      bgColor: "lightblue",
+
       src: "/images/ariana.png",
       title: "3 Ariana Grande",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     },
   ];
-
+  
+  const variants: Variants = {
+    enter: { opacity: 0, backgroundColor: carouselItems[count]?.bgColor },
+    active: (custom) => ({
+      opacity: 1,
+      backgroundColor: custom,
+      transition: { delay: 0.5, duration: 0.2 }
+    }),
+    exit: { opacity: 0 },
+  };
+  
   return (
     <CarouselContainer>
-      <AnimatePresence custom={{ direction }}>
+      <AnimatePresence>
         <CarouselBox
           key={count}
           variants={variants}
           initial="enter"
           animate="active"
           exit="exit"
-          custom={{ direction }}
-          style={{
-            flex: "none",
-          }}
         >
-          <Image
-            src={carouselItems[count]?.src}
-            alt="carousel image"
-            style={{ objectFit: "contain" }}
+          <motion.div
+            key={count}
+            variants={imageVariants}
+            initial="hidden"
+            animate="show"
+            exit="hidden"
             className="absolute right-10 -mt-10 drop-shadow-md"
-            width={300}
-            height={300}
-          />
+          >
+            <Image
+              src={carouselItems[count]?.src}
+              alt="carousel image"
+              style={{ objectFit: "contain" }}
+              width={300}
+              height={300}
+            />
+          </motion.div>
 
-          <Title>{carouselItems[count]?.title}</Title>
-          <Description>{carouselItems[count]?.desc}</Description>
-          <Buttons>
-            <Button
-              isIconOnly
-              radius="full"
-              variant="ghost"
-              startContent={<Plus />}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              variant="ghost"
-              startContent={<Heart />}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              variant="ghost"
-              startContent={<MoreHorizontal />}
-            ></Button>
-          </Buttons>
+          <motion.div
+            variants={parentVariants}
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+          >
+            <motion.div variants={textVariants}>
+              <Title>{carouselItems[count]?.title}</Title>
+            </motion.div>
+
+            <motion.div variants={textVariants}>
+              <Description>{carouselItems[count]?.desc}</Description>
+            </motion.div>
+            <motion.div variants={textVariants}>
+              <Buttons>
+                <Button
+                  isIconOnly
+                  radius="full"
+                  variant="flat"
+                  startContent={<Plus />}
+                ></Button>
+                <Button
+                  isIconOnly
+                  radius="full"
+                  variant="flat"
+                  startContent={<Heart />}
+                ></Button>
+                <Button
+                  isIconOnly
+                  radius="full"
+                  variant="flat"
+                  startContent={<MoreHorizontal />}
+                ></Button> 
+              </Buttons>
+            </motion.div>
+          </motion.div>
         </CarouselBox>
       </AnimatePresence>
       <NavBtnContainer>
