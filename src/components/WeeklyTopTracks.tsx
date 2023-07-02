@@ -3,19 +3,10 @@
 import { supabase } from "@/lib/server/client";
 import { Database } from "@/lib/server/database.types";
 import { FC, useEffect, useState } from "react";
-import { Card, CardHeader } from "@nextui-org/card";
-import Image from "next/image";
-import { Button } from "@nextui-org/button";
-import { HeartIcon } from "lucide-react";
 import {
-  Artist,
-  CardDetails,
   SectionContainer,
   SectionGrid,
   SectionTitle,
-  StyledCard,
-  StyledHeader,
-  TrackTitle,
 } from "@/styles/WeeklyTopTracks";
 import { ChartCard } from "./TrackCard";
 

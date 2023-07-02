@@ -1,12 +1,12 @@
 "use client";
 
-import { Bell, User2Icon } from "lucide-react";
 import { PanelContainer, UserStatus } from "@/styles/Panel";
 import { useRecoilState } from "recoil";
 import { authModalState } from "@/atoms";
 import { Button } from "@nextui-org/button";
 import { useUser } from "@supabase/auth-helpers-react";
 import { Avatar } from "@nextui-org/avatar";
+import { Icons } from "./Icons";
 
 export default function Panel() {
   const [isOpen, setIsOpen] = useRecoilState(authModalState);
@@ -15,7 +15,7 @@ export default function Panel() {
   return (
     <PanelContainer>
       <UserStatus>
-        <Bell />
+        <Icons.bell />
         {user ? (
           <Avatar
             classNames={{
@@ -27,7 +27,7 @@ export default function Panel() {
           />
         ) : (
           <Button
-            startContent={<User2Icon />}
+            startContent={<Icons.user2Icon />}
             variant="ghost"
             radius="full"
             isIconOnly

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Button } from '@nextui-org/button';
-import { HeartIcon } from 'lucide-react';
 import { Artist, CardDetails, StyledCard, StyledHeader, TrackTitle } from "@/styles/WeeklyTopTracks";
 import Image from "next/image";
 import { Database } from "@/lib/server/database.types";
+import { Icons } from './Icons';
 
 interface ChartCardProps {
   track: Database["public"]["Tables"]["tracks"]["Row"];
@@ -37,7 +37,7 @@ export const ChartCard: React.FC<ChartCardProps> = ({ track }) => {
           variant="light"
           onPress={() => setLiked((v) => !v)}
         >
-          <HeartIcon
+          <Icons.heart
             className={liked ? "[&>path]:stroke-transparent" : ""}
             fill={liked ? "currentColor" : "none"}
           />

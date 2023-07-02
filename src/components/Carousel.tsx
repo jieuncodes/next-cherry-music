@@ -1,17 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {useState } from "react";
 import { AnimatePresence, Variants } from "framer-motion";
 import { Button } from "@nextui-org/button";
 import { motion } from "framer-motion";
 
-import {
-  ChevronRight,
-  ChevronLeft,
-  Heart,
-  MoreHorizontal,
-  Plus,
-} from "lucide-react";
 //todo: make all the buttons to come from the server component for the best UX.
 import {
   Buttons,
@@ -22,6 +15,7 @@ import {
   Title,
 } from "@/styles/Carousel";
 import Image from "next/image";
+import { Icons } from "./Icons";
 
 
 const imageVariants: Variants = {
@@ -155,19 +149,19 @@ const Carousel: React.FC = () => {
                   isIconOnly
                   radius="full"
                   variant="flat"
-                  startContent={<Plus />}
+                  startContent={<Icons.plus />}
                 ></Button>
                 <Button
                   isIconOnly
                   radius="full"
                   variant="flat"
-                  startContent={<Heart />}
+                  startContent={<Icons.heart />}
                 ></Button>
                 <Button
                   isIconOnly
                   radius="full"
                   variant="flat"
-                  startContent={<MoreHorizontal />}
+                  startContent={<Icons.moreHorizontal />}
                 ></Button> 
               </Buttons>
             </motion.div>
@@ -178,7 +172,7 @@ const Carousel: React.FC = () => {
         <Button
           isIconOnly
           variant="light"
-          startContent={<ChevronLeft />}
+          startContent={<Icons.chevronLeft />}
           size="xl"
           onPress={() =>
             setCount((count - 1 + carouselItems.length) % carouselItems.length)
@@ -188,7 +182,7 @@ const Carousel: React.FC = () => {
         <Button
           isIconOnly
           variant="light"
-          startContent={<ChevronRight />}
+          startContent={<Icons.chevronRight />}
           size="xl"
           onPress={() => setCount((count + 1) % carouselItems.length)}
           radius="full"
