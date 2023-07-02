@@ -14,6 +14,8 @@ import {
   Bell,
   User2Icon,
   SearchIcon,
+  Play,
+  MoreVertical,
 } from "lucide-react";
 
 export const Icons = {
@@ -32,4 +34,6 @@ export const Icons = {
   bell: Bell,
   user2Icon: User2Icon,
   searchIcon: SearchIcon,
+  play: Play,
+  moreVertical: MoreVertical,
 };

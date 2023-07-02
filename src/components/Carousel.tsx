@@ -1,11 +1,10 @@
 "use client";
 
-import {useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, Variants } from "framer-motion";
 import { Button } from "@nextui-org/button";
 import { motion } from "framer-motion";
 
-//todo: make all the buttons to come from the server component for the best UX.
 import {
   Buttons,
   CarouselBox,
@@ -16,7 +15,6 @@ import {
 } from "@/styles/Carousel";
 import Image from "next/image";
 import { Icons } from "./Icons";
-
 
 const imageVariants: Variants = {
   hidden: { x: 100, opacity: 0 },
@@ -44,7 +42,6 @@ const textVariants: Variants = {
       duration: 0.5,
       when: "beforeChildren",
       staggerChildren: 0.2,
-      
     },
   },
   exit: { y: 100, opacity: 0, transition: { delay: 1 } },
@@ -68,19 +65,23 @@ const Carousel: React.FC = () => {
     {
       bgColor: "pink",
       src: "/images/ariana.png",
+      marginTop: "-2.5rem",
       title: "0 Ariana Grande",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     },
     {
       bgColor: "grey",
       src: "/images/tailor.png",
+      marginTop: "-5rem",
+      marginLeft: "-3rem",
       title: "Taylor Swift",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     },
     {
       bgColor: "purple",
-
       src: "/images/ariana.png",
+      marginTop: "-2.5rem",
+
       title: "2 Ariana Grande",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     },
@@ -88,21 +89,23 @@ const Carousel: React.FC = () => {
       bgColor: "lightblue",
 
       src: "/images/ariana.png",
+      marginTop: "-2.5rem",
+
       title: "3 Ariana Grande",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     },
   ];
-  
+
   const variants: Variants = {
     enter: { opacity: 0, backgroundColor: carouselItems[count]?.bgColor },
     active: (custom) => ({
       opacity: 1,
       backgroundColor: custom,
-      transition: { delay: 0.5, duration: 0.2 }
+      transition: { delay: 0.5, duration: 0.2 },
     }),
     exit: { opacity: 0 },
   };
-  
+
   return (
     <CarouselContainer>
       <AnimatePresence>
@@ -119,12 +122,14 @@ const Carousel: React.FC = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="absolute right-10 -mt-10 drop-shadow-md"
+            className="absolute right-10 drop-shadow-md"
+
           >
             <Image
               src={carouselItems[count]?.src}
               alt="carousel image"
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "contain" , marginTop: carouselItems[count]?.marginTop, marginLeft: carouselItems[count]?.marginLeft}}
+
               width={300}
               height={300}
             />
@@ -162,7 +167,7 @@ const Carousel: React.FC = () => {
                   radius="full"
                   variant="flat"
                   startContent={<Icons.moreHorizontal />}
-                ></Button> 
+                ></Button>
               </Buttons>
             </motion.div>
           </motion.div>

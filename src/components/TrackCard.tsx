@@ -1,9 +1,16 @@
-import { useState } from 'react';
-import { Button } from '@nextui-org/button';
-import { Artist, CardDetails, StyledCard, StyledHeader, TrackTitle } from "@/styles/WeeklyTopTracks";
+import { useState } from "react";
+import { Button } from "@nextui-org/button";
+import {
+  Artist,
+  CardDetails,
+  StyledCard,
+  StyledHeader,
+  TrackTitle,
+} from "@/styles/TrackCard";
 import Image from "next/image";
 import { Database } from "@/lib/server/database.types";
-import { Icons } from './Icons';
+import { Icons } from "./Icons";
+import { Buttons } from "@/styles/TrackCard";
 
 interface ChartCardProps {
   track: Database["public"]["Tables"]["tracks"]["Row"];
@@ -11,37 +18,65 @@ interface ChartCardProps {
 
 export const ChartCard: React.FC<ChartCardProps> = ({ track }) => {
   const [liked, setLiked] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
 
   if (!track) return null;
 
+  const iconColor = showButtons ? "white" : "currentColor";
+
   return (
-    <StyledCard>
+    <StyledCard
+      onMouseEnter={() => setShowButtons(true)}
+      onMouseLeave={() => setShowButtons(false)}
+      className="hover:bg-black/30"
+    >
       <StyledHeader>
-        <div className="flex gap-5">
+        <div className="relative flex gap-5 w-full ">
+          {showButtons && (
+            <>
+              <Icons.play
+                color="white"
+                fill="white"
+                size={17}
+                className="absolute ml-3 mt-[0.7rem] opacity-100"
+              />
+              <Buttons>
+                <Button
+                  isIconOnly
+                  radius="full"
+                  variant="light"
+                  onPress={() => setLiked((v) => !v)}
+                >
+                  <Icons.heart
+                    color={iconColor}
+                    fill={liked ? iconColor : "none"}
+                  />
+                </Button>
+                <Button isIconOnly radius="full" variant="light">
+                  <Icons.moreVertical color={iconColor} />
+                </Button>
+              </Buttons>
+            </>
+          )}
           <Image
             alt="album image"
-            className="object-cover rounded-md"
+            className={`object-cover rounded-md ${
+              showButtons ? "opacity-80" : ""
+            }`}
             src={track.albumImgUrl || ""}
             height={40}
             width={40}
           />
+
           <CardDetails>
-            <TrackTitle>{track.trackTitle}</TrackTitle>
-            <Artist>{track.artist}</Artist>
+            <TrackTitle className={showButtons ? "text-white" : ""}>
+              {track.trackTitle}
+            </TrackTitle>
+            <Artist className={showButtons ? "text-white/70" : ""}>
+              {track.artist}
+            </Artist>
           </CardDetails>
         </div>
-        <Button
-          isIconOnly
-          className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 translate-x-2"
-          radius="full"
-          variant="light"
-          onPress={() => setLiked((v) => !v)}
-        >
-          <Icons.heart
-            className={liked ? "[&>path]:stroke-transparent" : ""}
-            fill={liked ? "currentColor" : "none"}
-          />
-        </Button>
       </StyledHeader>
     </StyledCard>
   );

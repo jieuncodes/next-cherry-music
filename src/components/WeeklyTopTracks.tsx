@@ -16,7 +16,6 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
   const [tracks, setTracks] = useState<
     Database["public"]["Tables"]["tracks"]["Row"][]
   >([]);
-  const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     const fetchTracks = async () => {
