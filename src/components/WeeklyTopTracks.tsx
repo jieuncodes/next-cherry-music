@@ -19,6 +19,33 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
   const [tracks, setTracks] = useState<
     Database["public"]["Tables"]["tracks"]["Row"][]
   >([]);
+  const [scrollX, setScrollX] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const scrollAmount = 300;
+  const scrollLeft = () => {
+    if (ref.current) {
+      ref.current.scrollTo({
+        left: ref.current.scrollLeft - scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+  
+  const scrollRight = () => {
+    if (ref.current) {
+      ref.current.scrollTo({
+        left: ref.current.scrollLeft + scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log("ref.current?.scrollLeft", ref.current?.scrollLeft);
+    setScrollX(ref.current?.scrollLeft || 0);
+    console.log("scrollX", scrollX);
+  }, [scrollX]);
 
   useEffect(() => {
     const fetchTracks = async () => {
@@ -45,6 +72,7 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
           startContent={<Icons.chevronLeft />}
           size="xs"
           radius="full"
+          onPress={scrollLeft}
         />
         <Button
           isIconOnly
@@ -52,14 +80,15 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
           startContent={<Icons.chevronRight />}
           size="xs"
           radius="full"
+          onPress={scrollRight}
         />
       </SectionNav>
       <SectionTitle>Weekly Top Tracks</SectionTitle>
-        <SectionGrid>
-          {tracks.map((track, index) => (
-            <ChartCard track={track} key={index} />
-          ))}
-        </SectionGrid>
+      <SectionGrid ref={ref}>
+        {tracks.map((track, index) => (
+          <ChartCard track={track} key={index} />
+        ))}
+      </SectionGrid>
     </SectionContainer>
   );
 };
