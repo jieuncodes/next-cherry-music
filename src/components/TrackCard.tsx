@@ -71,7 +71,7 @@ export const ChartCard: React.FC<ChartCardProps> = ({ track }) => {
             {track.trackTitle && track.trackTitle.length > 20 && ishover? (
               <Marquee trackTitleText={track.trackTitle} />
             ) : (
-              <TrackTitle>{track.trackTitle}</TrackTitle>
+              <TrackTitle className={ishover ? "text-white" : ""}>{track.trackTitle}</TrackTitle>
             )}
 
             <Artist className={ishover ? "text-white/70" : ""}>

@@ -34,19 +34,7 @@ const imageVariants: Variants = {
     },
   },
 };
-const textVariants: Variants = {
-  hidden: { y: 100, opacity: 0 },
-  show: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      when: "beforeChildren",
-      staggerChildren: 0.2,
-    },
-  },
-  exit: { y: 100, opacity: 0, transition: { delay: 1 } },
-};
+
 const parentVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
@@ -58,11 +46,19 @@ const parentVariants: Variants = {
   },
   exit: { opacity: 0 },
 };
+const textVariants: Variants = {
+  hidden: { y: 100},
+  show: {
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: { y: 100, transition: { delay: 1 } },
+};
 
 const Carousel: React.FC = () => {
   let [count, setCount] = useState(0);
-
-
 
   const variants: Variants = {
     enter: { opacity: 0, backgroundColor: carouselItems[count]?.bgColor },
@@ -91,13 +87,15 @@ const Carousel: React.FC = () => {
             animate="show"
             exit="hidden"
             className="absolute right-10 drop-shadow-md"
-
           >
             <Image
               src={carouselItems[count]?.src}
               alt="carousel image"
-              style={{ objectFit: "contain" , marginTop: carouselItems[count]?.marginTop, marginLeft: carouselItems[count]?.marginLeft}}
-
+              style={{
+                objectFit: "contain",
+                marginTop: carouselItems[count]?.marginTop,
+                marginLeft: carouselItems[count]?.marginLeft,
+              }}
               width={300}
               height={300}
             />
@@ -109,15 +107,13 @@ const Carousel: React.FC = () => {
             animate="show"
             exit="hidden"
           >
-            <motion.div variants={textVariants}>
-              <Title>{carouselItems[count]?.title}</Title>
-            </motion.div>
+            <Title variants={textVariants}>{carouselItems[count]?.title}</Title>
 
-            <motion.div variants={textVariants}>
-              <Description>{carouselItems[count]?.desc}</Description>
-            </motion.div>
-            <motion.div variants={textVariants}>
-              <Buttons>
+            <Description variants={textVariants}>
+              {carouselItems[count]?.desc}
+            </Description>
+
+              <Buttons variants={textVariants}>
                 <Button
                   isIconOnly
                   radius="full"
@@ -137,7 +133,7 @@ const Carousel: React.FC = () => {
                   startContent={<Icons.moreHorizontal />}
                 ></Button>
               </Buttons>
-            </motion.div>
+              
           </motion.div>
         </CarouselBox>
       </AnimatePresence>

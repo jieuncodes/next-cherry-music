@@ -17,7 +17,7 @@ const Marquee: React.FC<{ trackTitleText: string }> = ({ trackTitleText }) => {
   };
 
   return (
-    <TrackTitle className="flex overflow-hidden gap-32 relative whitespace-nowrap">
+    <TrackTitle className="flex overflow-hidden gap-32 relative whitespace-nowrap text-white">
       <div className="whitespace-nowrap shrink-0 flex justify-around min-w-full gap-12">
         <motion.div
           ref={ref}

@@ -2,13 +2,16 @@
 
 import { supabase } from "@/lib/server/client";
 import { Database } from "@/lib/server/database.types";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import {
   SectionContainer,
   SectionGrid,
+  SectionNav,
   SectionTitle,
 } from "@/styles/WeeklyTopTracks";
 import { ChartCard } from "./TrackCard";
+import { Button } from "@nextui-org/button";
+import { Icons } from "./Icons";
 
 interface WeeklyTopTracksProps {}
 
@@ -28,7 +31,6 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
         console.error(error);
       } else {
         setTracks(tracks as Database["public"]["Tables"]["tracks"]["Row"][]);
-        console.log("tracks has album", tracks);
       }
     };
     fetchTracks();
@@ -36,12 +38,28 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
 
   return (
     <SectionContainer>
+      <SectionNav>
+        <Button
+          isIconOnly
+          variant="ghost"
+          startContent={<Icons.chevronLeft />}
+          size="xs"
+          radius="full"
+        />
+        <Button
+          isIconOnly
+          variant="ghost"
+          startContent={<Icons.chevronRight />}
+          size="xs"
+          radius="full"
+        />
+      </SectionNav>
       <SectionTitle>Weekly Top Tracks</SectionTitle>
-      <SectionGrid>
-        {tracks.map((track) => (
-          <ChartCard track={track} />
-        ))}
-      </SectionGrid>
+        <SectionGrid>
+          {tracks.map((track, index) => (
+            <ChartCard track={track} key={index} />
+          ))}
+        </SectionGrid>
     </SectionContainer>
   );
 };
