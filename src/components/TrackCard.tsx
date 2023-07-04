@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@nextui-org/button";
 import {
   Artist,
@@ -12,30 +12,12 @@ import { Database } from "@/lib/server/database.types";
 import { Icons } from "./Icons";
 import { Buttons } from "@/styles/TrackCard";
 import Marquee from "@/animations/marquee";
-import {
-  Dropdown,
-  DropdownMenu,
-  DropdownTrigger,
-  DropdownItem,
-} from "@nextui-org/dropdown";
+import { DropdownComponent } from "./TrackCardDropDown";
+
 
 interface ChartCardProps {
   track: Database["public"]["Tables"]["tracks"]["Row"];
 }
-
-type DropdownItemSelectedIconProps = {
-  icon?: ReactNode;
-  isSelected?: boolean;
-  /**
-   * The current disabled status.
-   * @default false
-   */
-  isDisabled?: boolean;
-  selectedIcon?:
-    | ReactNode
-    | ((props: DropdownItemSelectedIconProps) => ReactNode)
-    | null;
-};
 
 export const ChartCard: React.FC<ChartCardProps> = ({ track }) => {
   const [liked, setLiked] = useState(false);
@@ -46,33 +28,7 @@ export const ChartCard: React.FC<ChartCardProps> = ({ track }) => {
 
   if (!track) return null;
 
-  const dropdownItems = [
-    {
-      key: "play-next",
-      icon: Icons.listVideo,
-      label: "Play next",
-    },
-    {
-      key: "add-to-queue",
-      icon: Icons.listMusic,
-      label: "Add to queue",
-    },
-    {
-      key: "add-to-playlist",
-      icon: Icons.listPlus,
-      label: "Add to playlist",
-    },
-    {
-      key: "go-to-album",
-      icon: Icons.disc,
-      label: "Go to album",
-    },
-    {
-      key: "go-to-artist",
-      icon: Icons.mic2,
-      label: "Go to artist",
-    },
-  ];
+  
   return (
     <StyledCard
       onMouseEnter={() => setIsCardHover(true)}
@@ -103,39 +59,11 @@ export const ChartCard: React.FC<ChartCardProps> = ({ track }) => {
                     fill={liked ? iconColor : "none"}
                   />
                 </Button>
-                <Dropdown
+                <DropdownComponent
                   onMouseEnter={() => setIsDropdownHover(true)}
                   onMouseLeave={() => setIsDropdownHover(false)}
-                >
-                  <DropdownTrigger>
-                    <Button isIconOnly radius="full" variant="light">
-                      <Icons.moreVertical color={iconColor} />
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu
-                    aria-label="Dropdown menu with icons"
-                    items={dropdownItems}
-                    onAction={() => setIsDropdownHover(false)}
-                  >
-                    {(item: any) => {
-                      const typedItem = item as {
-                        key: string;
-                        label: string;
-                        icon: React.ComponentType<any>;
-                      };
-                      const IconComponent = typedItem.icon;
-
-                      return (
-                        <DropdownItem
-                          key={typedItem.key}
-                          startContent={<IconComponent strokeWidth={1.5} />}
-                        >
-                          {typedItem.label}
-                        </DropdownItem>
-                      );
-                    }}
-                  </DropdownMenu>
-                </Dropdown>
+                  iconColor={iconColor}
+                />
               </Buttons>
             </>
           )}
