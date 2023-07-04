@@ -7,7 +7,6 @@ import {
   Plus,
   Disc3,
   Library,
-  ListMusic,
   LogOut,
   MessageCircle,
   Settings,
@@ -16,6 +15,10 @@ import {
   SearchIcon,
   Play,
   MoreVertical,
+  ListVideo,ListMusic,
+  ListPlus,
+  Disc,
+  Mic2,
 } from "lucide-react";
 
 export const Icons = {
@@ -36,4 +39,9 @@ export const Icons = {
   searchIcon: SearchIcon,
   play: Play,
   moreVertical: MoreVertical,
+  listVideo: ListVideo,
+  listPlus: ListPlus,
+  disc: Disc,
+mic2:Mic2,
+
 };

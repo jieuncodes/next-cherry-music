@@ -42,9 +42,7 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
   };
 
   useEffect(() => {
-    console.log("ref.current?.scrollLeft", ref.current?.scrollLeft);
     setScrollX(ref.current?.scrollLeft || 0);
-    console.log("scrollX", scrollX);
   }, [scrollX]);
 
   useEffect(() => {
