@@ -7,7 +7,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [x] Auth
 - [x] Social Login
 - [x] Login with magic link
-- [ ] Music Top Chart
+- [x] Music Top Chart
 - [ ] Create and Add user playlist
 - [ ] Create and vote for comments
 - [ ] Vote for music

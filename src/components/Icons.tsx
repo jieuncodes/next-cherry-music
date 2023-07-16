@@ -15,7 +15,8 @@ import {
   SearchIcon,
   Play,
   MoreVertical,
-  ListVideo,ListMusic,
+  ListVideo,
+  ListMusic,
   ListPlus,
   Disc,
   Mic2,
@@ -42,6 +43,5 @@ export const Icons = {
   listVideo: ListVideo,
   listPlus: ListPlus,
   disc: Disc,
-mic2:Mic2,
-
+  mic2: Mic2,
 };

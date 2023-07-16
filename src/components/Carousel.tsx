@@ -1,67 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, Variants } from "framer-motion";
 import { Button } from "@nextui-org/button";
-import { motion } from "framer-motion";
-
+import { AnimatePresence, Variants } from "framer-motion";
+import { useState } from "react";
+import { carouselItems } from "@/database/carouselItems";
 import {
-  Buttons,
   CarouselBox,
   CarouselContainer,
-  Description,
   NavBtnContainer,
-  Title,
 } from "@/styles/Carousel";
-import Image from "next/image";
 import { Icons } from "./Icons";
-import { carouselItems } from "@/database/carouselItems";
+import CarouselItem from "./CarouselItem";
+import ChevronBtn from "./icons/ChevronBtn";
 
-const imageVariants: Variants = {
-  hidden: { x: 100, opacity: 0 },
-  show: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      duration: 1,
-    },
-  },
-  exit: {
-    x: 100,
-    opacity: 0,
-    transition: {
-      duration: 3,
-    },
-  },
-};
-
-const parentVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.2,
-    },
-  },
-  exit: { opacity: 0 },
-};
-const textVariants: Variants = {
-  hidden: { y: 100},
-  show: {
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-  exit: { y: 100, transition: { delay: 1 } },
-};
-
-const Carousel: React.FC = () => {
-  let [count, setCount] = useState(0);
+function Carousel() {
+  let [carouselIdx, setCarouselIdx] = useState(0);
 
   const variants: Variants = {
-    enter: { opacity: 0, backgroundColor: carouselItems[count]?.bgColor },
+    enter: { opacity: 0, backgroundColor: carouselItems[carouselIdx]?.bgColor },
     active: (custom) => ({
       opacity: 1,
       backgroundColor: custom,
@@ -74,91 +30,34 @@ const Carousel: React.FC = () => {
     <CarouselContainer>
       <AnimatePresence>
         <CarouselBox
-          key={count}
+          key={carouselIdx}
           variants={variants}
           initial="enter"
           animate="active"
           exit="exit"
         >
-          <motion.div
-            key={count}
-            variants={imageVariants}
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-            className="absolute right-10 drop-shadow-md"
-          >
-            <Image
-              src={carouselItems[count]?.src}
-              alt="carousel image"
-              style={{
-                objectFit: "contain",
-                marginTop: carouselItems[count]?.marginTop,
-                marginLeft: carouselItems[count]?.marginLeft,
-              }}
-              width={300}
-              height={300}
-            />
-          </motion.div>
-
-          <motion.div
-            variants={parentVariants}
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-          >
-            <Title variants={textVariants}>{carouselItems[count]?.title}</Title>
-
-            <Description variants={textVariants}>
-              {carouselItems[count]?.desc}
-            </Description>
-
-              <Buttons variants={textVariants}>
-                <Button
-                  isIconOnly
-                  radius="full"
-                  variant="flat"
-                  startContent={<Icons.plus />}
-                ></Button>
-                <Button
-                  isIconOnly
-                  radius="full"
-                  variant="flat"
-                  startContent={<Icons.heart />}
-                ></Button>
-                <Button
-                  isIconOnly
-                  radius="full"
-                  variant="flat"
-                  startContent={<Icons.moreHorizontal />}
-                ></Button>
-              </Buttons>
-              
-          </motion.div>
+          <CarouselItem carouselIdx={carouselIdx} />
         </CarouselBox>
       </AnimatePresence>
+
       <NavBtnContainer>
-        <Button
-          isIconOnly
-          variant="light"
+        <ChevronBtn
           startContent={<Icons.chevronLeft />}
-          size="xl"
           onPress={() =>
-            setCount((count - 1 + carouselItems.length) % carouselItems.length)
+            setCarouselIdx(
+              (carouselIdx - 1 + carouselItems.length) % carouselItems.length
+            )
           }
-          radius="full"
         />
-        <Button
-          isIconOnly
-          variant="light"
+        <ChevronBtn
           startContent={<Icons.chevronRight />}
-          size="xl"
-          onPress={() => setCount((count + 1) % carouselItems.length)}
-          radius="full"
+          onPress={() =>
+            setCarouselIdx((carouselIdx + 1) % carouselItems.length)
+          }
         />
       </NavBtnContainer>
     </CarouselContainer>
   );
-};
+}
 
 export default Carousel;
