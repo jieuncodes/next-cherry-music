@@ -1,7 +1,5 @@
 "use client";
 
-import { supabase } from "@/lib/server/client";
-import { Database } from "@/lib/server/database.types";
 import { FC, useEffect, useRef, useState } from "react";
 import {
   SectionContainer,
@@ -12,13 +10,13 @@ import {
 import { Button } from "@nextui-org/button";
 import { Icons } from "./Icons";
 import TrackCard from "./TrackCard/TrackCard";
+import { useFetchTracks } from "../hooks/useFetchTracks";
+import GhostRoundBtn from "./icons/ghostRoundBtn";
 
 interface WeeklyTopTracksProps {}
 
-const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
-  const [tracks, setTracks] = useState<
-    Database["public"]["Tables"]["tracks"]["Row"][]
-  >([]);
+function WeeklyTopTracks() {
+  const tracks = useFetchTracks();
   const [scrollX, setScrollX] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -45,39 +43,15 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
     setScrollX(ref.current?.scrollLeft || 0);
   }, [scrollX]);
 
-  useEffect(() => {
-    const fetchTracks = async () => {
-      let { data: tracks, error } = await supabase
-        .from("tracks")
-        .select("artist, trackTitle, albumImgUrl")
-        .not("albumImgUrl", "eq", null)
-        .range(0, 27);
-      if (error) {
-        console.error(error);
-      } else {
-        setTracks(tracks as Database["public"]["Tables"]["tracks"]["Row"][]);
-      }
-    };
-    fetchTracks();
-  }, []);
-
   return (
     <SectionContainer>
       <SectionNav>
-        <Button
-          isIconOnly
-          variant="ghost"
+        <GhostRoundBtn
           startContent={<Icons.chevronLeft />}
-          size="xs"
-          radius="full"
           onPress={scrollLeft}
         />
-        <Button
-          isIconOnly
-          variant="ghost"
+        <GhostRoundBtn
           startContent={<Icons.chevronRight />}
-          size="xs"
-          radius="full"
           onPress={scrollRight}
         />
       </SectionNav>
@@ -89,6 +63,6 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
       </SectionGrid>
     </SectionContainer>
   );
-};
+}
 
 export default WeeklyTopTracks;
