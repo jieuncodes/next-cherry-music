@@ -9,9 +9,9 @@ import {
   SectionNav,
   SectionTitle,
 } from "@/styles/WeeklyTopTracks";
-import { ChartCard } from "./TrackCard";
 import { Button } from "@nextui-org/button";
 import { Icons } from "./Icons";
+import TrackCard from "./TrackCard/TrackCard";
 
 interface WeeklyTopTracksProps {}
 
@@ -27,16 +27,16 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
     if (ref.current) {
       ref.current.scrollTo({
         left: ref.current.scrollLeft - scrollAmount,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
-  
+
   const scrollRight = () => {
     if (ref.current) {
       ref.current.scrollTo({
         left: ref.current.scrollLeft + scrollAmount,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
@@ -84,7 +84,7 @@ const WeeklyTopTracks: FC<WeeklyTopTracksProps> = () => {
       <SectionTitle>Weekly Top Tracks</SectionTitle>
       <SectionGrid ref={ref}>
         {tracks.map((track, index) => (
-          <ChartCard track={track} key={index} />
+          <TrackCard track={track} key={index} />
         ))}
       </SectionGrid>
     </SectionContainer>
