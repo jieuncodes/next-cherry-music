@@ -12,7 +12,7 @@ function GhostRoundBtn({ startContent, onPress }: GhostRoundBtnProps) {
       isIconOnly
       variant="ghost"
       startContent={startContent}
-      size="xs"
+      size="sm"
       radius="full"
       onPress={onPress}
     />

@@ -12,7 +12,7 @@ function ChevronBtn({ startContent, onPress }: ChevronBtnProps) {
       isIconOnly
       variant="light"
       startContent={startContent}
-      size="xl"
+      size="lg"
       onPress={onPress}
       radius="full"
     />

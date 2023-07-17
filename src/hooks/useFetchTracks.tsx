@@ -1,31 +1,30 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/server/client";
 import { Database } from "@/lib/server/database.types";
+import { fetchTracks } from "@/app/api/fetchTracks";
 
 export const useFetchTracks = () => {
   const [tracks, setTracks] = useState<
     Database["public"]["Tables"]["tracks"]["Row"][]
   >([]);
 
-  useEffect(() => {
-    const fetchTracks = async () => {
-      let { data: tracks, error } = await supabase
-        .from("tracks")
-        .select("artist, trackTitle, albumImgUrl")
-        .not("albumImgUrl", "eq", null)
-        .range(0, 27);
+  const [isLoading, setIsLoading] = useState(true);
 
-      if (error) {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedTracks = await fetchTracks();
+        setTracks(fetchedTracks);
+      } catch (error) {
         console.error(error);
-      } else {
-        setTracks(tracks as Database["public"]["Tables"]["tracks"]["Row"][]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    fetchTracks();
+    fetchData();
   }, []);
 
-  return tracks;
+  return { tracks, isLoading };
 };
