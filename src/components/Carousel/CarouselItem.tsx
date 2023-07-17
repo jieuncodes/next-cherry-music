@@ -1,48 +1,53 @@
 import { carouselItems } from "@/database/carouselItems";
-import { Buttons, Description, Title } from "@/styles/Carousel";
-import { Button } from "@nextui-org/button";
-import { Variants, motion } from "framer-motion";
+import {
+  Buttons,
+  CarouselContainer,
+  CarouselImg,
+  CarouselText,
+  Description,
+  Title,
+} from "@/styles/Carousel";
+import { Variants } from "framer-motion";
 import Image from "next/image";
-import { Icons } from "./Icons";
-import FlatIconButton from "./icons/FlatIconBtn";
-
-function CarouselItem({ carouselIdx }: { carouselIdx: number }) {
+import FlatIconButton from "../icons/FlatIconBtn";
+import { Icons } from "../Icons";
+import { Database } from "@/lib/server/database.types";
+function CarouselItem({
+  carouselItem,
+}: {
+  carouselItem: Database["public"]["Tables"]["carousel"]["Row"];
+}) {
   return (
     <>
-      <motion.div
-        key={carouselIdx}
+      <CarouselImg
+        key={carouselItem?.id}
         variants={imageVariants}
         initial="hidden"
         animate="show"
         exit="hidden"
-        className="absolute right-10 drop-shadow-md"
       >
         <Image
-          src={carouselItems[carouselIdx]?.src}
+          src={carouselItem?.src || "/images/ariana.png"}
           alt="carousel image"
           style={{
             objectFit: "contain",
-            marginTop: carouselItems[carouselIdx]?.marginTop,
-            marginLeft: carouselItems[carouselIdx]?.marginLeft,
+            marginTop: carouselItem?.marginTop || "-2.5rem",
+            marginLeft: carouselItem?.marginLeft || "0",
           }}
           width={300}
           height={300}
+          priority={true}
         />
-      </motion.div>
-
-      <motion.div
+      </CarouselImg>
+      <CarouselText
         variants={parentVariants}
         initial="hidden"
         animate="show"
         exit="hidden"
       >
-        <Title variants={textVariants}>
-          {carouselItems[carouselIdx]?.title}
-        </Title>
+        <Title variants={textVariants}>{carouselItem?.title}</Title>
 
-        <Description variants={textVariants}>
-          {carouselItems[carouselIdx]?.desc}
-        </Description>
+        <Description variants={textVariants}>{carouselItem?.desc}</Description>
         {/* todo: add onClick to buttons  */}
         <Buttons variants={textVariants}>
           <FlatIconButton startContent={<Icons.plus />} onClick={() => {}} />
@@ -52,7 +57,7 @@ function CarouselItem({ carouselIdx }: { carouselIdx: number }) {
             onClick={() => {}}
           />
         </Buttons>
-      </motion.div>
+      </CarouselText>
     </>
   );
 }

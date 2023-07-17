@@ -1,23 +1,25 @@
 "use client";
-
-import { Button } from "@nextui-org/button";
 import { AnimatePresence, Variants } from "framer-motion";
-import { useState } from "react";
-import { carouselItems } from "@/database/carouselItems";
+import { Suspense, useState } from "react";
 import {
   CarouselBox,
   CarouselContainer,
   NavBtnContainer,
 } from "@/styles/Carousel";
-import { Icons } from "./Icons";
+import { Icons } from "../Icons";
 import CarouselItem from "./CarouselItem";
-import ChevronBtn from "./icons/ChevronBtn";
+import ChevronBtn from "../icons/ChevronBtn";
+import { useCarouselItems } from "@/hooks/useCarouselItems";
 
 function Carousel() {
   let [carouselIdx, setCarouselIdx] = useState(0);
+  const { carouselItems, isLoading } = useCarouselItems();
 
   const variants: Variants = {
-    enter: { opacity: 0, backgroundColor: carouselItems[carouselIdx]?.bgColor },
+    enter: {
+      opacity: 0,
+      backgroundColor: carouselItems[carouselIdx]?.bgColor || "defaultColor",
+    },
     active: (custom) => ({
       opacity: 1,
       backgroundColor: custom,
@@ -36,7 +38,11 @@ function Carousel() {
           animate="active"
           exit="exit"
         >
-          <CarouselItem carouselIdx={carouselIdx} />
+          <Suspense fallback={<div>Loading...</div>}>
+            {!isLoading && (
+              <CarouselItem carouselItem={carouselItems[carouselIdx]} />
+            )}
+          </Suspense>
         </CarouselBox>
       </AnimatePresence>
 

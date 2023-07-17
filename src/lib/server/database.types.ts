@@ -3,28 +3,41 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json }
+  | { [key: string]: Json | undefined }
   | Json[];
 
 export interface Database {
   public: {
     Tables: {
-      test: {
+      carousel: {
         Row: {
-          created_at: string | null;
+          bgColor: string | null;
+          desc: string | null;
           id: number;
-          name: string | null;
+          marginLeft: string | null;
+          marginTop: string | null;
+          src: string | null;
+          title: string | null;
         };
         Insert: {
-          created_at?: string | null;
+          bgColor?: string | null;
+          desc?: string | null;
           id?: number;
-          name?: string | null;
+          marginLeft?: string | null;
+          marginTop?: string | null;
+          src?: string | null;
+          title?: string | null;
         };
         Update: {
-          created_at?: string | null;
+          bgColor?: string | null;
+          desc?: string | null;
           id?: number;
-          name?: string | null;
+          marginLeft?: string | null;
+          marginTop?: string | null;
+          src?: string | null;
+          title?: string | null;
         };
+        Relationships: [];
       };
       tracks: {
         Row: {
@@ -54,6 +67,7 @@ export interface Database {
           trackTitle?: string | null;
           wiki?: string | null;
         };
+        Relationships: [];
       };
     };
     Views: {

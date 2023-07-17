@@ -35,15 +35,14 @@ export default function Nav() {
     <NavContainer>
       <Link
         href="/"
-        className="w-full flex flex-row align-middle justify-center xl:pr-7 justify-self-start"
+        className="w-full flex flex-row align-middle justify-center 2xl:pr-5"
       >
         <LogoImage>
           <Image
             src="/images/logo2.png"
             alt="logo"
-            width={50}
-            height={50}
-            className="object-contain self-center"
+            fill
+            className="object-contain "
             priority={true}
           />
         </LogoImage>
@@ -54,35 +53,36 @@ export default function Nav() {
 
       <NavUl>
         <Menu>
-          <Icons.disc3 size={25} />
+          <Icons.disc3 size={22} />
           <MenuSpan>Chart</MenuSpan>
         </Menu>
         <Menu>
-          <Icons.library size={25} />
+          <Icons.library size={22} />
           <MenuSpan>Albums</MenuSpan>
         </Menu>
         <Menu>
-          <Icons.listMusic size={25} />
+          <Icons.listMusic size={22} />
           <MenuSpan>Playlist</MenuSpan>
         </Menu>
 
         <Menu>
-          <Icons.messageCircle size={25} />
+          <Icons.messageCircle size={22} />
           <MenuSpan>Comments</MenuSpan>
         </Menu>
 
         <Menu>
-          <Icons.settings size={25} />
+          <Icons.settings size={22} />
           <MenuSpan>Settings</MenuSpan>
         </Menu>
-      {user && <Button
-          onPress={handleSignOut}
-          isIconOnly
-          startContent={<Icons.logOut size={25} />}
-          variant="light"
-          className="text-white text-2xl mt-auto mb-2 -ml-1"
-        />}
-        
+        {user && (
+          <Button
+            onPress={handleSignOut}
+            isIconOnly
+            startContent={<Icons.logOut size={22} />}
+            variant="light"
+            className="text-white text-2xl mt-auto mb-2 -ml-1"
+          />
+        )}
       </NavUl>
     </NavContainer>
   );

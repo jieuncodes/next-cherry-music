@@ -7,6 +7,8 @@ export const CarouselBox = tw(
   motion.div
 )`flex-none relative h-80 w-full -ml-6 -mt-6  overflow-hidden p-10 pt-20 pl-16 justify-center xl:p-20
 `;
+export const CarouselImg = tw(motion.div)`absolute right-10 drop-shadow-md`;
+export const CarouselText = tw(motion.div)``;
 // bg-gradient-to-r from-pink-100 from-10% via-white via-50% to-indigo-100 to-90%
 export const Title = tw(motion.div)`font-extrabold text-4xl mb-5`;
 

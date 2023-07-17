@@ -1,4 +1,4 @@
-import Carousel from "@/components/Carousel";
+import Carousel from "@/components/Carousel/Carousel";
 import WeeklyTopTracks from "@/components/WeeklyTopTracks";
 
 export default async function Home() {
