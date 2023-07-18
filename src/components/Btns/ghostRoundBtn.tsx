@@ -4,15 +4,16 @@ import { ReactNode } from "react";
 interface GhostRoundBtnProps {
   startContent: ReactNode;
   onPress: () => void;
+  size?: "sm" | "md" | "lg";
 }
 
-function GhostRoundBtn({ startContent, onPress }: GhostRoundBtnProps) {
+function GhostRoundBtn({ startContent, onPress, size }: GhostRoundBtnProps) {
   return (
     <Button
       isIconOnly
       variant="ghost"
       startContent={startContent}
-      size="sm"
+      size={size}
       radius="full"
       onPress={onPress}
     />

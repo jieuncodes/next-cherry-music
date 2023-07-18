@@ -49,11 +49,13 @@ function WeeklyTopTracks() {
     <SectionContainer>
       <SectionNav>
         <GhostRoundBtn
-          startContent={<Icons.chevronLeft />}
+          size={"sm"}
+          startContent={<Icons.chevronLeft size={20} />}
           onPress={scrollLeft}
         />
         <GhostRoundBtn
-          startContent={<Icons.chevronRight />}
+          size={"sm"}
+          startContent={<Icons.chevronRight size={20} />}
           onPress={scrollRight}
         />
       </SectionNav>
