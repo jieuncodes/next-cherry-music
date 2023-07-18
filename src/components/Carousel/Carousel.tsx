@@ -1,6 +1,7 @@
 "use client";
+
 import { AnimatePresence, Variants } from "framer-motion";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import {
   CarouselBox,
   CarouselContainer,
@@ -8,17 +9,17 @@ import {
 } from "@/styles/Carousel";
 import { Icons } from "../Icons";
 import CarouselItem from "./CarouselItem";
-import ChevronBtn from "../icons/ChevronBtn";
+import ChevronBtn from "../Btns/ChevronBtn";
 import { useCarouselItems } from "@/hooks/useCarouselItems";
 
 function Carousel() {
-  let [carouselIdx, setCarouselIdx] = useState(0);
+  const [carouselIdx, setCarouselIdx] = useState(0);
   const { carouselItems, isLoading } = useCarouselItems();
 
   const variants: Variants = {
     enter: {
       opacity: 0,
-      backgroundColor: carouselItems[carouselIdx]?.bgColor || "defaultColor",
+      backgroundColor: carouselItems[carouselIdx]?.bgColor || "lightblue",
     },
     active: (custom) => ({
       opacity: 1,
@@ -38,11 +39,7 @@ function Carousel() {
           animate="active"
           exit="exit"
         >
-          <Suspense fallback={<div>Loading...</div>}>
-            {!isLoading && (
-              <CarouselItem carouselItem={carouselItems[carouselIdx]} />
-            )}
-          </Suspense>
+          <CarouselItem carouselItem={carouselItems[carouselIdx]} />
         </CarouselBox>
       </AnimatePresence>
 

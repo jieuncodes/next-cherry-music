@@ -7,49 +7,17 @@ import {
 } from "@nextui-org/dropdown";
 import { Icons } from "../Icons";
 
-type DropdownItemData = {
-  key: string;
-  label: string;
-  icon: React.ComponentType<any>;
-};
-const dropdownItems: DropdownItemData[] = [
-  {
-    key: "play-next",
-    icon: Icons.listVideo,
-    label: "Play next",
-  },
-  {
-    key: "add-to-queue",
-    icon: Icons.listMusic,
-    label: "Add to queue",
-  },
-  {
-    key: "add-to-playlist",
-    icon: Icons.listPlus,
-    label: "Add to playlist",
-  },
-  {
-    key: "go-to-album",
-    icon: Icons.disc,
-    label: "Go to album",
-  },
-  {
-    key: "go-to-artist",
-    icon: Icons.mic2,
-    label: "Go to artist",
-  },
-];
 interface DropDownProps {
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   iconColor: string;
 }
 
-export const DropdownComponent: React.FC<DropDownProps> = ({
+function DropdownComponent({
   onMouseEnter,
   onMouseLeave,
   iconColor,
-}) => {
+}: DropDownProps) {
   return (
     <Dropdown onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <DropdownTrigger>
@@ -59,27 +27,53 @@ export const DropdownComponent: React.FC<DropDownProps> = ({
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Dropdown menu with icons"
-        items={dropdownItems}
         onAction={(key) => alert(key)}
       >
-        {(item: any) => {
-          const typedItem = item as {
-            key: string;
-            label: string;
-            icon: React.ComponentType<any>;
-          };
-          const IconComponent = typedItem.icon;
+        {dropdownItems.map((item) => {
+          const IconComponent = item.icon;
 
           return (
-            <DropdownItem
-              key={typedItem.key}
-              startContent={<IconComponent strokeWidth={1.5} />}
-            >
-              {typedItem.label}
+            <DropdownItem key={item.key} startContent={item.icon}>
+              {item.label}
             </DropdownItem>
           );
-        }}
+        })}
       </DropdownMenu>
     </Dropdown>
   );
+}
+export default DropdownComponent;
+
+type DropdownItemData = {
+  key: string;
+  label: string;
+  icon: JSX.Element;
 };
+
+export const dropdownItems: DropdownItemData[] = [
+  {
+    key: "play-next",
+    icon: <Icons.listVideo strokeWidth={1.5} />,
+    label: "Play next",
+  },
+  {
+    key: "add-to-queue",
+    icon: <Icons.listMusic strokeWidth={1.5} />,
+    label: "Add to queue",
+  },
+  {
+    key: "add-to-playlist",
+    icon: <Icons.listPlus strokeWidth={1.5} />,
+    label: "Add to playlist",
+  },
+  {
+    key: "go-to-album",
+    icon: <Icons.disc strokeWidth={1.5} />,
+    label: "Go to album",
+  },
+  {
+    key: "go-to-artist",
+    icon: <Icons.mic2 strokeWidth={1.5} />,
+    label: "Go to artist",
+  },
+];

@@ -7,9 +7,10 @@ import TrackCardButtons from "./TrackCardBtns";
 
 interface TrackCardProps {
   track: Database["public"]["Tables"]["tracks"]["Row"];
+  onClick: (event: MouseEvent) => void;
 }
 
-export function TrackCard({ track }: TrackCardProps) {
+export function TrackCard({ track, onClick }: TrackCardProps) {
   const [liked, setLiked] = useState(false);
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
@@ -20,6 +21,7 @@ export function TrackCard({ track }: TrackCardProps) {
 
   return (
     <StyledCard
+      isPressable={true}
       onMouseEnter={() => setIsCardHover(true)}
       onMouseLeave={() => setIsCardHover(false)}
       className={`${

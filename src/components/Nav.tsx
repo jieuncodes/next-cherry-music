@@ -42,6 +42,7 @@ export default function Nav() {
             src="/images/logo2.png"
             alt="logo"
             fill
+            sizes="3rem"
             className="object-contain "
             priority={true}
           />

@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/button";
 import { Buttons } from "@/styles/TrackCard";
-import { DropdownComponent } from "./TrackCardDropDown";
 import { Icons } from "../Icons";
+import DropdownComponent from "./TrackCardDropDown";
 
 interface TrackCardButtonsProps {
   isCardHover: boolean;

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Database } from "@/lib/server/database.types";
 import { Icons } from "../Icons";
 import { TrackImgBox } from "@/styles/TrackCard";
+import { addToQueue } from "@/handlers";
 
 interface TrackCardImageProps {
   isCardHover: boolean;
@@ -10,7 +11,7 @@ interface TrackCardImageProps {
 
 function TrackCardImage({ isCardHover, track }: TrackCardImageProps) {
   return (
-    <TrackImgBox>
+    <TrackImgBox onClick={addToQueue}>
       {isCardHover && (
         <Icons.play
           color="white"

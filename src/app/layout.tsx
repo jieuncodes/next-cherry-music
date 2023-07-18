@@ -4,9 +4,9 @@ import NextUIProvider from "@/providers/NextUIProvider";
 import RecoilProvider from "@/providers/RecoilProvider";
 import Nav from "@/components/Nav";
 import PlayBar from "@/components/PlayBar";
-import Panel from "@/components/Panel";
-import { ContentsContainer } from "@/styles/Contents";
+import { Contents, ContentsContainer } from "@/styles/Contents";
 import ModalProvider from "@/providers/ModalProvider";
+import Panel from "@/components/Panel/Panel";
 
 export const metadata = {
   title: "Cherry Music",
@@ -28,11 +28,10 @@ export default function RootLayout({
               <main>
                 <Nav />
                 <ContentsContainer>
-                  <div className="w-full h-full box-border m-6 ">
-                    {children}
-                  </div>
+                  <Contents>{children}</Contents>
                   <PlayBar />
                 </ContentsContainer>
+
                 <Panel />
               </main>
             </SupabaseProvider>

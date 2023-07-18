@@ -20,6 +20,11 @@ import {
   ListPlus,
   Disc,
   Mic2,
+  Repeat,
+  SkipBack,
+  SkipForward,
+  Pause,
+  Shuffle,
 } from "lucide-react";
 
 export const Icons = {
@@ -44,4 +49,9 @@ export const Icons = {
   listPlus: ListPlus,
   disc: Disc,
   mic2: Mic2,
+  repeat: Repeat,
+  skipBack: SkipBack,
+  skipForward: SkipForward,
+  pause: Pause,
+  shuffle: Shuffle,
 };

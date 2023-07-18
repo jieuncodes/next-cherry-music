@@ -10,7 +10,7 @@ import {
 import { Icons } from "./Icons";
 import TrackCard from "./TrackCard/TrackCard";
 import { useFetchTracks } from "../hooks/useFetchTracks";
-import GhostRoundBtn from "./icons/ghostRoundBtn";
+import GhostRoundBtn from "./Btns/ghostRoundBtn";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
 
 function WeeklyTopTracks() {
@@ -41,6 +41,10 @@ function WeeklyTopTracks() {
     setScrollX(ref.current?.scrollLeft || 0);
   }, [scrollX]);
 
+  const handleTrackCardClick = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    console.log("clicked");
+  };
   return (
     <SectionContainer>
       <SectionNav>
@@ -60,7 +64,11 @@ function WeeklyTopTracks() {
               .fill(null)
               .map((_, index) => <TrackCardSkeleton key={index} />)
           : tracks.map((track, index) => (
-              <TrackCard track={track} key={index} />
+              <TrackCard
+                onClick={handleTrackCardClick}
+                track={track}
+                key={index}
+              />
             ))}
       </SectionGrid>
     </SectionContainer>

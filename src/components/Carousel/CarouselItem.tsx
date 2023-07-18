@@ -1,7 +1,5 @@
-import { carouselItems } from "@/database/carouselItems";
 import {
   Buttons,
-  CarouselContainer,
   CarouselImg,
   CarouselText,
   Description,
@@ -9,7 +7,7 @@ import {
 } from "@/styles/Carousel";
 import { Variants } from "framer-motion";
 import Image from "next/image";
-import FlatIconButton from "../icons/FlatIconBtn";
+import FlatIconButton from "../Btns/FlatIconBtn";
 import { Icons } from "../Icons";
 import { Database } from "@/lib/server/database.types";
 function CarouselItem({
@@ -33,10 +31,13 @@ function CarouselItem({
             objectFit: "contain",
             marginTop: carouselItem?.marginTop || "-2.5rem",
             marginLeft: carouselItem?.marginLeft || "0",
+            width: "auto",
+            height: "auto",
           }}
           width={300}
           height={300}
-          priority={true}
+          placeholder="blur"
+          blurDataURL="/images/ariana.png"
         />
       </CarouselImg>
       <CarouselText

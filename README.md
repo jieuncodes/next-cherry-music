@@ -16,10 +16,10 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] Responsive Design
     - [x] Shrink nav bar when md, sm window
 - [ ] Framer Motion
-    - [ ] Carousel
+    - [x] Carousel
     - [ ] Nav shifting animation
-- [ ] Modern data fetching usijng React-Query
-- [ ] Infinite scrolling for dynamically laoding 
+- [ ] Modern data fetching using React-Query
+- [ ] Infinite scrolling for dynamically loading 
 - [ ] Profile uploads (Avatar, nickname..)
 - [ ] User's Playlist Upload
 - [ ] Hashtag
@@ -27,6 +27,8 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] State management using Recoil
 - [ ] Edit account settings
 - [ ] Loading - skeleton
+- [ ] Data Caching
+- [ ] Music player
 - [ ] Deployment
 
 
