@@ -8,16 +8,19 @@ import {
 import { Icons } from "../Icons";
 
 interface DropDownProps {
+  iconColor: string;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-  iconColor: string;
 }
 
 function DropdownComponent({
+  iconColor,
   onMouseEnter,
   onMouseLeave,
-  iconColor,
 }: DropDownProps) {
+  const iconClasses =
+    "text-xl text-default-500 pointer-events-none flex-shrink-0";
+
   return (
     <Dropdown onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <DropdownTrigger>
@@ -25,13 +28,13 @@ function DropdownComponent({
           <Icons.moreVertical color={iconColor} />
         </Button>
       </DropdownTrigger>
+
       <DropdownMenu
+        variant="faded"
         aria-label="Dropdown menu with icons"
         onAction={(key) => alert(key)}
       >
         {dropdownItems.map((item) => {
-          const IconComponent = item.icon;
-
           return (
             <DropdownItem key={item.key} startContent={item.icon}>
               {item.label}
