@@ -2,20 +2,21 @@ import Marquee from "@/animations/marquee";
 import { TrackDetails } from "@/styles/Panel/PanelPlayer";
 import { Artist } from "@/styles/TrackCard";
 
-const track = {
-  trackTitle: "⬅︎ Play the music by clicking the card!",
-  artist: "ARTIST",
-};
-function TrackInfo() {
+interface TrackInfoProps {
+  trackTitle: string;
+  artist: string;
+}
+
+function TrackInfo({ trackTitle, artist }: TrackInfoProps) {
   return (
     <TrackDetails>
       <Marquee
-        trackTitleText={track.trackTitle}
+        trackTitleText={trackTitle || "⬅︎ Play the music by clicking the card!"}
         largeTitle={true}
         isBlack={true}
       />
 
-      <Artist>{track.artist}</Artist>
+      <Artist>{artist || "ARTIST"}</Artist>
     </TrackDetails>
   );
 }

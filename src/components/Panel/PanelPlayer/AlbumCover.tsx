@@ -6,12 +6,12 @@ import {
 import { Icons } from "@/components/Icons";
 import { useState } from "react";
 
-function AlbumCover() {
+function AlbumCover({ albumCoverURL }: { albumCoverURL: string }) {
   const [liked, setLiked] = useState(false);
 
   return (
     <AlbumCoverBox>
-      <AlbumCoverImg src="/images/default_album_img.png" />
+      <AlbumCoverImg src={albumCoverURL} />
       <Button
         isIconOnly
         className="absolute z-10 right-0"
