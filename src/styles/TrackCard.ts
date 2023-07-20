@@ -1,5 +1,5 @@
 import tw from "tailwind-styled-components";
-import { Card, CardHeader } from "@nextui-org/card";
+import { Card, CardHeader } from "@nextui-org/react";
 import { motion } from "framer-motion";
 
 export const Buttons = tw.div`absolute right-2`;

@@ -22,7 +22,7 @@ export function TrackCard({ track, handleClick }: TrackCardProps) {
   return (
     <StyledCard
       isPressable
-      onClick={handleClick}
+      onPress={handleClick}
       disableAnimation
       onMouseEnter={() => setIsCardHover(true)}
       onMouseLeave={() => setIsCardHover(false)}

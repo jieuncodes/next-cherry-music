@@ -7,6 +7,7 @@ function useLocalStoragePlaylist() {
   const [playlist, setPlaylist] = useLocalStorage<Track[]>("playlist", []);
 
   const addToPlaylist = (track: Track) => {
+    console.log("add to pl");
     setPlaylist((currentPlaylist) => [...currentPlaylist, track]);
   };
 
