@@ -5,7 +5,7 @@ import { Database } from "@/lib/server/database.types";
 export const fetchTracks = async () => {
   let { data: tracks, error } = await supabase
     .from("tracks")
-    .select("artist, trackTitle, albumImgUrl")
+    .select("id, artist, trackTitle, albumImgUrl")
     .not("albumImgUrl", "eq", null)
     .range(0, 27);
 
