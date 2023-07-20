@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const PanelPlayerContainer = tw.div`rounded-xl w-full h-auto flex flex-col align-middle p-6 mb-1`;
 
-export const AlbumCoverBox = tw.div` relative flex align-middle  rounded-xl shadow-xl justify-center self-center bg-white overflow-hidden aspect-square `;
+export const AlbumCoverBox = tw.div` relative flex align-middle  rounded-xl shadow-2xl justify-center self-center bg-white overflow-hidden aspect-square `;
 
 export const AlbumCoverImg = tw.img`aspect-square object-cover max-h-[180px] 2xl:max-h-[200px] shadow-xl rounded-xl`;
 

@@ -11,7 +11,7 @@ function AlbumCover({ albumCoverURL }: { albumCoverURL: string }) {
 
   return (
     <AlbumCoverBox>
-      <AlbumCoverImg src={albumCoverURL} />
+      <AlbumCoverImg src={albumCoverURL || "/images/default_album_img.png"} />
       <Button
         isIconOnly
         className="absolute z-10 right-0"
@@ -19,11 +19,13 @@ function AlbumCover({ albumCoverURL }: { albumCoverURL: string }) {
         variant="light"
         onPress={() => setLiked((v) => !v)}
         startContent={
-          <Icons.heart
-            color="#ff5173"
-            size={20}
-            fill={liked ? "#ff5173" : "none"}
-          />
+          albumCoverURL && (
+            <Icons.heart
+              color="#ff5173"
+              size={20}
+              fill={liked ? "#ff5173" : "none"}
+            />
+          )
         }
       />
     </AlbumCoverBox>

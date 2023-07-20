@@ -21,8 +21,6 @@ export function TrackCard({ track, handleClick }: TrackCardProps) {
 
   return (
     <StyledCard
-      isPressable
-      onPress={handleClick}
       disableAnimation
       onMouseEnter={() => setIsCardHover(true)}
       onMouseLeave={() => setIsCardHover(false)}
@@ -30,6 +28,11 @@ export function TrackCard({ track, handleClick }: TrackCardProps) {
         isCardHover || isDropdownHover ? "bg-black/30" : "bg-white"
       } `}
     >
+      <div
+        className="absolute inset-0 z-20"
+        onClick={handleClick}
+        aria-hidden="true"
+      ></div>
       <StyledHeader>
         <TrackCardImage isCardHover={isCardHover} track={track} />
         <TrackCardDetails isCardHover={isCardHover} track={track} />
