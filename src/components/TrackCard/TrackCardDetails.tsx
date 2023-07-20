@@ -1,7 +1,6 @@
 import { Artist, TrackTitle, CardDetails } from "@/styles/TrackCard";
 import Marquee from "@/animations/marquee";
 import { Database } from "@/lib/server/database.types";
-import { addToQueue } from "@/handlers";
 
 interface TrackCardDetailsProps {
   isCardHover: boolean;
@@ -10,7 +9,7 @@ interface TrackCardDetailsProps {
 
 function TrackCardDetails({ isCardHover, track }: TrackCardDetailsProps) {
   return (
-    <CardDetails onClick={addToQueue}>
+    <CardDetails>
       {track.trackTitle && track.trackTitle.length > 20 && isCardHover ? (
         <Marquee trackTitleText={track.trackTitle} />
       ) : (

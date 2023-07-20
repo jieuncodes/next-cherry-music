@@ -14,7 +14,6 @@ export const useCarouselItems = () => {
         let { data: carouselItems, error } = await supabase
           .from("carousel")
           .select("*");
-        console.log("data", carouselItems);
         if (error) throw error;
 
         if (carouselItems) {

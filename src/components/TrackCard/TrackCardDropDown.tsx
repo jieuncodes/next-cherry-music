@@ -4,7 +4,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   DropdownItem,
-} from "@nextui-org/dropdown";
+} from "@nextui-org/react";
 import { Icons } from "../Icons";
 
 interface DropDownProps {
@@ -18,9 +18,6 @@ function DropdownComponent({
   onMouseEnter,
   onMouseLeave,
 }: DropDownProps) {
-  const iconClasses =
-    "text-xl text-default-500 pointer-events-none flex-shrink-0";
-
   return (
     <Dropdown onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <DropdownTrigger>
@@ -35,11 +32,7 @@ function DropdownComponent({
         onAction={(key) => alert(key)}
       >
         {dropdownItems.map((item) => {
-          return (
-            <DropdownItem key={item.key} startContent={item.icon}>
-              {item.label}
-            </DropdownItem>
-          );
+          return <DropdownItem key={item.key}>{item.label}</DropdownItem>;
         })}
       </DropdownMenu>
     </Dropdown>
@@ -52,7 +45,6 @@ type DropdownItemData = {
   label: string;
   icon: JSX.Element;
 };
-
 export const dropdownItems: DropdownItemData[] = [
   {
     key: "play-next",

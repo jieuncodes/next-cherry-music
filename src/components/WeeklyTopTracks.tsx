@@ -12,6 +12,7 @@ import TrackCard from "./TrackCard/TrackCard";
 import { useFetchTracks } from "../hooks/useFetchTracks";
 import GhostRoundBtn from "./Btns/ghostRoundBtn";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
+import { Database } from "@/lib/server/database.types";
 
 function WeeklyTopTracks() {
   const { tracks, isLoading } = useFetchTracks();
@@ -41,10 +42,10 @@ function WeeklyTopTracks() {
     setScrollX(ref.current?.scrollLeft || 0);
   }, [scrollX]);
 
-  const handleTrackCardClick = (event: MouseEvent) => {
-    const target = event.target as HTMLElement;
-    console.log("clicked");
+  const addToQueue = (track: Database["public"]["Tables"]["tracks"]["Row"]) => {
+    console.log("track", track);
   };
+
   return (
     <SectionContainer>
       <SectionNav>
@@ -67,9 +68,9 @@ function WeeklyTopTracks() {
               .map((_, index) => <TrackCardSkeleton key={index} />)
           : tracks.map((track, index) => (
               <TrackCard
-                onClick={handleTrackCardClick}
-                track={track}
                 key={index}
+                track={track}
+                handleClick={() => addToQueue(track)}
               />
             ))}
       </SectionGrid>

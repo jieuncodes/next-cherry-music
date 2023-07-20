@@ -83,7 +83,6 @@ export const fetchLastFmTrackDetails = async (
 
     const response = await fetch(url);
     const data = await response.json();
-    console.log("datadetaildalbum", data.track?.album);
     return data.track;
   } catch (error) {
     if (error instanceof Error) {
