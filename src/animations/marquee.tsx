@@ -6,9 +6,10 @@ interface MarqueeProps {
   trackTitleText: string;
   largeTitle?: boolean;
   isBlack?: boolean;
+  size?: "small" | "medium" | "large";
 }
 
-function Marquee({ trackTitleText, largeTitle, isBlack }: MarqueeProps) {
+function Marquee({ trackTitleText, largeTitle, isBlack, size }: MarqueeProps) {
   const [ref, { width }] = useMeasure();
 
   const variants: Variants = {

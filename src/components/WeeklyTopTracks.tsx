@@ -1,21 +1,24 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
+import { Database } from "@/lib/server/database.types";
 import {
   SectionContainer,
   SectionGrid,
   SectionNav,
   SectionTitle,
 } from "@/styles/WeeklyTopTracks";
-import { Icons } from "./Icons";
-import TrackCard from "./TrackCard/TrackCard";
+import { useEffect, useRef, useState } from "react";
 import { useFetchTracks } from "../hooks/useFetchTracks";
 import GhostRoundBtn from "./Btns/ghostRoundBtn";
+import { Icons } from "./Icons";
+import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
-import { Database } from "@/lib/server/database.types";
 
 function WeeklyTopTracks() {
   const { tracks, isLoading } = useFetchTracks();
+  const { playlist, addToPlaylist, removeFromPlaylist } =
+    useLocalStoragePlaylist();
   const [scrollX, setScrollX] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -42,10 +45,6 @@ function WeeklyTopTracks() {
     setScrollX(ref.current?.scrollLeft || 0);
   }, [scrollX]);
 
-  const addToQueue = (track: Database["public"]["Tables"]["tracks"]["Row"]) => {
-    console.log("track", track);
-  };
-
   return (
     <SectionContainer>
       <SectionNav>
@@ -70,7 +69,7 @@ function WeeklyTopTracks() {
               <TrackCard
                 key={index}
                 track={track}
-                handleClick={() => addToQueue(track)}
+                handleClick={() => addToPlaylist(track)}
               />
             ))}
       </SectionGrid>
