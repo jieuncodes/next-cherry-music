@@ -3,7 +3,7 @@ import { TrackDetails } from "@/styles/Panel/PanelPlayer";
 import { Artist } from "@/styles/TrackCard";
 
 const track = {
-  trackTitle: "TITTTTTTTLEEeeeeeeeeeeeeeeeeeeee",
+  trackTitle: "⬅︎ Play the music by clicking the card!",
   artist: "ARTIST",
 };
 function TrackInfo() {

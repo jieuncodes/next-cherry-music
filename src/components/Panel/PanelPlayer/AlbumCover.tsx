@@ -1,5 +1,8 @@
 import { Button } from "@nextui-org/react";
-import { AlbumCoverBox, AlbumCoverImg } from "../../styles/Panel/PanelPlayer";
+import {
+  AlbumCoverBox,
+  AlbumCoverImg,
+} from "../../../styles/Panel/PanelPlayer";
 import { Icons } from "@/components/Icons";
 import { useState } from "react";
 
@@ -16,7 +19,11 @@ function AlbumCover() {
         variant="light"
         onPress={() => setLiked((v) => !v)}
         startContent={
-          <Icons.heart size={20} fill={liked ? "currentColor" : "none"} />
+          <Icons.heart
+            color="#ff5173"
+            size={20}
+            fill={liked ? "#ff5173" : "none"}
+          />
         }
       />
     </AlbumCoverBox>

@@ -29,6 +29,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] Loading - skeleton
 - [ ] Data Caching
 - [ ] Music player
-- [ ] Deployment
+- [ ] beautiful dnd - drag cards to move position
+- [ ] Deploymnpm ent
 
 

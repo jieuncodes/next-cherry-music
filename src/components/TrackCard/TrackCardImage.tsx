@@ -6,12 +6,13 @@ import { TrackImgBox } from "@/styles/TrackCard";
 interface TrackCardImageProps {
   isCardHover: boolean;
   track: Database["public"]["Tables"]["tracks"]["Row"];
+  size?: "small" | "medium" | "large";
 }
 
-function TrackCardImage({ isCardHover, track }: TrackCardImageProps) {
+function TrackCardImage({ isCardHover, track, size }: TrackCardImageProps) {
   return (
     <TrackImgBox>
-      {isCardHover && (
+      {isCardHover && size !== "small" && (
         <Icons.play
           color="white"
           fill="white"
@@ -21,10 +22,12 @@ function TrackCardImage({ isCardHover, track }: TrackCardImageProps) {
       )}
       <Image
         alt="album image"
-        className={`object-cover rounded-md ${isCardHover ? "opacity-80" : ""}`}
+        className={`object-cover rounded-md box-border ${
+          isCardHover ? "opacity-80" : ""
+        } ${size === "small" ? "-mt-1" : ""}`}
         src={track.albumImgUrl || ""}
-        height={47}
-        width={47}
+        height={size === "small" ? 36 : 47}
+        width={size === "small" ? 36 : 47}
       />
     </TrackImgBox>
   );
