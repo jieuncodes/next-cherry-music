@@ -14,7 +14,7 @@ function useLocalStoragePlaylist() {
   });
 
   const addToPlaylist = (track: Track) => {
-    setPlaylist((currentPlaylist) => [...currentPlaylist, track]);
+    setPlaylist((currentPlaylist) => [track, ...currentPlaylist]);
   };
 
   const removeFromPlaylist = (trackId: number) => {
