@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Database } from "@/lib/server/database.types";
+import { Database, Track } from "@/lib/server/database.types";
 import { fetchTracks } from "@/app/api/fetchTracks";
 
 export const useFetchTracks = () => {
-  const [tracks, setTracks] = useState<
-    Database["public"]["Tables"]["tracks"]["Row"][]
-  >([]);
+  const [tracks, setTracks] = useState<Track[]>([]);
 
   const [isLoading, setIsLoading] = useState(true);
 

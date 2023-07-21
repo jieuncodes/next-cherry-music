@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { StyledCard, StyledHeader } from "@/styles/TrackCard";
-import { Database } from "@/lib/server/database.types";
+import { Database, Track } from "@/lib/server/database.types";
 import TrackCardImage from "./TrackCardImage";
 import TrackCardDetails from "./TrackCardDetails";
 import TrackCardButtons from "./TrackCardBtns";
 
 interface TrackCardProps {
-  track: Database["public"]["Tables"]["tracks"]["Row"];
+  track: Track;
   handleClick: (e: React.MouseEvent<Element, MouseEvent>) => void;
 }
 

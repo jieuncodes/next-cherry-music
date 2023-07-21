@@ -13,29 +13,35 @@ export interface Database {
         Row: {
           bgColor: string | null;
           desc: string | null;
+          height: string | null;
           id: number;
           marginLeft: string | null;
           marginTop: string | null;
           src: string | null;
           title: string | null;
+          width: string | null;
         };
         Insert: {
           bgColor?: string | null;
           desc?: string | null;
+          height?: string | null;
           id?: number;
           marginLeft?: string | null;
           marginTop?: string | null;
           src?: string | null;
           title?: string | null;
+          width?: string | null;
         };
         Update: {
           bgColor?: string | null;
           desc?: string | null;
+          height?: string | null;
           id?: number;
           marginLeft?: string | null;
           marginTop?: string | null;
           src?: string | null;
           title?: string | null;
+          width?: string | null;
         };
         Relationships: [];
       };
@@ -84,3 +90,5 @@ export interface Database {
     };
   };
 }
+
+export type Track = Database["public"]["Tables"]["tracks"]["Row"];

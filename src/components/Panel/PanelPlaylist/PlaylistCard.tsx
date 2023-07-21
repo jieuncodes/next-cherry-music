@@ -2,10 +2,10 @@ import { StyledCard, StyledHeader } from "@/styles/Panel/PlaylistCard";
 import TrackCardImage from "@/components/TrackCard/TrackCardImage";
 import TrackCardDetails from "@/components/TrackCard/TrackCardDetails";
 import { useState } from "react";
-import { Database } from "@/lib/server/database.types";
+import { Database, Track } from "@/lib/server/database.types";
 
 interface PlaylistCardProps {
-  track: Database["public"]["Tables"]["tracks"]["Row"];
+  track: Track;
   index: number;
 }
 function PlaylistCard({ track, index }: PlaylistCardProps) {

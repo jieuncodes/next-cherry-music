@@ -1,7 +1,6 @@
 "use client";
 
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import { Database } from "@/lib/server/database.types";
 import {
   SectionContainer,
   SectionGrid,

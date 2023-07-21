@@ -1,6 +1,6 @@
 "use client";
 import { supabase } from "@/lib/server/client";
-import { Database } from "@/lib/server/database.types";
+import { Database, Track } from "@/lib/server/database.types";
 
 export const fetchTracks = async () => {
   let { data: tracks, error } = await supabase
@@ -14,5 +14,5 @@ export const fetchTracks = async () => {
     throw error;
   }
 
-  return tracks as Database["public"]["Tables"]["tracks"]["Row"][];
+  return tracks as Track[];
 };
