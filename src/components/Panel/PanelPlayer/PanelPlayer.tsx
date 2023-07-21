@@ -3,18 +3,28 @@ import AlbumCover from "./AlbumCover";
 import TrackInfo from "./TrackInfo";
 import ProgressBar from "./ProgressBar";
 import PlayerController from "./PlayerControllers";
+import { useRecoilState } from "recoil";
+import { localStoragePlaylist } from "@/atoms";
 
 function PanelPlayer() {
-  const firstTrackOnLocalStorage = JSON.parse(
-    localStorage.getItem("playlist") || "[]"
-  )[0];
+  const [recoilPlaylist, setRecoilPlaylist] =
+    useRecoilState(localStoragePlaylist);
+
+  const firstPlaylistTrack = recoilPlaylist[0] || "[]";
 
   return (
     <PanelPlayerContainer>
-      <AlbumCover albumCoverURL={firstTrackOnLocalStorage?.albumImgUrl} />
+      <AlbumCover
+        albumCoverURL={
+          firstPlaylistTrack?.albumImgUrl || "/images/default_album_img.png"
+        }
+      />
       <TrackInfo
-        trackTitle={firstTrackOnLocalStorage?.trackTitle}
-        artist={firstTrackOnLocalStorage?.artist}
+        trackTitle={
+          firstPlaylistTrack?.trackTitle ||
+          "⬅︎ Play the music by clicking the card!"
+        }
+        artist={firstPlaylistTrack?.artist || "ARTIST"}
       />
       <ProgressBar></ProgressBar>
       <PlayerController />

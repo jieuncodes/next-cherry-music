@@ -31,8 +31,8 @@ function CarouselItem({
             objectFit: "contain",
             marginTop: carouselItem?.marginTop || "-2.5rem",
             marginLeft: carouselItem?.marginLeft || "0",
-            width: carouselItem?.width || "auto",
-            height: carouselItem?.height || "auto",
+            width: "auto",
+            height: "auto",
           }}
           width={300}
           height={300}
