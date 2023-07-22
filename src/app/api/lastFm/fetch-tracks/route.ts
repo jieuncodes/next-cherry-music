@@ -1,45 +1,35 @@
-import { supabase } from "@/lib/server/client";
+import { Track } from "@/lib/server/database.types";
 import { LastFmTopTrack } from "@/types/trackTypes";
-
-export interface TrackInfo {
-  trackTitle: string;
-  artist: string;
-  albumTitle?: string;
-  albumImgUrl?: string;
-  tags?: string[];
-  wiki?: string;
-}
+import { NextResponse } from "next/server";
 
 const LAST_FM_BASE_URL = "https://ws.audioscrobbler.com/2.0";
 
-export const getAndSaveLastFmTopTracks = async () => {
-  const topTracks = await fetchLastFmTopTracks();
-  const allTrackInfo: TrackInfo[] = await Promise.all(
-    topTracks.map(async (track: LastFmTopTrack) => {
-      const trackDetail = await fetchLastFmTrackDetails(
-        track.artist.name,
-        track.name
-      );
-      return {
-        trackTitle: track.name,
-        artist: track.artist.name,
-        albumTitle: trackDetail.album?.title,
-        albumImgUrl: trackDetail.album?.image[3]["#text"],
-        tags: trackDetail.toptags?.tag,
-        wiki: trackDetail.wiki?.summary,
-      };
-    })
-  );
+export async function GET(request: Request) {
+  try {
+    const topTracks = await fetchLastFmTopTracks();
+    const allTrackInfo: Track[] = await Promise.all(
+      topTracks.map(async (track: LastFmTopTrack) => {
+        const trackDetail = await fetchLastFmTrackDetails(
+          track.artist.name,
+          track.name
+        );
+        return {
+          trackTitle: track.name,
+          artist: track.artist.name,
+          albumTitle: trackDetail.album?.title,
+          albumImgUrl: trackDetail.album?.image[3]["#text"],
+          tags: trackDetail.toptags?.tag,
+          wiki: trackDetail.wiki?.summary,
+        };
+      })
+    );
 
-  const { data, error } = await supabase
-    .from("tracks")
-    .insert([...allTrackInfo]);
-  if (data) {
+    return NextResponse.json(allTrackInfo);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return new NextResponse("Internal Error", { status: 500 });
   }
-  if (error) {
-    console.error("There was an error inserting the track:", error);
-  }
-};
+}
 
 export const fetchLastFmTopTracks = async () => {
   try {

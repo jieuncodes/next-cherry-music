@@ -19,15 +19,6 @@ export interface LastFmTopTrack {
     rank: string;
   };
 }
-export interface TrackInfo {
-  name: string;
-  artist: string;
-  albumTitle: string;
-  albumImgUrl: string;
-  tags: Tag[];
-  mbid: string;
-  wiki: string;
-}
 
 export interface Album {
   artist: string;
