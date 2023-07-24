@@ -15,8 +15,8 @@ export const useSupabaseTracks = () => {
       const lastFmTopTracks = await fetch("/api/lastFm/fetch-tracks");
       const allTrackInfo = await lastFmTopTracks.json();
 
-      setTopTracks(allTrackInfo);
-      fetchYoutubeIds(allTrackInfo);
+      setTopTracks(allTrackInfo.allTrackInfo);
+      fetchYoutubeIds(allTrackInfo.allTrackInfo);
     } catch (error) {
       console.error("Error fetching tracks:", error);
     }
@@ -44,6 +44,7 @@ export const useSupabaseTracks = () => {
         track.youtubeId = videoId;
       }
       updatedTracks.push(track);
+      console.log("videoId", videoId);
     }
 
     setTopTracks(updatedTracks);

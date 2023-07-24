@@ -58,7 +58,6 @@ const getYoutubeVideoId = async ({
   };
 
   const response = await youtube.search.list(requestConfig);
-  console.log("response", response);
   const { items } = response.data;
 
   if (!items || items.length === 0) {
