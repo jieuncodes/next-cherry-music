@@ -36,16 +36,18 @@ export const useSupabaseTracks = () => {
   };
 
   const fetchYoutubeIds = async (tracks: Track[]) => {
-    const updatedTracks = [];
-
-    for (let track of tracks) {
-      const videoId = await getYoutubeVideoId(track.trackTitle!, track.artist!);
-      if (videoId) {
-        track.youtubeId = videoId;
-      }
-      updatedTracks.push(track);
-      console.log("videoId", videoId);
-    }
+    const updatedTracks = await Promise.all(
+      tracks.map(async (track) => {
+        const videoId = await getYoutubeVideoId(
+          track.trackTitle!,
+          track.artist!
+        );
+        if (videoId) {
+          track.youtubeId = videoId;
+        }
+        return track;
+      })
+    );
 
     setTopTracks(updatedTracks);
   };

@@ -1,21 +1,24 @@
+import { handleFetchError, validateEnvVariable } from "@/lib/utils";
 import { LastFmTopTrack, LastFmTrackDetails } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 
 let topTracksCache: LastFmTrackDetails[] | null = null;
 const trackDetailsCache: Record<string, any> = {};
 
-let lastFetchedTime: Date | null = null;
 const CACHE_DURATION_HOURS = 6;
+const CACHE_DURATION_MILLISECONDS = CACHE_DURATION_HOURS * 60 * 60 * 1000;
+let lastFetchedTime: Date | null = null;
+
+const isCacheExpired = () => {
+  return lastFetchedTime
+    ? new Date().getTime() - lastFetchedTime.getTime() >=
+        CACHE_DURATION_MILLISECONDS
+    : true;
+};
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
-    const currentTime = new Date();
-    const hasSixHoursPassed =
-      lastFetchedTime &&
-      currentTime.getTime() - lastFetchedTime.getTime() >=
-        CACHE_DURATION_HOURS * 60 * 60 * 1000;
-
-    if (!topTracksCache || hasSixHoursPassed) {
+    if (!topTracksCache || isCacheExpired()) {
       console.log("update has done before 6hour. update again.");
       topTracksCache = await fetchLastFmTopTracks();
       lastFetchedTime = new Date();
@@ -37,7 +40,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
           });
           trackDetailsCache[key] = trackDetail;
         }
-
         return {
           id: key,
           trackTitle: track.name,
@@ -52,12 +54,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     return NextResponse.json({ allTrackInfo });
   } catch (error) {
-    console.error("Error fetching data:", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    handleFetchError({ context: "lastFm API", error });
   }
 }
 
 export const fetchLastFmTopTracks = async () => {
+  validateEnvVariable(process.env.LAST_FM_BASE_URL, "LAST_FM_BASE_URL");
+  validateEnvVariable(process.env.LAST_FM_API_KEY, "LAST_FM_API_KEY");
+
   try {
     const url = new URL(process.env.LAST_FM_BASE_URL!);
     const params = new URLSearchParams({
@@ -73,12 +77,7 @@ export const fetchLastFmTopTracks = async () => {
 
     return data.tracks.track;
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error fetching data from Last.fm API:", error.message);
-    } else {
-      console.error("An unknown error occurred:", error);
-    }
-    throw error;
+    handleFetchError({ context: "lastFm API", error });
   }
 };
 
@@ -89,7 +88,8 @@ export const fetchLastFmTrackDetails = async ({
   trackTitle: string;
   artist: string;
 }) => {
-  console.log("trackTitle,aritst", trackTitle, artist);
+  validateEnvVariable(process.env.LAST_FM_BASE_URL, "LAST_FM_BASE_URL");
+  validateEnvVariable(process.env.LAST_FM_API_KEY, "LAST_FM_API_KEY");
   try {
     const url = new URL(process.env.LAST_FM_BASE_URL!);
     const params = new URLSearchParams({
@@ -105,10 +105,6 @@ export const fetchLastFmTrackDetails = async ({
     const data = await response.json();
     return data.track;
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error fetching data from Last.fm API:", error.message);
-      throw error;
-    }
-    throw new Error("An unknown error occurred");
+    handleFetchError({ context: "lastFm API", error });
   }
 };
