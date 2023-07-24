@@ -1,4 +1,4 @@
-import { handleFetchError, validateEnvVariable } from "@/lib/utils";
+import { handleError, validateEnvVariable } from "@/lib/utils";
 import { LastFmTopTrack, LastFmTrackDetails } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -54,7 +54,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     return NextResponse.json({ allTrackInfo });
   } catch (error) {
-    handleFetchError({ context: "lastFm API", error });
+    handleError({ context: "lastFm API", error });
   }
 }
 
@@ -77,7 +77,7 @@ export const fetchLastFmTopTracks = async () => {
 
     return data.tracks.track;
   } catch (error) {
-    handleFetchError({ context: "lastFm API", error });
+    handleError({ context: "lastFm API", error });
   }
 };
 
@@ -99,12 +99,13 @@ export const fetchLastFmTrackDetails = async ({
       track: trackTitle,
       format: "json",
     });
+    1;
     url.search = params.toString();
 
     const response = await fetch(url);
     const data = await response.json();
     return data.track;
   } catch (error) {
-    handleFetchError({ context: "lastFm API", error });
+    handleError({ context: "lastFm API", error });
   }
 };

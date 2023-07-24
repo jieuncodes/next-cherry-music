@@ -14,7 +14,7 @@ export function validateEnvVariable(
   }
 }
 
-export const handleFetchError = ({
+export const handleError = ({
   context,
   error,
 }: {
@@ -22,7 +22,7 @@ export const handleFetchError = ({
   error: any;
 }) => {
   console.error(
-    `Error fetching data from ${context}:`,
+    `Error on ${context}:`,
     error instanceof Error ? error.message : error
   );
   throw error instanceof Error ? error : new Error("An unknown error occurred");

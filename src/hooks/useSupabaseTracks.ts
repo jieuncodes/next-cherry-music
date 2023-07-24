@@ -1,14 +1,10 @@
 import { Track } from "@/lib/server/database.types";
+import { handleError } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 export const useSupabaseTracks = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [topTracks, setTopTracks] = useState<Track[]>([]);
-
-  //for debug
-  useEffect(() => {
-    console.log("topTracks updated:", topTracks);
-  }, [topTracks]);
 
   const fetchFromLastFmTopTracks = async () => {
     try {
@@ -54,14 +50,29 @@ export const useSupabaseTracks = () => {
 
   const saveToSupabase = async () => {
     try {
-      setIsSaved(true);
+      const response = await fetch("/api/supabase/save-to-db", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(topTracks),
+      });
+
+      const responseData = await response.json();
+      if (responseData.success) {
+        setIsSaved(true);
+      } else {
+        setIsSaved(false);
+      }
     } catch (error) {
+      handleError({ context: "saving to Supabase", error });
       setIsSaved(false);
     }
   };
 
   useEffect(() => {
     fetchFromLastFmTopTracks();
+    saveToSupabase();
   }, []);
 
   return {
