@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { Database } from "@/lib/server/database.types";
+import { Database, Track } from "@/lib/server/database.types";
 import { Icons } from "../Icons";
 import { TrackImgBox } from "@/styles/TrackCard";
 
 interface TrackCardImageProps {
   isCardHover: boolean;
-  track: Database["public"]["Tables"]["tracks"]["Row"];
+  track: Track;
   size?: "small" | "medium" | "large";
 }
 

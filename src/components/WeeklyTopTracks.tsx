@@ -13,9 +13,14 @@ import GhostRoundBtn from "./Btns/ghostRoundBtn";
 import { Icons } from "./Icons";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
+import { Track } from "@/lib/server/database.types";
+import { useSupabaseTracks } from "@/hooks/useSupabaseTracks";
 
 function WeeklyTopTracks() {
-  const { tracks, isLoading } = useFetchTracks();
+  const { tracks, isLoading }: { tracks: Track[]; isLoading: boolean } =
+    useFetchTracks();
+  const { isSaved } = useSupabaseTracks();
+
   const { playlist, addToPlaylist, removeFromPlaylist } =
     useLocalStoragePlaylist();
   const [scrollX, setScrollX] = useState(0);

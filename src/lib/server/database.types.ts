@@ -54,6 +54,7 @@ export interface Database {
           tags: string[] | null;
           trackTitle: string | null;
           wiki: string | null;
+          youtubeId: string | null;
         };
         Insert: {
           albumImgUrl?: string | null;
@@ -63,6 +64,7 @@ export interface Database {
           tags?: string[] | null;
           trackTitle?: string | null;
           wiki?: string | null;
+          youtubeId?: string | null;
         };
         Update: {
           albumImgUrl?: string | null;
@@ -72,6 +74,7 @@ export interface Database {
           tags?: string[] | null;
           trackTitle?: string | null;
           wiki?: string | null;
+          youtubeId?: string | null;
         };
         Relationships: [];
       };

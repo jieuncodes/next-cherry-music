@@ -10,7 +10,7 @@ export const useFetchTracks = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/supabase");
+        const response = await fetch("/api/supabase/get-from-db");
         const fetchedTracks: Track[] = await response.json();
         setTracks(fetchedTracks);
       } catch (error) {

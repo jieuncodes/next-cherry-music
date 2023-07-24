@@ -1,10 +1,10 @@
 import { Track } from "@/lib/server/database.types";
 import { LastFmTopTrack } from "@/types/trackTypes";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const LAST_FM_BASE_URL = "https://ws.audioscrobbler.com/2.0";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     const topTracks = await fetchLastFmTopTracks();
     const allTrackInfo: Track[] = await Promise.all(
@@ -14,8 +14,8 @@ export async function GET(request: Request) {
           track.name
         );
         return {
-          trackTitle: track.name,
-          artist: track.artist.name,
+          trackTitle: track.name || "",
+          artist: track.artist.name || "",
           albumTitle: trackDetail.album?.title,
           albumImgUrl: trackDetail.album?.image[3]["#text"],
           tags: trackDetail.toptags?.tag,
@@ -45,6 +45,7 @@ export const fetchLastFmTopTracks = async () => {
     const response = await fetch(url);
 
     const data = await response.json();
+
     return data.tracks.track;
   } catch (error) {
     if (error instanceof Error) {
