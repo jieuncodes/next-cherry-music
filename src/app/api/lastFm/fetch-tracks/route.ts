@@ -1,4 +1,4 @@
-import { handleError, validateEnvVariable } from "@/lib/utils";
+import { handleError, validateEnvVariable } from "@/lib/helpers";
 import { LastFmTopTrack, LastFmTrackDetails } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,14 +6,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const topTracks = await fetchLastFmTopTracks();
   const allTrackInfo: LastFmTopTrack[] = await Promise.all(
     topTracks.map(async (track: LastFmTrackDetails) => {
-      const key = `${track.name}-${track.artist.name}`;
       let trackDetail = await fetchLastFmTrackDetails({
         trackTitle: track.name || "",
         artist: track.artist.name || "",
       });
-      console.log("track", track);
       return {
-        id: key,
         trackTitle: track.name,
         artist: track.artist.name,
         albumTitle: trackDetail.albumTitle,

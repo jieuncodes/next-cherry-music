@@ -1,30 +1,35 @@
-import { fetchLastFmTopTracks } from "./../app/api/lastFm/fetch-tracks/route";
-import { topTracksLastFetchTime } from "@/atoms";
 import { Track } from "@/lib/server/database.types";
-import { handleError } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import useTrackFetcher, {
+  LastFmFetcher,
+  SupabaseFetcher,
+} from "./useTrackFetcher";
+import { handleError, isDataOld } from "@/lib/helpers";
 
-export const useSupabaseTracks = () => {
+function useSupabaseTracks() {
   const [isSaved, setIsSaved] = useState(false);
-  const [topTracks, setTopTracks] = useState<Track[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastFetchTime, setLastFetchTime] = useState<Date | null>(null);
-
-  const REFRESH_TERM_MILLISECOND = 6 * 60 * 60 * 1000;
-
+  const [supabaseTracks, setSupabaseTracks] = useState<Track[]>([]);
+  const { topTracks: lastFmTopTracks } = useTrackFetcher(new LastFmFetcher());
+  const { topTracks: supabaseTopTracks } = useTrackFetcher(
+    new SupabaseFetcher()
+  );
   useEffect(() => {
-    console.log("lastfetchtime", lastFetchTime);
     fetchData();
   }, []);
 
   const fetchData = async () => {
     setIsLoading(true);
-
     try {
-      await fetchTopTracks();
-      if (isDataOld()) {
-        await saveToSupabase();
+      let tracks;
+      if (!lastFetchTime || isDataOld(lastFetchTime)) {
+        tracks = await fetchFromLastFmAndSave();
+        setLastFetchTime(new Date());
+      } else {
+        tracks = supabaseTopTracks;
       }
+      setSupabaseTracks(tracks);
     } catch (error) {
       handleError({ context: "useSupabaseTracks", error });
     } finally {
@@ -32,39 +37,12 @@ export const useSupabaseTracks = () => {
     }
   };
 
-  const isDataOld = (): boolean => {
-    return lastFetchTime &&
-      new Date().getTime() - lastFetchTime.getTime() < REFRESH_TERM_MILLISECOND
-      ? true
-      : false;
-  };
+  const fetchFromLastFmAndSave = async () => {
+    const tracksWithYoutubeId = await setTracksWithYoutubeId(lastFmTopTracks);
+    saveToSupabase(tracksWithYoutubeId);
 
-  const fetchFromLastFm = async (): Promise<Track[]> => {
-    const response = await fetch("/api/lastFm/fetch-tracks");
-    const data = await response.json();
-    return data.allTrackInfo;
-  };
-
-  const fetchFromSupabase = async (): Promise<Track[]> => {
-    const response = await fetch("/api/supabase/get-from-db");
-    return await response.json();
-  };
-
-  const fetchTopTracks = async () => {
-    try {
-      if (isDataOld()) {
-        const lastFmTopTracks = await fetchFromLastFm();
-        setLastFetchTime(new Date());
-
-        setTopTracks(lastFmTopTracks);
-        await fetchYoutubeIds(lastFmTopTracks);
-      } else {
-        const dbTopTracks: Track[] = await fetchFromSupabase();
-        setTopTracks(dbTopTracks);
-      }
-    } catch (error) {
-      console.error("Error fetching tracks:", error);
-    }
+    setIsSaved(true);
+    return tracksWithYoutubeId;
   };
 
   const getYoutubeVideoId = async (
@@ -83,35 +61,31 @@ export const useSupabaseTracks = () => {
     }
   };
 
-  const fetchYoutubeIds = async (tracks: Track[]) => {
-    const updatedTracks = await Promise.all(
+  const setTracksWithYoutubeId = async (tracks: Track[]): Promise<Track[]> => {
+    return await Promise.all(
       tracks.map(async (track) => {
         const videoId = await getYoutubeVideoId(
           track.trackTitle!,
           track.artist!
         );
-        if (videoId) {
-          track.youtubeId = videoId;
-        }
-        return track;
+        return {
+          ...track,
+          youtubeId: videoId ? videoId : "",
+        };
       })
     );
-
-    setTopTracks(updatedTracks);
   };
 
-  const saveToSupabase = async () => {
-    console.log("saveToSupabase with:", topTracks);
-    if (!topTracks) {
-      console.log("topTracks is empty");
+  const saveToSupabase = async (tracksWithYoutubeId: Track[]) => {
+    if (!tracksWithYoutubeId) {
       return;
     }
+    console.log("tracksWithYoutubeId", tracksWithYoutubeId);
     try {
-      console.log("toptracks", topTracks);
       const response: Response = await fetch("/api/supabase/save-to-db", {
         method: "POST",
         headers: new Headers({ "Content-Type": "application/json" }),
-        body: JSON.stringify(topTracks),
+        body: JSON.stringify(tracksWithYoutubeId),
       });
 
       const responseData = await response.json();
@@ -125,6 +99,7 @@ export const useSupabaseTracks = () => {
   return {
     isSaved,
     isLoading,
-    topTracks,
+    supabaseTracks,
   };
-};
+}
+export default useSupabaseTracks;

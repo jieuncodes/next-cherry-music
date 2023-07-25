@@ -25,7 +25,7 @@ function TrackCardImage({ isCardHover, track, size }: TrackCardImageProps) {
         className={`object-cover rounded-md box-border ${
           isCardHover ? "opacity-80" : ""
         } ${size === "small" ? "-mt-1" : ""}`}
-        src={track.albumImgUrl || ""}
+        src={track.albumImgUrl || "/images/default_album_img.png"}
         height={size === "small" ? 36 : 47}
         width={size === "small" ? 36 : 47}
       />

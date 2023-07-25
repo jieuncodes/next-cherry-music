@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const trackInfo: Track[] = await request.json();
-
   try {
     const { data, error } = await supabase
       .from("tracks")

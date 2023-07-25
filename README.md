@@ -26,7 +26,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] Friends online
 - [ ] State management using Recoil
 - [ ] Edit account settings
-- [ ] Loading - skeleton
+- [x] Loading - skeleton
 - [ ] Data Caching - minimize api call
 - [ ] Music player
 - [ ] beautiful dnd - drag cards to move position
