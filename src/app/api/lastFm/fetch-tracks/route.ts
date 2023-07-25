@@ -2,60 +2,29 @@ import { handleError, validateEnvVariable } from "@/lib/utils";
 import { LastFmTopTrack, LastFmTrackDetails } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 
-let topTracksCache: LastFmTrackDetails[] | null = null;
-const trackDetailsCache: Record<string, any> = {};
-
-const CACHE_DURATION_HOURS = 6;
-const CACHE_DURATION_MILLISECONDS = CACHE_DURATION_HOURS * 60 * 60 * 1000;
-let lastFetchedTime: Date | null = null;
-
-const isCacheExpired = () => {
-  return lastFetchedTime
-    ? new Date().getTime() - lastFetchedTime.getTime() >=
-        CACHE_DURATION_MILLISECONDS
-    : true;
-};
-
 export async function GET(req: NextRequest, res: NextResponse) {
-  try {
-    if (!topTracksCache || isCacheExpired()) {
-      console.log("update has done before 6hour. update again.");
-      topTracksCache = await fetchLastFmTopTracks();
-      lastFetchedTime = new Date();
-    }
-
-    if (!topTracksCache) {
-      throw new Error("Failed to fetch top tracks.");
-    }
-
-    const allTrackInfo: LastFmTopTrack[] = await Promise.all(
-      topTracksCache.map(async (track: LastFmTrackDetails) => {
-        const key = `${track.name}-${track.artist.name}`;
-        let trackDetail = trackDetailsCache[key];
-
-        if (!trackDetail) {
-          trackDetail = await fetchLastFmTrackDetails({
-            trackTitle: track.name || "",
-            artist: track.artist.name || "",
-          });
-          trackDetailsCache[key] = trackDetail;
-        }
-        return {
-          id: key,
-          trackTitle: track.name,
-          artist: track.artist.name,
-          albumTitle: trackDetail.albumTitle,
-          albumImgUrl: trackDetail.album?.image[3]["#text"],
-          tags: trackDetail.toptags?.tag,
-          wiki: trackDetail.wiki?.summary,
-        };
-      })
-    );
-
-    return NextResponse.json({ allTrackInfo });
-  } catch (error) {
-    handleError({ context: "lastFm API", error });
-  }
+  const topTracks = await fetchLastFmTopTracks();
+  const allTrackInfo: LastFmTopTrack[] = await Promise.all(
+    topTracks.map(async (track: LastFmTrackDetails) => {
+      const key = `${track.name}-${track.artist.name}`;
+      let trackDetail = await fetchLastFmTrackDetails({
+        trackTitle: track.name || "",
+        artist: track.artist.name || "",
+      });
+      console.log("track", track);
+      return {
+        id: key,
+        trackTitle: track.name,
+        artist: track.artist.name,
+        albumTitle: trackDetail.albumTitle,
+        albumImgUrl: trackDetail.album?.image[3]["#text"],
+        tags: trackDetail.toptags?.tag,
+        wiki: trackDetail.wiki?.summary,
+        playCount: trackDetail.playcount,
+      };
+    })
+  );
+  return NextResponse.json({ allTrackInfo });
 }
 
 export const fetchLastFmTopTracks = async () => {

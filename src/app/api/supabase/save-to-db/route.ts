@@ -1,8 +1,8 @@
 import { supabase } from "@/lib/server/client";
 import { Track } from "@/lib/server/database.types";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const trackInfo: Track[] = await request.json();
 
   try {
@@ -19,6 +19,6 @@ export async function POST(request: Request) {
     }
   } catch (error) {
     console.error("Error:", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    return new Response("Internal Error", { status: 500 });
   }
 }

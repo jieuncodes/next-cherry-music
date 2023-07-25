@@ -17,9 +17,9 @@ import { Track } from "@/lib/server/database.types";
 import { useSupabaseTracks } from "@/hooks/useSupabaseTracks";
 
 function WeeklyTopTracks() {
-  const { tracks, isLoading }: { tracks: Track[]; isLoading: boolean } =
-    useFetchTracks();
-  const { isSaved } = useSupabaseTracks();
+  // const { tracks, isLoading }: { tracks: Track[]; isLoading: boolean } =
+  //   useFetchTracks();
+  const { isSaved, topTracks, isLoading } = useSupabaseTracks();
 
   const { playlist, addToPlaylist, removeFromPlaylist } =
     useLocalStoragePlaylist();
@@ -69,7 +69,7 @@ function WeeklyTopTracks() {
           ? Array(30)
               .fill(null)
               .map((_, index) => <TrackCardSkeleton key={index} />)
-          : tracks.map((track, index) => (
+          : topTracks.map((track, index) => (
               <TrackCard
                 key={index}
                 track={track}
