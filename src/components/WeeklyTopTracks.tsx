@@ -8,15 +8,14 @@ import {
   SectionTitle,
 } from "@/styles/WeeklyTopTracks";
 import { useEffect, useRef, useState } from "react";
-import { useFetchTracks } from "../hooks/useFetchTracks";
 import GhostRoundBtn from "./Btns/ghostRoundBtn";
 import { Icons } from "./Icons";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
-import useSupabaseTracks from "@/hooks/useSupabaseTracks";
+import useTopTracks from "@/hooks/useTopTracks";
 
 function WeeklyTopTracks() {
-  const { isSaved, isLoading, supabaseTracks } = useSupabaseTracks();
+  const { isSaved, isLoading, topTracks } = useTopTracks();
 
   const { playlist, addToPlaylist, removeFromPlaylist } =
     useLocalStoragePlaylist();
@@ -62,11 +61,11 @@ function WeeklyTopTracks() {
       </SectionNav>
       <SectionTitle>Weekly Top Tracks</SectionTitle>
       <SectionGrid ref={ref}>
-        {isLoading
+        {!isSaved && isLoading
           ? Array(30)
               .fill(null)
               .map((_, index) => <TrackCardSkeleton key={index} />)
-          : supabaseTracks.map((track, index) => (
+          : topTracks.map((track, index) => (
               <TrackCard
                 key={index}
                 track={track}

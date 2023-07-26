@@ -24,10 +24,18 @@ export const handleError = ({
 export const isDataOld = (lastFetchTime: Date | null): boolean => {
   const REFRESH_TERM_MILLISECOND = 6 * 60 * 60 * 1000;
 
-  //for debugging
-  return true;
-  //   return lastFetchTime &&
-  //     new Date().getTime() - lastFetchTime.getTime() < REFRESH_TERM_MILLISECOND
-  //     ? true
-  //     : false;
+  return lastFetchTime &&
+    new Date().getTime() - lastFetchTime.getTime() < REFRESH_TERM_MILLISECOND
+    ? true
+    : false;
+};
+
+export const simpleHash = (str: string) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0;
+  }
+  return Math.abs(hash);
 };

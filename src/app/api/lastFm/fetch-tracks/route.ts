@@ -1,4 +1,4 @@
-import { handleError, validateEnvVariable } from "@/lib/helpers";
+import { handleError, simpleHash, validateEnvVariable } from "@/lib/helpers";
 import { LastFmTopTrack, LastFmTrackDetails } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,13 +10,30 @@ export async function GET(req: NextRequest, res: NextResponse) {
         trackTitle: track.name || "",
         artist: track.artist.name || "",
       });
+      const urlLastPart = trackDetail.url.split("/");
+      const id = simpleHash(urlLastPart[urlLastPart.length - 1]);
+
+      const youtubeResponse: Response = await fetch(
+        `${process.env.URL}/api/youtube?track=${track.name}&artist=${track.artist.name}&id=${id}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!youtubeResponse.ok) {
+        throw new Error("Error fetching video ID");
+      }
+
+      const youtubeData = await youtubeResponse.json();
+      console.log("youtubeData", youtubeData);
       return {
+        id,
         trackTitle: track.name,
         artist: track.artist.name,
-        albumTitle: trackDetail.albumTitle,
+        youtubeId: youtubeData.videoId || "",
+        albumTitle: trackDetail.album?.title || "",
         albumImgUrl: trackDetail.album?.image[3]["#text"],
         tags: trackDetail.toptags?.tag,
-        wiki: trackDetail.wiki?.summary,
         playCount: trackDetail.playcount,
       };
     })
@@ -40,7 +57,6 @@ export const fetchLastFmTopTracks = async () => {
 
     const response = await fetch(url);
     const data = await response.json();
-
     return data.tracks.track;
   } catch (error) {
     handleError({ context: "lastFm API", error });
@@ -67,9 +83,10 @@ export const fetchLastFmTrackDetails = async ({
     });
     1;
     url.search = params.toString();
-
     const response = await fetch(url);
+
     const data = await response.json();
+
     return data.track;
   } catch (error) {
     handleError({ context: "lastFm API", error });

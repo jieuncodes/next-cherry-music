@@ -1,11 +1,13 @@
+import { TrackTitle } from "@/styles/TrackCard";
+import { supabase } from "@/lib/server/client";
 import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
-const videoIdCache: Record<string, string | null> = {};
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const trackTitle = req.nextUrl.searchParams.get("track");
   const artist = req.nextUrl.searchParams.get("artist");
-
+  const id = req.nextUrl.searchParams.get("id");
+  console.log("", trackTitle, artist, id);
   if (!trackTitle || !artist) {
     return new Response(
       JSON.stringify({ error: "track or artist parameter is missing" }),
@@ -15,19 +17,24 @@ export async function GET(req: NextRequest, res: NextResponse) {
     );
   }
 
-  const cacheKey = `${trackTitle}-${artist}`;
-  if (videoIdCache[cacheKey]) {
-    console.log("CACHED", videoIdCache);
-
-    return new Response(JSON.stringify({ videoId: videoIdCache[cacheKey] }), {
+  let { data: track, error } = await supabase
+    .from("tracks")
+    .select("youtubeId")
+    .eq("id", id)
+    .single();
+  if (!track) {
+    console.log(
+      `supabase doesnt have youtube id for this track: ${TrackTitle}`
+    );
+  }
+  if (track && track.youtubeId) {
+    return new Response(JSON.stringify({ videoId: track.youtubeId }), {
       status: 200,
     });
   }
-
   try {
     const videoId = await getYoutubeVideoId({ trackTitle, artist });
-    videoIdCache[cacheKey] = videoId as string;
-    console.log("videoId", videoIdCache);
+
     return new Response(JSON.stringify({ videoId }), { status: 200 });
   } catch (error) {
     console.error("Error fetching video ID:", error);
@@ -48,7 +55,7 @@ const getYoutubeVideoId = async ({
     version: "v3",
     auth: process.env.YOUTUBE_API_KEY,
   });
-  const query = `${trackTitle} ${artist}`;
+  const query = `${trackTitle}-${artist}`;
 
   const requestConfig = {
     part: ["id"],

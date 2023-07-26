@@ -51,10 +51,9 @@ export interface Database {
           albumTitle: string | null;
           artist: string | null;
           id: number;
-          playCount: number | null;
+          playCount: string | null;
           tags: string[] | null;
           trackTitle: string | null;
-          wiki: string | null;
           youtubeId: string | null;
         };
         Insert: {
@@ -62,10 +61,9 @@ export interface Database {
           albumTitle?: string | null;
           artist?: string | null;
           id?: number;
-          playCount?: number | null;
+          playCount?: string | null;
           tags?: string[] | null;
           trackTitle?: string | null;
-          wiki?: string | null;
           youtubeId?: string | null;
         };
         Update: {
@@ -73,10 +71,9 @@ export interface Database {
           albumTitle?: string | null;
           artist?: string | null;
           id?: number;
-          playCount?: number | null;
+          playCount?: string | null;
           tags?: string[] | null;
           trackTitle?: string | null;
-          wiki?: string | null;
           youtubeId?: string | null;
         };
         Relationships: [];
