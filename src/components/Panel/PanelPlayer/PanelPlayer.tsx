@@ -1,11 +1,12 @@
 import { localStoragePlaylist } from "@/atoms";
 import { PanelPlayerContainer } from "@/styles/Panel/PanelPlayer";
-import YouTube from "react-youtube";
+import YouTube, { YouTubePlayer } from "react-youtube";
 import { useRecoilState } from "recoil";
 import AlbumCover from "./AlbumCover";
 import PlayerController from "./PlayerControllers";
 import ProgressBar from "./ProgressBar";
 import TrackInfo from "./TrackInfo";
+import { useEffect, useRef, useState } from "react";
 
 const opts = {
   height: "1",
@@ -27,34 +28,59 @@ const opts = {
 function PanelPlayer() {
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
-  console.log("recoilPlaylist", recoilPlaylist);
-  const firstPlaylistTrack = recoilPlaylist[0] || "[]";
+  const [currTrackIdx, setCurrTrackIdx] = useState(0);
+  const currTrack = recoilPlaylist[currTrackIdx] || "[]";
+  const [isPlaying, setIsPlaying] = useState(false);
+  const playerRef = useRef<YouTubePlayer | null>(null);
+
+  useEffect(() => {
+    setCurrTrackIdx(0);
+  }, [recoilPlaylist]);
+
+  const togglePlayPause = () => {
+    if (isPlaying) {
+      playerRef.current.pauseVideo();
+    } else {
+      playerRef.current.playVideo();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   return (
     <PanelPlayerContainer>
       <AlbumCover
         albumCoverURL={
-          firstPlaylistTrack?.albumImgUrl || "/images/default_album_img.png"
+          currTrack?.albumImgUrl || "/images/default_album_img.png"
         }
       />
       <TrackInfo
         trackTitle={
-          firstPlaylistTrack?.trackTitle ||
-          "⬅︎ Play the music by clicking the card!"
+          currTrack?.trackTitle || "⬅︎ Play the music by clicking the card!"
         }
-        artist={firstPlaylistTrack?.artist || "ARTIST"}
+        artist={currTrack?.artist || "ARTIST"}
       />
       <ProgressBar></ProgressBar>
-      <PlayerController />
+      <PlayerController
+        currTrackIdx={currTrackIdx}
+        setCurrTrackIdx={setCurrTrackIdx}
+        playlistLength={recoilPlaylist.length}
+        isPlaying={isPlaying}
+        togglePlayPause={togglePlayPause}
+      />
 
-      {firstPlaylistTrack?.youtubeId && (
+      {currTrack?.youtubeId && (
         <div
           style={{ visibility: "hidden", position: "absolute", top: "-1000px" }}
         >
           <YouTube
-            videoId={firstPlaylistTrack.youtubeId}
+            ref={playerRef}
+            videoId={currTrack.youtubeId}
             opts={opts}
-            onReady={(event) => event.target.playVideo()}
+            onReady={(event) => {
+              playerRef.current = event.target;
+              event.target.playVideo();
+              setIsPlaying(true);
+            }}
           />
         </div>
       )}
