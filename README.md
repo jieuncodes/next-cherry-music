@@ -24,10 +24,10 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] User's Playlist Upload
 - [ ] Hashtag
 - [ ] Friends online
-- [ ] State management using Recoil
+- [x] State management using Recoil
 - [ ] Edit account settings
 - [x] Loading - skeleton
-- [ ] Data Caching - minimize api call
+- [x] Data Caching - minimize api call
 - [ ] Music player
 - [ ] beautiful dnd - drag cards to move position
 - [ ] Deploy

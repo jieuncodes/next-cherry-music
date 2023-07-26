@@ -30,7 +30,9 @@ function PanelPlayer() {
     useRecoilState(localStoragePlaylist);
   const [currTrackIdx, setCurrTrackIdx] = useState(0);
   const currTrack = recoilPlaylist[currTrackIdx] || "[]";
+  const [playerReady, setPlayerReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+
   const playerRef = useRef<YouTubePlayer | null>(null);
 
   useEffect(() => {
@@ -59,7 +61,7 @@ function PanelPlayer() {
         }
         artist={currTrack?.artist || "ARTIST"}
       />
-      <ProgressBar></ProgressBar>
+      <ProgressBar playerRef={playerRef} />
       <PlayerController
         currTrackIdx={currTrackIdx}
         setCurrTrackIdx={setCurrTrackIdx}
@@ -77,9 +79,15 @@ function PanelPlayer() {
             videoId={currTrack.youtubeId}
             opts={opts}
             onReady={(event) => {
+              setPlayerReady(true);
               playerRef.current = event.target;
               event.target.playVideo();
-              setIsPlaying(true);
+            }}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onEnd={() => {
+              setIsPlaying(false);
+              setCurrTrackIdx(currTrackIdx + 1);
             }}
           />
         </div>

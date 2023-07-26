@@ -14,7 +14,7 @@ function Marquee({ trackTitleText, largeTitle, isBlack, size }: MarqueeProps) {
 
   const variants: Variants = {
     initial: { x: 0 },
-    animate: { x: -width / 2 - 24.5 },
+    animate: { x: -(width / 2) - 24.5 },
   };
 
   const transition = {
