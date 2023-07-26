@@ -16,4 +16,4 @@ export const Description = tw(motion.p)`w-72 mb-10 mt-5`;
 
 export const Buttons = tw(motion.div)`absolute w-40 flex justify-between z-20`;
 
-export const NavBtnContainer = tw.div`absolute z-10 w-full h-full -left-6 bg-none flex justify-between items-center `;
+export const NavBtnContainer = tw.div`absolute z-10 w-full h-full -left-6 bg-none flex justify-between items-center`;
