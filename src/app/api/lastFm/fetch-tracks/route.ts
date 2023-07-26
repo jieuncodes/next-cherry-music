@@ -25,7 +25,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       }
 
       const youtubeData = await youtubeResponse.json();
-      console.log("youtubeData", youtubeData);
       return {
         id,
         trackTitle: track.name,

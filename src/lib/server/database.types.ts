@@ -45,6 +45,21 @@ export interface Database {
         };
         Relationships: [];
       };
+      lastFetchTimes: {
+        Row: {
+          id: number;
+          topTracks: string | null;
+        };
+        Insert: {
+          id?: number;
+          topTracks?: string | null;
+        };
+        Update: {
+          id?: number;
+          topTracks?: string | null;
+        };
+        Relationships: [];
+      };
       tracks: {
         Row: {
           albumImgUrl: string | null;

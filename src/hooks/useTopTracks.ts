@@ -3,16 +3,20 @@ import { LastFmTopTrack } from "@/types/trackTypes";
 import { Track } from "@/lib/server/database.types";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/server/client";
+import useLastFetchTime from "./useLastFetchTime";
 
 function useTopTracks() {
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [topTracks, setTopTracks] = useState<Track[]>([]);
-  const [lastFetchTime, setLastFetchTime] = useState<Date | null>(null);
+  const { lastFetchTime, setLastFetchTime } = useLastFetchTime("topTracks");
 
   useEffect(() => {
+    console.log("lastFetchTime", lastFetchTime);
     if (!lastFetchTime || isDataOld(lastFetchTime)) {
       fetchAndSave();
+      console.log("oldData setting new last fetch time");
+      setLastFetchTime(new Date());
     }
   }, []);
 
@@ -28,7 +32,6 @@ function useTopTracks() {
 
     const fetchedTracks = await fetchTracksFromSupabase();
     setTopTracks(fetchedTracks);
-    setLastFetchTime(new Date());
 
     setIsLoading(false);
   };
