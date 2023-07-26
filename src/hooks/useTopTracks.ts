@@ -9,16 +9,17 @@ function useTopTracks() {
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [topTracks, setTopTracks] = useState<Track[]>([]);
-  const { lastFetchTime, setLastFetchTime } = useLastFetchTime("topTracks");
+  const { lastFetchTime, setLastFetchTime, isLastFetchStateLoading } =
+    useLastFetchTime("topTracks");
 
   useEffect(() => {
-    console.log("lastFetchTime", lastFetchTime);
-    if (!lastFetchTime || isDataOld(lastFetchTime)) {
-      fetchAndSave();
-      console.log("oldData setting new last fetch time");
-      setLastFetchTime(new Date());
+    if (!isLastFetchStateLoading) {
+      if (!lastFetchTime || isDataOld(lastFetchTime)) {
+        fetchAndSave().then(() => setLastFetchTime(new Date()));
+        console.log(lastFetchTime, isDataOld(lastFetchTime));
+      }
     }
-  }, []);
+  }, [isLastFetchStateLoading]);
 
   const fetchAndSave = async () => {
     setIsLoading(true);

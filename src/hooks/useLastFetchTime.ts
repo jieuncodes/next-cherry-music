@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/server/client";
 
 function useLastFetchTime(column: string) {
+  const [isLastFetchStateLoading, setIsLastFetchStateLoading] = useState(true);
   const [lastFetchTime, setLastFetchTime] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -14,10 +15,10 @@ function useLastFetchTime(column: string) {
       .select(column)
       .order("id", { ascending: false })
       .limit(1);
-    console.log("lastfetchtime", data);
     if (error) {
       console.error("Error fetching last fetch time from Supabase:", error);
     }
+    setIsLastFetchStateLoading(false);
   };
 
   const updateLastFetchTimeToSupabase = async (time: Date) => {
@@ -27,7 +28,6 @@ function useLastFetchTime(column: string) {
     if (error) {
       console.error("Error updating last fetch time in Supabase:", error);
     } else {
-      console.log("time", time);
       setLastFetchTime(time);
     }
   };
@@ -35,6 +35,7 @@ function useLastFetchTime(column: string) {
   return {
     lastFetchTime,
     setLastFetchTime: updateLastFetchTimeToSupabase,
+    isLastFetchStateLoading,
   };
 }
 
