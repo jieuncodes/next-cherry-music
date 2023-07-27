@@ -25,6 +25,8 @@ import {
   SkipForward,
   Pause,
   Shuffle,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 
 export const Icons = {
@@ -32,6 +34,8 @@ export const Icons = {
   heart: HeartIcon,
   chevronRight: ChevronRight,
   chevronLeft: ChevronLeft,
+  chevronUp: ChevronUp,
+  chevronDown: ChevronDown,
   moreHorizontal: MoreHorizontal,
   plus: Plus,
   disc3: Disc3,

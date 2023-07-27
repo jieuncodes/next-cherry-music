@@ -1,5 +1,5 @@
 import Marquee from "@/animations/marquee";
-import { Artist, TrackDetails } from "@/styles/Panel/PanelPlayer";
+import { Artist, TrackDetails, TrackTitle } from "@/styles/Panel/PanelPlayer";
 
 interface TrackInfoProps {
   trackTitle: string;
@@ -9,11 +9,17 @@ interface TrackInfoProps {
 function TrackInfo({ trackTitle, artist }: TrackInfoProps) {
   return (
     <TrackDetails>
-      <Marquee
-        trackTitleText={trackTitle || "⬅︎ Play the music by clicking the card!"}
-        largeTitle={true}
-        isBlack={true}
-      />
+      {trackTitle.length > 20 ? (
+        <Marquee
+          trackTitleText={
+            trackTitle || "⬅︎ Play the music by clicking the card!"
+          }
+          largeTitle={true}
+          isBlack={true}
+        />
+      ) : (
+        <TrackTitle>{trackTitle}</TrackTitle>
+      )}
 
       <Artist>{artist || "ARTIST"}</Artist>
     </TrackDetails>

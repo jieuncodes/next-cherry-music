@@ -28,7 +28,11 @@ function TrackCardButtons({
             variant="light"
             onPress={() => setLiked(!liked)}
           >
-            <Icons.heart color={iconColor} fill={liked ? iconColor : "none"} />
+            <Icons.heart
+              color="#ff5173"
+              size={20}
+              fill={liked ? "#ff5173" : "none"}
+            />
           </Button>
           <DropdownComponent
             onMouseEnter={() => setIsDropdownHover(true)}

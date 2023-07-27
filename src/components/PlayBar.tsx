@@ -16,14 +16,19 @@ import {
   TrackInfoBox,
   Title,
   Artist,
+  PlayListBtn,
+  LikeBtn,
+  Btns,
 } from "@/styles/PlayBar";
 import { useRecoilState, useRecoilValue } from "recoil";
 import PlayerController from "./Panel/PanelPlayer/PlayerControllers";
 import ProgressBar from "./Panel/PanelPlayer/ProgressBar";
+import { Icons } from "./Icons";
+import { useState } from "react";
 
 function PlayBar() {
   const { togglePlayPause, playerRef } = usePlayer();
-
+  const [liked, setLiked] = useState(false);
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
   const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
@@ -48,10 +53,24 @@ function PlayBar() {
             />
           </AlbumCoverBox>
           <Title>{currTrack.trackTitle}</Title>
-          <Artist>{currTrack.artist}</Artist>
+          <Artist>
+            {currTrack.artist}
+            {currTrack.albumTitle ? " • currTrack.albumTitle" : ""}
+          </Artist>
         </TrackInfoBox>
+        <Btns>
+          <Icons.heart
+            color="#ff5173"
+            size={20}
+            fill={liked ? "#ff5173" : "none"}
+            style={{ marginTop: 2 }}
+          />
+          <Icons.moreVertical style={{ marginLeft: 10, marginBottom: 3 }} />
+        </Btns>
 
-        <div></div>
+        <PlayListBtn>
+          <Icons.chevronUp />
+        </PlayListBtn>
       </Player>
     </PlayBarContainer>
   );

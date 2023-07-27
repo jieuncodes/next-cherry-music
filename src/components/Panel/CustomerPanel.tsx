@@ -17,14 +17,14 @@ function CustomerPanel() {
         <Avatar
           classNames={{
             base: "bg-gradient-to-br from-[#ffafe67b] to-[#ff005da2]",
-            icon: "text-black/80",
+            icon: "text-white/70",
           }}
           name={user.user_metadata.user_name}
           src=""
         />
       ) : (
         <Button
-          startContent={<Icons.user2Icon />}
+          startContent={<Icons.user2Icon color="white" />}
           variant="ghost"
           radius="full"
           isIconOnly
