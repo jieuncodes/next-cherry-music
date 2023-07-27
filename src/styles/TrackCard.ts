@@ -16,4 +16,4 @@ export const TrackTitle = tw(
   motion.div
 )`text-sm w-36 flex overflow-hidden gap-32 bg-red font-semibold leading-none text-default-600 relative select-none whitespace-nowrap`;
 
-export const Artist = tw.h5`text-sm tracking-tight text-default-400`;
+export const Artist = tw.h5`text-sm tracking-tight text-black/50`;

@@ -20,7 +20,10 @@ function ProgressBar({ playerRef, isOnPlayBar }: ProgressBarProps) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (playerRef) {
+      if (
+        playerRef.current &&
+        typeof playerRef.current.getCurrentTime === "function"
+      ) {
         const currentTime = playerRef?.current.getCurrentTime();
         const duration = playerRef?.current.getDuration();
 

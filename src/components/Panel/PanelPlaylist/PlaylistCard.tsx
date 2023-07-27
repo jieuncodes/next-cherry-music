@@ -20,7 +20,7 @@ function PlaylistCard({ track, index }: PlaylistCardProps) {
       onMouseLeave={() => setIsCardHover(false)}
       radius="sm"
       className={`${
-        isCardHover || isDropdownHover ? "bg-black/30" : "bg-white"
+        isCardHover || isDropdownHover ? "bg-black/30" : "bg-white/30"
       } `}
     >
       <StyledHeader>

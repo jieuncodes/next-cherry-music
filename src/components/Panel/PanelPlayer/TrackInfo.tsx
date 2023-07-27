@@ -1,6 +1,5 @@
 import Marquee from "@/animations/marquee";
-import { TrackDetails } from "@/styles/Panel/PanelPlayer";
-import { Artist } from "@/styles/TrackCard";
+import { Artist, TrackDetails } from "@/styles/Panel/PanelPlayer";
 
 interface TrackInfoProps {
   trackTitle: string;

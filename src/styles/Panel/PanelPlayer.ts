@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const PanelPlayerContainer = tw.div`rounded-xl w-full h-auto flex flex-col align-middle p-6 mb-1 `;
 
-export const AlbumCoverBox = tw.div` relative flex align-middle  rounded-xl shadow-2xl justify-center self-center bg-white overflow-hidden aspect-square `;
+export const AlbumCoverBox = tw.div` relative flex align-middle  rounded-xl shadow-2xl justify-center self-center bg-white/30 overflow-hidden aspect-square `;
 
 export const AlbumCoverImg = tw.img`aspect-square object-cover max-h-[180px] 2xl:max-h-[200px] shadow-xl rounded-xl`;
 
@@ -15,4 +15,4 @@ export const TrackTitle = tw(
   motion.div
 )`text-sm w-36 flex overflow-hidden gap-32 bg-red font-semibold leading-none text-default-600 relative select-none whitespace-nowrap`;
 
-export const Artist = tw.h5`text-sm tracking-tight text-default-400 `;
+export const Artist = tw.h5`text-sm tracking-tight text-black/90 `;
