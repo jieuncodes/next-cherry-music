@@ -15,3 +15,25 @@ export const topTracksLastFetchTime = atom<Date | null>({
   key: "topTracksLastFetchTime",
   default: null,
 });
+
+export const currTrackIdxAtom = atom<number>({
+  key: "currTrackIdx",
+  default: 0,
+});
+export const playerReadyStateAtom = atom<boolean>({
+  key: "playerReadyState",
+  default: false,
+});
+export const playStateAtom = atom<boolean>({
+  key: "playState",
+  default: false,
+});
+export const currTrackCurrentTimeAtom = atom<string>({
+  key: "currTrackCurrentTime",
+  default: "0:00",
+});
+export const currTrackDurationAtom = atom<string>({
+  key: "currTrackDuration",
+
+  default: "0:00",
+});

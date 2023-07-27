@@ -7,7 +7,7 @@ export const AlbumCoverBox = tw.div` relative flex align-middle  rounded-xl shad
 
 export const AlbumCoverImg = tw.img`aspect-square object-cover max-h-[180px] 2xl:max-h-[200px] shadow-xl rounded-xl`;
 
-export const Controllers = tw.div`w-full h-10 mt-5 flex items-center justify-between gap-1`;
+export const Controllers = tw.div`w-full h-10 flex items-center justify-between gap-1 -ml-1`;
 
 export const TrackDetails = tw.div`mt-6 flex flex-col gap-2 items-center align-middle justify-center w-full overflow-hidden `;
 

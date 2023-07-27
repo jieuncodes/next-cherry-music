@@ -3,10 +3,11 @@ import SupabaseProvider from "@/providers/SupabaseProvider";
 import NextUIProvider from "@/providers/NextUIProvider";
 import RecoilProvider from "@/providers/RecoilProvider";
 import Nav from "@/components/Nav";
-import PlayBar from "@/components/PlayBar";
 import { Contents, ContentsContainer } from "@/styles/Contents";
 import ModalProvider from "@/providers/ModalProvider";
 import Panel from "@/components/Panel/Panel";
+import PlayBar from "@/components/PlayBar";
+import PlayerProvider from "@/providers/PlayerProvider";
 
 export const metadata = {
   title: "Cherry Music",
@@ -25,15 +26,16 @@ export default function RootLayout({
           <NextUIProvider>
             <SupabaseProvider>
               <ModalProvider />
-              <main>
-                <Nav />
-                <ContentsContainer>
-                  <Contents>{children}</Contents>
+              <PlayerProvider>
+                <main>
+                  <Nav />
+                  <ContentsContainer>
+                    <Contents>{children}</Contents>
+                  </ContentsContainer>
+                  <Panel />
                   <PlayBar />
-                </ContentsContainer>
-
-                <Panel />
-              </main>
+                </main>
+              </PlayerProvider>
             </SupabaseProvider>
           </NextUIProvider>
         </RecoilProvider>

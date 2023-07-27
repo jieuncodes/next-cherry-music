@@ -2,22 +2,23 @@ import TransparentRoundBtn from "@/components/Btns/TransparentRoundBtn";
 import { Icons } from "@/components/Icons";
 import FlatIconButton from "@/components/Btns/FlatIconBtn";
 import { Controllers } from "@/styles/Panel/PanelPlayer";
+import { currTrackIdxAtom, localStoragePlaylist, playStateAtom } from "@/atoms";
+import { useRecoilState } from "recoil";
 
 interface PlayerControllerProps {
-  currTrackIdx: number;
-  setCurrTrackIdx: (newIndex: number) => void;
-  playlistLength: number;
   togglePlayPause: () => void;
-  isPlaying: boolean;
+  isPlayBar?: boolean;
 }
 
 function PlayerController({
-  currTrackIdx,
-  setCurrTrackIdx,
-  playlistLength,
   togglePlayPause,
-  isPlaying,
+  isPlayBar,
 }: PlayerControllerProps) {
+  const [recoilPlaylist, setRecoilPlaylist] =
+    useRecoilState(localStoragePlaylist);
+  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
+  const [isPlaying, setIsPlaying] = useRecoilState(playStateAtom);
+
   const handleShuffle = () => {};
   const handleSkipBack = () => {
     if (currTrackIdx > 0) {
@@ -25,17 +26,19 @@ function PlayerController({
     }
   };
   const handleSkipForward = () => {
-    if (currTrackIdx < playlistLength - 1) {
+    if (currTrackIdx < recoilPlaylist.length - 1) {
       setCurrTrackIdx(currTrackIdx + 1);
     }
   };
   return (
     <Controllers>
-      <TransparentRoundBtn
-        startContent={<Icons.shuffle size={17} />}
-        onPress={handleShuffle}
-        size="sm"
-      />
+      {!isPlayBar && (
+        <TransparentRoundBtn
+          startContent={<Icons.shuffle size={17} />}
+          onPress={handleShuffle}
+          size="sm"
+        />
+      )}
       <TransparentRoundBtn
         startContent={<Icons.skipBack size={17} />}
         onPress={handleSkipBack}
@@ -55,12 +58,14 @@ function PlayerController({
         startContent={<Icons.skipForward size={17} />}
         onPress={handleSkipForward}
         size="sm"
-      />
-      <TransparentRoundBtn
-        startContent={<Icons.repeat size={17} />}
-        onPress={handleShuffle}
-        size="sm"
-      />
+      />{" "}
+      {!isPlayBar && (
+        <TransparentRoundBtn
+          startContent={<Icons.repeat size={17} />}
+          onPress={handleShuffle}
+          size="sm"
+        />
+      )}
     </Controllers>
   );
 }

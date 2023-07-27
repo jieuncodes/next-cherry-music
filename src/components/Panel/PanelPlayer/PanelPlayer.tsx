@@ -1,4 +1,9 @@
-import { localStoragePlaylist } from "@/atoms";
+import {
+  currTrackIdxAtom,
+  localStoragePlaylist,
+  playStateAtom,
+  playerReadyStateAtom,
+} from "@/atoms";
 import { PanelPlayerContainer } from "@/styles/Panel/PanelPlayer";
 import YouTube, { YouTubePlayer } from "react-youtube";
 import { useRecoilState } from "recoil";
@@ -7,46 +12,19 @@ import PlayerController from "./PlayerControllers";
 import ProgressBar from "./ProgressBar";
 import TrackInfo from "./TrackInfo";
 import { useEffect, useRef, useState } from "react";
-
-const opts = {
-  height: "1",
-  width: "1",
-  playerVars: {
-    autoplay: 1,
-    controls: 0,
-    showinfo: 0,
-    modestbranding: 1,
-    loop: 1,
-    fs: 0,
-    cc_load_policty: 0,
-    iv_load_policy: 3,
-    autohide: 1,
-    rel: 0,
-  },
-};
+import { usePlayer } from "@/providers/PlayerProvider";
 
 function PanelPlayer() {
+  const { togglePlayPause, playerRef } = usePlayer();
+
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
-  const [currTrackIdx, setCurrTrackIdx] = useState(0);
+  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
   const currTrack = recoilPlaylist[currTrackIdx] || "[]";
-  const [playerReady, setPlayerReady] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const playerRef = useRef<YouTubePlayer | null>(null);
 
   useEffect(() => {
     setCurrTrackIdx(0);
   }, [recoilPlaylist]);
-
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      playerRef.current.pauseVideo();
-    } else {
-      playerRef.current.playVideo();
-    }
-    setIsPlaying(!isPlaying);
-  };
 
   return (
     <PanelPlayerContainer>
@@ -62,36 +40,7 @@ function PanelPlayer() {
         artist={currTrack?.artist || "ARTIST"}
       />
       <ProgressBar playerRef={playerRef} />
-      <PlayerController
-        currTrackIdx={currTrackIdx}
-        setCurrTrackIdx={setCurrTrackIdx}
-        playlistLength={recoilPlaylist.length}
-        isPlaying={isPlaying}
-        togglePlayPause={togglePlayPause}
-      />
-
-      {currTrack?.youtubeId && (
-        <div
-          style={{ visibility: "hidden", position: "absolute", top: "-1000px" }}
-        >
-          <YouTube
-            ref={playerRef}
-            videoId={currTrack.youtubeId}
-            opts={opts}
-            onReady={(event) => {
-              setPlayerReady(true);
-              playerRef.current = event.target;
-              event.target.playVideo();
-            }}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-            onEnd={() => {
-              setIsPlaying(false);
-              setCurrTrackIdx(currTrackIdx + 1);
-            }}
-          />
-        </div>
-      )}
+      <PlayerController togglePlayPause={togglePlayPause} />
     </PanelPlayerContainer>
   );
 }
