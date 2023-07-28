@@ -1,3 +1,4 @@
+import { Minus } from "lucide-react";
 import {
   HeartIcon,
   User,
@@ -62,4 +63,5 @@ export const Icons = {
   shuffle: Shuffle,
   sun: Sun,
   moon: Moon,
+  minus: Minus,
 };

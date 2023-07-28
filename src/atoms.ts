@@ -37,3 +37,7 @@ export const currTrackDurationAtom = atom<string>({
 
   default: "0:00",
 });
+export const PlaylistModalState = atom<boolean>({
+  key: "PlaylistModalState",
+  default: false,
+});

@@ -1,6 +1,7 @@
 "use client";
 
 import AuthModal from "@/components/AuthModal";
+import PlaylistModal from "@/components/PlaylistModal";
 
 interface ModalProviderProps {}
 
@@ -8,6 +9,7 @@ function ModalProvider({}) {
   return (
     <>
       <AuthModal />
+      <PlaylistModal />
     </>
   );
 }

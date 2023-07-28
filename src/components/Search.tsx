@@ -1,7 +1,7 @@
 "use client";
 
 import { SearchContainer, SearchInput } from "@/styles/Search";
-import { Icons } from "./Icons";
+import { Icons } from "../app/Icons";
 
 export default function Search() {
   return (

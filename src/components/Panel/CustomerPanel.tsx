@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/button";
 import { useUser } from "@supabase/auth-helpers-react";
 import { Avatar } from "@nextui-org/avatar";
-import { Icons } from "../Icons";
+import { Icons } from "../../app/Icons";
 import { useRecoilState } from "recoil";
 import { authModalState } from "@/atoms";
 import { CustomerPanelContainer } from "@/styles/Panel/Panel";

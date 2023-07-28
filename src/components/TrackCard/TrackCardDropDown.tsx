@@ -5,18 +5,21 @@ import {
   DropdownTrigger,
   DropdownItem,
 } from "@nextui-org/react";
-import { Icons } from "../Icons";
+import { Icons } from "../../app/Icons";
+import { DropdownItemData } from "@/types/itemTypes";
 
 interface DropDownProps {
   iconColor: string;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
+  dropdownItems: DropdownItemData[];
 }
 
-function DropdownComponent({
+function CardDropDown({
   iconColor,
   onMouseEnter,
   onMouseLeave,
+  dropdownItems,
 }: DropDownProps) {
   return (
     <Dropdown onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
@@ -31,44 +34,13 @@ function DropdownComponent({
         aria-label="Dropdown menu with icons"
         onAction={(key) => alert(key)}
       >
-        {dropdownItems.map((item) => {
-          return <DropdownItem key={item.key}>{item.label}</DropdownItem>;
-        })}
+        {dropdownItems.map((item) => (
+          <DropdownItem key={item.key} startContent={item.icon}>
+            {item.label}
+          </DropdownItem>
+        ))}
       </DropdownMenu>
     </Dropdown>
   );
 }
-export default DropdownComponent;
-
-type DropdownItemData = {
-  key: string;
-  label: string;
-  icon: JSX.Element;
-};
-export const dropdownItems: DropdownItemData[] = [
-  {
-    key: "play-next",
-    icon: <Icons.listVideo strokeWidth={1.5} />,
-    label: "Play next",
-  },
-  {
-    key: "add-to-queue",
-    icon: <Icons.listMusic strokeWidth={1.5} />,
-    label: "Add to queue",
-  },
-  {
-    key: "add-to-playlist",
-    icon: <Icons.listPlus strokeWidth={1.5} />,
-    label: "Add to playlist",
-  },
-  {
-    key: "go-to-album",
-    icon: <Icons.disc strokeWidth={1.5} />,
-    label: "Go to album",
-  },
-  {
-    key: "go-to-artist",
-    icon: <Icons.mic2 strokeWidth={1.5} />,
-    label: "Go to artist",
-  },
-];
+export default CardDropDown;

@@ -2,11 +2,11 @@ import tw from "tailwind-styled-components";
 import { Card, CardHeader } from "@nextui-org/react";
 import { motion } from "framer-motion";
 
-export const Buttons = tw.div`absolute right-2`;
+export const Buttons = tw.div`absolute right-2 top-3 z-30`;
 
 export const StyledCard = tw(
   Card
-)`hover:cursor-pointer w-80 h-16 shadow-none snap-start`;
+)` hover:cursor-pointer w-80 h-16 shadow-none snap-start`;
 export const StyledHeader = tw(CardHeader)`justify-between`;
 
 export const TrackImgBox = tw.div`relative flex`;

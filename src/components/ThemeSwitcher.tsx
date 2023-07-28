@@ -1,5 +1,5 @@
 import { useTheme } from "next-themes";
-import { Icons } from "./Icons";
+import { Icons } from "../app/Icons";
 import { useState } from "react";
 
 function ThemeSwitcher() {

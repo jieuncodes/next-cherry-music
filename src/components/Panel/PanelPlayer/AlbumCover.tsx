@@ -3,7 +3,7 @@ import {
   AlbumCoverBox,
   AlbumCoverImg,
 } from "../../../styles/Panel/PanelPlayer";
-import { Icons } from "@/components/Icons";
+import { Icons } from "@/app/Icons";
 import { useState } from "react";
 
 function AlbumCover({ albumCoverURL }: { albumCoverURL: string }) {

@@ -8,7 +8,7 @@ import {
 import { Variants } from "framer-motion";
 import Image from "next/image";
 import FlatIconButton from "../Btns/FlatIconBtn";
-import { Icons } from "../Icons";
+import { Icons } from "../../app/Icons";
 import { Database } from "@/lib/server/database.types";
 function CarouselItem({
   carouselItem,

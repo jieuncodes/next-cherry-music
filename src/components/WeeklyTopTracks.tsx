@@ -9,7 +9,7 @@ import {
 } from "@/styles/WeeklyTopTracks";
 import { useEffect, useRef, useState } from "react";
 import GhostRoundBtn from "./Btns/ghostRoundBtn";
-import { Icons } from "./Icons";
+import { Icons } from "../app/Icons";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
 import useTopTracks from "@/hooks/useTopTracks";

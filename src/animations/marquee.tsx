@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { TrackTitle } from "@/styles/TrackCard";
 import { Variants, motion } from "framer-motion";
 import useMeasure from "react-use-measure";
@@ -7,9 +8,16 @@ interface MarqueeProps {
   largeTitle?: boolean;
   isBlack?: boolean;
   size?: "small" | "medium" | "large";
+  onPlaylist?: boolean;
 }
 
-function Marquee({ trackTitleText, largeTitle, isBlack, size }: MarqueeProps) {
+function Marquee({
+  trackTitleText,
+  largeTitle,
+  isBlack,
+  size,
+  onPlaylist,
+}: MarqueeProps) {
   const [ref, { width }] = useMeasure();
 
   const variants: Variants = {
@@ -24,15 +32,23 @@ function Marquee({ trackTitleText, largeTitle, isBlack, size }: MarqueeProps) {
   };
 
   return (
-    <TrackTitle className="flex overflow-hidden gap-32 relative whitespace-nowrap ">
+    <TrackTitle
+      className={cn(
+        "flex overflow-hidden gap-32 relative whitespace-nowrap  ",
+        `${onPlaylist ? "-ml-2" : ""}`
+      )}
+    >
       <div
-        className={`whitespace-nowrap shrink-0 flex justify-around min-w-full gap-12 ${
-          isBlack ? "text-black" : "text-white"
-        }`}
+        className={cn(
+          `whitespace-nowrap shrink-0 flex justify-around min-w-full gap-12 ${
+            isBlack ? "text-black" : "text-white"
+          }`,
+          ` ${onPlaylist ? "text-xs -mt-1" : ""}`
+        )}
       >
         <motion.div
           ref={ref}
-          className={`track-title ${largeTitle ? "text-medium" : ""}`}
+          className={cn(`track-title ${largeTitle ? "text-medium" : ""}`)}
           variants={variants}
           initial="initial"
           animate="animate"

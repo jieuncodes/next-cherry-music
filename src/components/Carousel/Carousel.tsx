@@ -7,7 +7,7 @@ import {
   CarouselContainer,
   NavBtnContainer,
 } from "@/styles/Carousel";
-import { Icons } from "../Icons";
+import { Icons } from "../../app/Icons";
 import CarouselItem from "./CarouselItem";
 import ChevronBtn from "../Btns/ChevronBtn";
 import { useCarouselItems } from "@/hooks/useCarouselItems";

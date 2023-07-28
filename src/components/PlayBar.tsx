@@ -22,7 +22,7 @@ import {
 import { useRecoilState, useRecoilValue } from "recoil";
 import PlayerController from "./Panel/PanelPlayer/PlayerControllers";
 import ProgressBar from "./Panel/PanelPlayer/ProgressBar";
-import { Icons } from "./Icons";
+import { Icons } from "../app/Icons";
 import { useState } from "react";
 
 function PlayBar() {

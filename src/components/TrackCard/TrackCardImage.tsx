@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Database, Track } from "@/lib/server/database.types";
-import { Icons } from "../Icons";
+import { Icons } from "../../app/Icons";
 import { TrackImgBox } from "@/styles/TrackCard";
 
 interface TrackCardImageProps {

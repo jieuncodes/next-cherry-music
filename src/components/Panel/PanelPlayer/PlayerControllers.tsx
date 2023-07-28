@@ -1,5 +1,5 @@
 import TransparentRoundBtn from "@/components/Btns/TransparentRoundBtn";
-import { Icons } from "@/components/Icons";
+import { Icons } from "@/app/Icons";
 import FlatIconButton from "@/components/Btns/FlatIconBtn";
 import { Controllers } from "@/styles/Panel/PanelPlayer";
 import { currTrackIdxAtom, localStoragePlaylist, playStateAtom } from "@/atoms";

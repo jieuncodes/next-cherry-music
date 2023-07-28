@@ -28,22 +28,17 @@ export function TrackCard({ track, handleClick }: TrackCardProps) {
         isCardHover || isDropdownHover ? "bg-black/30" : "bg-white"
       } `}
     >
-      <div
-        className="absolute inset-0 z-20"
-        onClick={handleClick}
-        aria-hidden="true"
-      ></div>
-      <StyledHeader>
+      <StyledHeader onClick={handleClick}>
         <TrackCardImage isCardHover={isCardHover} track={track} />
         <TrackCardDetails isCardHover={isCardHover} track={track} />
-        <TrackCardButtons
-          isCardHover={isCardHover}
-          setIsDropdownHover={setIsDropdownHover}
-          iconColor={iconColor}
-          liked={liked}
-          setLiked={setLiked}
-        />
       </StyledHeader>
+      <TrackCardButtons
+        isCardHover={isCardHover}
+        setIsDropdownHover={setIsDropdownHover}
+        iconColor={iconColor}
+        liked={liked}
+        setLiked={setLiked}
+      />
     </StyledCard>
   );
 }
