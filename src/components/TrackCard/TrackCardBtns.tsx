@@ -3,13 +3,14 @@ import { Buttons } from "@/styles/TrackCard";
 import { Icons } from "../../app/Icons";
 import CardDropDown from "./TrackCardDropDown";
 import { DropdownItemData } from "@/types/itemTypes";
+import { Dispatch } from "react";
 
 interface TrackCardButtonsProps {
   isCardHover: boolean;
-  setIsDropdownHover: (isDropdownHover: boolean) => void;
+  setIsDropdownHover: Dispatch<boolean>;
   iconColor: string;
   liked: boolean;
-  setLiked: (liked: boolean) => void;
+  setLiked: Dispatch<boolean>;
 }
 
 function TrackCardButtons({
