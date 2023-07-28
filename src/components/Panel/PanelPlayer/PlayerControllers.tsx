@@ -58,7 +58,7 @@ function PlayerController({
         startContent={<Icons.skipForward size={17} />}
         onPress={handleSkipForward}
         size="sm"
-      />{" "}
+      />
       {!isPlayBar && (
         <TransparentRoundBtn
           startContent={<Icons.repeat size={17} />}

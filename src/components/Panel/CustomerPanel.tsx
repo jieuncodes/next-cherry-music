@@ -20,15 +20,15 @@ function CustomerPanel() {
             icon: "text-white/70",
           }}
           name={user.user_metadata.user_name}
-          src=""
         />
       ) : (
         <Button
-          startContent={<Icons.user2Icon color="white" />}
+          startContent={<Icons.user2Icon />}
           variant="ghost"
           radius="full"
           isIconOnly
           onPress={() => setIsOpen(true)}
+          color="foreground"
         />
       )}
     </CustomerPanelContainer>

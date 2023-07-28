@@ -5,4 +5,4 @@ ull flex flex-col gap-3`;
 
 export const PanelSectionTitle = tw.span`font-bold text-default-600 xl:mb-2`;
 
-export const ShowAllBtn = tw.button`absolute text-xs right-0 mt-1 text-gray-500 font-semibold cursor-pointer hover:text-cherry`;
+export const ShowAllBtn = tw.button`absolute text-xs right-0 mt-1 text-white/60 font-semibold cursor-pointer hover:text-cherry`;

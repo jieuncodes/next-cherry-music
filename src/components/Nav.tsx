@@ -18,6 +18,7 @@ import { Database } from "@/lib/server/database.types";
 import { useRouter } from "next/navigation";
 import { useUser } from "@supabase/auth-helpers-react";
 import { Icons } from "./Icons";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
@@ -74,6 +75,10 @@ export default function Nav() {
         <Menu>
           <Icons.settings size={22} />
           <MenuSpan>Settings</MenuSpan>
+        </Menu>
+
+        <Menu>
+          <ThemeSwitcher />
         </Menu>
         {user && (
           <Button

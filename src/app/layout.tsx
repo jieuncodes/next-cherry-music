@@ -1,13 +1,13 @@
-import "./globals.css";
-import SupabaseProvider from "@/providers/SupabaseProvider";
-import NextUIProvider from "@/providers/NextUIProvider";
-import RecoilProvider from "@/providers/RecoilProvider";
 import Nav from "@/components/Nav";
-import { Contents, ContentsContainer } from "@/styles/Contents";
-import ModalProvider from "@/providers/ModalProvider";
 import Panel from "@/components/Panel/Panel";
 import PlayBar from "@/components/PlayBar";
+import ModalProvider from "@/providers/ModalProvider";
+import NextUIProvider from "@/providers/NextUIProvider";
 import PlayerProvider from "@/providers/PlayerProvider";
+import RecoilProvider from "@/providers/RecoilProvider";
+import SupabaseProvider from "@/providers/SupabaseProvider";
+import { Contents, ContentsContainer } from "@/styles/Contents";
+import "./globals.css";
 
 export const metadata = {
   title: "Cherry Music",

@@ -27,6 +27,8 @@ import {
   Shuffle,
   ChevronUp,
   ChevronDown,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 export const Icons = {
@@ -58,4 +60,6 @@ export const Icons = {
   skipForward: SkipForward,
   pause: Pause,
   shuffle: Shuffle,
+  sun: Sun,
+  moon: Moon,
 };
