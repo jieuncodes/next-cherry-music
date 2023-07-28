@@ -19,9 +19,7 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 
-interface AuthModalProps {}
-
-const AuthModal: FC<AuthModalProps> = ({}) => {
+function AuthModal({}) {
   const [isOpen, setIsOpen] = useRecoilState(authModalState);
   const { session } = useSessionContext();
   const router = useRouter();
@@ -63,6 +61,6 @@ const AuthModal: FC<AuthModalProps> = ({}) => {
       </ModalContent>
     </Modal>
   );
-};
+}
 
 export default AuthModal;

@@ -81,7 +81,7 @@ export default function Nav() {
             isIconOnly
             startContent={<Icons.logOut size={22} />}
             variant="light"
-            className="text-white text-2xl mt-auto mb-2 -ml-1"
+            className="text-white text-2xl mt-auto mb-2 -ml-1 z-50"
           />
         )}
       </NavUl>

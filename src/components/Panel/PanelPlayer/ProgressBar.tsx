@@ -1,7 +1,9 @@
+import { playerReadyStateAtom } from "@/atoms";
 import { cn, floatToTime } from "@/lib/utils";
 import { Progress } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
+import { useRecoilValue } from "recoil";
 
 interface ProgressBarProps {
   playerRef: YouTubePlayer;
@@ -9,33 +11,35 @@ interface ProgressBarProps {
 }
 
 function ProgressBar({ playerRef, isOnPlayBar }: ProgressBarProps) {
+  const isPlayerReady = useRecoilValue(playerReadyStateAtom);
   const [currentTime, setCurrentTime] = useState("0:00");
   const [duration, setDuration] = useState("0:00");
   const [progress, setProgress] = useState(0);
   const progressBarRef = useRef(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (playerRef) {
-        const currentTime = playerRef.current.getCurrentTime();
-        const duration = playerRef.current.getDuration();
+    if (isPlayerReady) {
+      const interval = setInterval(() => {
+        if (playerRef) {
+          const currentTime = playerRef.current.getCurrentTime();
+          const duration = playerRef.current.getDuration();
 
-        setCurrentTime(floatToTime(currentTime / 60));
-        setDuration(floatToTime(duration / 60));
-        const percentage = (currentTime / duration) * 100;
-        setProgress(percentage);
-      }
-    }, 200);
-
-    return () => clearInterval(interval);
-  }, [playerRef]);
+          setCurrentTime(floatToTime(currentTime / 60));
+          setDuration(floatToTime(duration / 60));
+          const percentage = (currentTime / duration) * 100;
+          setProgress(percentage);
+        }
+      }, 200);
+      return () => clearInterval(interval);
+    }
+  }, [playerRef, isPlayerReady]);
 
   return (
     <div
       className={cn(
-        "flex flex-col mt-3 gap-1",
+        "flex flex-col mt-3 gap-1 mb-3",
         isOnPlayBar
-          ? "absolute w-auto -mt-1 left-[63px] md:left-[72px] right-[30px] md:right-[37px]"
+          ? "absolute w-auto -mt-1 left-[63px] md:left-[72px] right-[30px] md:right-[37px] mb-0"
           : ""
       )}
     >

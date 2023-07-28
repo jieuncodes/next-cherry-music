@@ -4,13 +4,12 @@ import AuthModal from "@/components/AuthModal";
 
 interface ModalProviderProps {}
 
-const ModalProvider: React.FC<ModalProviderProps> = ({}) => {
+function ModalProvider({}) {
   return (
     <>
       <AuthModal />
-      {/* <LoginModal /> */}
     </>
   );
-};
+}
 
 export default ModalProvider;

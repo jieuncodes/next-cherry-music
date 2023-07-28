@@ -1,8 +1,8 @@
 import tw from "tailwind-styled-components";
 
-export const PlayBarContainer = tw.div` fixed bottom-8 h-20   lg:hidden z-30 grid  w-full start-0 end-0 grid-cols-[64px_auto_29px] md:grid-cols-[73px_auto_39px] backdrop-blur-sm`;
+export const PlayBarContainer = tw.div` fixed bottom-8 h-20   lg:hidden z-30 grid  w-full start-0 end-0 grid-cols-[67px_auto_30px] md:grid-cols-[76px_auto_39px] `;
 
-export const Player = tw.div`col-start-2 bg-white/90 rounded-b-[15px] relative w-full overflow-hidden grid grid-cols-[1.7fr_2fr_6fr_2fr_0.5fr]  p-4 items-center`;
+export const Player = tw.div`col-start-2 bg-white/90 rounded-b-[15px] relative w-full overflow-hidden grid grid-cols-[1.7fr_2fr_6fr_2fr_0.5fr]  p-4 items-center backdrop-blur-sm`;
 
 export const TimeFlow = tw.div`ml-4 col-start-2 text-xs text-default-500`;
 
