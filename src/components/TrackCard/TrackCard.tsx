@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { Track } from "@/lib/server/database.types";
 import { StyledCard, StyledHeader } from "@/styles/TrackCard";
-import { Database, Track } from "@/lib/server/database.types";
-import TrackCardImage from "./TrackCardImage";
-import TrackCardDetails from "./TrackCardDetails";
+import { useState } from "react";
 import TrackCardButtons from "./TrackCardBtns";
+import TrackCardDetails from "./TrackCardDetails";
+import TrackCardImage from "./TrackCardImage";
+import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 
 interface TrackCardProps {
   track: Track;
-  handleClick: (e: React.MouseEvent<Element, MouseEvent>) => void;
+  addToPlaylist: (track: Track) => void;
+  removeFromPlaylist: (trackId: number) => void;
 }
 
-export function TrackCard({ track, handleClick }: TrackCardProps) {
+export function TrackCard({ track }: TrackCardProps) {
+  const { playlist, addToPlaylist, removeFromPlaylist } =
+    useLocalStoragePlaylist();
   const [liked, setLiked] = useState(false);
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
@@ -28,11 +32,12 @@ export function TrackCard({ track, handleClick }: TrackCardProps) {
         isCardHover || isDropdownHover ? "bg-black/30" : "bg-white"
       } `}
     >
-      <StyledHeader onClick={handleClick}>
+      <StyledHeader onClick={addToPlaylist}>
         <TrackCardImage isCardHover={isCardHover} track={track} />
         <TrackCardDetails isCardHover={isCardHover} track={track} />
       </StyledHeader>
       <TrackCardButtons
+        track={track}
         isCardHover={isCardHover}
         setIsDropdownHover={setIsDropdownHover}
         iconColor={iconColor}

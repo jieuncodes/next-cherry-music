@@ -1,7 +1,7 @@
 import Carousel from "@/components/Carousel/Carousel";
 
 import PlayBar from "@/components/PlayBar";
-import WeeklyTopTracks from "@/components/WeeklyTopTracks";
+import TopTracks from "@/components/TopTracks";
 
 export default async function Home() {
   return (
@@ -9,7 +9,7 @@ export default async function Home() {
       <div className="carousel-container h-80 relative">
         <Carousel />
       </div>
-      <WeeklyTopTracks />
+      <TopTracks />
       {/* <TrendingArtists /> */}
       {/* <TopPlayLists /> */}
     </div>

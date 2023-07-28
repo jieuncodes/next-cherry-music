@@ -4,6 +4,7 @@ import { Icons } from "../../app/Icons";
 import CardDropDown from "./TrackCardDropDown";
 import { DropdownItemData } from "@/types/itemTypes";
 import { Dispatch } from "react";
+import { Track } from "@/lib/server/database.types";
 
 interface TrackCardButtonsProps {
   isCardHover: boolean;
@@ -11,9 +12,11 @@ interface TrackCardButtonsProps {
   iconColor: string;
   liked: boolean;
   setLiked: Dispatch<boolean>;
+  track: Track;
 }
 
 function TrackCardButtons({
+  track,
   isCardHover,
   setIsDropdownHover,
   iconColor,
@@ -33,6 +36,7 @@ function TrackCardButtons({
             <Icons.heart color={iconColor} fill={liked ? iconColor : "none"} />
           </Button>
           <CardDropDown
+            track={track}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
             iconColor={iconColor}

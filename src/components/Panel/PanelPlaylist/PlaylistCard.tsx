@@ -34,6 +34,7 @@ function PlaylistCard({ track, index }: PlaylistCardProps) {
         />
         <div className="absolute right-0">
           <CardDropDown
+            track={track}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
             iconColor="black"

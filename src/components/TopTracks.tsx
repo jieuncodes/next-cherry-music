@@ -1,20 +1,20 @@
 "use client";
 
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
+import useTopTracks from "@/hooks/useTopTracks";
 import {
   SectionContainer,
   SectionGrid,
   SectionNav,
   SectionTitle,
-} from "@/styles/WeeklyTopTracks";
+} from "@/styles/TopTracks";
 import { useEffect, useRef, useState } from "react";
-import GhostRoundBtn from "./Btns/ghostRoundBtn";
 import { Icons } from "../app/Icons";
+import GhostRoundBtn from "./Btns/ghostRoundBtn";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
-import useTopTracks from "@/hooks/useTopTracks";
 
-function WeeklyTopTracks() {
+function TopTracks() {
   const { isSaved, isLoading, topTracks } = useTopTracks();
 
   const { playlist, addToPlaylist, removeFromPlaylist } =
@@ -59,7 +59,7 @@ function WeeklyTopTracks() {
           onPress={scrollRight}
         />
       </SectionNav>
-      <SectionTitle>Weekly Top Tracks</SectionTitle>
+      <SectionTitle>Top Tracks</SectionTitle>
       <SectionGrid ref={ref}>
         {!isSaved && isLoading
           ? Array(30)
@@ -69,7 +69,8 @@ function WeeklyTopTracks() {
               <TrackCard
                 key={index}
                 track={track}
-                handleClick={() => addToPlaylist(track)}
+                addToPlaylist={addToPlaylist}
+                removeFromPlaylist={removeFromPlaylist}
               />
             ))}
       </SectionGrid>
@@ -77,4 +78,4 @@ function WeeklyTopTracks() {
   );
 }
 
-export default WeeklyTopTracks;
+export default TopTracks;
