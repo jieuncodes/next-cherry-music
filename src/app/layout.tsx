@@ -1,11 +1,7 @@
 import Nav from "@/components/Nav";
 import Panel from "@/components/Panel/Panel";
 import PlayBar from "@/components/PlayBar";
-import ModalProvider from "@/providers/ModalProvider";
-import NextUIProvider from "@/providers/NextUIProvider";
-import PlayerProvider from "@/providers/PlayerProvider";
-import RecoilProvider from "@/providers/RecoilProvider";
-import SupabaseProvider from "@/providers/SupabaseProvider";
+import Providers from "@/providers/Providers";
 import { Contents, ContentsContainer } from "@/styles/Contents";
 import "./globals.css";
 
@@ -22,23 +18,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body className="antialiased">
-        <RecoilProvider>
-          <NextUIProvider>
-            <SupabaseProvider>
-              <ModalProvider />
-              <PlayerProvider>
-                <main>
-                  <Nav />
-                  <ContentsContainer>
-                    <Contents>{children}</Contents>
-                  </ContentsContainer>
-                  <Panel />
-                  <PlayBar />
-                </main>
-              </PlayerProvider>
-            </SupabaseProvider>
-          </NextUIProvider>
-        </RecoilProvider>
+        <Providers>
+          <main>
+            <Nav />
+            <ContentsContainer>
+              <Contents>{children}</Contents>
+            </ContentsContainer>
+            <Panel />
+            <PlayBar />
+          </main>
+        </Providers>
       </body>
     </html>
   );
