@@ -17,7 +17,6 @@ import {
   Title,
   Artist,
   PlayListBtn,
-  LikeBtn,
   Btns,
 } from "@/styles/PlayBar";
 import { useRecoilState, useRecoilValue } from "recoil";
