@@ -1,12 +1,13 @@
 import { playerReadyStateAtom } from "@/atoms";
+import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { cn, floatToTime } from "@/lib/utils";
 import { Progress } from "@nextui-org/react";
-import { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
 import { useRecoilValue } from "recoil";
 
 interface ProgressBarProps {
-  playerRef: YouTubePlayer;
+  playerRef: RefObject<YouTubePlayer>;
   isOnPlayBar?: boolean;
 }
 
@@ -16,23 +17,29 @@ function ProgressBar({ playerRef, isOnPlayBar }: ProgressBarProps) {
   const [duration, setDuration] = useState("0:00");
   const [progress, setProgress] = useState(0);
   const progressBarRef = useRef(null);
+  const { playlist } = useLocalStoragePlaylist();
 
   useEffect(() => {
-    if (isPlayerReady && playerRef && playerRef.current) {
+    if (playlist.length > 0 && isPlayerReady && playerRef.current) {
       const interval = setInterval(() => {
-        if (playerRef) {
-          const currentTime = playerRef.current.getCurrentTime();
-          const duration = playerRef.current.getDuration();
-
-          setCurrentTime(floatToTime(currentTime / 60));
-          setDuration(floatToTime(duration / 60));
-          const percentage = (currentTime / duration) * 100;
-          setProgress(percentage);
+        if (
+          !playerRef.current ||
+          typeof playerRef.current.getCurrentTime !== "function" ||
+          typeof playerRef.current.getDuration !== "function"
+        ) {
+          return;
         }
+        const currentTime = playerRef.current.getCurrentTime();
+        const duration = playerRef.current.getDuration();
+
+        setCurrentTime(floatToTime(currentTime / 60));
+        setDuration(floatToTime(duration / 60));
+        const percentage = (currentTime / duration) * 100;
+        setProgress(percentage);
       }, 200);
       return () => clearInterval(interval);
     }
-  }, [playerRef, isPlayerReady]);
+  }, [playerRef, isPlayerReady, playlist]);
 
   return (
     <div

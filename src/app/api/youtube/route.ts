@@ -7,7 +7,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const trackTitle = req.nextUrl.searchParams.get("track");
   const artist = req.nextUrl.searchParams.get("artist");
   const id = req.nextUrl.searchParams.get("id");
-  console.log("", trackTitle, artist, id);
   if (!trackTitle || !artist) {
     return new Response(
       JSON.stringify({ error: "track or artist parameter is missing" }),

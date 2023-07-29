@@ -32,7 +32,7 @@ export function TrackCard({ track }: TrackCardProps) {
         isCardHover || isDropdownHover ? "bg-black/30" : "bg-white"
       } `}
     >
-      <StyledHeader onClick={addToPlaylist}>
+      <StyledHeader onClick={() => addToPlaylist(track)}>
         <TrackCardImage isCardHover={isCardHover} track={track} />
         <TrackCardDetails isCardHover={isCardHover} track={track} />
       </StyledHeader>

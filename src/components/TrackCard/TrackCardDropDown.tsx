@@ -9,14 +9,14 @@ import {
 } from "@nextui-org/react";
 import { Key } from "react";
 import { Icons } from "../../app/Icons";
-import { Track } from "../../lib/server/database.types";
+import { Track, TrackWithIndex } from "../../lib/server/database.types";
 
 interface DropDownProps {
   iconColor: string;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   dropdownItems: DropdownItemData[];
-  track: Track;
+  track: TrackWithIndex;
 }
 
 function CardDropDown({
@@ -43,7 +43,8 @@ function CardDropDown({
       case "go-to-artist":
         break;
       case "remove-item":
-        removeFromPlaylist(track.id);
+        removeFromPlaylist(track.playlistIndex);
+        break;
       default:
         console.warn(`Unhandled action key: ${key}`);
         break;

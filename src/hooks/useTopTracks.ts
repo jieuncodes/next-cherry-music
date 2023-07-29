@@ -1,5 +1,4 @@
 import { isDataOld } from "./../lib/helpers";
-import { LastFmTopTrack } from "@/types/trackTypes";
 import { Track } from "@/lib/server/database.types";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/server/client";
@@ -16,7 +15,6 @@ function useTopTracks() {
     if (!isLastFetchStateLoading) {
       if (!lastFetchTime || isDataOld(lastFetchTime)) {
         fetchAndSave().then(() => setLastFetchTime(new Date()));
-        console.log(lastFetchTime, isDataOld(lastFetchTime));
       }
     }
   }, [isLastFetchStateLoading]);

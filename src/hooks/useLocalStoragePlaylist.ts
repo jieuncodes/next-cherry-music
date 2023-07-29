@@ -1,25 +1,27 @@
 import { useRecoilState } from "recoil";
-import useLocalStorage from "./useLocalStorage";
 import { localStoragePlaylist } from "@/atoms";
-import { Track } from "@/lib/server/database.types";
+import { Track, TrackWithIndex } from "@/lib/server/database.types";
+import useSyncedLocalStorage from "./useSyncedLocalStorage";
 
 function useLocalStoragePlaylist() {
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
 
-  const [playlist, setPlaylist] = useLocalStorage<Track[]>({
+  const { setValue: setPlaylist } = useSyncedLocalStorage<TrackWithIndex[]>({
     key: "playlist",
     initialValue: [],
     setRecoilState: setRecoilPlaylist,
   });
-
   const addToPlaylist = (track: Track) => {
-    setPlaylist((currentPlaylist) => [track, ...currentPlaylist]);
+    setPlaylist([
+      { playlistIndex: recoilPlaylist.length, ...track },
+      ...recoilPlaylist,
+    ]);
   };
 
-  const removeFromPlaylist = (trackId: number) => {
-    setPlaylist((currentPlaylist) =>
-      currentPlaylist.filter((t) => t.id !== trackId)
+  const removeFromPlaylist = (index: number) => {
+    setPlaylist((prevPlaylist: TrackWithIndex[]) =>
+      prevPlaylist.filter((t) => t.playlistIndex !== index)
     );
   };
 
