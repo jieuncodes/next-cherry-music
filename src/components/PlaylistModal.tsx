@@ -1,25 +1,23 @@
 import { PlaylistModalState } from "@/atoms";
+import usePlayerControls from "@/hooks/usePlayerControls";
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
-  useDisclosure,
-  RadioGroup,
-  Radio,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
 } from "@nextui-org/react";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { Icons } from "../app/Icons";
 import PlaylistCards from "./Panel/PanelPlaylist/PlaylistCards";
+import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 
 export default function PlaylistModal() {
   const [isOpen, setIsOpen] = useRecoilState(PlaylistModalState);
-
   const [scrollBehavior, setScrollBehavior] = useState("inside");
-
+  const { emptyPlaylist } = useLocalStoragePlaylist();
   return (
     <div className="flex flex-col gap-2">
       <Modal
@@ -37,6 +35,12 @@ export default function PlaylistModal() {
               <ModalBody>
                 <PlaylistCards />
               </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={emptyPlaylist}>
+                  <Icons.trash2 />
+                  ALL
+                </Button>
+              </ModalFooter>
             </>
           )}
         </ModalContent>

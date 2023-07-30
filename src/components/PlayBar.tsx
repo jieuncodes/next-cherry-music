@@ -10,20 +10,20 @@ import { usePlayer } from "@/providers/PlayerProvider";
 import {
   AlbumCoverBox,
   AlbumCoverImg,
+  Artist,
+  Btns,
   PlayBarContainer,
+  PlayListBtn,
   Player,
   TimeFlow,
-  TrackInfoBox,
   Title,
-  Artist,
-  PlayListBtn,
-  Btns,
+  TrackInfoBox,
 } from "@/styles/PlayBar";
+import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { Icons } from "../app/Icons";
 import PlayerController from "./Panel/PanelPlayer/PlayerControllers";
 import ProgressBar from "./Panel/PanelPlayer/ProgressBar";
-import { Icons } from "../app/Icons";
-import { useState } from "react";
 
 function PlayBar() {
   const { togglePlayPause, playerRef } = usePlayer();
@@ -39,7 +39,7 @@ function PlayBar() {
   const duration = useRecoilValue(currTrackDurationAtom);
   return (
     <PlayBarContainer>
-      <ProgressBar playerRef={playerRef} isOnPlayBar={true} />
+      <ProgressBar playerRef={playerRef} isPlayBar={true} />
       <Player>
         <PlayerController togglePlayPause={togglePlayPause} isPlayBar={true} />
         <TimeFlow>

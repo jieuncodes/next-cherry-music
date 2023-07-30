@@ -25,8 +25,16 @@ function useLocalStoragePlaylist() {
       recoilPlaylist.filter((t) => t.playlistIndex !== index)
     );
   };
+  const emptyPlaylist = () => {
+    setPlaylist([]);
+  };
 
-  return { playlist: recoilPlaylist, addToPlaylist, removeFromPlaylist };
+  return {
+    playlist: recoilPlaylist,
+    addToPlaylist,
+    removeFromPlaylist,
+    emptyPlaylist,
+  };
 }
 
 export default useLocalStoragePlaylist;

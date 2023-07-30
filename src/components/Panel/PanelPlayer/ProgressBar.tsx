@@ -1,4 +1,4 @@
-import { playerReadyStateAtom } from "@/atoms";
+import { localStoragePlaylist, playerReadyStateAtom } from "@/atoms";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { cn, floatToTime } from "@/lib/utils";
 import { Progress } from "@nextui-org/react";
@@ -8,19 +8,23 @@ import { useRecoilValue } from "recoil";
 
 interface ProgressBarProps {
   playerRef: RefObject<YouTubePlayer>;
-  isOnPlayBar?: boolean;
+  isPlayBar?: boolean;
 }
 
-function ProgressBar({ playerRef, isOnPlayBar }: ProgressBarProps) {
+function ProgressBar({ playerRef, isPlayBar }: ProgressBarProps) {
   const isPlayerReady = useRecoilValue(playerReadyStateAtom);
   const [currentTime, setCurrentTime] = useState("0:00");
   const [duration, setDuration] = useState("0:00");
   const [progress, setProgress] = useState(0);
   const progressBarRef = useRef(null);
-  const { playlist } = useLocalStoragePlaylist();
+  const playlist = useRecoilValue(localStoragePlaylist);
 
   useEffect(() => {
-    if (playlist.length > 0 && isPlayerReady && playerRef.current) {
+    if (playlist.length === 0) {
+      setProgress(0);
+      setCurrentTime("0:00");
+      setDuration("0:00");
+    } else if (playlist.length > 0 && isPlayerReady && playerRef.current) {
       const interval = setInterval(() => {
         if (
           !playerRef.current ||
@@ -45,7 +49,7 @@ function ProgressBar({ playerRef, isOnPlayBar }: ProgressBarProps) {
     <div
       className={cn(
         "flex flex-col mt-3 gap-1 mb-3",
-        isOnPlayBar
+        isPlayBar
           ? "absolute w-auto -mt-1 left-[63px] md:left-[72px] right-[30px] md:right-[37px] mb-0"
           : ""
       )}
@@ -55,15 +59,15 @@ function ProgressBar({ playerRef, isOnPlayBar }: ProgressBarProps) {
         aria-label="Music progress"
         classNames={{
           indicator: `${
-            isOnPlayBar ? "bg-pink-500" : "bg-default-800 "
+            isPlayBar ? "bg-pink-500" : "bg-default-800 "
           } dark:bg-white`,
-          track: ` ${isOnPlayBar ? "bg-pink-500/30" : "bg-default-500/30"}`,
+          track: ` ${isPlayBar ? "bg-pink-500/30" : "bg-default-500/30"}`,
         }}
         color="default"
         size="sm"
         value={progress}
       />
-      {!isOnPlayBar && (
+      {!isPlayBar && (
         <div className="flex justify-between">
           <p className="text-small">{currentTime}</p>
           <p className="text-small text-foreground/50">{duration}</p>
