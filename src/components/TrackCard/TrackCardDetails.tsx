@@ -7,20 +7,24 @@ interface TrackCardDetailsProps {
   track: Database["public"]["Tables"]["tracks"]["Row"];
   size?: "small" | "medium" | "large";
   onPlaylist?: boolean;
+  isPlayingTrack?: boolean;
 }
 
 function TrackCardDetails({
   isCardHover,
   track,
   onPlaylist,
+  isPlayingTrack,
 }: TrackCardDetailsProps) {
   return (
     <CardDetails>
-      {track.trackTitle && track.trackTitle.length > 20 && isCardHover ? (
+      {track.trackTitle &&
+      track.trackTitle.length > 20 &&
+      (isCardHover || isPlayingTrack) ? (
         <Marquee trackTitleText={track.trackTitle} onPlaylist={onPlaylist} />
       ) : (
         <TrackTitle
-          className={`${isCardHover ? "text-white" : ""} ${
+          className={`${isCardHover || isPlayingTrack ? "text-white" : ""} ${
             onPlaylist ? "text-xs -mb-[2px] -ml-2 -mt-[3px] w-full" : ""
           }`}
         >
@@ -28,7 +32,7 @@ function TrackCardDetails({
         </TrackTitle>
       )}
       <Artist
-        className={`${isCardHover ? "text-white/70" : ""} ${
+        className={`${isCardHover || isPlayingTrack ? "text-white/70" : ""} ${
           onPlaylist ? "text-xs -ml-2 -mt-[3px]" : ""
         }`}
       >

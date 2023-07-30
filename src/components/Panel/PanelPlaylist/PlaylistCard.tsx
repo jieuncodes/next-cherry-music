@@ -11,9 +11,10 @@ import { useState } from "react";
 interface PlaylistCardProps {
   track: TrackWithIndex;
   index: number;
+  isPlayingTrack?: boolean;
 }
 
-function PlaylistCard({ track, index }: PlaylistCardProps) {
+function PlaylistCard({ track, index, isPlayingTrack }: PlaylistCardProps) {
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
   const { handlePlayClickedTrack } = usePlayerControls();
@@ -26,8 +27,8 @@ function PlaylistCard({ track, index }: PlaylistCardProps) {
       onMouseLeave={() => setIsCardHover(false)}
       radius="sm"
       className={`${
-        isCardHover || isDropdownHover ? "bg-black/30" : "bg-white/30"
-      } `}
+        isCardHover || isDropdownHover ? "bg-black/20" : "bg-white/30"
+      } ${isPlayingTrack && "bg-black/30 "}`}
     >
       <StyledHeader>
         <TrackCardImage isCardHover={isCardHover} track={track} size="small" />
@@ -36,6 +37,7 @@ function PlaylistCard({ track, index }: PlaylistCardProps) {
           track={track}
           size="small"
           onPlaylist={true}
+          isPlayingTrack={isPlayingTrack}
         />
         <div className="absolute right-0">
           <CardDropDown
