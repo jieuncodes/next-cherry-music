@@ -1,14 +1,16 @@
 "use client";
 
 import {
+  ShuffleState,
   currTrackIdxAtom,
   localStoragePlaylist,
   playStateAtom,
   playerReadyStateAtom,
 } from "@/atoms";
+import usePlayerControls from "@/hooks/usePlayerControls";
 import React, { ReactNode, createContext, useContext, useRef } from "react";
 import YouTube, { YouTubePlayer } from "react-youtube";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 interface PlayerContextType {
   playerRef: React.RefObject<YouTubePlayer>;
@@ -54,6 +56,8 @@ function PlayerProvider({ children }: PlayerProviderProps) {
   const [playerReady, setPlayerReady] = useRecoilState(playerReadyStateAtom);
   const playerRef = useRef<YouTubePlayer | null>(null);
   const [isPlaying, setIsPlaying] = useRecoilState(playStateAtom);
+  const isShuffleOn = useRecoilValue(ShuffleState);
+  const { playShuffledNextTrack } = usePlayerControls();
 
   const togglePlayPause = () => {
     if (isPlaying) {
@@ -90,6 +94,10 @@ function PlayerProvider({ children }: PlayerProviderProps) {
             onPause={() => setIsPlaying(false)}
             onEnd={() => {
               setIsPlaying(false);
+              if (isShuffleOn) {
+                playShuffledNextTrack();
+                return;
+              }
               setCurrTrackIdx(currTrackIdx + 1);
             }}
           />

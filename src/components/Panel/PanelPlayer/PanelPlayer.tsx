@@ -24,7 +24,7 @@ function PanelPlayer() {
 
   useEffect(() => {
     setCurrTrackIdx(0);
-  }, [recoilPlaylist]);
+  }, [recoilPlaylist.length]);
 
   return (
     <PanelPlayerContainer>

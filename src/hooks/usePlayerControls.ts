@@ -1,5 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ShuffleState, currTrackIdxAtom, localStoragePlaylist } from "@/atoms";
+import { useEffect } from "react";
 
 const usePlayerControls = () => {
   const [recoilPlaylist, setRecoilPlaylist] =
@@ -43,6 +44,7 @@ const usePlayerControls = () => {
     handleSkipBack,
     handleSkipForward,
     handlePlayClickedTrack,
+    playShuffledNextTrack,
   };
 };
 
