@@ -1,5 +1,10 @@
 import { Icons } from "@/app/Icons";
-import { currTrackIdxAtom, localStoragePlaylist, playStateAtom } from "@/atoms";
+import {
+  ShuffleState,
+  currTrackIdxAtom,
+  localStoragePlaylist,
+  playStateAtom,
+} from "@/atoms";
 import FlatIconButton from "@/components/Btns/FlatIconBtn";
 import TransparentRoundBtn from "@/components/Btns/TransparentRoundBtn";
 import usePlayerControls from "@/hooks/usePlayerControls";
@@ -19,16 +24,17 @@ function PlayerController({
   const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
-  const { handleShuffle, handleSkipBack, handleSkipForward } =
-    usePlayerControls();
+  const { handleSkipBack, handleSkipForward } = usePlayerControls();
+  const [isShuffleOn, setIsShuffleOn] = useRecoilState(ShuffleState);
 
   return (
     <Controllers>
       {!isPlayBar && (
         <TransparentRoundBtn
           startContent={<Icons.shuffle size={17} />}
-          onPress={handleShuffle}
+          onPress={() => setIsShuffleOn(!isShuffleOn)}
           size="sm"
+          isShuffleOn={isShuffleOn}
         />
       )}
       <TransparentRoundBtn
@@ -60,8 +66,8 @@ function PlayerController({
       {!isPlayBar && (
         <TransparentRoundBtn
           startContent={<Icons.repeat size={17} />}
-          onPress={handleShuffle}
           size="sm"
+          onPress={() => console.log("")}
         />
       )}
     </Controllers>

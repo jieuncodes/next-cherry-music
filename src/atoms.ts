@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Track, TrackWithIndex } from "./lib/server/database.types";
+import { TrackWithIndex } from "./lib/server/database.types";
 
 export const authModalState = atom<boolean>({
   key: "authModalState",
@@ -34,10 +34,13 @@ export const currTrackCurrentTimeAtom = atom<string>({
 });
 export const currTrackDurationAtom = atom<string>({
   key: "currTrackDuration",
-
   default: "0:00",
 });
 export const PlaylistModalState = atom<boolean>({
   key: "PlaylistModalState",
+  default: false,
+});
+export const ShuffleState = atom<boolean>({
+  key: "ShuffleState",
   default: false,
 });
