@@ -49,7 +49,10 @@ function PlayerController({
         onClick={togglePlayPause}
       />
       <TransparentRoundBtn
-        isDisabled={currTrackIdx === recoilPlaylist.length - 1}
+        isDisabled={
+          recoilPlaylist.length === 0 ||
+          currTrackIdx === recoilPlaylist.length - 1
+        }
         startContent={<Icons.skipForward size={17} />}
         onPress={handleSkipForward}
         size="sm"

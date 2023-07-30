@@ -12,6 +12,7 @@ function useLocalStoragePlaylist() {
     initialValue: [],
     setRecoilState: setRecoilPlaylist,
   });
+
   const addToPlaylist = (track: Track) => {
     setPlaylist([
       { playlistIndex: recoilPlaylist.length, ...track },
@@ -21,7 +22,7 @@ function useLocalStoragePlaylist() {
 
   const removeFromPlaylist = (index: number) => {
     setPlaylist((prevPlaylist: TrackWithIndex[]) =>
-      prevPlaylist.filter((t) => t.playlistIndex !== index)
+      recoilPlaylist.filter((t) => t.playlistIndex !== index)
     );
   };
 
