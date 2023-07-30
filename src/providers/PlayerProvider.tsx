@@ -6,7 +6,7 @@ import {
   playStateAtom,
   playerReadyStateAtom,
 } from "@/atoms";
-import React, { createContext, useContext, useRef, ReactNode } from "react";
+import React, { ReactNode, createContext, useContext, useRef } from "react";
 import YouTube, { YouTubePlayer } from "react-youtube";
 import { useRecoilState } from "recoil";
 

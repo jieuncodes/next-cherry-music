@@ -31,5 +31,53 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] Music player
 - [ ] beautiful dnd - drag cards to move position
 - [ ] Deploy
--
 
+
+``` FolderTree
+├─ src
+│  ├─ animations
+│  ├─ app
+│  │  ├─ Icons.tsx
+│  │  ├─ api
+│  │  │  ├─ auth
+│  │  │  │  └─ callback
+│  │  │  │     └─ route.ts
+│  │  │  ├─ lastFm
+│  │  │  │  └─ fetch-tracks
+│  │  │  │     └─ route.ts
+│  │  │  ├─ supabase
+│  │  │  │  ├─ get-from-db
+│  │  │  │  │  └─ route.ts
+│  │  │  │  └─ save-to-db
+│  │  │  │     └─ route.ts
+│  │  │  └─ youtube
+│  │  │     └─ route.ts
+│  │  ├─ layout.tsx
+│  │  ├─ login.tsx
+│  │  └─ page.tsx
+│  ├─ atoms.ts
+│  ├─ components
+│  │  ├─ AuthModal.tsx
+│  │  ├─ Btns
+│  │  ├─ Carousel
+│  │  ├─ Nav.tsx
+│  │  ├─ Panel
+│  │  │  ├─ CustomerPanel.tsx
+│  │  │  ├─ Panel.tsx
+│  │  │  ├─ PanelPlayer
+│  │  │  └─ PanelPlaylist
+│  │  ├─ PlayBar.tsx
+│  │  ├─ PlaylistModal.tsx
+│  │  ├─ Search.tsx
+│  │  ├─ ThemeSwitcher.tsx
+│  │  ├─ TopChart.tsx
+│  │  ├─ TopTracks.tsx
+│  │  └─ TrackCard
+│  ├─ hooks
+│  ├─ lib
+│  ├─ middleware.ts
+│  ├─ providers
+│  ├─ styles
+│  └─ types
+├─ supabase
+```

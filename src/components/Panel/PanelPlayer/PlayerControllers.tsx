@@ -1,8 +1,9 @@
-import TransparentRoundBtn from "@/components/Btns/TransparentRoundBtn";
 import { Icons } from "@/app/Icons";
-import FlatIconButton from "@/components/Btns/FlatIconBtn";
-import { Controllers } from "@/styles/Panel/PanelPlayer";
 import { currTrackIdxAtom, localStoragePlaylist, playStateAtom } from "@/atoms";
+import FlatIconButton from "@/components/Btns/FlatIconBtn";
+import TransparentRoundBtn from "@/components/Btns/TransparentRoundBtn";
+import usePlayerControls from "@/hooks/usePlayerControls";
+import { Controllers } from "@/styles/Panel/PanelPlayer";
 import { useRecoilState } from "recoil";
 
 interface PlayerControllerProps {
@@ -14,22 +15,13 @@ function PlayerController({
   togglePlayPause,
   isPlayBar,
 }: PlayerControllerProps) {
+  const [isPlaying, setIsPlaying] = useRecoilState(playStateAtom);
+  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
-  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
-  const [isPlaying, setIsPlaying] = useRecoilState(playStateAtom);
+  const { handleShuffle, handleSkipBack, handleSkipForward } =
+    usePlayerControls();
 
-  const handleShuffle = () => {};
-  const handleSkipBack = () => {
-    if (currTrackIdx > 0) {
-      setCurrTrackIdx(currTrackIdx - 1);
-    }
-  };
-  const handleSkipForward = () => {
-    if (currTrackIdx < recoilPlaylist.length - 1) {
-      setCurrTrackIdx(currTrackIdx + 1);
-    }
-  };
   return (
     <Controllers>
       {!isPlayBar && (
