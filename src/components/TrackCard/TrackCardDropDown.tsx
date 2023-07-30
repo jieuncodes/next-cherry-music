@@ -12,7 +12,6 @@ import { Icons } from "../../app/Icons";
 import { Track, TrackWithIndex } from "../../lib/server/database.types";
 
 interface DropDownProps {
-  iconColor: string;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   dropdownItems: DropdownItemData[];
@@ -21,7 +20,6 @@ interface DropDownProps {
 
 function CardDropDown({
   track,
-  iconColor,
   onMouseEnter,
   onMouseLeave,
   dropdownItems,
@@ -55,7 +53,7 @@ function CardDropDown({
     <Dropdown onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <DropdownTrigger>
         <Button isIconOnly radius="full" variant="light">
-          <Icons.moreVertical color={iconColor} />
+          <Icons.moreVertical />
         </Button>
       </DropdownTrigger>
 

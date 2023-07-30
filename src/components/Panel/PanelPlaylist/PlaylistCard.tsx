@@ -2,15 +2,16 @@ import { StyledCard, StyledHeader } from "@/styles/Panel/PlaylistCard";
 import TrackCardImage from "@/components/TrackCard/TrackCardImage";
 import TrackCardDetails from "@/components/TrackCard/TrackCardDetails";
 import { useState } from "react";
-import { Track } from "@/lib/server/database.types";
+import { TrackWithIndex } from "@/lib/server/database.types";
 import CardDropDown from "@/components/TrackCard/TrackCardDropDown";
 import { Icons } from "@/app/Icons";
 import { DropdownItemData } from "@/types/itemTypes";
 
 interface PlaylistCardProps {
-  track: Track;
+  track: TrackWithIndex;
   index: number;
 }
+
 function PlaylistCard({ track, index }: PlaylistCardProps) {
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
@@ -37,7 +38,6 @@ function PlaylistCard({ track, index }: PlaylistCardProps) {
             track={track}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
-            iconColor="black"
             dropdownItems={dropdownItems}
           />
         </div>

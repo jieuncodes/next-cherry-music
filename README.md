@@ -31,5 +31,5 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] Music player
 - [ ] beautiful dnd - drag cards to move position
 - [ ] Deploy
-
+-
 

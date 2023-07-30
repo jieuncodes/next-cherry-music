@@ -4,16 +4,22 @@ import { ReactNode } from "react";
 interface FlatIconButtonProps {
   startContent: ReactNode;
   onClick: () => void;
+  isDisabled?: boolean;
 }
 
-function FlatIconButton({ startContent, onClick }: FlatIconButtonProps) {
+function FlatIconButton({
+  startContent,
+  onClick,
+  isDisabled,
+}: FlatIconButtonProps) {
   return (
     <Button
+      isDisabled={isDisabled}
       isIconOnly
       radius="full"
       variant="flat"
       startContent={startContent}
-      onPress={onClick}
+      onPress={isDisabled ? undefined : onClick}
     />
   );
 }

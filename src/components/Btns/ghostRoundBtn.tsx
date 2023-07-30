@@ -5,11 +5,18 @@ interface GhostRoundBtnProps {
   startContent: ReactNode;
   onPress: () => void;
   size?: "sm" | "md" | "lg";
+  isDisabled?: boolean;
 }
 
-function GhostRoundBtn({ startContent, onPress, size }: GhostRoundBtnProps) {
+function GhostRoundBtn({
+  startContent,
+  onPress,
+  size,
+  isDisabled,
+}: GhostRoundBtnProps) {
   return (
     <Button
+      isDisabled={isDisabled}
       isIconOnly
       variant="ghost"
       startContent={startContent}

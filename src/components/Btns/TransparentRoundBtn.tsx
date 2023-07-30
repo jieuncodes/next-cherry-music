@@ -5,15 +5,18 @@ interface TransparentRoundBtnProps {
   startContent: ReactNode;
   onPress: () => void;
   size?: "sm" | "md" | "lg";
+  isDisabled?: boolean;
 }
 
 function TransparentRoundBtn({
   startContent,
   onPress,
   size,
+  isDisabled,
 }: TransparentRoundBtnProps) {
   return (
     <Button
+      isDisabled={isDisabled}
       isIconOnly
       className=" data-[hover]:bg-foreground/10 "
       radius="full"
