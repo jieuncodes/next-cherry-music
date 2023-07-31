@@ -6,7 +6,7 @@ import usePlayerControls from "@/hooks/usePlayerControls";
 import { TrackWithIndex } from "@/lib/server/database.types";
 import { StyledCard, StyledHeader } from "@/styles/Panel/PlaylistCard";
 import { DropdownItemData } from "@/types/itemTypes";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface PlaylistCardProps {
   track: TrackWithIndex;
@@ -19,8 +19,12 @@ function PlaylistCard({ track, index, isPlayingTrack }: PlaylistCardProps) {
   const [isDropdownHover, setIsDropdownHover] = useState(false);
   const { handlePlayClickedTrack } = usePlayerControls();
 
+  const trackCardRef = useRef<HTMLButtonElement | null>(null);
+
   return (
     <StyledCard
+      data-playlist-index={index}
+      ref={trackCardRef}
       isPressable
       onPress={() => handlePlayClickedTrack(index)}
       onMouseEnter={() => setIsCardHover(true)}
@@ -42,9 +46,11 @@ function PlaylistCard({ track, index, isPlayingTrack }: PlaylistCardProps) {
         <div className="absolute right-0">
           <CardDropDown
             track={track}
+            setIsCardHover={setIsCardHover}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
             dropdownItems={dropdownItems}
+            cardRef={trackCardRef}
           />
         </div>
       </StyledHeader>

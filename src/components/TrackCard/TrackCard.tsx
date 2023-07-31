@@ -1,6 +1,6 @@
 import { Track } from "@/lib/server/database.types";
 import { StyledCard, StyledHeader } from "@/styles/TrackCard";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TrackCardButtons from "./TrackCardBtns";
 import TrackCardDetails from "./TrackCardDetails";
 import TrackCardImage from "./TrackCardImage";
@@ -13,12 +13,10 @@ interface TrackCardProps {
 }
 
 export function TrackCard({ track }: TrackCardProps) {
-  const { playlist, addToPlaylist, removeFromPlaylist } =
-    useLocalStoragePlaylist();
+  const { addToPlaylist } = useLocalStoragePlaylist();
   const [liked, setLiked] = useState(false);
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
-
   const iconColor = isCardHover || isDropdownHover ? "white" : "currentColor";
 
   if (!track) return null;
@@ -39,6 +37,7 @@ export function TrackCard({ track }: TrackCardProps) {
       <TrackCardButtons
         track={track}
         isCardHover={isCardHover}
+        setIsCardHover={setIsCardHover}
         setIsDropdownHover={setIsDropdownHover}
         iconColor={iconColor}
         liked={liked}

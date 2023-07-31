@@ -5,8 +5,7 @@ import { useRecoilState } from "recoil";
 import { currTrackIdxAtom } from "@/atoms";
 
 export function PlaylistCards() {
-  const { playlist, addToPlaylist, removeFromPlaylist } =
-    useLocalStoragePlaylist();
+  const { playlist } = useLocalStoragePlaylist();
   const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
 
   return (

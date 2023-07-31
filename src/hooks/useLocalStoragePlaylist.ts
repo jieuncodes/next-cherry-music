@@ -14,6 +14,7 @@ function useLocalStoragePlaylist() {
   });
 
   const addToPlaylist = (track: Track) => {
+    console.log("playlist", recoilPlaylist);
     setPlaylist([
       { playlistIndex: recoilPlaylist.length, ...track },
       ...recoilPlaylist,
@@ -21,9 +22,11 @@ function useLocalStoragePlaylist() {
   };
 
   const removeFromPlaylist = (index: number) => {
-    setPlaylist((prevPlaylist: TrackWithIndex[]) =>
-      recoilPlaylist.filter((t) => t.playlistIndex !== index)
-    );
+    const newPlaylist = [
+      ...recoilPlaylist.slice(0, index),
+      ...recoilPlaylist.slice(index + 1),
+    ];
+    setPlaylist(newPlaylist);
   };
   const emptyPlaylist = () => {
     setPlaylist([]);

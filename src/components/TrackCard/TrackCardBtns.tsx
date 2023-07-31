@@ -1,20 +1,20 @@
 import { Button } from "@nextui-org/button";
 import { Buttons } from "@/styles/TrackCard";
 import { Icons } from "../../app/Icons";
-import CardDropDown from "./TrackCardDropDown";
+import TrackCardDropDown from "./TrackCardDropDown";
 import { DropdownItemData } from "@/types/itemTypes";
-import { Dispatch } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Track } from "@/lib/server/database.types";
 
 interface TrackCardButtonsProps {
   isCardHover: boolean;
+  setIsCardHover: Dispatch<SetStateAction<boolean>>;
   setIsDropdownHover: Dispatch<boolean>;
   iconColor: string;
   liked: boolean;
   setLiked: Dispatch<boolean>;
   track: Track;
 }
-
 function TrackCardButtons({
   track,
   isCardHover,
@@ -22,6 +22,7 @@ function TrackCardButtons({
   iconColor,
   liked,
   setLiked,
+  setIsCardHover,
 }: TrackCardButtonsProps) {
   return (
     <>
@@ -35,27 +36,21 @@ function TrackCardButtons({
           >
             <Icons.heart color={iconColor} fill={liked ? iconColor : "none"} />
           </Button>
-          <CardDropDown
+          <TrackCardDropDown
             track={track}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
-            iconColor={iconColor}
             dropdownItems={dropdownItems}
+            setIsCardHover={setIsCardHover}
           />
         </Buttons>
       )}
     </>
   );
 }
-
 export default TrackCardButtons;
 
 const dropdownItems: DropdownItemData[] = [
-  {
-    key: "play-next",
-    icon: <Icons.listVideo strokeWidth={1.5} />,
-    label: "Play next",
-  },
   {
     key: "add-to-queue",
     icon: <Icons.listMusic strokeWidth={1.5} />,

@@ -7,25 +7,36 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
-import { Key } from "react";
+import {
+  Dispatch,
+  Key,
+  MutableRefObject,
+  SetStateAction,
+  forwardRef,
+} from "react";
 import { Icons } from "../../app/Icons";
-import { Track, TrackWithIndex } from "../../lib/server/database.types";
+import { Track } from "../../lib/server/database.types";
+import { PlaylistContainer } from "../../styles/Panel/Playlist";
+import { parse } from "path";
 
 interface DropDownProps {
+  track: Track;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   dropdownItems: DropdownItemData[];
-  track: TrackWithIndex;
+  setIsCardHover: Dispatch<SetStateAction<boolean>>;
+  cardRef?: MutableRefObject<HTMLButtonElement | null>;
 }
 
-function CardDropDown({
+function TrackCardDropDown({
   track,
   onMouseEnter,
   onMouseLeave,
   dropdownItems,
+  setIsCardHover,
+  cardRef,
 }: DropDownProps) {
-  const { playlist, addToPlaylist, removeFromPlaylist } =
-    useLocalStoragePlaylist();
+  const { addToPlaylist, removeFromPlaylist } = useLocalStoragePlaylist();
 
   const handleDropdownAction = (key: Key) => {
     switch (key) {
@@ -33,6 +44,8 @@ function CardDropDown({
         break;
       case "add-to-queue":
         addToPlaylist(track);
+        console.log("", setIsCardHover);
+        setIsCardHover(false);
         break;
       case "add-to-playlist":
         break;
@@ -41,7 +54,14 @@ function CardDropDown({
       case "go-to-artist":
         break;
       case "remove-item":
-        removeFromPlaylist(track.playlistIndex);
+        const playlistIndex = cardRef?.current?.getAttribute(
+          "data-playlist-index"
+        );
+        if (playlistIndex) {
+          console.log("pi", parseInt(playlistIndex));
+          removeFromPlaylist(parseInt(playlistIndex));
+        }
+
         break;
       default:
         console.warn(`Unhandled action key: ${key}`);
@@ -71,4 +91,4 @@ function CardDropDown({
     </Dropdown>
   );
 }
-export default CardDropDown;
+export default TrackCardDropDown;
