@@ -1,6 +1,5 @@
 import Carousel from "@/components/Carousel/Carousel";
 
-import PlayBar from "@/components/PlayBar";
 import TopTracks from "@/components/TopTracks";
 
 export default async function Home() {

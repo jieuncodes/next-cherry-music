@@ -1,8 +1,12 @@
+import {
+  localStoragePlaylist,
+  playerReadyStateAtom,
+  progressBarDraggingState,
+} from "@/atoms";
+import { floatToTime } from "@/lib/utils";
 import { RefObject, useEffect, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
-import { useRecoilValue } from "recoil";
-import { localStoragePlaylist, playerReadyStateAtom } from "@/atoms";
-import { floatToTime } from "@/lib/utils";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export const usePlayerProgress = (playerRef: RefObject<YouTubePlayer>) => {
   const isPlayerReady = useRecoilValue(playerReadyStateAtom);
@@ -10,6 +14,7 @@ export const usePlayerProgress = (playerRef: RefObject<YouTubePlayer>) => {
   const [duration, setDuration] = useState("0:00");
   const [progress, setProgress] = useState(0);
   const playlist = useRecoilValue(localStoragePlaylist);
+  const [isDragging, setIsDragging] = useRecoilState(progressBarDraggingState);
 
   useEffect(() => {
     if (playlist.length === 0) {
@@ -21,7 +26,8 @@ export const usePlayerProgress = (playerRef: RefObject<YouTubePlayer>) => {
         if (
           !playerRef.current ||
           typeof playerRef.current.getCurrentTime !== "function" ||
-          typeof playerRef.current.getDuration !== "function"
+          typeof playerRef.current.getDuration !== "function" ||
+          isDragging
         ) {
           return;
         }
@@ -37,5 +43,5 @@ export const usePlayerProgress = (playerRef: RefObject<YouTubePlayer>) => {
     }
   }, [playerRef, isPlayerReady, playlist]);
 
-  return { currentTime, duration, progress };
+  return { currentTime, duration, progress, setProgress };
 };
