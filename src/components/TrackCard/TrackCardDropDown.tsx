@@ -1,4 +1,3 @@
-import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { DropdownItemData } from "@/types/itemTypes";
 import { Button } from "@nextui-org/button";
 import {
@@ -10,6 +9,7 @@ import {
 import { Dispatch, Key, MutableRefObject, SetStateAction } from "react";
 import { Icons } from "../../app/Icons";
 import { Track } from "../../lib/server/database.types";
+import useDropdownHandlers from "@/hooks/useDropdownHandlers";
 
 interface DropDownProps {
   track: Track;
@@ -21,53 +21,14 @@ interface DropDownProps {
   cardRef?: MutableRefObject<HTMLButtonElement | null>;
 }
 
-function TrackCardDropDown({
-  track,
-  onMouseEnter,
-  onMouseLeave,
-  dropdownItems,
-  cardRef,
-  setIsCardHover,
-  setIsDropdownHover,
-}: DropDownProps) {
-  const { addToPlaylist, removeFromPlaylist } = useLocalStoragePlaylist();
-
-  const handleDropdownAction = (key: Key) => {
-    switch (key) {
-      case "add-to-queue":
-        addToPlaylist(track);
-        setIsCardHover(false);
-        setIsDropdownHover(false);
-        break;
-      case "add-to-playlist":
-        setIsCardHover(false);
-        setIsDropdownHover(false);
-        break;
-      case "go-to-album":
-        setIsCardHover(false);
-        setIsDropdownHover(false);
-        break;
-      case "go-to-artist":
-        setIsCardHover(false);
-        setIsDropdownHover(false);
-        break;
-      case "remove-item":
-        const playlistIndex = cardRef?.current?.getAttribute(
-          "data-playlist-index"
-        );
-        if (playlistIndex) {
-          removeFromPlaylist(parseInt(playlistIndex));
-        }
-
-        break;
-      default:
-        console.warn(`Unhandled action key: ${key}`);
-        break;
-    }
-  };
+function TrackCardDropDown(props: DropDownProps) {
+  const { handleDropdownAction } = useDropdownHandlers(props);
 
   return (
-    <Dropdown onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <Dropdown
+      onMouseEnter={props.onMouseEnter}
+      onMouseLeave={props.onMouseLeave}
+    >
       <DropdownTrigger>
         <Button isIconOnly radius="full" variant="light">
           <Icons.moreVertical />
@@ -79,7 +40,7 @@ function TrackCardDropDown({
         aria-label="Dropdown menu with icons"
         onAction={(key) => handleDropdownAction(key)}
       >
-        {dropdownItems.map((item) => (
+        {props.dropdownItems.map((item) => (
           <DropdownItem key={item.key} startContent={item.icon}>
             {item.label}
           </DropdownItem>
