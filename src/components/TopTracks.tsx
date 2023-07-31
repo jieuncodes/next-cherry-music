@@ -17,8 +17,12 @@ import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
 function TopTracks() {
   const { isSaved, isLoading, topTracks } = useTopTracks();
 
-  const { playlist, addToPlaylist, removeFromPlaylist } =
-    useLocalStoragePlaylist();
+  const {
+    playlist,
+    addToTopOfCurrPlaylist,
+    addToBottomOfCurrPlaylist,
+    removeFromPlaylist,
+  } = useLocalStoragePlaylist();
   const [scrollX, setScrollX] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -69,7 +73,7 @@ function TopTracks() {
               <TrackCard
                 key={index}
                 track={track}
-                addToPlaylist={addToPlaylist}
+                addToTopOfCurrPlaylist={addToTopOfCurrPlaylist}
                 removeFromPlaylist={removeFromPlaylist}
               />
             ))}

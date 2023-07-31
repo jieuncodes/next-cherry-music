@@ -8,12 +8,12 @@ import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 
 interface TrackCardProps {
   track: Track;
-  addToPlaylist: (track: Track) => void;
+  addToTopOfCurrPlaylist: (track: Track) => void;
   removeFromPlaylist: (trackId: number) => void;
 }
 
 export function TrackCard({ track }: TrackCardProps) {
-  const { addToPlaylist } = useLocalStoragePlaylist();
+  const { addToTopOfCurrPlaylist } = useLocalStoragePlaylist();
   const [liked, setLiked] = useState(false);
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
@@ -30,7 +30,7 @@ export function TrackCard({ track }: TrackCardProps) {
         isCardHover || isDropdownHover ? "bg-black/30" : "bg-white"
       } `}
     >
-      <StyledHeader onClick={() => addToPlaylist(track)}>
+      <StyledHeader onClick={() => addToTopOfCurrPlaylist(track)}>
         <TrackCardImage isCardHover={isCardHover} track={track} />
         <TrackCardDetails isCardHover={isCardHover} track={track} />
       </StyledHeader>

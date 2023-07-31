@@ -23,20 +23,30 @@ function useSyncedLocalStorage<T>({
     }
   };
 
-  const [value, setValue] = useState<T>(getStoredValue());
+  const setValue = (update: T | ((prevState: T) => T)) => {
+    let newValue: T;
 
-  useEffect(() => {
+    if (typeof update === "function") {
+      newValue = (update as (prevState: T) => T)(getStoredValue());
+    } else {
+      newValue = update;
+    }
+
     try {
       if (typeof window !== "undefined") {
-        window.localStorage.setItem(key, JSON.stringify(value));
-        setRecoilState(value);
+        window.localStorage.setItem(key, JSON.stringify(newValue));
+        setRecoilState(newValue);
       }
     } catch (error) {
       console.error(`Error storing value for key "${key}":`, error);
     }
-  }, [key, setRecoilState, value]);
+  };
 
-  return { value, setValue };
+  useEffect(() => {
+    setRecoilState(getStoredValue());
+  }, [key, setRecoilState]);
+
+  return { setValue };
 }
 
 export default useSyncedLocalStorage;

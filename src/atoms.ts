@@ -1,12 +1,12 @@
 import { atom } from "recoil";
-import { TrackWithIndex } from "./lib/server/database.types";
+import { Track } from "./lib/server/database.types";
 
 export const authModalState = atom<boolean>({
   key: "authModalState",
   default: false,
 });
 
-export const localStoragePlaylist = atom<TrackWithIndex[]>({
+export const localStoragePlaylist = atom<Track[]>({
   key: "localStorageState",
   default: [],
 });

@@ -110,6 +110,3 @@ export interface Database {
 }
 
 export type Track = Database["public"]["Tables"]["tracks"]["Row"];
-export type TrackWithIndex = Track & {
-  playlistIndex: number;
-};

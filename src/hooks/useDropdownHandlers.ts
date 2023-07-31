@@ -14,12 +14,13 @@ interface DropDownProps {
 }
 
 function useDropdownHandlers(props: DropDownProps) {
-  const { addToPlaylist, removeFromPlaylist } = useLocalStoragePlaylist();
+  const { addToBottomOfCurrPlaylist, removeFromPlaylist } =
+    useLocalStoragePlaylist();
 
   const handleDropdownAction = (key: Key) => {
     switch (key) {
       case "add-to-queue":
-        addToPlaylist(props.track);
+        addToBottomOfCurrPlaylist(props.track);
         props.setIsCardHover(false);
         props.setIsDropdownHover(false);
         break;

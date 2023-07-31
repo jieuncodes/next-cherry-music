@@ -1,24 +1,23 @@
 import { useRecoilState } from "recoil";
 import { localStoragePlaylist } from "@/atoms";
-import { Track, TrackWithIndex } from "@/lib/server/database.types";
+import { Track } from "@/lib/server/database.types";
 import useSyncedLocalStorage from "./useSyncedLocalStorage";
 
 function useLocalStoragePlaylist() {
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
 
-  const { setValue: setPlaylist } = useSyncedLocalStorage<TrackWithIndex[]>({
+  const { setValue: setPlaylist } = useSyncedLocalStorage<Track[]>({
     key: "playlist",
     initialValue: [],
     setRecoilState: setRecoilPlaylist,
   });
 
-  const addToPlaylist = (track: Track) => {
-    console.log("playlist", recoilPlaylist);
-    setPlaylist([
-      { playlistIndex: recoilPlaylist.length, ...track },
-      ...recoilPlaylist,
-    ]);
+  const addToTopOfCurrPlaylist = (track: Track) => {
+    setPlaylist((prevPlaylist: Track[]) => [track, ...prevPlaylist]);
+  };
+  const addToBottomOfCurrPlaylist = (track: Track) => {
+    setPlaylist((prevPlaylist: Track[]) => [...prevPlaylist, track]);
   };
 
   const removeFromPlaylist = (index: number) => {
@@ -34,7 +33,8 @@ function useLocalStoragePlaylist() {
 
   return {
     playlist: recoilPlaylist,
-    addToPlaylist,
+    addToTopOfCurrPlaylist,
+    addToBottomOfCurrPlaylist,
     removeFromPlaylist,
     emptyPlaylist,
   };
