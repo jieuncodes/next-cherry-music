@@ -7,17 +7,9 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
-import {
-  Dispatch,
-  Key,
-  MutableRefObject,
-  SetStateAction,
-  forwardRef,
-} from "react";
+import { Dispatch, Key, MutableRefObject, SetStateAction } from "react";
 import { Icons } from "../../app/Icons";
 import { Track } from "../../lib/server/database.types";
-import { PlaylistContainer } from "../../styles/Panel/Playlist";
-import { parse } from "path";
 
 interface DropDownProps {
   track: Track;
@@ -25,6 +17,7 @@ interface DropDownProps {
   onMouseLeave: () => void;
   dropdownItems: DropdownItemData[];
   setIsCardHover: Dispatch<SetStateAction<boolean>>;
+  setIsDropdownHover: Dispatch<SetStateAction<boolean>>;
   cardRef?: MutableRefObject<HTMLButtonElement | null>;
 }
 
@@ -33,32 +26,36 @@ function TrackCardDropDown({
   onMouseEnter,
   onMouseLeave,
   dropdownItems,
-  setIsCardHover,
   cardRef,
+  setIsCardHover,
+  setIsDropdownHover,
 }: DropDownProps) {
   const { addToPlaylist, removeFromPlaylist } = useLocalStoragePlaylist();
 
   const handleDropdownAction = (key: Key) => {
     switch (key) {
-      case "play-next":
-        break;
       case "add-to-queue":
         addToPlaylist(track);
-        console.log("", setIsCardHover);
         setIsCardHover(false);
+        setIsDropdownHover(false);
         break;
       case "add-to-playlist":
+        setIsCardHover(false);
+        setIsDropdownHover(false);
         break;
       case "go-to-album":
+        setIsCardHover(false);
+        setIsDropdownHover(false);
         break;
       case "go-to-artist":
+        setIsCardHover(false);
+        setIsDropdownHover(false);
         break;
       case "remove-item":
         const playlistIndex = cardRef?.current?.getAttribute(
           "data-playlist-index"
         );
         if (playlistIndex) {
-          console.log("pi", parseInt(playlistIndex));
           removeFromPlaylist(parseInt(playlistIndex));
         }
 

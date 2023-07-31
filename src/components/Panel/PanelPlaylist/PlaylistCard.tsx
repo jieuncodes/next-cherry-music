@@ -47,6 +47,7 @@ function PlaylistCard({ track, index, isPlayingTrack }: PlaylistCardProps) {
           <CardDropDown
             track={track}
             setIsCardHover={setIsCardHover}
+            setIsDropdownHover={setIsDropdownHover}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
             dropdownItems={dropdownItems}

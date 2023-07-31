@@ -9,7 +9,7 @@ import { Track } from "@/lib/server/database.types";
 interface TrackCardButtonsProps {
   isCardHover: boolean;
   setIsCardHover: Dispatch<SetStateAction<boolean>>;
-  setIsDropdownHover: Dispatch<boolean>;
+  setIsDropdownHover: Dispatch<SetStateAction<boolean>>;
   iconColor: string;
   liked: boolean;
   setLiked: Dispatch<boolean>;
@@ -42,6 +42,7 @@ function TrackCardButtons({
             onMouseLeave={() => setIsDropdownHover(false)}
             dropdownItems={dropdownItems}
             setIsCardHover={setIsCardHover}
+            setIsDropdownHover={setIsDropdownHover}
           />
         </Buttons>
       )}
