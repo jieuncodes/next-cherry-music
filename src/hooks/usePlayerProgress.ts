@@ -6,13 +6,11 @@ import { useRecoilValue } from "recoil";
 
 interface usePlayerProgressProps {
   playerRef: RefObject<YouTubePlayer>;
-  progressBarRef: RefObject<HTMLDivElement>;
   isDragging: boolean;
 }
 
 export const usePlayerProgress = ({
   playerRef,
-  progressBarRef,
   isDragging,
 }: usePlayerProgressProps) => {
   const playlist = useRecoilValue(localStoragePlaylist);

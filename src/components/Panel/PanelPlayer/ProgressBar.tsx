@@ -3,7 +3,7 @@ import useMouseAction from "@/hooks/useMouseAction";
 import { usePlayerProgress } from "@/hooks/usePlayerProgress";
 import { cn } from "@/lib/utils";
 import { Progress } from "@nextui-org/react";
-import { RefObject, useRef } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
 import { useRecoilState } from "recoil";
 
@@ -14,20 +14,18 @@ interface ProgressBarProps {
 
 function ProgressBar({ playerRef, isPlayBar }: ProgressBarProps) {
   const progressBarRef = useRef<HTMLDivElement | null>(null);
-  const { isDragging, handleMouseDown, handleMouseUp, draggingProgress } =
-    useMouseAction({
-      playerRef,
-      progressBarRef,
-    });
+  const [isDragging, setIsDragging] = useRecoilState(progressBarDraggingState);
+  const { handleMouseDown, handleMouseUp, draggingProgress } = useMouseAction({
+    playerRef,
+    progressBarRef,
+  });
 
   const { duration, currentTime, youtubeProgress, setYoutubeProgress } =
     usePlayerProgress({
       playerRef,
-      progressBarRef,
       isDragging,
     });
-
-  const uiProgress = isDragging ? draggingProgress : youtubeProgress;
+  const [progressValue, setProgressValue] = useState(youtubeProgress);
   return (
     <div
       className={cn(
@@ -43,13 +41,13 @@ function ProgressBar({ playerRef, isPlayBar }: ProgressBarProps) {
         disableAnimation={true}
         classNames={{
           indicator: `${
-            isPlayBar ? "bg-pink-500" : "bg-default-800 "
+            isPlayBar ? "bg-pink-500" : "bg-default-800"
           } dark:bg-white`,
           track: ` ${isPlayBar ? "bg-pink-500/30" : "bg-default-500/30"}`,
         }}
         color="default"
         size="sm"
-        value={uiProgress}
+        value={isDragging ? draggingProgress : youtubeProgress}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       />
