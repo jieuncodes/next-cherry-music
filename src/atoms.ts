@@ -44,7 +44,3 @@ export const ShuffleState = atom<boolean>({
   key: "ShuffleState",
   default: false,
 });
-export const progressBarDraggingState = atom<boolean>({
-  key: "progressBarDraggingState",
-  default: false,
-});

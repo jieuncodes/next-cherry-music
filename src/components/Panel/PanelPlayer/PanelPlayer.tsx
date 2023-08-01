@@ -1,18 +1,12 @@
-import {
-  currTrackIdxAtom,
-  localStoragePlaylist,
-  playStateAtom,
-  playerReadyStateAtom,
-} from "@/atoms";
+import { currTrackIdxAtom, localStoragePlaylist } from "@/atoms";
+import { usePlayer } from "@/providers/PlayerProvider";
 import { PanelPlayerContainer } from "@/styles/Panel/PanelPlayer";
-import YouTube, { YouTubePlayer } from "react-youtube";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import AlbumCover from "./AlbumCover";
 import PlayerController from "./PlayerControllers";
 import ProgressBar from "./ProgressBar";
 import TrackInfo from "./TrackInfo";
-import { useEffect, useRef, useState } from "react";
-import { usePlayer } from "@/providers/PlayerProvider";
 
 function PanelPlayer() {
   const { togglePlayPause, playerRef } = usePlayer();
