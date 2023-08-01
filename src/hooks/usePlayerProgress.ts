@@ -1,5 +1,5 @@
 import { localStoragePlaylist, playerReadyStateAtom } from "@/atoms";
-import { floatToTime } from "@/lib/utils";
+import { floatToTime, isValidPlayer } from "@/lib/utils";
 import { RefObject, useEffect, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
 import { useRecoilValue } from "recoil";
@@ -27,16 +27,12 @@ export const usePlayerProgress = ({
     setCurrentTime("0:00");
     setDuration("0:00");
   };
-  const hasValidPlayerMethods =
-    playerRef.current &&
-    typeof playerRef.current.getCurrentTime === "function" &&
-    typeof playerRef.current.getDuration === "function";
 
   useEffect(() => {
     if (playlist.length === 0) {
       initProgress();
     } else if (playlist.length > 0 && isPlayerReady && playerRef.current) {
-      if (!hasValidPlayerMethods || isDragging) return;
+      if (!isValidPlayer(playerRef) || isDragging) return;
 
       const interval = setInterval(() => {
         const currentTime = playerRef.current.getCurrentTime();
