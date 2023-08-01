@@ -13,46 +13,49 @@ function useMouseAction({ playerRef, progressBarRef }: useMouseActionProps) {
     playerRef.current && typeof playerRef.current.getCurrentTime === "function";
 
   let playerCurrTime;
+  let duration: number;
   if (hasValidPlayerMethods) {
     playerCurrTime = playerRef.current.getCurrentTime();
+    duration = playerRef.current.getDuration();
   }
 
   const [draggingProgress, setDraggingProgress] = useState(playerCurrTime || 0);
+  const [percentage, setPercentage] = useState(0);
 
-  let percentage: number;
+  const getPercentageFromEvent = (event: MouseEvent): number => {
+    const rect = progressBarRef.current?.getBoundingClientRect();
+    if (rect && rect.width) {
+      const x = event.clientX - rect.left;
+      return (x / rect.width) * 100;
+    }
+    return 0;
+  };
 
   const handleMouseDown = (event: MouseEvent) => {
     setIsDragging(true);
 
-    const rect = progressBarRef.current?.getBoundingClientRect();
-    if (rect && rect.width) {
-      const x = event.clientX - rect.left;
-      const percentage = (x / rect.width) * 100;
-      setDraggingProgress(percentage);
-    }
+    setPercentage(getPercentageFromEvent(event));
+    setDraggingProgress(percentage);
+
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
-
-    console.log("mouseDown");
   };
 
   const handleMouseMove = (event: MouseEvent) => {
     if (isDragging) {
-      const rect = progressBarRef.current?.getBoundingClientRect();
-      if (rect && rect.width) {
-        const x = event.clientX - rect.left;
-        const percentage = (x / rect.width) * 100;
-        setDraggingProgress(percentage);
-      }
+      setPercentage(getPercentageFromEvent(event));
+
+      setDraggingProgress(percentage);
     }
   };
 
   const handleMouseUp = () => {
     if (isDragging) {
-      playerRef.current?.seekTo(percentage, true); //not working
+      if (percentage) {
+        playerRef.current?.seekTo((percentage / 100) * duration, true);
+      }
       setIsDragging(false);
       document.removeEventListener("mousemove", handleMouseMove);
-      console.log("mouseUp");
     }
   };
 
