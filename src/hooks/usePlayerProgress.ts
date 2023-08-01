@@ -17,10 +17,10 @@ export const usePlayerProgress = ({
 }: usePlayerProgressProps) => {
   const playlist = useRecoilValue(localStoragePlaylist);
   const isPlayerReady = useRecoilValue(playerReadyStateAtom);
+
   const [currentTime, setCurrentTime] = useState("0:00");
   const [duration, setDuration] = useState("0:00");
   const [youtubeProgress, setYoutubeProgress] = useState(0);
-  const [isTracking, setIsTracking] = useState(true);
 
   const initProgress = () => {
     setYoutubeProgress(0);

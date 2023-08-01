@@ -20,42 +20,47 @@ function useMouseAction({ playerRef, progressBarRef }: useMouseActionProps) {
   }
 
   const [draggingProgress, setDraggingProgress] = useState(playerCurrTime || 0);
+
   const [percentage, setPercentage] = useState(0);
 
   const getPercentageFromEvent = (event: MouseEvent): number => {
     const rect = progressBarRef.current?.getBoundingClientRect();
     if (rect && rect.width) {
       const x = event.clientX - rect.left;
+      console.log("(x / rect.width) * 100", (x / rect.width) * 100);
       return (x / rect.width) * 100;
     }
     return 0;
   };
-
   const handleMouseDown = (event: MouseEvent) => {
     setIsDragging(true);
 
-    setPercentage(getPercentageFromEvent(event));
-    setDraggingProgress(percentage);
+    const newPercentage = getPercentageFromEvent(event);
+    console.log("on mouse down ", newPercentage);
+    setPercentage(newPercentage);
 
+    setDraggingProgress(newPercentage);
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
+
+    console.log("mouseDown");
   };
 
   const handleMouseMove = (event: MouseEvent) => {
     if (isDragging) {
-      setPercentage(getPercentageFromEvent(event));
+      const newPercentage = getPercentageFromEvent(event);
+      setPercentage(newPercentage);
 
-      setDraggingProgress(percentage);
+      setDraggingProgress(newPercentage);
     }
   };
 
   const handleMouseUp = () => {
     if (isDragging) {
-      if (percentage) {
-        playerRef.current?.seekTo((percentage / 100) * duration, true);
-      }
-      setIsDragging(false);
+      console.log("UP percentage:", percentage);
+      playerRef.current?.seekTo((percentage / 100) * duration, true);
       document.removeEventListener("mousemove", handleMouseMove);
+      console.log("mouseUp");
     }
   };
 

@@ -1,9 +1,11 @@
+import { progressBarDraggingState } from "@/atoms";
 import useMouseAction from "@/hooks/useMouseAction";
 import { usePlayerProgress } from "@/hooks/usePlayerProgress";
 import { cn } from "@/lib/utils";
 import { Progress } from "@nextui-org/react";
 import { RefObject, useRef } from "react";
 import { YouTubePlayer } from "react-youtube";
+import { useRecoilState } from "recoil";
 
 interface ProgressBarProps {
   playerRef: RefObject<YouTubePlayer>;
