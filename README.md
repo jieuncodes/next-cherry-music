@@ -43,7 +43,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 │  │  │  │  └─ callback
 │  │  │  │     └─ route.ts
 │  │  │  ├─ lastFm
-│  │  │  │  └─ fetch-tracks
+│  │  │  │  └─ top-tracks
 │  │  │  │     └─ route.ts
 │  │  │  ├─ supabase
 │  │  │  │  ├─ get-from-db

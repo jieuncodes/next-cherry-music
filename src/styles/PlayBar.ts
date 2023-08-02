@@ -4,7 +4,7 @@ export const PlayBarContainer = tw.div` fixed bottom-8 h-20   lg:hidden z-30 gri
 
 export const Player = tw.div`col-start-2 bg-white/90 rounded-b-[15px] relative w-full overflow-hidden grid grid-cols-[1.7fr_2fr_6fr_2fr_0.5fr]  p-4 items-center backdrop-blur-sm`;
 
-export const TimeFlow = tw.div`ml-4 col-start-2 text-xs text-default-500`;
+export const TimeFlow = tw.div`ml-4 col-start-2 text-xs text-default-500 w-20 flex justify-between`;
 
 export const TrackInfoBox = tw.div`gap-0 grid grid-cols-[auto_4fr] grid-rows-2 `;
 

@@ -28,6 +28,12 @@ function useDropdownHandlers(props: DropDownProps) {
         props.setIsCardHover(false);
         props.setIsDropdownHover(false);
         break;
+      case "go-to-album":
+        alert(props.track.albumTitle);
+        break;
+      case "go-to-artist":
+        alert(props.track.artist);
+        break;
       case "remove-item":
         const playlistIndex = props.cardRef?.current?.getAttribute(
           "data-playlist-index"

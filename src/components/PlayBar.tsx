@@ -44,7 +44,9 @@ function PlayBar() {
       <Player>
         <PlayerController togglePlayPause={togglePlayPause} isPlayBar={true} />
         <TimeFlow>
-          {floatToTime(duration / 60)} / {floatToTime(duration / 60)}
+          <span>{floatToTime(currentTime / 60)}</span>
+          <span>/</span>
+          <span> {floatToTime(duration / 60)}</span>
         </TimeFlow>
         <TrackInfoBox>
           <AlbumCoverBox>

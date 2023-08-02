@@ -21,7 +21,7 @@ function useTopTracks() {
 
   const fetchAndSave = async () => {
     setIsLoading(true);
-    const response = await fetch("/api/lastFm/fetch-tracks");
+    const response = await fetch("/api/lastFm/top-tracks");
     const data = await response.json();
 
     const tracksWithYoutubeId = data.allTrackInfo.filter(

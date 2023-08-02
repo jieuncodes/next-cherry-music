@@ -6,7 +6,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
-import { Dispatch, Key, MutableRefObject, SetStateAction } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { Icons } from "../../app/Icons";
 import { Track } from "../../lib/server/database.types";
 import useDropdownHandlers from "@/hooks/useDropdownHandlers";
@@ -23,7 +23,6 @@ interface DropDownProps {
 
 function TrackCardDropDown(props: DropDownProps) {
   const { handleDropdownAction } = useDropdownHandlers(props);
-
   return (
     <Dropdown
       onMouseEnter={props.onMouseEnter}
