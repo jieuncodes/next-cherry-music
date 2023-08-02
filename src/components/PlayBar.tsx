@@ -3,7 +3,7 @@
 import {
   currTrackCurrentTimeAtom,
   currTrackDurationAtom,
-  currTrackIdxAtom,
+  currPlaylistTrackIdx,
   localStoragePlaylist,
 } from "@/atoms";
 import { usePlayer } from "@/providers/PlayerProvider";
@@ -24,13 +24,14 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { Icons } from "../app/Icons";
 import PlayerController from "./Panel/PanelPlayer/PlayerControllers";
 import ProgressBar from "./Panel/PanelPlayer/ProgressBar";
+import { floatToTime } from "@/lib/utils";
 
 function PlayBar() {
   const { togglePlayPause, playerRef } = usePlayer();
   const [liked, setLiked] = useState(false);
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
-  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
+  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currPlaylistTrackIdx);
 
   const currTrack = recoilPlaylist[currTrackIdx] || "[]";
   const [currentTime, setCurrentTime] = useRecoilState(
@@ -43,7 +44,7 @@ function PlayBar() {
       <Player>
         <PlayerController togglePlayPause={togglePlayPause} isPlayBar={true} />
         <TimeFlow>
-          {currentTime} / {duration}
+          {floatToTime(duration / 60)} / {floatToTime(duration / 60)}
         </TimeFlow>
         <TrackInfoBox>
           <AlbumCoverBox>

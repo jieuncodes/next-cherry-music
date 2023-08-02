@@ -1,47 +1,50 @@
-import { localStoragePlaylist, playerReadyStateAtom } from "@/atoms";
-import { floatToTime, isValidPlayer } from "@/lib/utils";
+import {
+  currTrackCurrentTimeAtom,
+  currTrackDurationAtom,
+  localStoragePlaylist,
+  playerReadyStateAtom,
+} from "@/atoms";
 import { RefObject, useEffect, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 interface usePlayerProgressProps {
   playerRef: RefObject<YouTubePlayer>;
-  isDragging: boolean;
 }
 
-export const usePlayerProgress = ({
-  playerRef,
-  isDragging,
-}: usePlayerProgressProps) => {
+export const usePlayerProgress = ({ playerRef }: usePlayerProgressProps) => {
   const playlist = useRecoilValue(localStoragePlaylist);
   const isPlayerReady = useRecoilValue(playerReadyStateAtom);
 
-  const [currentTime, setCurrentTime] = useState("0:00");
-  const [duration, setDuration] = useState("0:00");
+  const [currentTime, setCurrentTime] = useRecoilState(
+    currTrackCurrentTimeAtom
+  );
+  const [duration, setDuration] = useRecoilState(currTrackDurationAtom);
   const [youtubeProgress, setYoutubeProgress] = useState(0);
 
   const initProgress = () => {
     setYoutubeProgress(0);
-    setCurrentTime("0:00");
-    setDuration("0:00");
+    setCurrentTime(0);
+    setDuration(0);
   };
-
+  useEffect(() => {
+    if (youtubeProgress === 0) {
+      setCurrentTime(0);
+    }
+  }, [youtubeProgress]);
   useEffect(() => {
     if (playlist.length === 0) {
       initProgress();
     } else if (playlist.length > 0 && isPlayerReady && playerRef.current) {
-      if (!isValidPlayer(playerRef) || isDragging) return;
-
       const interval = setInterval(() => {
-        const currentTime = playerRef.current.getCurrentTime();
-        const duration = playerRef.current.getDuration();
-
-        setCurrentTime(floatToTime(currentTime / 60));
-        setDuration(floatToTime(duration / 60));
+        if (!playerRef.current) return;
+        const currentTime = playerRef?.current?.getCurrentTime();
+        setDuration(playerRef.current.getDuration());
+        setCurrentTime(currentTime);
 
         const percentage = (currentTime / duration) * 100;
         setYoutubeProgress(percentage);
-      }, 200);
+      }, 100);
       return () => clearInterval(interval);
     }
   }, [playerRef, isPlayerReady, playlist]);

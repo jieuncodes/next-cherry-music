@@ -1,4 +1,4 @@
-import { currTrackIdxAtom, localStoragePlaylist } from "@/atoms";
+import { currPlaylistTrackIdx, localStoragePlaylist } from "@/atoms";
 import { usePlayer } from "@/providers/PlayerProvider";
 import { PanelPlayerContainer } from "@/styles/Panel/PanelPlayer";
 import { useEffect } from "react";
@@ -13,7 +13,7 @@ function PanelPlayer() {
 
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
-  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
+  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currPlaylistTrackIdx);
   const currTrack = recoilPlaylist[currTrackIdx] || "[]";
 
   useEffect(() => {

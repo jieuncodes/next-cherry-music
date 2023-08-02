@@ -2,7 +2,7 @@
 
 import {
   ShuffleState,
-  currTrackIdxAtom,
+  currPlaylistTrackIdx,
   localStoragePlaylist,
   playStateAtom,
   playerReadyStateAtom,
@@ -51,11 +51,13 @@ interface PlayerProviderProps {
 function PlayerProvider({ children }: PlayerProviderProps) {
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
-  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
+  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currPlaylistTrackIdx);
   const currTrack = recoilPlaylist[currTrackIdx] || "[]";
+
   const [playerReady, setPlayerReady] = useRecoilState(playerReadyStateAtom);
   const [isPlaying, setIsPlaying] = useRecoilState(playStateAtom);
   const playerRef = useRef<YouTubePlayer | null>(null);
+
   const isShuffleOn = useRecoilValue(ShuffleState);
   const { playShuffledNextTrack } = usePlayerControls();
 
@@ -99,7 +101,9 @@ function PlayerProvider({ children }: PlayerProviderProps) {
               playerRef.current = event.target;
               event.target.playVideo();
             }}
-            onPlay={() => setIsPlaying(true)}
+            onPlay={() => {
+              setIsPlaying(true);
+            }}
             onPause={() => setIsPlaying(false)}
             onEnd={handleTrackEnd}
           />

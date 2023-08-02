@@ -1,9 +1,9 @@
 import { progressBarDraggingState } from "@/atoms";
 import useMouseAction from "@/hooks/useMouseAction";
 import { usePlayerProgress } from "@/hooks/usePlayerProgress";
-import { cn } from "@/lib/utils";
+import { cn, floatToTime } from "@/lib/utils";
 import { Progress } from "@nextui-org/react";
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import { YouTubePlayer } from "react-youtube";
 import { useRecoilState } from "recoil";
 
@@ -13,19 +13,17 @@ interface ProgressBarProps {
 }
 
 function ProgressBar({ playerRef, isPlayBar }: ProgressBarProps) {
-  const progressBarRef = useRef<HTMLDivElement | null>(null);
   const [isDragging, setIsDragging] = useRecoilState(progressBarDraggingState);
-  const { handleMouseDown, handleMouseUp, draggingProgress } = useMouseAction({
+  const progressBarRef = useRef<HTMLDivElement | null>(null);
+
+  const { onMouseDown, onMouseUp, draggingProgress } = useMouseAction({
     playerRef,
     progressBarRef,
   });
 
-  const { duration, currentTime, youtubeProgress, setYoutubeProgress } =
-    usePlayerProgress({
-      playerRef,
-      isDragging,
-    });
-  const [progressValue, setProgressValue] = useState(youtubeProgress);
+  const { duration, currentTime } = usePlayerProgress({
+    playerRef,
+  });
   return (
     <div
       className={cn(
@@ -47,14 +45,18 @@ function ProgressBar({ playerRef, isPlayBar }: ProgressBarProps) {
         }}
         color="default"
         size="sm"
-        value={isDragging ? draggingProgress : youtubeProgress}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
+        value={
+          isDragging ? draggingProgress : (currentTime / duration) * 100 || 0
+        }
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
       />
       {!isPlayBar && (
         <div className="flex justify-between">
-          <p className="text-small">{currentTime}</p>
-          <p className="text-small text-foreground/50">{duration}</p>
+          <p className="text-small">{floatToTime(currentTime / 60)}</p>
+          <p className="text-small text-foreground/50">
+            {floatToTime(duration / 60)}
+          </p>
         </div>
       )}
     </div>

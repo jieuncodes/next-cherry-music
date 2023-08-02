@@ -1,8 +1,8 @@
-import { progressBarDraggingState } from "@/atoms";
+import { currTrackDurationAtom, progressBarDraggingState } from "@/atoms";
 import { calculatePercentage, isValidPlayer } from "@/lib/utils";
-import { RefObject, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 interface useMouseActionProps {
   playerRef: RefObject<YouTubePlayer>;
@@ -12,42 +12,38 @@ interface useMouseActionProps {
 function useMouseAction({ playerRef, progressBarRef }: useMouseActionProps) {
   const [isDragging, setIsDragging] = useRecoilState(progressBarDraggingState);
   const [draggingProgress, setDraggingProgress] = useState(0);
-  const [percentage, setPercentage] = useState(0);
+  const uiPercentageRef = useRef(0);
 
-  let duration: number = 0;
-  if (isValidPlayer(playerRef)) {
-    duration = playerRef.current.getDuration();
-  }
+  const duration = useRecoilValue(currTrackDurationAtom);
 
-  const handleMouseDown = (event: MouseEvent) => {
+  const onMouseDown = (event: MouseEvent) => {
     const newPercentage = calculatePercentage(event, progressBarRef);
-    setPercentage(newPercentage);
+    uiPercentageRef.current = newPercentage;
     setDraggingProgress(newPercentage);
 
     document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-    console.log("setIsDragging", isDragging);
+    document.addEventListener("mouseup", onMouseUp);
   };
 
   const handleMouseMove = (event: MouseEvent) => {
     setIsDragging(true);
     const newPercentage = calculatePercentage(event, progressBarRef);
-    setPercentage(newPercentage);
+    uiPercentageRef.current = newPercentage;
     setDraggingProgress(newPercentage);
   };
 
-  const handleMouseUp = () => {
-    console.log("mouseUP");
-    playerRef.current?.seekTo((percentage / 100) * duration, true);
+  const onMouseUp = () => {
+    playerRef.current?.seekTo((uiPercentageRef.current / 100) * duration, true);
     document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
+    document.removeEventListener("mouseup", onMouseUp);
+    setIsDragging(false);
   };
 
   return {
     isDragging,
-    handleMouseDown,
+    onMouseDown,
     handleMouseMove,
-    handleMouseUp,
+    onMouseUp,
     draggingProgress,
   };
 }

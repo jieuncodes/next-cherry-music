@@ -1,7 +1,7 @@
 import { Icons } from "@/app/Icons";
 import {
   ShuffleState,
-  currTrackIdxAtom,
+  currPlaylistTrackIdx,
   localStoragePlaylist,
   playStateAtom,
 } from "@/atoms";
@@ -21,7 +21,7 @@ function PlayerController({
   isPlayBar,
 }: PlayerControllerProps) {
   const [isPlaying, setIsPlaying] = useRecoilState(playStateAtom);
-  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
+  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currPlaylistTrackIdx);
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
   const { handleSkipBack, handleSkipForward } = usePlayerControls();

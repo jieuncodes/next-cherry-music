@@ -1,11 +1,14 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { ShuffleState, currTrackIdxAtom, localStoragePlaylist } from "@/atoms";
-import { useEffect } from "react";
+import {
+  ShuffleState,
+  currPlaylistTrackIdx,
+  localStoragePlaylist,
+} from "@/atoms";
 
 const usePlayerControls = () => {
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
-  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
+  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currPlaylistTrackIdx);
   const isShuffleOn = useRecoilValue(ShuffleState);
 
   const playShuffledNextTrack = () => {

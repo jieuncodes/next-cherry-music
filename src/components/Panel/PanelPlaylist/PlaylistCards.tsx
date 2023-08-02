@@ -2,11 +2,11 @@ import PlaylistCard from "./PlaylistCard";
 import { PlaylistGrid } from "@/styles/Panel/PlaylistCard";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { useRecoilState } from "recoil";
-import { currTrackIdxAtom } from "@/atoms";
+import { currPlaylistTrackIdx } from "@/atoms";
 
 export function PlaylistCards() {
   const { playlist } = useLocalStoragePlaylist();
-  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currTrackIdxAtom);
+  const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currPlaylistTrackIdx);
 
   return (
     <PlaylistGrid>
