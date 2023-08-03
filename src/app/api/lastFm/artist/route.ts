@@ -19,7 +19,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       api_key: process.env.LAST_FM_API_KEY!,
       format: "json",
     });
-    1;
+
     url.search = params.toString();
     const response = await fetch(url);
 

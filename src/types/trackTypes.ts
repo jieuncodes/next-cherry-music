@@ -28,7 +28,7 @@ export interface LastFmArtistInfo {
   name: string;
   mbid: string;
   url: string;
-  image: AlbumImage[];
+  image: string[];
   streamable: string;
   ontour: string;
   stats: { listeners: string; playcount: string };
@@ -39,4 +39,17 @@ export interface LastFmArtistInfo {
     published: string;
     summary: string;
   };
+}
+
+export interface SpotifyBestMatchArtistInfo {
+  external_urls: { spotify: string };
+  followers: { href: string | null; total: number };
+  genres: string[];
+  href: string;
+  id: string;
+  images: { height: number; url: string; width: number }[];
+  name: string;
+  popularity: number;
+  type: string;
+  uri: string;
 }
