@@ -1,16 +1,3 @@
-import { type } from "os";
-
-export interface LastFmArtist {
-  name: string;
-  mbid: string;
-  url: string;
-}
-
-export interface LastFmImage {
-  "#text": string;
-  size: string;
-}
-
 export interface LastFmTopTrack {
   id: string;
 
@@ -37,13 +24,19 @@ export interface LastFmTrackDetails {
   image: AlbumImage[];
 }
 
-export interface Album {
-  artist: string;
-  title: string;
-  mbid: string;
-}
-
-export interface Tag {
+export interface LastFmArtistInfo {
   name: string;
+  mbid: string;
   url: string;
+  image: AlbumImage[];
+  streamable: string;
+  ontour: string;
+  stats: { listeners: string; playcount: string };
+  similar: { artist: Artist[] };
+  tags: { tag: { name: string; url: string }[] };
+  bio: {
+    links: { link: { "#text": string; rel: string; href: string }[] };
+    published: string;
+    summary: string;
+  };
 }

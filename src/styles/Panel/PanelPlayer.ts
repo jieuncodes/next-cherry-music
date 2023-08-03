@@ -1,7 +1,7 @@
 import tw from "tailwind-styled-components";
 import { motion } from "framer-motion";
 
-export const PanelPlayerContainer = tw.div`rounded-xl w-full h-auto flex flex-col align-middle justify-center mb-1 overflow-scroll`;
+export const PanelPlayerContainer = tw.div`rounded-xl w-full h-auto flex flex-col align-middle justify-center mb-1`;
 
 export const AlbumCoverBox = tw.div` relative flex align-middle max-h-[170px] 2xl:max-h-[200px] bg-cover rounded-xl shadow-xl justify-center self-center bg-white/30 overflow-hidden aspect-square `;
 

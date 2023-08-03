@@ -1,4 +1,3 @@
-import { TrackTitle } from "@/styles/TrackCard";
 import { supabase } from "@/lib/server/client";
 import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
@@ -23,7 +22,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     .single();
   if (!track) {
     console.log(
-      `supabase doesnt have youtube id for this track: ${TrackTitle}`
+      `supabase doesnt have youtube id for this track: ${trackTitle}`
     );
   }
   if (track && track.youtubeId) {
