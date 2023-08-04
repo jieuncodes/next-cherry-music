@@ -32,13 +32,14 @@ export const usePlayerProgress = ({ playerRef }: usePlayerProgressProps) => {
       setCurrentTime(0);
     }
   }, [youtubeProgress]);
+
   useEffect(() => {
     if (playlist.length === 0) {
       initProgress();
     } else if (playlist.length > 0 && isPlayerReady && playerRef.current) {
       const interval = setInterval(() => {
-        if (!playerRef.current) return;
-        const currentTime = playerRef?.current?.getCurrentTime();
+        if (!playerRef || !playerRef.current) return;
+        const currentTime = playerRef.current?.getCurrentTime();
         setDuration(playerRef.current.getDuration());
         setCurrentTime(currentTime);
 

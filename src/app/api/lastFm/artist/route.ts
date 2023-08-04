@@ -8,7 +8,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const artist = req.nextUrl.searchParams.get("artist");
   const mbid = req.nextUrl.searchParams.get("mbid");
   const lang = req.nextUrl.searchParams.get("lang");
-  console.log("api", artist);
 
   try {
     const url = new URL(process.env.LAST_FM_BASE_URL!);
@@ -24,7 +23,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const response = await fetch(url);
 
     const data = await response.json();
-    console.log("data", data);
     return NextResponse.json(data);
   } catch (error) {
     handleError({ context: "lastFm API", error });

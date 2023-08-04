@@ -7,31 +7,10 @@ function Artist({ params }: { params: { artist: string } }) {
   const [artistData, setArtistData] = useState<LastFmArtistInfo>();
   const [artistImageUrl, setAritstImageUrl] = useState<string>("");
 
-  const fetchSpotifyArtistData = async (artistName: string): Promise<void> => {
-    console.log("fetch");
-    const tokenResponse = await fetch(
-      "https://open.spotify.com/get_access_token?reason=transport&productType=web_player"
-    );
-    const tokenData = await tokenResponse.json();
-    const token = tokenData.accessToken;
-    console.log("token", tokenData);
-    const headers = new Headers({
-      Authorization: `Bearer ${token}`,
-    });
-
-    const response = await fetch(
-      `https://api.spotify.com/v1/search?type=artist&q=${artistName}&decorate_restrictions=false&best_match=true&include_external=audio&limit=1`,
-      { headers }
-    );
+  const fetchSpotifyImage = async (artist: string) => {
+    const response = await fetch(`/api/spotify/artist?artist=${artist}`);
     const data = await response.json();
-
-    if (
-      data.artists &&
-      data.artists.items.length > 0 &&
-      data.artists.items[0].images.length > 0
-    ) {
-      setAritstImageUrl(data.artists.items[0].images[0].url);
-    }
+    setAritstImageUrl(data.best_match.items[0].images[0].url);
   };
 
   const fetchArtistData = async (): Promise<LastFmArtistInfo | undefined> => {
@@ -39,14 +18,16 @@ function Artist({ params }: { params: { artist: string } }) {
     const data: LastFmArtistInfo = await response.json();
     return data;
   };
+
   const fetchLastFmArtistData = async () => {
     const artistData = await fetchArtistData();
     setArtistData(artistData);
   };
 
   useEffect(() => {
+    console.log("artistData", artistData);
     fetchLastFmArtistData();
-    fetchSpotifyArtistData(params.artist);
+    fetchSpotifyImage(params.artist);
   }, [params.artist]);
 
   if (!artistData) {
@@ -57,6 +38,9 @@ function Artist({ params }: { params: { artist: string } }) {
     <div>
       <img src={artistImageUrl} alt={artistData.name} />
       <h1>{params.artist}</h1>
+      <p className="overflow-ellipsis">{artistData.artist.bio?.summary}</p>
+      <button>shuffle</button>
+      <button>heart icon</button>
     </div>
   );
 }

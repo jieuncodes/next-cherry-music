@@ -34,10 +34,12 @@ export interface LastFmArtistInfo {
   stats: { listeners: string; playcount: string };
   similar: { artist: Artist[] };
   tags: { tag: { name: string; url: string }[] };
-  bio: {
-    links: { link: { "#text": string; rel: string; href: string }[] };
-    published: string;
-    summary: string;
+  artist: {
+    bio: {
+      links: { link: { "#text": string; rel: string; href: string }[] };
+      published: string;
+      summary: string;
+    };
   };
 }
 
