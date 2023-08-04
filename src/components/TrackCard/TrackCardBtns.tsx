@@ -5,6 +5,7 @@ import TrackCardDropDown from "./TrackCardDropDown";
 import { DropdownItemData } from "@/types/itemTypes";
 import { Dispatch, SetStateAction } from "react";
 import { Track } from "@/lib/server/database.types";
+import LikeButton from "../Btns/LikeButton";
 
 interface TrackCardButtonsProps {
   isCardHover: boolean;
@@ -12,7 +13,8 @@ interface TrackCardButtonsProps {
   setIsDropdownHover: Dispatch<SetStateAction<boolean>>;
   iconColor: string;
   liked: boolean;
-  setLiked: Dispatch<boolean>;
+  setLiked: Dispatch<SetStateAction<boolean>>;
+
   track: Track;
 }
 function TrackCardButtons({
@@ -28,14 +30,7 @@ function TrackCardButtons({
     <>
       {isCardHover && (
         <Buttons>
-          <Button
-            isIconOnly
-            radius="full"
-            variant="light"
-            onPress={() => setLiked(!liked)}
-          >
-            <Icons.heart color={iconColor} fill={liked ? iconColor : "none"} />
-          </Button>
+          <LikeButton liked={liked} setLiked={setLiked} iconColor={iconColor} />
           <TrackCardDropDown
             track={track}
             onMouseEnter={() => setIsDropdownHover(true)}
