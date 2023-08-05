@@ -25,16 +25,16 @@ export interface LastFmTrackDetails {
 }
 
 export interface LastFmArtistInfo {
-  name: string;
-  mbid: string;
-  url: string;
-  image: string[];
-  streamable: string;
-  ontour: string;
-  stats: { listeners: string; playcount: string };
-  similar: { artist: Artist[] };
-  tags: { tag: { name: string; url: string }[] };
   artist: {
+    name: string;
+    mbid: string;
+    url: string;
+    image: string[];
+    streamable: string;
+    ontour: string;
+    stats: { listeners: string; playcount: string };
+    similar: { artist: Artist[] };
+    tags: { tag: { name: string; url: string }[] };
     bio: {
       links: { link: { "#text": string; rel: string; href: string }[] };
       published: string;
