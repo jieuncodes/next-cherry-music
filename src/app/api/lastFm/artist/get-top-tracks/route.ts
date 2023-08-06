@@ -10,7 +10,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const url = new URL(process.env.LAST_FM_BASE_URL!);
     const params = new URLSearchParams({
-      method: "artist.getInfo",
+      method: "artist.getTopTracks",
       artist: artist as string,
       autocorrect: "1",
       api_key: process.env.LAST_FM_API_KEY!,
