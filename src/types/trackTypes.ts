@@ -55,3 +55,15 @@ export interface SpotifyBestMatchArtistInfo {
   type: string;
   uri: string;
 }
+
+export interface ArtistTopTracks {
+  "@attr": {
+    rank: string;
+  };
+  artist: {
+    mbid: string;
+    name: string;
+    url: string;
+  };
+  name: string;
+}

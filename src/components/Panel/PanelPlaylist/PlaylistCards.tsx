@@ -6,7 +6,6 @@ import { Track } from "@/lib/server/database.types";
 
 export function PlaylistCards({ playlist }: { playlist: Track[] }) {
   const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currPlaylistTrackIdx);
-
   return (
     <PlaylistGrid>
       {playlist.map((track, index) => (

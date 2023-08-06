@@ -6,10 +6,10 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const topTracks = await fetchLastFmTopTracks();
   const allTrackInfo: LastFmTopTrack[] = await Promise.all(
     topTracks.map(async (track: LastFmTrackDetails) => {
-      let trackDetail = await fetchLastFmTrackDetails({
-        trackTitle: track.name || "",
-        artist: track.artist.name || "",
-      });
+      const fetchDetailResponse = await fetch(
+        `${process.env.URL}/api/lastFm/track/details?trackTitle=${track.name}&artist=${track.artist.name}`
+      );
+      let trackDetail = await fetchDetailResponse.json();
       const urlLastPart = trackDetail.url.split("/");
       const id = simpleHash(urlLastPart[urlLastPart.length - 1]);
 
@@ -57,36 +57,6 @@ export const fetchLastFmTopTracks = async () => {
     const response = await fetch(url);
     const data = await response.json();
     return data.tracks.track;
-  } catch (error) {
-    handleError({ context: "lastFm API", error });
-  }
-};
-
-export const fetchLastFmTrackDetails = async ({
-  trackTitle,
-  artist,
-}: {
-  trackTitle: string;
-  artist: string;
-}) => {
-  validateEnvVariable(process.env.LAST_FM_BASE_URL, "LAST_FM_BASE_URL");
-  validateEnvVariable(process.env.LAST_FM_API_KEY, "LAST_FM_API_KEY");
-  try {
-    const url = new URL(process.env.LAST_FM_BASE_URL!);
-    const params = new URLSearchParams({
-      method: "track.getInfo",
-      api_key: process.env.LAST_FM_API_KEY!,
-      artist: artist,
-      track: trackTitle,
-      format: "json",
-    });
-    1;
-    url.search = params.toString();
-    const response = await fetch(url);
-
-    const data = await response.json();
-
-    return data.track;
   } catch (error) {
     handleError({ context: "lastFm API", error });
   }
