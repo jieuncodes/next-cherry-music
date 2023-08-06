@@ -7,7 +7,7 @@ import {
   SectionGrid,
   SectionNav,
   SectionTitle,
-} from "@/styles/TopTracks";
+} from "@/styles/Section";
 import { useEffect, useRef, useState } from "react";
 import { Icons } from "../app/Icons";
 import GhostRoundBtn from "./Btns/ghostRoundBtn";

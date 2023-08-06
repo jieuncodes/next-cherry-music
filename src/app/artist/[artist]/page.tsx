@@ -1,6 +1,7 @@
 "use client";
 
 import ArtistHeader from "@/components/Artist/ArtistHeader";
+import ArtistTopTracks from "@/components/Artist/ArtistTopTracks";
 import LikeButton from "@/components/Btns/LikeButton";
 import { useArtistData } from "@/hooks/useArtistData";
 import { useArtistImage } from "@/hooks/useArtistImage";
@@ -36,6 +37,10 @@ function Artist({ params }: { params: { artist: string } }) {
           <Button variant="flat">Play All</Button>
           <LikeButton liked={liked} setLiked={setLiked} iconColor="black" />
         </Buttons>
+
+        <ArtistTopTracks artist={params.artist} />
+        {/* <ArtistAlbums /> */}
+        {/* <SimilarArtists> */}
       </ArtistInfo>
     </>
   );

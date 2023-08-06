@@ -18,6 +18,8 @@ export default function PlaylistModal() {
   const [isOpen, setIsOpen] = useRecoilState(PlaylistModalState);
   const [scrollBehavior, setScrollBehavior] = useState("inside");
   const { emptyPlaylist } = useLocalStoragePlaylist();
+  const { playlist } = useLocalStoragePlaylist();
+
   return (
     <div className="flex flex-col gap-2">
       <Modal
@@ -33,7 +35,7 @@ export default function PlaylistModal() {
                 <h1>Playlist</h1>
               </ModalHeader>
               <ModalBody>
-                <PlaylistCards />
+                <PlaylistCards playlist={playlist} />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={emptyPlaylist}>
