@@ -21,15 +21,17 @@ function useTopTracks() {
 
   const fetchAndSave = async () => {
     setIsLoading(true);
-    const response = await fetch("/api/lastFm/top-tracks");
+
+    const response = await fetch("/api/cherryMusic/track?query=top-50");
+
     if (!response.ok) {
       console.error("Error fetching top tracks:", response.statusText);
       setIsLoading(false);
       return;
     }
     const data = await response.json();
-
-    const tracksWithYoutubeId = data.allTrackInfo.filter(
+    console.log("data****", data);
+    const tracksWithYoutubeId = data.allTrackDetailsWithYoutube.filter(
       (track: Track) => track.youtubeId
     );
     await saveTracksToSupabase(tracksWithYoutubeId);

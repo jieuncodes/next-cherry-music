@@ -60,10 +60,18 @@ export interface ArtistTopTracks {
   "@attr": {
     rank: string;
   };
-  artist: {
-    mbid: string;
-    name: string;
-    url: string;
-  };
+  artist: Artist;
   name: string;
+}
+
+export interface LastFmTopTracks {
+  name: string;
+  duration: string;
+  playcount: string;
+  listeners: string;
+  mbid: string;
+  url: string;
+  streamable: { "#text": string; fulltrack: string };
+  artist: Artist;
+  image: AlbumImage[];
 }
