@@ -1,68 +1,47 @@
-import { isDataOld } from "./../lib/helpers";
+import { handleError, isDataOld } from "../lib/helpers";
 import { Track } from "@/lib/server/database.types";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/server/client";
-import useLastFetchTime from "./useLastFetchTime";
+import useLastFetchTime from "./supabase/useLastFetchTime";
+import saveTracksToSupabase from "../lib/server/saveTracksToSupabase";
+import fetchFromSupabase from "@/lib/server/fetchFromSupabase";
 
 function useTopTracks() {
-  const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [topTracks, setTopTracks] = useState<Track[]>([]);
   const { lastFetchTime, setLastFetchTime, isLastFetchStateLoading } =
     useLastFetchTime("topTracks");
 
   useEffect(() => {
+    const fetchAndSave = async () => {
+      setIsLoading(true);
+      try {
+        const topTracksResponse = await fetch(
+          "/api/cherryMusic/track?query=top"
+        );
+        if (!topTracksResponse.ok) {
+          throw new Error(topTracksResponse.statusText);
+        }
+
+        const topTracksList = await topTracksResponse.json();
+
+        await saveTracksToSupabase({ tracks: topTracksList, setIsSaved });
+
+        const supabaseTopData = await fetchFromSupabase(topTracksList);
+        setTopTracks(supabaseTopData);
+      } catch (error) {
+        handleError({ context: "Error fetching top tracks:", error });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     if (!isLastFetchStateLoading) {
       if (!lastFetchTime || isDataOld(lastFetchTime)) {
         fetchAndSave().then(() => setLastFetchTime(new Date()));
       }
     }
-  }, [isLastFetchStateLoading]);
-
-  const fetchAndSave = async () => {
-    setIsLoading(true);
-
-    const response = await fetch("/api/cherryMusic/track?query=top");
-
-    if (!response.ok) {
-      console.error("Error fetching top tracks:", response.statusText);
-      setIsLoading(false);
-      return;
-    }
-    const data = await response.json();
-    console.log("data****", data);
-    const tracksWithYoutubeId = data.allTrackDetailsWithYoutube.filter(
-      (track: Track) => track.youtubeId
-    );
-    await saveTracksToSupabase(tracksWithYoutubeId);
-
-    const fetchedTracks = await fetchTracksFromSupabase();
-    setTopTracks(fetchedTracks);
-
-    setIsLoading(false);
-  };
-
-  const saveTracksToSupabase = async (tracks: Track[]) => {
-    for (const track of tracks) {
-      const { data, error } = await supabase.from("tracks").upsert(track);
-      if (error) {
-        console.error("Error saving track to Supabase:", error);
-      }
-    }
-    setIsSaved(true);
-  };
-
-  const fetchTracksFromSupabase = async () => {
-    const { data, error } = await supabase
-      .from("tracks")
-      .select("*")
-      .filter("youtubeId", "neq", null);
-    if (error) {
-      console.error("Error fetching tracks from Supabase:", error);
-      return [];
-    }
-    return data || [];
-  };
+  }, [isLastFetchStateLoading, lastFetchTime, setLastFetchTime]);
 
   return { isSaved, isLoading, topTracks };
 }

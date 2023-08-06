@@ -1,5 +1,5 @@
 import { simpleHash } from "@/lib/helpers";
-import { LastFmTopTracks } from "@/types/trackTypes";
+import { LastFmTrack } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -16,7 +16,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
         ` ${process.env.URL}/api/lastFm/top-tracks`
       );
       tracksToProcess = await topTracksResponse.json();
-      console.log("tracksToProcess", tracksToProcess);
       break;
 
     case "artist-top":
@@ -36,7 +35,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 
   const trackDetailsPromises = tracksToProcess.map(
-    async (track: LastFmTopTracks) => {
+    async (track: LastFmTrack) => {
       const fetchDetailResponse = await fetch(
         `${process.env.URL}/api/lastFm/track/details?trackTitle=${track.name}&artist=${track.artist.name}`
       );

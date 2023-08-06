@@ -1,7 +1,7 @@
 "use client";
 
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import useTopTracks from "@/hooks/useTopTracks";
+import useTopTracks from "@/hooks/saveTracksToSupabase";
 import {
   SectionContainerMain,
   SectionGridMain,
