@@ -3,10 +3,10 @@
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import useTopTracks from "@/hooks/useTopTracks";
 import {
-  SectionContainer,
-  SectionGrid,
+  SectionContainerMain,
+  SectionGridMain,
   SectionNav,
-  SectionTitle,
+  SectionTitleMain,
 } from "@/styles/Section";
 import { useEffect, useRef, useState } from "react";
 import { Icons } from "../app/Icons";
@@ -50,7 +50,7 @@ function TopTracks() {
   }, [scrollX]);
 
   return (
-    <SectionContainer>
+    <SectionContainerMain>
       <SectionNav>
         <GhostRoundBtn
           size={"sm"}
@@ -63,8 +63,8 @@ function TopTracks() {
           onPress={scrollRight}
         />
       </SectionNav>
-      <SectionTitle>Top Tracks</SectionTitle>
-      <SectionGrid ref={ref}>
+      <SectionTitleMain>Top Tracks</SectionTitleMain>
+      <SectionGridMain ref={ref}>
         {!isSaved && isLoading
           ? Array(30)
               .fill(null)
@@ -77,8 +77,8 @@ function TopTracks() {
                 removeFromPlaylist={removeFromPlaylist}
               />
             ))}
-      </SectionGrid>
-    </SectionContainer>
+      </SectionGridMain>
+    </SectionContainerMain>
   );
 }
 

@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { SectionTitle } from "../../styles/Section";
+import {
+  SectionContainer,
+  SectionTitle,
+  SectionTitleMain,
+} from "../../styles/Section";
 import PlaylistCards from "../Panel/PanelPlaylist/PlaylistCards";
 import { Track } from "@/lib/server/database.types";
 
@@ -33,10 +37,10 @@ function ArtistTopTracks({ artist }: { artist: string }) {
   }, []);
 
   return (
-    <>
+    <SectionContainer>
       <SectionTitle>Popular Tracks</SectionTitle>
       <PlaylistCards playlist={artistTopTrackList} />
-    </>
+    </SectionContainer>
   );
 }
 export default ArtistTopTracks;
