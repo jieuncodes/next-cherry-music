@@ -2,6 +2,7 @@ import { Track } from "@/lib/server/database.types";
 import { DropdownItemData } from "@/types/itemTypes";
 import { Dispatch, Key, MutableRefObject, SetStateAction } from "react";
 import useLocalStoragePlaylist from "./useLocalStoragePlaylist";
+import { useRouter } from "next/navigation";
 
 interface DropDownProps {
   track: Track;
@@ -16,6 +17,7 @@ interface DropDownProps {
 function useDropdownHandlers(props: DropDownProps) {
   const { addToBottomOfCurrPlaylist, removeFromPlaylist } =
     useLocalStoragePlaylist();
+  const router = useRouter();
 
   const handleDropdownAction = (key: Key) => {
     switch (key) {
@@ -32,7 +34,7 @@ function useDropdownHandlers(props: DropDownProps) {
         alert(props.track.albumTitle);
         break;
       case "go-to-artist":
-        alert(props.track.artist);
+        router.push(`/artist/${props.track.artist}`);
         break;
       case "remove-item":
         const playlistIndex = props.cardRef?.current?.getAttribute(

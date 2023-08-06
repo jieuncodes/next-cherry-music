@@ -1,10 +1,10 @@
+import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { Track } from "@/lib/server/database.types";
 import { StyledCard, StyledHeader } from "@/styles/TrackCard";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import TrackCardButtons from "./TrackCardBtns";
 import TrackCardDetails from "./TrackCardDetails";
 import TrackCardImage from "./TrackCardImage";
-import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 
 interface TrackCardProps {
   track: Track;

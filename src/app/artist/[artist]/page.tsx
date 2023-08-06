@@ -1,6 +1,7 @@
 "use client";
 
 import LikeButton from "@/components/Btns/LikeButton";
+import { truncateString } from "@/lib/utils";
 import {
   ArtistDesc,
   ArtistInfo,
@@ -9,9 +10,9 @@ import {
   Buttons,
   Desc,
   HeaderImg,
-  PlayAllBtn,
 } from "@/styles/Artist";
 import { LastFmArtistInfo } from "@/types/trackTypes";
+import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -43,7 +44,7 @@ function Artist({ params }: { params: { artist: string } }) {
   };
 
   useEffect(() => {
-    console.log("artistData", artistData);
+    console.log("artistData", artistData?.artist);
     fetchLastFmArtistData();
     fetchSpotifyImage(params.artist);
   }, [params.artist]);
@@ -51,12 +52,11 @@ function Artist({ params }: { params: { artist: string } }) {
   if (!artistData) {
     return <div>Loading...</div>;
   }
-  const desc = artistData.artist.bio?.summary.split(".");
   return (
     <>
       <HeaderImg>
         <Image
-          src={artistImageUrl}
+          src={artistImageUrl || "/images/default_band.png"}
           alt={artistData.artist.name}
           fill
           sizes="(min-width: 808px) 50vw, 100vw"
@@ -71,10 +71,10 @@ function Artist({ params }: { params: { artist: string } }) {
       <ArtistInfo>
         <ArtistName>{artistData.artist.name}</ArtistName>
         <ArtistDesc>
-          <Desc>{desc.slice(0, 2)}</Desc>
+          <Desc>{truncateString(artistData.artist.bio?.summary, 200)}</Desc>
         </ArtistDesc>
         <Buttons>
-          <PlayAllBtn>Play All</PlayAllBtn>
+          <Button variant="flat">Play All</Button>
           <LikeButton liked={liked} setLiked={setLiked} iconColor="black" />
         </Buttons>
       </ArtistInfo>
