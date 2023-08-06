@@ -4,7 +4,7 @@ import PlaylistCards from "../Panel/PanelPlaylist/PlaylistCards";
 import { Track } from "@/lib/server/database.types";
 
 function ArtistTopTracks({ artist }: { artist: string }) {
-  const [topTracks, setTopTracks] = useState<Track[]>([]);
+  const [artistTopTrackList, setArtistTopTrackList] = useState<Track[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -13,16 +13,15 @@ function ArtistTopTracks({ artist }: { artist: string }) {
       setLoading(true);
       try {
         const response = await fetch(
-          `/api/lastFm/artist/get-top-tracks?artist=${artist}`
+          `/api/cherryMusic/track?artist=${artist}&query=artist-top`
         );
-        console.log("res", response);
         if (!response.ok) {
           throw new Error("Failed to fetch top tracks.");
         }
 
         const data = await response.json();
-        setTopTracks(data.toptracks.track);
-        console.log("data", data.toptracks.track);
+
+        setArtistTopTrackList(data.allTrackDetailsWithYoutube);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -31,14 +30,12 @@ function ArtistTopTracks({ artist }: { artist: string }) {
     };
 
     fetchTopTracks();
-  }, [artist]);
-
-  const topTracksList = () => {};
+  }, []);
 
   return (
     <>
       <SectionTitle>Popular Tracks</SectionTitle>
-      <PlaylistCards playlist={topTracksList} />
+      <PlaylistCards playlist={artistTopTrackList} />
     </>
   );
 }

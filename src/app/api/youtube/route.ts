@@ -20,16 +20,19 @@ export async function GET(req: NextRequest, res: NextResponse) {
     .select("youtubeId")
     .eq("id", id)
     .single();
+
   if (!track) {
     console.log(
       `supabase doesnt have youtube id for this track: ${trackTitle}`
     );
   }
   if (track && track.youtubeId) {
+    console.log("", track.youtubeId);
     return new Response(JSON.stringify({ videoId: track.youtubeId }), {
       status: 200,
     });
   }
+
   try {
     const videoId = await getYoutubeVideoId({ trackTitle, artist });
 

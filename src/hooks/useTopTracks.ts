@@ -22,7 +22,7 @@ function useTopTracks() {
   const fetchAndSave = async () => {
     setIsLoading(true);
 
-    const response = await fetch("/api/cherryMusic/track?query=top-50");
+    const response = await fetch("/api/cherryMusic/track?query=top");
 
     if (!response.ok) {
       console.error("Error fetching top tracks:", response.statusText);

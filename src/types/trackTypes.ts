@@ -1,16 +1,21 @@
-export interface LastFmTopTrack {
-  id: string;
-
-  albumImgUrl: string | null;
-  albumTitle: string | null;
-  artist: string | null;
-  tags: string[] | null;
-  trackTitle: string | null;
-  wiki: string | null;
-}
 type Streamable = { "#text": string; fulltrack: string };
 type Artist = { name: string; mbid: string; url: string };
 type AlbumImage = { "#text": string; size: string };
+
+export interface LastFmTopTrack {
+  "@attr"?: {
+    rank: string;
+  };
+  name: string;
+  duration?: string;
+  playcount: string;
+  listeners: string;
+  mbid: string;
+  url: string;
+  streamable: { "#text": string; fulltrack: string };
+  artist: Artist;
+  image: AlbumImage[];
+}
 
 export interface LastFmTrackDetails {
   name: string;
@@ -54,14 +59,6 @@ export interface SpotifyBestMatchArtistInfo {
   popularity: number;
   type: string;
   uri: string;
-}
-
-export interface ArtistTopTracks {
-  "@attr": {
-    rank: string;
-  };
-  artist: Artist;
-  name: string;
 }
 
 export interface LastFmTopTracks {
