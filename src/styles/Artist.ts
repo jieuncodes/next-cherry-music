@@ -14,5 +14,8 @@ export const BlurredGradient = styled.div`
 
 export const ArtistInfo = tw.div`absolute z-10 text-white top-56 px-6`;
 export const ArtistName = tw.h1`text-3xl font-bold mb-6`;
-export const ArtistDesc = tw.p` w-full h-20 text-ellipsis overflow-hidden`;
+export const ArtistDesc = tw.div`w-full h-16 `;
+export const Desc = tw.p`overflow-hidden text-ellipsis`;
+
+export const Buttons = tw.div`flex flex-row`;
 export const PlayAllBtn = tw.button``;

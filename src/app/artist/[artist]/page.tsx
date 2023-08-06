@@ -6,6 +6,8 @@ import {
   ArtistInfo,
   ArtistName,
   BlurredGradient,
+  Buttons,
+  Desc,
   HeaderImg,
   PlayAllBtn,
 } from "@/styles/Artist";
@@ -49,7 +51,7 @@ function Artist({ params }: { params: { artist: string } }) {
   if (!artistData) {
     return <div>Loading...</div>;
   }
-  console.log("artist", artistData);
+  const desc = artistData.artist.bio?.summary.split(".");
   return (
     <>
       <HeaderImg>
@@ -68,9 +70,13 @@ function Artist({ params }: { params: { artist: string } }) {
       </HeaderImg>
       <ArtistInfo>
         <ArtistName>{artistData.artist.name}</ArtistName>
-        <ArtistDesc>{artistData.artist.bio?.summary}</ArtistDesc>
-        <PlayAllBtn>Play All</PlayAllBtn>
-        <LikeButton liked={liked} setLiked={setLiked} iconColor="black" />
+        <ArtistDesc>
+          <Desc>{desc.slice(0, 2)}</Desc>
+        </ArtistDesc>
+        <Buttons>
+          <PlayAllBtn>Play All</PlayAllBtn>
+          <LikeButton liked={liked} setLiked={setLiked} iconColor="black" />
+        </Buttons>
       </ArtistInfo>
     </>
   );
