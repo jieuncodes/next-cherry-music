@@ -1,3 +1,4 @@
+import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
 import { simpleHash } from "@/lib/helpers";
 import { LastFmTrack } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
@@ -45,16 +46,31 @@ export async function GET(req: NextRequest, res: NextResponse) {
       const urlLastPart = trackDetail.url.split("/");
       const id = simpleHash(urlLastPart[urlLastPart.length - 1]);
 
-      const youtubeResponse = await fetch(
-        `${process.env.URL}/api/youtube?track=${track.name}&artist=${track.artist.name}&id=${id}`
-      );
-      const youtubeData = await youtubeResponse.json();
+      let youtubeId;
+      switch (query) {
+        case "top":
+          const youtubeResponse = await fetch(
+            `${process.env.URL}/api/youtube?track=${track.name}&artist=${track.artist.name}&id=${id}`
+          );
+          const youtubeData = await youtubeResponse.json();
+          youtubeId = youtubeData.videoId || "";
+          break;
+
+        case "artist-top":
+          youtubeId = await fetchYouTubeVideoId({
+            artist: track.artist.name,
+            trackTitle: track.name,
+          });
+          break;
+        default:
+          throw new Error("Invalid query parameter.");
+      }
 
       return {
         id,
         trackTitle: track.name,
         artist: track.artist.name,
-        youtubeId: youtubeData.videoId || "",
+        youtubeId,
         albumTitle: trackDetail.album?.title || "",
         albumImgUrl: trackDetail.album?.image[3]["#text"],
         tags: trackDetail.toptags?.tag,
@@ -64,5 +80,5 @@ export async function GET(req: NextRequest, res: NextResponse) {
   );
 
   const allTrackDetailsWithYoutube = await Promise.all(trackDetailsPromises);
-  return NextResponse.json({ allTrackDetailsWithYoutube });
+  return NextResponse.json([...allTrackDetailsWithYoutube]);
 }
