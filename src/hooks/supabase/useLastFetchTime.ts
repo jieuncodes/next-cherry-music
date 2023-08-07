@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/server/client";
+import { handleError } from "@/lib/helpers";
 
 function useLastFetchTime(column: string) {
   const [isLastFetchStateLoading, setIsLastFetchStateLoading] = useState(true);
@@ -10,15 +11,27 @@ function useLastFetchTime(column: string) {
   }, []);
 
   const fetchLastFetchTimeFromSupabase = async () => {
-    const { data, error } = await supabase
-      .from("lastFetchTimes")
-      .select(column)
-      .order("id", { ascending: false })
-      .limit(1);
-    if (error) {
-      console.error("Error fetching last fetch time from Supabase:", error);
+    try {
+      const { data, error } = await supabase
+        .from("lastFetchTimes")
+        .select(column)
+        .order("id", { ascending: false })
+        .limit(1);
+      console.log("data******", typeof data);
+      if (error) {
+        console.log("Error fetching last fetch time from SB.", error);
+      }
+      if (data) {
+        setLastFetchTime(new Date(data[0][column as any]));
+      }
+    } catch (error) {
+      handleError({
+        context: "fetchLastFetchTimeFromSupabase has an error.",
+        error,
+      });
+    } finally {
+      setIsLastFetchStateLoading(false);
     }
-    setIsLastFetchStateLoading(false);
   };
 
   const updateLastFetchTimeToSupabase = async (time: Date) => {
