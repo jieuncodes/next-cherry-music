@@ -13,7 +13,6 @@ import GhostRoundBtn from "./Btns/ghostRoundBtn";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
 import useTopTracks from "@/hooks/useTopTracks";
-import useYoutubeVideoId from "@/hooks/useYoutubeVideoId";
 
 function TopTracks() {
   const { isSaved, isLoading, topTracks } = useTopTracks();

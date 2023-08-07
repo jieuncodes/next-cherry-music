@@ -1,4 +1,5 @@
-import puppeteer from "puppeteer";
+import axios from "axios";
+import * as cheerio from "cheerio";
 
 interface FetchYouTubeVideoIdProps {
   artist: string;
@@ -8,30 +9,25 @@ interface FetchYouTubeVideoIdProps {
 async function fetchYouTubeVideoId({
   artist,
   trackTitle,
-}: FetchYouTubeVideoIdProps): Promise<string | null> {
-  const browser = await puppeteer.launch({ headless: "new" });
-  const page = await browser.newPage();
-
+}: FetchYouTubeVideoIdProps) {
   const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(
     artist + "-" + trackTitle
   )}`;
-  await page.goto(searchUrl);
 
-  const videoId = await page.evaluate((): string | null => {
-    const anchors = Array.from(
-      document.querySelectorAll("a.yt-simple-endpoint")
-    );
-    for (let a of anchors) {
-      const anchor = a as HTMLAnchorElement;
-      if (anchor.href && anchor.href.includes("/watch?v=")) {
-        return new URL(anchor.href).searchParams.get("v");
-      }
+  try {
+    const response = await axios.get(searchUrl);
+    const html = response.data;
+    const $ = cheerio.load(html);
+
+    const videoLink = $("a.yt-simple-endpoint").attr("href");
+    if (videoLink && videoLink.includes("/watch?v=")) {
+      return new URLSearchParams(videoLink.split("?")[1]).get("v");
     }
-    return null;
-  });
+  } catch (error) {
+    console.error("Error fetching YouTube video ID:", error);
+  }
 
-  await browser.close();
-  console.log("videoId", videoId);
-  return videoId;
+  return null;
 }
+
 export default fetchYouTubeVideoId;

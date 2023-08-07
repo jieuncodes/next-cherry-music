@@ -18,7 +18,7 @@ async function saveTracksToSupabase({ tracks, setIsSaved }: SaveTracksProps) {
   const existingTrackIds = new Set(existingTracks?.map((t) => t.id));
 
   const tracksToInsert = tracks.filter(
-    (track) => !existingTrackIds.has(track.id) || !track.youtubeId
+    (track) => !existingTrackIds.has(track.id) && track.youtubeId
   );
   for (const track of tracksToInsert) {
     const { error: insertError } = await supabase.from("tracks").insert(track);

@@ -1,5 +1,5 @@
 import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
-import { simpleHash } from "@/lib/helpers";
+import { handleError, simpleHash } from "@/lib/helpers";
 import { LastFmTrack } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -52,8 +52,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
           const youtubeResponse = await fetch(
             `${process.env.URL}/api/youtube?track=${track.name}&artist=${track.artist.name}&id=${id}`
           );
+          if (!youtubeResponse.ok) {
+            console.log("Error fetching youtube videoId");
+          }
           const youtubeData = await youtubeResponse.json();
-          youtubeId = youtubeData.videoId || "";
+
+          youtubeId = youtubeData.videoId;
           break;
 
         case "artist-top":
