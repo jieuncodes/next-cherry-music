@@ -19,6 +19,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const data = await response.json();
     return NextResponse.json(data.tracks.track);
   } catch (error) {
-    handleError({ context: "lastFm API", error });
+    handleError({ context: "lastFm API - chart.getTopTracks", error });
   }
 }

@@ -23,6 +23,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    handleError({ context: "lastFm API", error });
+    handleError({ context: "lastFm API - artist.getTopTracks", error });
   }
 }

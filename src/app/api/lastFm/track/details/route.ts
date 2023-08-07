@@ -22,9 +22,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const response = await fetch(url);
 
     const data = await response.json();
-
     return NextResponse.json(data.track);
   } catch (error) {
-    handleError({ context: "lastFm API", error });
+    handleError({ context: "lastFm API - track.getInfo", error });
   }
 }

@@ -1,5 +1,5 @@
 import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
-import { handleError, simpleHash } from "@/lib/helpers";
+import { simpleHash } from "@/lib/helpers";
 import { LastFmTrack } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,7 +8,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   if (!query) {
     throw new Error("Query parameter is required.");
   }
-
+  console.log("query", query);
   let tracksToProcess;
 
   switch (query) {

@@ -21,6 +21,7 @@ async function fetchYouTubeVideoId({
 
     const videoLink = $("a.yt-simple-endpoint").attr("href");
     if (videoLink && videoLink.includes("/watch?v=")) {
+      console.log('videoLink.split("?")[1]', videoLink.split("?")[1]);
       return new URLSearchParams(videoLink.split("?")[1]).get("v");
     }
   } catch (error) {

@@ -12,10 +12,14 @@ import { Icons } from "../app/Icons";
 import GhostRoundBtn from "./Btns/ghostRoundBtn";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
-import useTopTracks from "@/hooks/useTopTracks";
+import useDbTracks from "@/hooks/useDbTracks";
 
 function TopTracks() {
-  const { isSaved, isLoading, topTracks } = useTopTracks();
+  const { isSaved, isLoading, reqTracks } = useDbTracks({
+    trackCategory: "topTracks",
+    query: "top",
+  });
+  console.log("reqTracks in TopTracks", reqTracks);
   const {
     playlist,
     addToTopOfCurrPlaylist,
@@ -68,7 +72,7 @@ function TopTracks() {
           ? Array(30)
               .fill(null)
               .map((_, index) => <TrackCardSkeleton key={index} />)
-          : topTracks.map((track, index) => (
+          : reqTracks.map((track, index) => (
               <TrackCard
                 key={index}
                 track={track}
