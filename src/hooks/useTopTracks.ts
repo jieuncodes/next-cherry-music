@@ -13,7 +13,7 @@ function useTopTracks() {
     useLastFetchTime("topTracks");
 
   useEffect(() => {
-    const fetchAndSave = async () => {
+    const saveAndFetch = async () => {
       setIsLoading(true);
       try {
         const topTracksResponse = await fetch(
@@ -24,8 +24,12 @@ function useTopTracks() {
         }
 
         const topTracksList = await topTracksResponse.json();
-
-        await saveTracksToSupabase({ tracks: topTracksList, setIsSaved });
+        const cherryTopTracks = topTracksList;
+        console.log("cherryTopTracks", cherryTopTracks);
+        await saveTracksToSupabase({
+          tracks: cherryTopTracks,
+          setIsSaved,
+        });
 
         const supabaseTopData = await fetchFromSupabase(topTracksList);
         setTopTracks(supabaseTopData);
@@ -33,15 +37,15 @@ function useTopTracks() {
         handleError({ context: "Error fetching top tracks:", error });
       } finally {
         setIsLoading(false);
+        setLastFetchTime(new Date());
       }
     };
-
     if (!isLastFetchStateLoading) {
       if (!lastFetchTime || isDataOld(lastFetchTime)) {
-        fetchAndSave().then(() => setLastFetchTime(new Date()));
+        saveAndFetch();
       }
     }
-  }, [isLastFetchStateLoading, lastFetchTime, setLastFetchTime]);
+  }, [isLastFetchStateLoading]);
 
   return { isSaved, isLoading, topTracks };
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import useTopTracks from "@/hooks/saveTracksToSupabase";
 import {
   SectionContainerMain,
   SectionGridMain,
@@ -13,6 +12,7 @@ import { Icons } from "../app/Icons";
 import GhostRoundBtn from "./Btns/ghostRoundBtn";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
+import useTopTracks from "@/hooks/useTopTracks";
 
 function TopTracks() {
   const { isSaved, isLoading, topTracks } = useTopTracks();

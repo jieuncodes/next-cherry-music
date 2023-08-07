@@ -3,7 +3,7 @@ import useMouseAction from "@/hooks/useMouseAction";
 import { usePlayerProgress } from "@/hooks/usePlayerProgress";
 import { cn, floatToTime } from "@/lib/utils";
 import { Progress } from "@nextui-org/react";
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useRef } from "react";
 import { YouTubePlayer } from "react-youtube";
 import { useRecoilState } from "recoil";
 

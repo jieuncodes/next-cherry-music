@@ -25,7 +25,7 @@ function ArtistTopTracks({ artist }: { artist: string }) {
 
         const data = await response.json();
 
-        setArtistTopTrackList(data.allTrackDetailsWithYoutube);
+        setArtistTopTrackList(data);
       } catch (err: any) {
         setError(err.message);
       } finally {

@@ -15,13 +15,13 @@ async function saveTracksToSupabase({ tracks, setIsSaved }: SaveTracksProps) {
     console.error("Error fetching tracks from Supabase:", error);
     return;
   }
-
   const existingTrackIds = new Set(existingTracks?.map((t) => t.id));
+  console.log("existingTrackIds", existingTrackIds);
+  console.log("tracks", tracks);
 
   const tracksToInsert = tracks.filter(
-    (track) => !existingTrackIds.has(track.id)
+    (track) => !existingTrackIds.has(track.id) || !track.youtubeId
   );
-
   for (const track of tracksToInsert) {
     const { error: insertError } = await supabase.from("tracks").insert(track);
     if (insertError) {

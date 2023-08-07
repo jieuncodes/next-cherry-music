@@ -17,11 +17,11 @@ function useLastFetchTime(column: string) {
         .select(column)
         .order("id", { ascending: false })
         .limit(1);
-      console.log("data******", typeof data);
       if (error) {
         console.log("Error fetching last fetch time from SB.", error);
       }
-      if (data) {
+      if (data && data[0]) {
+        console.log("setLastFetchTime");
         setLastFetchTime(new Date(data[0][column as any]));
       }
     } catch (error) {

@@ -27,7 +27,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     );
   }
   if (track && track.youtubeId) {
-    console.log("", track.youtubeId);
     return new Response(JSON.stringify({ videoId: track.youtubeId }), {
       status: 200,
     });

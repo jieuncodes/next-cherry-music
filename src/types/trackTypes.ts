@@ -60,15 +60,3 @@ export interface SpotifyBestMatchArtistInfo {
   type: string;
   uri: string;
 }
-
-// export interface LastFmTrack {
-//   name: string;
-//   duration: string;
-//   playcount: string;
-//   listeners: string;
-//   mbid: string;
-//   url: string;
-//   streamable: { "#text": string; fulltrack: string };
-//   artist: Artist;
-//   image: AlbumImage[];
-// }
