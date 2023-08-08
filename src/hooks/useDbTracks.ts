@@ -19,8 +19,10 @@ function useDbTracks({ trackCategory, query, artist }: UseDbTracksProps) {
     useLastFetchTime(trackCategory);
 
   const fetchReqTracks = async () => {
+    const queryEncoded = encodeURIComponent(query);
+    const artistEncoded = encodeURIComponent(artist || "");
     const reqTracksResponse = await fetch(
-      `/api/cherryMusic/track?query=${query}&artist=${artist}`
+      `/api/cherryMusic/track?query=${queryEncoded}&artist=${artistEncoded}`
     );
     if (!reqTracksResponse.ok) {
       throw new Error(reqTracksResponse.statusText);

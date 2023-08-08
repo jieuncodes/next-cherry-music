@@ -1,5 +1,4 @@
 import { LastFmTrack } from "@/types/trackTypes";
-import { NextResponse } from "next/server";
 
 export async function fetchTopTracks(): Promise<LastFmTrack[]> {
   const response = await fetch(`${process.env.URL}/api/lastFm/top-tracks`);
@@ -9,8 +8,10 @@ export async function fetchTopTracks(): Promise<LastFmTrack[]> {
 export async function fetchArtistTopTracks(
   artist: string
 ): Promise<LastFmTrack[]> {
+  const artistEncoded = encodeURIComponent(artist);
+
   const response = await fetch(
-    `${process.env.URL}/api/lastFm/artist/get-top-tracks?artist=${artist}`
+    `${process.env.URL}/api/lastFm/artist/get-top-tracks?artist=${artistEncoded}`
   );
   const data = await response.json();
   return data.toptracks.track;

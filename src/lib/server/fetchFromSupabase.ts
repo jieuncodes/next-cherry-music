@@ -2,7 +2,6 @@ import { supabase } from "@/lib/server/client";
 import { Track } from "@/lib/server/database.types";
 
 async function fetchFromSupabase(tracksToFetch: Track[]) {
-  console.log("tracksToFetch", tracksToFetch);
   const ids = tracksToFetch.map((track) => track.id);
 
   let { data, error } = await supabase

@@ -13,14 +13,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
   if (!query) {
     throw new Error("Query parameter is required.");
   }
-  console.log("query", query);
   let tracksToProcess;
 
   if (query === "top") {
     tracksToProcess = await fetchTopTracks();
   } else if (query === "artist-top") {
     const artist = req.nextUrl.searchParams.get("artist");
-    console.log("params artist:", artist);
     if (!artist)
       throw new Error("Artist name is required for artist-top query.");
     tracksToProcess = await fetchArtistTopTracks(artist);
@@ -36,8 +34,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
       const youtubeId = await fetchYoutubeId(query, track, String(id));
       return {
         id,
-        trackTitle: track.name,
-        artist: track.artist.name,
+        trackTitle: decodeURIComponent(track.name),
+        artist: decodeURIComponent(track.artist.name),
         youtubeId,
         albumTitle: trackDetail.album?.title || "",
         albumImgUrl: trackDetail.album?.image[3]["#text"],
