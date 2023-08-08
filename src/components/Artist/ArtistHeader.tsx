@@ -1,4 +1,4 @@
-import { HeaderImg, BlurredGradient } from "@/styles/Artist";
+import { HeaderImg, BlurredGradient } from "@/styles/Artist/Artist";
 import Image from "next/image";
 
 interface ArtistHeaderProps {

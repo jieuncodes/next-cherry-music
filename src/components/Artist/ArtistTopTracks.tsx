@@ -1,6 +1,6 @@
 import { SectionContainer, SectionTitle } from "../../styles/Section";
-import PlaylistCards from "../Panel/PanelPlaylist/PlaylistCards";
 import useDbTracks from "@/hooks/useDbTracks";
+import Playlist from "../Playlist/Playlist";
 
 function ArtistTopTracks({ artist }: { artist: string }) {
   const { isSaved, isLoading, reqTracks } = useDbTracks({
@@ -12,7 +12,7 @@ function ArtistTopTracks({ artist }: { artist: string }) {
   return (
     <SectionContainer>
       <SectionTitle>Popular Tracks</SectionTitle>
-      {!isSaved && isLoading ? <></> : <PlaylistCards playlist={reqTracks} />}
+      {!isSaved && isLoading ? <></> : <Playlist playlist={reqTracks} />}
     </SectionContainer>
   );
 }

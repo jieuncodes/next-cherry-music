@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { Icons } from "../app/Icons";
-import PlaylistCards from "./Panel/PanelPlaylist/PlaylistCards";
+import PlaylistCards from "./Playlist/PlaylistCards";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 
 export default function PlaylistModal() {

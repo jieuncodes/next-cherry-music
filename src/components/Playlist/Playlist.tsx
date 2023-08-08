@@ -6,11 +6,10 @@ import {
 import { useRecoilState } from "recoil";
 import PlaylistCards from "./PlaylistCards";
 import { PlaylistModalState } from "@/atoms";
-import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
+import { Track } from "@/lib/server/database.types";
 
-function Playlist() {
+function Playlist({ playlist }: { playlist: Track[] }) {
   const [isOpen, setIsOpen] = useRecoilState(PlaylistModalState);
-  const { playlist } = useLocalStoragePlaylist();
 
   return (
     <>

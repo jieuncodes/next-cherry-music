@@ -12,7 +12,7 @@ import {
   ArtistName,
   Buttons,
   Desc,
-} from "@/styles/Artist";
+} from "@/styles/Artist/Artist";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
 

@@ -20,20 +20,20 @@ export async function GET(req: NextRequest, res: NextResponse) {
     tracksToProcess = await fetchTopTracks();
   } else if (query === "artist-top") {
     const artist = req.nextUrl.searchParams.get("artist");
+    console.log("params artist:", artist);
     if (!artist)
       throw new Error("Artist name is required for artist-top query.");
     tracksToProcess = await fetchArtistTopTracks(artist);
   } else {
     throw new Error("Invalid query parameter.");
   }
+  console.log("", tracksToProcess);
 
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack) => {
       const trackDetail = await fetchTrackDetail(track);
       const id = generateTrackId(trackDetail.url);
-
       const youtubeId = await fetchYoutubeId(query, track, String(id));
-
       return {
         id,
         trackTitle: track.name,
