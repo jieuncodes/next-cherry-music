@@ -1,7 +1,6 @@
 import { ClassValue, clsx } from "clsx";
 import { RefObject } from "react";
 import { twMerge } from "tailwind-merge";
-import { YouTubePlayer } from "react-youtube";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -17,6 +16,16 @@ export function floatToTime(floatNumber: number) {
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
+export const simpleHash = (str: string) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0;
+  }
+  return Math.abs(hash);
+};
+
 export const calculatePercentage = (
   event: MouseEvent,
   progressBarRef: RefObject<HTMLDivElement>
@@ -29,17 +38,13 @@ export const calculatePercentage = (
   return 0;
 };
 
-export const isValidPlayer = (playerRef: RefObject<YouTubePlayer>): boolean => {
-  return (
-    playerRef.current &&
-    typeof playerRef.current.getCurrentTime === "function" &&
-    typeof playerRef.current.getDuration() === "function"
-  );
-};
-
 export const truncateString = (str: string, num: number) => {
   if (str.length <= num) {
     return str;
   }
   return str.slice(0, num) + "...";
+};
+export const generateTrackId = (url: string): number => {
+  const urlLastPart = url.split("/");
+  return simpleHash(urlLastPart[urlLastPart.length - 1]);
 };

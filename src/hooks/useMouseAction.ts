@@ -1,5 +1,5 @@
 import { currTrackDurationAtom, progressBarDraggingState } from "@/atoms";
-import { calculatePercentage, isValidPlayer } from "@/lib/utils";
+import { calculatePercentage } from "@/lib/utils";
 import { RefObject, useRef, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
 import { useRecoilState, useRecoilValue } from "recoil";

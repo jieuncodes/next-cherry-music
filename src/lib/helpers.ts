@@ -1,3 +1,6 @@
+import { RefObject } from "react";
+import { YouTubePlayer } from "react-youtube";
+
 export function validateEnvVariable(
   variable: string | undefined,
   name: string
@@ -30,12 +33,10 @@ export const isDataOld = (lastFetchTime: Date | null): boolean => {
   );
 };
 
-export const simpleHash = (str: string) => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash |= 0;
-  }
-  return Math.abs(hash);
+export const isValidPlayer = (playerRef: RefObject<YouTubePlayer>): boolean => {
+  return (
+    playerRef.current &&
+    typeof playerRef.current.getCurrentTime === "function" &&
+    typeof playerRef.current.getDuration() === "function"
+  );
 };
