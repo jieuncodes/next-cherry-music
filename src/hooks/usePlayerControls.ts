@@ -39,14 +39,14 @@ const usePlayerControls = () => {
     }
   };
 
-  const handlePlayClickedTrack = (index: number) => {
+  const handlePlayClickedInPlaylist = (index: number) => {
     setCurrTrackIdx(index);
   };
 
   return {
     handleSkipBack,
     handleSkipForward,
-    handlePlayClickedTrack,
+    handlePlayClickedInPlaylist,
     playShuffledNextTrack,
   };
 };

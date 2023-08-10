@@ -20,7 +20,7 @@ function ArtistPlaylistCards({
 }: PlaylistCardProps) {
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
-  const { handlePlayClickedTrack } = usePlayerControls();
+  const { handlePlayClickedInPlaylist } = usePlayerControls();
 
   const trackCardRef = useRef<HTMLButtonElement | null>(null);
 
@@ -29,7 +29,7 @@ function ArtistPlaylistCards({
       data-playlist-index={index}
       ref={trackCardRef}
       isPressable
-      onPress={() => handlePlayClickedTrack(index)}
+      onPress={() => handlePlayClickedInPlaylist(index)}
       onMouseEnter={() => setIsCardHover(true)}
       onMouseLeave={() => setIsCardHover(false)}
       radius="sm"

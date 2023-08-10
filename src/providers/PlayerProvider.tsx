@@ -2,6 +2,7 @@
 
 import {
   ShuffleState,
+  currPlayingTrackYoutubeId,
   currPlaylistTrackIdx,
   localStoragePlaylist,
   playStateAtom,
@@ -10,7 +11,7 @@ import {
 import usePlayerControls from "@/hooks/usePlayerControls";
 import React, { ReactNode, createContext, useContext, useRef } from "react";
 import YouTube, { YouTubePlayer } from "react-youtube";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 interface PlayerContextType {
   playerRef: React.RefObject<YouTubePlayer>;
@@ -61,6 +62,10 @@ function PlayerProvider({ children }: PlayerProviderProps) {
   const isShuffleOn = useRecoilValue(ShuffleState);
   const { playShuffledNextTrack } = usePlayerControls();
 
+  const setCurrPlaylingTrackYoutubeId = useSetRecoilState(
+    currPlayingTrackYoutubeId
+  );
+
   const togglePlayPause = () => {
     if (isPlaying) {
       playerRef.current?.pauseVideo();
@@ -103,6 +108,7 @@ function PlayerProvider({ children }: PlayerProviderProps) {
             }}
             onPlay={() => {
               setIsPlaying(true);
+              setCurrPlaylingTrackYoutubeId(currTrack.youtubeId || "");
             }}
             onPause={() => setIsPlaying(false)}
             onEnd={handleTrackEnd}

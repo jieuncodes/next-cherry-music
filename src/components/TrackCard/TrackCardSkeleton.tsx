@@ -1,5 +1,5 @@
 import { StyledCard } from "@/styles/TrackCard";
-import { Card, Skeleton } from "@nextui-org/react";
+import { Skeleton } from "@nextui-org/react";
 
 function TrackCardSkeleton() {
   return (

@@ -30,6 +30,10 @@ export const ShuffleState = atom<boolean>({
   key: "ShuffleState",
   default: false,
 });
+export const currPlayingTrackYoutubeId = atom<string>({
+  key: "currPlayingTrackId",
+  default: "",
+});
 
 //modals
 export const PlaylistModalState = atom<boolean>({

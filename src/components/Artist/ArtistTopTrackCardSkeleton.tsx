@@ -13,7 +13,7 @@ function ArtistTrackCardsSkeleton() {
             .map((_, index) => (
               <StyledCard className="flex flex-row pl-2 rounded-lg">
                 <div className="grid grid-cols-[1.7fr_15fr_3fr] pt-2 w-full">
-                  <Skeleton className="relative flex rounded-md w-10 h-9" />
+                  <Skeleton className="relative flex rounded-md w-9 h-8" />
                   <div className="grid grid-cols-[2.4fr_1fr_2fr] gap-2 place-content-center mb-2">
                     <Skeleton className="h-3 w-3/5 rounded-lg" />
                     <Skeleton className="h-3 w-6/5 rounded-lg" />

@@ -13,7 +13,6 @@ function ArtistTopTracks({ artist }: { artist: string }) {
     query: "artist-top",
     artist,
   });
-  console.log("req", reqTracks);
   return (
     <SectionContainer>
       {!isSaved && isLoading ? (

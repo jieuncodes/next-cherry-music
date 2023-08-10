@@ -1,6 +1,5 @@
 "use client";
 
-import Loading from "@/app/(site)/loading";
 import ArtistHeader from "@/components/Artist/ArtistHeader";
 import ArtistTopTracks from "@/components/Artist/ArtistTopTracks";
 import LikeButton from "@/components/Btns/LikeButton";

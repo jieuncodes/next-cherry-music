@@ -3,13 +3,11 @@ import TrackCardImage from "@/components/TrackCard/TrackCardImage";
 import usePlayerControls from "@/hooks/usePlayerControls";
 import { Track } from "@/lib/server/database.types";
 import { useRef, useState } from "react";
-import {
-  artistPageDropdownItems,
-  trackActionDropdownItems,
-} from "../Dropdowns/DropdownItems";
+import { artistPageDropdownItems } from "../Dropdowns/DropdownItems";
 import ArtistPlaylistCardDetails from "./ArtistPlaylistCardDetails";
 import { StyledCard, StyledHeader } from "@/styles/Artist/ArtistTrackCard";
 import LikeButton from "@/components/Btns/LikeButton";
+import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 
 interface PlaylistCardProps {
   track: Track;
@@ -26,7 +24,7 @@ function ArtistPlaylistCard({
   const [isDropdownHover, setIsDropdownHover] = useState(false);
   const [liked, setLiked] = useState<boolean>(false);
 
-  const { handlePlayClickedTrack } = usePlayerControls();
+  const { addToTopOfCurrPlaylist } = useLocalStoragePlaylist();
 
   const trackCardRef = useRef<HTMLButtonElement | null>(null);
 
@@ -35,7 +33,7 @@ function ArtistPlaylistCard({
       data-playlist-index={index}
       ref={trackCardRef}
       isPressable
-      onPress={() => handlePlayClickedTrack(index)}
+      onPress={() => addToTopOfCurrPlaylist(track)}
       onMouseEnter={() => setIsCardHover(true)}
       onMouseLeave={() => setIsCardHover(false)}
       radius="sm"
