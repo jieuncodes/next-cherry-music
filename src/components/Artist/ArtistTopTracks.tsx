@@ -1,6 +1,11 @@
-import { SectionContainer, SectionTitle } from "../../styles/Section";
+import {
+  RowSection,
+  SectionContainer,
+  SectionTitle,
+} from "../../styles/Section";
 import useDbTracks from "@/hooks/useDbTracks";
 import ArtsitPlaylist from "./ArtistPlaylist";
+import ArtistTrackCardsSkeleton from "./ArtistTopTrackCardSkeleton";
 
 function ArtistTopTracks({ artist }: { artist: string }) {
   const { isSaved, isLoading, reqTracks } = useDbTracks({
@@ -8,9 +13,14 @@ function ArtistTopTracks({ artist }: { artist: string }) {
     query: "artist-top",
     artist,
   });
+  console.log("req", reqTracks);
   return (
     <SectionContainer>
-      {!isSaved && isLoading ? <></> : <ArtsitPlaylist playlist={reqTracks} />}
+      {!isSaved && isLoading ? (
+        <ArtistTrackCardsSkeleton />
+      ) : (
+        <ArtsitPlaylist playlist={reqTracks.slice(0, 6)} />
+      )}
     </SectionContainer>
   );
 }

@@ -41,7 +41,7 @@ function ArtistPlaylistCardDetails({
       <AlbumTitle className={trackInfoClassNames}>
         <span className="block overflow-hidden text-ellipsis max-w-full">
           {track.albumTitle || "single"}
-        </span>{" "}
+        </span>
       </AlbumTitle>
     </CardDetails>
   );

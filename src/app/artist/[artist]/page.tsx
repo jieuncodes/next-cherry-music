@@ -9,6 +9,7 @@ import { truncateString } from "@/lib/utils";
 import {
   ArtistDesc,
   ArtistInfo,
+  ArtistInfoHeader,
   ArtistName,
   Buttons,
   Desc,
@@ -29,15 +30,14 @@ function Artist({ params }: { params: { artist: string } }) {
     <>
       <ArtistHeader imageUrl={artistImageUrl} name={artistData.artist.name} />
       <ArtistInfo>
-        <ArtistName>{artistData.artist.name}</ArtistName>
+        <ArtistInfoHeader>
+          <ArtistName>{artistData.artist.name}</ArtistName>
+          <LikeButton liked={liked} setLiked={setLiked} iconColor="black" />
+        </ArtistInfoHeader>
+
         <ArtistDesc>
           <Desc>{truncateString(artistData.artist.bio?.summary, 200)}</Desc>
         </ArtistDesc>
-        <Buttons>
-          <Button variant="flat">Play All</Button>
-          <LikeButton liked={liked} setLiked={setLiked} iconColor="black" />
-        </Buttons>
-
         <ArtistTopTracks artist={params.artist} />
         {/* <ArtistAlbums /> */}
         {/* <SimilarArtists> */}

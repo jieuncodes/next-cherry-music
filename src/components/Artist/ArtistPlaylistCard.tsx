@@ -3,7 +3,10 @@ import TrackCardImage from "@/components/TrackCard/TrackCardImage";
 import usePlayerControls from "@/hooks/usePlayerControls";
 import { Track } from "@/lib/server/database.types";
 import { useRef, useState } from "react";
-import { trackActionDropdownItems } from "../Dropdowns/DropdownItems";
+import {
+  artistPageDropdownItems,
+  trackActionDropdownItems,
+} from "../Dropdowns/DropdownItems";
 import ArtistPlaylistCardDetails from "./ArtistPlaylistCardDetails";
 import { StyledCard, StyledHeader } from "@/styles/Artist/ArtistTrackCard";
 import LikeButton from "@/components/Btns/LikeButton";
@@ -58,7 +61,7 @@ function ArtistPlaylistCard({
             setIsDropdownHover={setIsDropdownHover}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
-            dropdownItems={trackActionDropdownItems}
+            dropdownItems={artistPageDropdownItems}
             cardRef={trackCardRef}
           />
         </div>

@@ -31,3 +31,20 @@ export const playlistActionDropdownItems: DropdownItemData[] = [
     label: "remove from playlist",
   },
 ];
+export const artistPageDropdownItems: DropdownItemData[] = [
+  {
+    key: "add-to-queue",
+    icon: <Icons.listMusic strokeWidth={1.5} />,
+    label: "Add to queue",
+  },
+  {
+    key: "add-to-playlist",
+    icon: <Icons.listPlus strokeWidth={1.5} />,
+    label: "Add to playlist",
+  },
+  {
+    key: "go-to-album",
+    icon: <Icons.disc strokeWidth={1.5} />,
+    label: "Go to album",
+  },
+];
