@@ -1,9 +1,5 @@
-import {
-  RowSection,
-  SectionContainer,
-  SectionTitle,
-} from "../../styles/Section";
 import useDbTracks from "@/hooks/useDbTracks";
+import { SectionContainer } from "../../styles/Section";
 import ArtsitPlaylist from "./ArtistPlaylist";
 import ArtistTrackCardsSkeleton from "./ArtistTopTrackCardSkeleton";
 
