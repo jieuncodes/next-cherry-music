@@ -24,7 +24,6 @@ function Artist({ params }: { params: { artist: string } }) {
   const artistData = useArtistData(params.artist);
   const artistImageUrl = useArtistImage(params.artist);
   const [liked, setLiked] = useState<boolean>(false);
-  console.log("artistData", artistData);
   if (!artistData) {
     return <LoadingSpinner />;
   }
@@ -51,7 +50,7 @@ function Artist({ params }: { params: { artist: string } }) {
           </ArtistDesc>
         )}
         <ArtistTopTracks artist={params.artist} />
-        <ArtistAlbums artist={params.artist} />
+        {/* <ArtistAlbums artist={params.artist} /> */}
         <SimilarArtists artists={artistData.artist.similar.artist} />
       </ArtistInfo>
     </>

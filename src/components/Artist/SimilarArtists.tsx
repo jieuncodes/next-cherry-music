@@ -17,8 +17,9 @@ function SimilarArtists({ artists }: { artists: Artist[] }) {
     <SectionContainer>
       <SectionTitle>Fans might also like</SectionTitle>
       <ArtistBadges>
-        {artists.slice(0, 5).map((artist) => (
+        {artists.slice(0, 5).map((artist, index) => (
           <ArtistBadge
+            key={index}
             artist={artist.name}
             handleArtistBadgeClick={handleArtistBadgeClick}
           />
