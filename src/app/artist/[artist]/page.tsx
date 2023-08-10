@@ -1,8 +1,10 @@
 "use client";
 
+import Loading from "@/app/(site)/loading";
 import ArtistHeader from "@/components/Artist/ArtistHeader";
 import ArtistTopTracks from "@/components/Artist/ArtistTopTracks";
 import LikeButton from "@/components/Btns/LikeButton";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { useArtistData } from "@/hooks/useArtistData";
 import { useArtistImage } from "@/hooks/useArtistImage";
 import { truncateString } from "@/lib/utils";
@@ -11,10 +13,8 @@ import {
   ArtistInfo,
   ArtistInfoHeader,
   ArtistName,
-  Buttons,
   Desc,
 } from "@/styles/Artist/Artist";
-import { Button } from "@nextui-org/react";
 import { useState } from "react";
 
 function Artist({ params }: { params: { artist: string } }) {
@@ -23,7 +23,7 @@ function Artist({ params }: { params: { artist: string } }) {
   const [liked, setLiked] = useState<boolean>(false);
 
   if (!artistData) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   return (
