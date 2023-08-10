@@ -12,6 +12,7 @@ interface UseDbTracksProps {
 }
 
 function useDbTracks({ trackCategory, query, artist }: UseDbTracksProps) {
+  console.log("useDB", trackCategory, query, artist);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
   const [reqTracks, setReqTracks] = useState<Track[]>([]);
@@ -19,10 +20,8 @@ function useDbTracks({ trackCategory, query, artist }: UseDbTracksProps) {
     useLastFetchTime(trackCategory);
 
   const fetchReqTracks = async () => {
-    const queryEncoded = encodeURIComponent(query);
-    const artistEncoded = encodeURIComponent(artist || "");
     const reqTracksResponse = await fetch(
-      `/api/cherryMusic/track?query=${queryEncoded}&artist=${artistEncoded}`
+      `/api/cherryMusic/track?query=${query}&artist=${artist}`
     );
     if (!reqTracksResponse.ok) {
       throw new Error(reqTracksResponse.statusText);
@@ -38,6 +37,7 @@ function useDbTracks({ trackCategory, query, artist }: UseDbTracksProps) {
 
   const fetchDataFromDB = async (tracksToFetch: Track[]) => {
     const dataFromDB = await fetchFromSupabase(tracksToFetch);
+    console.log("dataFromDB", dataFromDB);
     setReqTracks(dataFromDB);
   };
 
@@ -47,7 +47,11 @@ function useDbTracks({ trackCategory, query, artist }: UseDbTracksProps) {
       try {
         if (!isLastFetchStateLoading) {
           const fetchedTracks = await fetchReqTracks();
-          if (!lastFetchTime || isDataOld(lastFetchTime)) {
+          if (
+            trackCategory !== "topTracks" ||
+            !lastFetchTime ||
+            isDataOld(lastFetchTime)
+          ) {
             await saveTracksToDB(fetchedTracks);
             setLastFetchTime(new Date());
           }
