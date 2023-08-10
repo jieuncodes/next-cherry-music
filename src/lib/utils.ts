@@ -37,7 +37,13 @@ export const calculatePercentage = (
   }
   return 0;
 };
-
+export const cleanedStr = (str: string) => {
+  const cleanedStr = str.replace(
+    /<a href="https:\/\/www\.last\.fm\/.*">Read more on Last.fm<\/a>/,
+    ""
+  );
+  return cleanedStr;
+};
 export const truncateString = (str: string, num: number) => {
   if (str.length <= num) {
     return str;

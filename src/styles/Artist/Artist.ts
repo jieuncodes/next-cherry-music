@@ -17,7 +17,9 @@ export const BlurredGradient = styled.div`
 `;
 
 export const ArtistInfo = tw.div`absolute z-10 text-black top-56 px-6`;
-export const ArtistInfoHeader = tw.div`flex flex-row align-middle justify-between w-full pr-12`;
+export const ArtistInfoHeader = tw.div`flex flex-col justify-between w-full pr-12`;
+export const ArtistNameArea = tw.div`flex flex-row   max-w-[calc(70%-10px)]
+`;
 export const ArtistName = tw.h1`text-3xl font-bold mb-6`;
 export const ArtistDesc = tw.div`w-full h-20 pr-6 mb-3`;
 export const Desc = tw.p`hidden lg:block h-20 pr-6 whitespace-normal overflow-hidden`;
@@ -26,3 +28,4 @@ export const Buttons = tw.div`flex flex-row w-36 justify-between `;
 export const PlayAllBtn = tw.button``;
 
 export const ArtistBadges = tw.div`mt-6 grid grid-cols-5`;
+export const Hashtags = tw.div``;
