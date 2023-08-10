@@ -3,7 +3,6 @@ import * as cheerio from "cheerio";
 
 async function fetchYouTubeVideoId(trackUrl: string) {
   try {
-    console.log("cherr");
     const response = await axios.get(trackUrl);
     const html = response.data;
     const $ = cheerio.load(html);

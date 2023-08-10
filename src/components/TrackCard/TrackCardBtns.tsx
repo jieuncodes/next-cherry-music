@@ -1,10 +1,12 @@
-import { Buttons } from "@/styles/TrackCard";
-import { Icons } from "../../app/Icons";
-import TrackCardDropDown from "./TrackCardDropDown";
-import { DropdownItemData } from "@/types/itemTypes";
-import { Dispatch, SetStateAction } from "react";
 import { Track } from "@/lib/server/database.types";
+import { Buttons } from "@/styles/TrackCard";
+import { Dispatch, SetStateAction } from "react";
 import LikeButton from "../Btns/LikeButton";
+import {
+  playlistActionDropdownItems,
+  trackActionDropdownItems,
+} from "../Dropdowns/DropdownItems";
+import TrackCardDropDown from "./TrackCardDropDown";
 
 interface TrackCardButtonsProps {
   isCardHover: boolean;
@@ -34,7 +36,7 @@ function TrackCardButtons({
             track={track}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
-            dropdownItems={dropdownItems}
+            dropdownItems={trackActionDropdownItems}
             setIsCardHover={setIsCardHover}
             setIsDropdownHover={setIsDropdownHover}
           />
@@ -44,26 +46,3 @@ function TrackCardButtons({
   );
 }
 export default TrackCardButtons;
-
-const dropdownItems: DropdownItemData[] = [
-  {
-    key: "add-to-queue",
-    icon: <Icons.listMusic strokeWidth={1.5} />,
-    label: "Add to queue",
-  },
-  {
-    key: "add-to-playlist",
-    icon: <Icons.listPlus strokeWidth={1.5} />,
-    label: "Add to playlist",
-  },
-  {
-    key: "go-to-album",
-    icon: <Icons.disc strokeWidth={1.5} />,
-    label: "Go to album",
-  },
-  {
-    key: "go-to-artist",
-    icon: <Icons.mic2 strokeWidth={1.5} />,
-    label: "Go to artist",
-  },
-];

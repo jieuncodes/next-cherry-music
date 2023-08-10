@@ -9,7 +9,7 @@ export const StyledCard = tw(
 )` hover:cursor-pointer w-80 h-16 shadow-none snap-start`;
 export const StyledHeader = tw(CardHeader)`justify-between`;
 
-export const TrackImgBox = tw.div`relative flex`;
+export const TrackImgBox = tw.div`relative flex mt-1`;
 export const CardDetails = tw.div`hover:cursor-pointer flex flex-col gap-1 items-start justify-center w-full overflow-hidden pl-5`;
 
 export const TrackTitle = tw(

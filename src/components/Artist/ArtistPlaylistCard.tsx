@@ -1,11 +1,12 @@
-import TrackCardDetails from "@/components/TrackCard/TrackCardDetails";
 import CardDropDown from "@/components/TrackCard/TrackCardDropDown";
 import TrackCardImage from "@/components/TrackCard/TrackCardImage";
 import usePlayerControls from "@/hooks/usePlayerControls";
 import { Track } from "@/lib/server/database.types";
-import { StyledCard, StyledHeader } from "@/styles/Panel/PlaylistCard";
 import { useRef, useState } from "react";
 import { trackActionDropdownItems } from "../Dropdowns/DropdownItems";
+import ArtistPlaylistCardDetails from "./ArtistPlaylistCardDetails";
+import { StyledCard, StyledHeader } from "@/styles/Artist/ArtistTrackCard";
+import LikeButton from "@/components/Btns/LikeButton";
 
 interface PlaylistCardProps {
   track: Track;
@@ -13,13 +14,15 @@ interface PlaylistCardProps {
   isPlayingTrack?: boolean;
 }
 
-function ArtistPlaylistCards({
+function ArtistPlaylistCard({
   track,
   index,
   isPlayingTrack,
 }: PlaylistCardProps) {
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
+  const [liked, setLiked] = useState<boolean>(false);
+
   const { handlePlayClickedTrack } = usePlayerControls();
 
   const trackCardRef = useRef<HTMLButtonElement | null>(null);
@@ -39,14 +42,16 @@ function ArtistPlaylistCards({
     >
       <StyledHeader>
         <TrackCardImage isCardHover={isCardHover} track={track} size="small" />
-        <TrackCardDetails
+        <ArtistPlaylistCardDetails
           isCardHover={isCardHover}
           track={track}
-          size="small"
           onPlaylist={true}
           isPlayingTrack={isPlayingTrack}
         />
         <div className="absolute right-0">
+          {isCardHover && (
+            <LikeButton liked={liked} setLiked={setLiked} iconColor="white" />
+          )}
           <CardDropDown
             track={track}
             setIsCardHover={setIsCardHover}
@@ -61,4 +66,4 @@ function ArtistPlaylistCards({
     </StyledCard>
   );
 }
-export default ArtistPlaylistCards;
+export default ArtistPlaylistCard;

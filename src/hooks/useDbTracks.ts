@@ -12,7 +12,6 @@ interface UseDbTracksProps {
 }
 
 function useDbTracks({ trackCategory, query, artist }: UseDbTracksProps) {
-  console.log("useDB", trackCategory, query, artist);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
   const [reqTracks, setReqTracks] = useState<Track[]>([]);
@@ -37,7 +36,6 @@ function useDbTracks({ trackCategory, query, artist }: UseDbTracksProps) {
 
   const fetchDataFromDB = async (tracksToFetch: Track[]) => {
     const dataFromDB = await fetchFromSupabase(tracksToFetch);
-    console.log("dataFromDB", dataFromDB);
     setReqTracks(dataFromDB);
   };
 
