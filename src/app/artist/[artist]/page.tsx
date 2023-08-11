@@ -1,12 +1,11 @@
 "use client";
 
-import ArtistAlbums from "@/components/Artist/ArtistAlbums";
 import ArtistHeader from "@/components/Artist/ArtistHeader";
 import ArtistTopTracks from "@/components/Artist/ArtistTopTracks";
-import SimilarArtists from "@/components/Artist/SimilarArtists";
 import LikeButton from "@/components/Btns/LikeButton";
 import Hashtags from "@/components/Hashtags";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import { useArtistData } from "@/hooks/useArtistData";
 import { useArtistImage } from "@/hooks/useArtistImage";
 import { cleanedStr, truncateString } from "@/lib/utils";
@@ -29,7 +28,6 @@ function Artist({ params }: { params: { artist: string } }) {
   }
   const cleanedArtistBio = cleanedStr(artistData.artist.bio?.summary);
   if (cleanedArtistBio.length === 1) {
-    console.log("1");
   }
   return (
     <>
@@ -51,7 +49,11 @@ function Artist({ params }: { params: { artist: string } }) {
         )}
         <ArtistTopTracks artist={params.artist} />
         {/* <ArtistAlbums artist={params.artist} /> */}
-        <SimilarArtists artists={artistData.artist.similar.artist} />
+        <HorizontalTiles
+          sectionTitle="Fans might also like"
+          arr={artistData.artist.similar.artist}
+          isCircle
+        />
       </ArtistInfo>
     </>
   );
