@@ -17,7 +17,7 @@ function Tile({ item, isCircle, handleTileClick }: TileProps) {
 
   return (
     <div
-      className={`flex flex-col justify-start align-middle  items-center hover:cursor-pointer ${
+      className={`flex flex-col justify-start align-middle  items-center hover:cursor-pointer snap-start ${
         isCircle ? "h-52 gap-1" : ""
       }`}
       onClick={() => handleTileClick(item)}
@@ -36,7 +36,13 @@ function Tile({ item, isCircle, handleTileClick }: TileProps) {
           blurDataURL="/images/default_user_avatar.jpeg"
         />
       </div>
-      <span className="font-semibold text-md mt-2 text-center">{item}</span>
+      <span
+        className={`whitespace-normal font-semibold text-md mt-2 text-center ${
+          isCircle ? "w-28" : "w-40"
+        }`}
+      >
+        {item}
+      </span>
     </div>
   );
 }

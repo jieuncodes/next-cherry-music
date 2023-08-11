@@ -15,4 +15,4 @@ export const TrackTitle = tw(
   motion.div
 )`text-[1.1rem] flex overflow-hidden gap-32 bg-red font-semibold leading-none text-black relative place-self-center mb-1`;
 
-export const Artist = tw.h5`text-sm tracking-tight text-black/90 `;
+export const Artist = tw.div`z-30 text-sm tracking-tight text-black/90 hover:cursor-pointer `;

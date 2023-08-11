@@ -1,5 +1,6 @@
 import Marquee from "@/animations/marquee";
 import { Artist, TrackDetails, TrackTitle } from "@/styles/Panel/PanelPlayer";
+import { useRouter } from "next/navigation";
 
 interface TrackInfoProps {
   trackTitle: string;
@@ -7,6 +8,7 @@ interface TrackInfoProps {
 }
 
 function TrackInfo({ trackTitle, artist }: TrackInfoProps) {
+  const router = useRouter();
   return (
     <TrackDetails>
       {trackTitle.length > 20 ? (
@@ -21,7 +23,9 @@ function TrackInfo({ trackTitle, artist }: TrackInfoProps) {
         <TrackTitle>{trackTitle}</TrackTitle>
       )}
 
-      <Artist>{artist || "ARTIST"}</Artist>
+      <Artist onClick={() => router.push(`/artist/${artist}`)}>
+        {artist || "ARTIST"}
+      </Artist>
     </TrackDetails>
   );
 }

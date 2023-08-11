@@ -7,8 +7,8 @@ import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 
 function HashtagPage({ params }: { params: { hashtag: string } }) {
   const [tagTopAlbums, setTagTopAlbums] = useState<Track[]>([]);
-
   const decodedHashtag = decodeURIComponent(params.hashtag);
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchTagTopAlbums(params.hashtag);
@@ -17,10 +17,11 @@ function HashtagPage({ params }: { params: { hashtag: string } }) {
     fetchData();
   }, []);
 
+  const tagTopAlbumsDataWithType = { type: "album", items: tagTopAlbums };
   return (
     <>
-      <h1 className="text-2xl font-bold"># {decodedHashtag.toUpperCase()}</h1>
-      <HorizontalTiles arr={tagTopAlbums} />
+      <h1 className="text-2xl font-bold"># {decodedHashtag.toUpperCase()}</h1>{" "}
+      <HorizontalTiles arr={tagTopAlbumsDataWithType} />
       {/* <TopAlbums tagTopAlbums={tagTopAlbums} /> */}
       {/* <ArtistTopTracks artist={params.artist} />
         <ArtistAlbums artist={params.artist} />

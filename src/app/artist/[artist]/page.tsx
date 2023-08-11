@@ -27,8 +27,12 @@ function Artist({ params }: { params: { artist: string } }) {
     return <LoadingSpinner />;
   }
   const cleanedArtistBio = cleanedStr(artistData.artist.bio?.summary);
-  if (cleanedArtistBio.length === 1) {
-  }
+
+  const similarArtistDataWithType = {
+    type: "artist",
+    items: artistData.artist.similar.artist,
+  };
+
   return (
     <>
       <ArtistHeader imageUrl={artistImageUrl} name={artistData.artist.name} />
@@ -51,7 +55,7 @@ function Artist({ params }: { params: { artist: string } }) {
         {/* <ArtistAlbums artist={params.artist} /> */}
         <HorizontalTiles
           sectionTitle="Fans might also like"
-          arr={artistData.artist.similar.artist}
+          arr={similarArtistDataWithType}
           isCircle
         />
       </ArtistInfo>

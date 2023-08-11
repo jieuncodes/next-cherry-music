@@ -10,7 +10,7 @@ function ArtistTopTracks({ artist }: { artist: string }) {
     artist,
   });
   return (
-    <SectionContainer>
+    <SectionContainer className="mb-12">
       {!isSaved && isLoading ? (
         <ArtistTrackCardsSkeleton />
       ) : (

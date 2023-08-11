@@ -27,5 +27,5 @@ export const Desc = tw.p`hidden lg:block h-20 pr-6 whitespace-normal overflow-hi
 export const Buttons = tw.div`flex flex-row w-36 justify-between `;
 export const PlayAllBtn = tw.button``;
 
-export const ArtistTiles = tw.div`mt-6 grid whitespace-nowrap overflow-x-auto w-fit grid-cols-5`;
+export const Tiles = tw.div`relative top-6 grid w-full overflow-x-scroll scrollbar-hide grid-flow-col whitespace-nowrap  `;
 export const Hashtags = tw.div``;
