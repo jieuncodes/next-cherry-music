@@ -25,7 +25,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   } else {
     throw new Error("Invalid query parameter.");
   }
-  console.log("", tracksToProcess);
 
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack) => {
@@ -46,6 +45,5 @@ export async function GET(req: NextRequest, res: NextResponse) {
   );
 
   const allTrackDetailsWithYoutube = await Promise.all(trackDetailsPromises);
-  console.log("allTrackDetailsWithYoutube", allTrackDetailsWithYoutube);
   return NextResponse.json([...allTrackDetailsWithYoutube]);
 }

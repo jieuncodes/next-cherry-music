@@ -6,12 +6,14 @@ type Tag = { name: string; url: string };
 function Hashtags({ tags }: { tags: Tag[] }) {
   const router = useRouter();
 
-  const goToHashtagPage = () => {};
+  const goToHashtagPage = (tag: string) => {
+    router.push(`/hashtag/${tag}`);
+  };
   return (
     <div className="flex gap-2 mb-3">
       {tags.map((tag, index) => (
         <Chip
-          onClick={goToHashtagPage}
+          onClick={() => goToHashtagPage(tag.name)}
           key={index}
           classNames={{
             base: "bg-cherry/40 hover:bg-cherry/60 hover:cursor-pointer",
