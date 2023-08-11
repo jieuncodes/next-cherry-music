@@ -35,7 +35,6 @@ function HashtagPage({ params }: { params: { hashtag: string } }) {
 
   const tagTopAlbumsDataWithType = { type: "album", items: tagTopAlbums };
   const tagTopArtistsDataWithType = { type: "artist", items: tagTopArtists };
-
   return (
     <div className="flex flex-col gap-6 pt-32">
       <GradientHeader
@@ -51,6 +50,7 @@ function HashtagPage({ params }: { params: { hashtag: string } }) {
         arr={tagTopAlbumsDataWithType}
         nav
       />
+
       <TopTracks
         title={`Top30 of Tag #${decodedHashtag}`}
         trackCategory="tagTopTracks"

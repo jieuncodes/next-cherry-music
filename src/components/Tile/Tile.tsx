@@ -1,15 +1,16 @@
 import { useArtistImage } from "@/hooks/useArtistImage";
 import Image from "next/image";
 import TileSkeleton from "./TileSkeleton";
+import { ItemProps } from "./HorizontalTiles";
 
 interface TileProps {
-  item: string;
+  item: ItemProps;
   isCircle?: boolean;
   handleTileClick: (artist: string) => void;
 }
 
 function Tile({ item, isCircle, handleTileClick }: TileProps) {
-  const imgUrl = useArtistImage(item);
+  const imgUrl = useArtistImage(item.name);
 
   if (!imgUrl) {
     return <TileSkeleton isCircle={isCircle} />;
@@ -20,7 +21,7 @@ function Tile({ item, isCircle, handleTileClick }: TileProps) {
       className={`flex flex-col justify-start align-middle  items-center hover:cursor-pointer snap-start ${
         isCircle ? "h-52 gap-1" : ""
       }`}
-      onClick={() => handleTileClick(item)}
+      onClick={() => handleTileClick(item.name)}
     >
       <div
         className={`${
@@ -37,12 +38,17 @@ function Tile({ item, isCircle, handleTileClick }: TileProps) {
         />
       </div>
       <span
-        className={`whitespace-normal font-semibold text-md mt-2 text-center ${
-          isCircle ? "w-28" : "w-40 "
+        className={`whitespace-nowrap font-semibold mt-2 text-md truncate ${
+          isCircle ? "w-28 text-center" : "w-40 "
         }`}
       >
-        {item}
+        {item.name}
       </span>
+      {item.artist && (
+        <span className="whitespace-nowrap font-semibold text-sm truncate w-40 mt-1 text-black/40">
+          {item.artist.name}
+        </span>
+      )}
     </div>
   );
 }

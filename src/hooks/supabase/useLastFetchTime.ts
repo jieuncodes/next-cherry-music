@@ -21,7 +21,6 @@ function useLastFetchTime(column: string) {
         console.log("Error fetching last fetch time from SB.", error);
       }
       if (data && data[0]) {
-        console.log("setLastFetchTime");
         setLastFetchTime(new Date(data[0][column as any]));
       }
     } catch (error) {

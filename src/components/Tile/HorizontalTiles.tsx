@@ -11,8 +11,9 @@ interface HorizontalTilesProps {
   isCircle?: boolean;
   nav?: boolean;
 }
-interface itemProps {
+export interface ItemProps {
   name: string;
+  artist?: { name: string };
 }
 
 function HorizontalTiles({
@@ -30,7 +31,6 @@ function HorizontalTiles({
     router.push(`/${arr.type}/${name}`);
     return;
   };
-  console.log("", sectionTitle);
   return (
     <SectionContainer>
       {nav && <SectionNavigator refContainer={ref} scrollAmount={650} />}
@@ -43,10 +43,10 @@ function HorizontalTiles({
       >
         {arr.items
           .slice(0, arr.items.length - 1)
-          .map((item: itemProps, index) => (
+          .map((item: ItemProps, index) => (
             <Tile
               key={index}
-              item={item.name}
+              item={item}
               handleTileClick={() => handleTileClick(item.name)}
               isCircle={isCircle}
             />

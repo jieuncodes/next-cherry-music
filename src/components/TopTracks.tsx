@@ -33,7 +33,6 @@ function TopTracks({
     tag,
     count,
   });
-  console.log("req", reqTracks);
   const { playlist, addToTopOfCurrPlaylist, removeFromPlaylist } =
     useLocalStoragePlaylist();
   const [scrollX, setScrollX] = useState(0);

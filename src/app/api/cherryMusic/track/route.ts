@@ -15,7 +15,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     throw new Error("Query parameter is required.");
   }
   let tracksToProcess;
-  console.log("query: ", query);
   if (query === "top") {
     tracksToProcess = await fetchTopTracks();
   } else if (query === "artist-top") {

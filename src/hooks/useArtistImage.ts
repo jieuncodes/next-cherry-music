@@ -12,8 +12,7 @@ export const useArtistImage = (artist: string): string => {
       if (!response.ok) throw new Error("Failed to fetch spotify artist image");
       const data = await response.json();
       setAritstImageUrl(
-        data.best_match?.items[0]?.images[0]?.url ||
-          "/images/default_album_img.png"
+        data.best_match?.items[0]?.images[0]?.url || "/images/default_band.png"
       );
     };
 

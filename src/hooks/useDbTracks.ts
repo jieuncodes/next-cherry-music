@@ -20,7 +20,6 @@ function useDbTracks({
   tag,
   count,
 }: UseDbTracksProps) {
-  console.log("useDbTracks", trackCategory, query, tag);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
   const [reqTracks, setReqTracks] = useState<Track[]>([]);
@@ -36,7 +35,6 @@ function useDbTracks({
       throw new Error(reqTracksResponse.statusText);
     }
     const reqTracksList = await reqTracksResponse.json();
-    console.log("reqTracksList", reqTracksList);
     return reqTracksList.slice(0, count);
   };
 
