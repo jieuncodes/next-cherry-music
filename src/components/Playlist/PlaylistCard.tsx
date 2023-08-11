@@ -13,11 +13,7 @@ interface PlaylistCardProps {
   isPlayingTrack?: boolean;
 }
 
-function ArtistPlaylistCards({
-  track,
-  index,
-  isPlayingTrack,
-}: PlaylistCardProps) {
+function PlaylistCard({ track, index, isPlayingTrack }: PlaylistCardProps) {
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
   const { handlePlayClickedInPlaylist } = usePlayerControls();
@@ -61,4 +57,4 @@ function ArtistPlaylistCards({
     </StyledCard>
   );
 }
-export default ArtistPlaylistCards;
+export default PlaylistCard;

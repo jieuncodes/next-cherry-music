@@ -1,6 +1,7 @@
 import { Artist, TrackTitle, CardDetails } from "@/styles/TrackCard";
 import Marquee from "@/animations/marquee";
 import { Database } from "@/lib/server/database.types";
+import { useRouter } from "next/navigation";
 
 interface TrackCardDetailsProps {
   isCardHover: boolean;
@@ -16,6 +17,7 @@ function TrackCardDetails({
   onPlaylist,
   isPlayingTrack,
 }: TrackCardDetailsProps) {
+  const router = useRouter();
   return (
     <CardDetails>
       {track.trackTitle &&
@@ -32,6 +34,7 @@ function TrackCardDetails({
         </TrackTitle>
       )}
       <Artist
+        onClick={() => router.push(`/artist/${track.artist}`)}
         className={`${isCardHover || isPlayingTrack ? "text-white/70" : ""} ${
           onPlaylist ? "text-xs -ml-2 -mt-[3px]" : ""
         }`}

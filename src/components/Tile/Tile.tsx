@@ -17,7 +17,9 @@ function Tile({ item, isCircle, handleTileClick }: TileProps) {
 
   return (
     <div
-      className="flex flex-col justify-start align-middle  items-center hover:cursor-pointer "
+      className={`flex flex-col justify-start align-middle  items-center hover:cursor-pointer ${
+        isCircle ? "h-52 gap-1" : ""
+      }`}
       onClick={() => handleTileClick(item)}
     >
       <div

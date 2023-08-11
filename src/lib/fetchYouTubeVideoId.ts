@@ -10,7 +10,6 @@ async function fetchYouTubeVideoId(trackUrl: string) {
     const youtubeLink = $(".play-this-track-playlink").attr("href");
     if (youtubeLink && youtubeLink.includes("/watch?v=")) {
       const youtubeId = new URLSearchParams(youtubeLink.split("?")[1]).get("v");
-      console.log("youtubeId", youtubeId);
       return youtubeId;
     }
   } catch (error) {
