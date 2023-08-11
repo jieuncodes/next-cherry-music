@@ -1,52 +1,26 @@
 "use client";
 
+import useDbTracks from "@/hooks/useDbTracks";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import {
   SectionContainerMain,
   SectionGridMain,
-  SectionNav,
   SectionTitleMain,
 } from "@/styles/Section";
 import { useEffect, useRef, useState } from "react";
-import { Icons } from "../app/Icons";
-import GhostRoundBtn from "./Btns/ghostRoundBtn";
+import SectionNavigator from "./SectionNavigator";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
-import useDbTracks from "@/hooks/useDbTracks";
 
 function TopTracks() {
   const { isSaved, isLoading, reqTracks } = useDbTracks({
     trackCategory: "topTracks",
     query: "top",
   });
-  console.log("reqTracks in TopTracks", reqTracks);
-  const {
-    playlist,
-    addToTopOfCurrPlaylist,
-    addToBottomOfCurrPlaylist,
-    removeFromPlaylist,
-  } = useLocalStoragePlaylist();
+  const { playlist, addToTopOfCurrPlaylist, removeFromPlaylist } =
+    useLocalStoragePlaylist();
   const [scrollX, setScrollX] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-
-  const scrollAmount = 300;
-  const scrollLeft = () => {
-    if (ref.current) {
-      ref.current.scrollTo({
-        left: ref.current.scrollLeft - scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const scrollRight = () => {
-    if (ref.current) {
-      ref.current.scrollTo({
-        left: ref.current.scrollLeft + scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
 
   useEffect(() => {
     setScrollX(ref.current?.scrollLeft || 0);
@@ -54,18 +28,7 @@ function TopTracks() {
 
   return (
     <SectionContainerMain>
-      <SectionNav>
-        <GhostRoundBtn
-          size={"sm"}
-          startContent={<Icons.chevronLeft size={20} />}
-          onPress={scrollLeft}
-        />
-        <GhostRoundBtn
-          size={"sm"}
-          startContent={<Icons.chevronRight size={20} />}
-          onPress={scrollRight}
-        />
-      </SectionNav>
+      <SectionNavigator refContainer={ref} scrollAmount={300} />
       <SectionTitleMain>Top Tracks</SectionTitleMain>
       <SectionGridMain ref={ref}>
         {!isSaved && isLoading
