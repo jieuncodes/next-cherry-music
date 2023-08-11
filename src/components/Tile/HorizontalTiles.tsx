@@ -9,6 +9,7 @@ interface HorizontalTilesProps {
   sectionTitle?: string;
   arr: { type: string; items: any[] };
   isCircle?: boolean;
+  nav?: boolean;
 }
 interface itemProps {
   name: string;
@@ -18,22 +19,27 @@ function HorizontalTiles({
   sectionTitle,
   arr,
   isCircle,
+  nav,
 }: HorizontalTilesProps) {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
   if (arr.items.length === 0) return <></>;
 
   const handleTileClick = (name: string) => {
     router.push(`/${arr.type}/${name}`);
     return;
   };
+  console.log("", sectionTitle);
   return (
     <SectionContainer>
-      {!isCircle && <SectionNavigator refContainer={ref} scrollAmount={650} />}
+      {nav && <SectionNavigator refContainer={ref} scrollAmount={650} />}
       <SectionTitle>{sectionTitle}</SectionTitle>
       <Tiles
         ref={ref}
-        className={`snap-x ${!isCircle ? "top-12 gap-3" : "w-fit gap-10"}`}
+        className={`snap-x ${nav ? "gap-3" : "w-fit gap-10"} ${
+          isCircle ? "gap-5" : ""
+        }`}
       >
         {arr.items
           .slice(0, arr.items.length - 1)

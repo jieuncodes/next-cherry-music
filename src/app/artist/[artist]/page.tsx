@@ -1,6 +1,6 @@
 "use client";
 
-import ArtistHeader from "@/components/Artist/ArtistHeader";
+import GradientHeader from "@/components/GradientHeader";
 import ArtistTopTracks from "@/components/Artist/ArtistTopTracks";
 import LikeButton from "@/components/Btns/LikeButton";
 import Hashtags from "@/components/Hashtags";
@@ -35,7 +35,7 @@ function Artist({ params }: { params: { artist: string } }) {
 
   return (
     <>
-      <ArtistHeader imageUrl={artistImageUrl} name={artistData.artist.name} />
+      <GradientHeader imageUrl={artistImageUrl} name={artistData.artist.name} />
       <ArtistInfo>
         <ArtistInfoHeader>
           <ArtistNameArea>

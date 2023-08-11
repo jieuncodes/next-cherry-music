@@ -38,7 +38,7 @@ function Tile({ item, isCircle, handleTileClick }: TileProps) {
       </div>
       <span
         className={`whitespace-normal font-semibold text-md mt-2 text-center ${
-          isCircle ? "w-28" : "w-40"
+          isCircle ? "w-28" : "w-40 "
         }`}
       >
         {item}

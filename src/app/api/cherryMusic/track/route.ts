@@ -7,6 +7,7 @@ import {
   fetchTrackDetail,
 } from "../../lastFm/service";
 import { fetchYoutubeId } from "../../youtube/service";
+import { fetchTagTopTracks } from "../../lastFm/tag/services";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const query = req.nextUrl.searchParams.get("query");
@@ -14,7 +15,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     throw new Error("Query parameter is required.");
   }
   let tracksToProcess;
-
+  console.log("query: ", query);
   if (query === "top") {
     tracksToProcess = await fetchTopTracks();
   } else if (query === "artist-top") {
@@ -22,6 +23,10 @@ export async function GET(req: NextRequest, res: NextResponse) {
     if (!artist)
       throw new Error("Artist name is required for artist-top query.");
     tracksToProcess = await fetchArtistTopTracks(artist);
+  } else if (query === "tag-top") {
+    const tag = req.nextUrl.searchParams.get("tag");
+    if (!tag) throw new Error("Tag name is required for tag-top query.");
+    tracksToProcess = await fetchTagTopTracks(tag);
   } else {
     throw new Error("Invalid query parameter.");
   }

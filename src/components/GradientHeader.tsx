@@ -1,12 +1,12 @@
 import { HeaderImg, BlurredGradient } from "@/styles/Artist/Artist";
 import Image from "next/image";
 
-interface ArtistHeaderProps {
+interface GradientHeaderProps {
   imageUrl: string;
   name: string;
 }
 
-function ArtistHeader({ imageUrl, name }: ArtistHeaderProps) {
+function GradientHeader({ imageUrl, name }: GradientHeaderProps) {
   return (
     <HeaderImg>
       <Image
@@ -22,4 +22,4 @@ function ArtistHeader({ imageUrl, name }: ArtistHeaderProps) {
   );
 }
 
-export default ArtistHeader;
+export default GradientHeader;

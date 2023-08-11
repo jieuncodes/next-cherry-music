@@ -5,13 +5,22 @@ import { handleError, isDataOld } from "../lib/helpers";
 import saveTracksToSupabase from "../lib/server/saveTracksToSupabase";
 import useLastFetchTime from "./supabase/useLastFetchTime";
 
-interface UseDbTracksProps {
-  trackCategory: "topTracks" | "artistTopTracks";
-  query: "top" | "artist-top";
+export interface UseDbTracksProps {
+  trackCategory: "topTracks" | "artistTopTracks" | "tagTopTracks";
+  query: "top" | "artist-top" | "tag-top";
   artist?: string;
+  tag?: string;
+  count?: number;
 }
 
-function useDbTracks({ trackCategory, query, artist }: UseDbTracksProps) {
+function useDbTracks({
+  trackCategory,
+  query,
+  artist,
+  tag,
+  count,
+}: UseDbTracksProps) {
+  console.log("useDbTracks", trackCategory, query, tag);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
   const [reqTracks, setReqTracks] = useState<Track[]>([]);
@@ -20,13 +29,15 @@ function useDbTracks({ trackCategory, query, artist }: UseDbTracksProps) {
 
   const fetchReqTracks = async () => {
     const reqTracksResponse = await fetch(
-      `/api/cherryMusic/track?query=${query}&artist=${artist}`
+      `/api/cherryMusic/track?query=${query}&artist=${artist}&tag=${tag}`
     );
+    console.log("reqTracksResponse", reqTracksResponse);
     if (!reqTracksResponse.ok) {
       throw new Error(reqTracksResponse.statusText);
     }
     const reqTracksList = await reqTracksResponse.json();
-    return reqTracksList;
+    console.log("reqTracksList", reqTracksList);
+    return reqTracksList.slice(0, count);
   };
 
   const saveTracksToDB = async (tracks: Track[]) => {

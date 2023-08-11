@@ -1,22 +1,39 @@
 "use client";
 
-import useDbTracks from "@/hooks/useDbTracks";
+import useDbTracks, { UseDbTracksProps } from "@/hooks/useDbTracks";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import {
   SectionContainerMain,
   SectionGridMain,
-  SectionTitleMain,
+  SectionTitle,
 } from "@/styles/Section";
 import { useEffect, useRef, useState } from "react";
 import SectionNavigator from "./SectionNavigator";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
 
-function TopTracks() {
+interface TopTracksProps {
+  title: string;
+  trackCategory: UseDbTracksProps["trackCategory"];
+  query: UseDbTracksProps["query"];
+  tag?: string;
+  count?: number;
+}
+
+function TopTracks({
+  title,
+  trackCategory,
+  query,
+  tag,
+  count,
+}: TopTracksProps) {
   const { isSaved, isLoading, reqTracks } = useDbTracks({
-    trackCategory: "topTracks",
-    query: "top",
+    trackCategory,
+    query,
+    tag,
+    count,
   });
+  console.log("req", reqTracks);
   const { playlist, addToTopOfCurrPlaylist, removeFromPlaylist } =
     useLocalStoragePlaylist();
   const [scrollX, setScrollX] = useState(0);
@@ -29,7 +46,7 @@ function TopTracks() {
   return (
     <SectionContainerMain>
       <SectionNavigator refContainer={ref} scrollAmount={300} />
-      <SectionTitleMain>Top Tracks</SectionTitleMain>
+      <SectionTitle>{title}</SectionTitle>
       <SectionGridMain ref={ref}>
         {!isSaved && isLoading
           ? Array(30)
