@@ -7,7 +7,6 @@ import {
 } from "@/styles/Panel/Playlist";
 import { useRecoilState } from "recoil";
 import PlaylistCards from "./PlaylistCards";
-import { useEffect } from "react";
 
 function Playlist({
   playlist,

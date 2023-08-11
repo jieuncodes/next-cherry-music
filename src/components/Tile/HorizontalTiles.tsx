@@ -19,7 +19,7 @@ function HorizontalTiles({
 }: HorizontalTilesProps) {
   const router = useRouter();
   if (arr.length === 0) return <></>;
-
+  console.log(arr);
   const handleTileClick = (name: string) => {
     router.push(`/${arr}/${name}`);
     return;

@@ -10,19 +10,33 @@ import { useEffect, useState } from "react";
 
 export default function Panel() {
   const { playlist } = useLocalStoragePlaylist();
-  const [ref, bounds] = useMeasure();
   const [playlistHeight, setPlaylistHeight] = useState<number | null>(null);
   const customerPanelHeight = 50;
   const panelPlayerHeight = 350;
 
   useEffect(() => {
-    setPlaylistHeight(
-      window.innerHeight - customerPanelHeight - panelPlayerHeight - 200
-    );
-  }, [window.innerHeight]);
+    if (typeof window !== "undefined") {
+      const handleResize = () => {
+        if (window.innerHeight < 800) {
+          setPlaylistHeight(
+            window.innerHeight - customerPanelHeight - panelPlayerHeight - 120
+          );
+        } else {
+          setPlaylistHeight(
+            window.innerHeight - customerPanelHeight - panelPlayerHeight - 200
+          );
+        }
+      };
+      handleResize();
+
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
 
   return (
-    <PanelContainer ref={ref}>
+    <PanelContainer>
       <CustomerPanel />
       <PanelPlayer />
       <Playlist playlist={playlist} height={playlistHeight} />
