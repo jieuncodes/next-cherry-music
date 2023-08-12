@@ -29,3 +29,5 @@ export const PlayAllBtn = tw.button``;
 
 export const Tiles = tw.div`relative top-6 grid w-full overflow-x-scroll scrollbar-hide grid-flow-col whitespace-nowrap  `;
 export const Hashtags = tw.div``;
+
+export const AlbumTitleSpan = tw.span`block overflow-hidden text-ellipsis max-w-full`;

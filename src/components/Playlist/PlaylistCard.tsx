@@ -5,7 +5,7 @@ import usePlayerControls from "@/hooks/usePlayerControls";
 import { Track } from "@/lib/server/database.types";
 import { StyledCard, StyledHeader } from "@/styles/Panel/PlaylistCard";
 import { useRef, useState } from "react";
-import { trackActionDropdownItems } from "../Dropdowns/DropdownItems";
+import { playlistActionDropdownItems } from "../Dropdowns/DropdownItems";
 
 interface PlaylistCardProps {
   track: Track;
@@ -49,7 +49,7 @@ function PlaylistCard({ track, index, isPlayingTrack }: PlaylistCardProps) {
             setIsDropdownHover={setIsDropdownHover}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
-            dropdownItems={trackActionDropdownItems}
+            dropdownItems={playlistActionDropdownItems}
             cardRef={trackCardRef}
           />
         </div>

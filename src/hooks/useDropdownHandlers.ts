@@ -31,7 +31,15 @@ function useDropdownHandlers(props: DropDownProps) {
         props.setIsDropdownHover(false);
         break;
       case "go-to-album":
-        alert(props.track.albumTitle);
+        if (props.track.albumTitle && props.track.artist) {
+          router.push(
+            `/artist/${encodeURIComponent(
+              props.track.artist
+            )}/${encodeURIComponent(props.track.albumTitle)}`
+          );
+        } else {
+          alert("No album or artist found");
+        }
         break;
       case "go-to-artist":
         router.push(`/artist/${props.track.artist}`);

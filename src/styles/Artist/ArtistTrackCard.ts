@@ -17,4 +17,4 @@ export const TrackTitle = tw(
 )`text-sm w-36 flex overflow-hidden gap-32 bg-red font-semibold leading-none text-default-600 relative  left-3 select-none whitespace-nowrap `;
 
 export const Artist = tw.div`text-sm tracking-tight text-black/50  justify-self-start`;
-export const AlbumTitle = tw.div`flex items-center text-sm tracking-tight text-black/50 whitespace-nowrap overflow-hidden justify-self-start w-full`;
+export const AlbumTitle = tw.div`z-30 box-border flex items-center text-sm tracking-tight text-black/50 whitespace-nowrap overflow-hidden justify-self-start w-full`;

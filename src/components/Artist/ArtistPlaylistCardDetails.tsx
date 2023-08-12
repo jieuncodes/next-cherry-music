@@ -1,12 +1,13 @@
 import Marquee from "@/animations/marquee";
 import { Database } from "@/lib/server/database.types";
-import { cn } from "@/lib/utils";
+import { AlbumTitleSpan } from "@/styles/Artist/Artist";
 import {
   AlbumTitle,
   Artist,
   CardDetails,
   TrackTitle,
 } from "@/styles/Artist/ArtistTrackCard";
+import { useRouter } from "next/navigation";
 
 interface ArtistPlaylistCardDetailsProps {
   isCardHover: boolean;
@@ -22,9 +23,20 @@ function ArtistPlaylistCardDetails({
   onPlaylist,
   isPlayingTrack,
 }: ArtistPlaylistCardDetailsProps) {
+  const router = useRouter();
+
   const trackInfoClassNames = `${
     isCardHover || isPlayingTrack ? "text-white/70" : ""
   } ${onPlaylist ? "text-xs -ml-2 -mt-[3px]" : ""}`;
+
+  const handleAlbumTitleClick = () => {
+    if (!track.albumTitle || !track.artist) return;
+    router.push(
+      `/artist/${encodeURIComponent(track.artist)}/${encodeURIComponent(
+        track.albumTitle
+      )}`
+    );
+  };
 
   return (
     <CardDetails>
@@ -38,10 +50,11 @@ function ArtistPlaylistCardDetails({
         </TrackTitle>
       )}
       <Artist className={trackInfoClassNames}>{track.artist}</Artist>
-      <AlbumTitle className={trackInfoClassNames}>
-        <span className="block overflow-hidden text-ellipsis max-w-full">
-          {track.albumTitle || "single"}
-        </span>
+      <AlbumTitle
+        className={trackInfoClassNames}
+        onClick={track.albumTitle ? handleAlbumTitleClick : undefined}
+      >
+        <AlbumTitleSpan>{track.albumTitle || "single"}</AlbumTitleSpan>
       </AlbumTitle>
     </CardDetails>
   );
