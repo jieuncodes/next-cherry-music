@@ -1,4 +1,5 @@
-import { LastFmTrack } from "@/types/trackTypes";
+import { Track } from "@/lib/server/database.types";
+import { AlbumTrack, LastFmAlbumInfo, LastFmTrack } from "@/types/trackTypes";
 
 export async function fetchTopTracks(): Promise<LastFmTrack[]> {
   const response = await fetch(`${process.env.URL}/api/lastFm/top-tracks`);
@@ -38,4 +39,32 @@ export async function fetchTrackDetail(track: LastFmTrack): Promise<any> {
     console.error("Error fetching or parsing JSON for track detail:", error);
     throw new Error("Failed to fetch or parse track detail JSON");
   }
+}
+export async function fetchAlbumInfo({
+  artist,
+  album,
+}: {
+  artist: string;
+  album: string;
+}): Promise<LastFmAlbumInfo> {
+  const response = await fetch(
+    `/api/lastFm/album/get-info?artist=${artist}&album=${album}`
+  );
+  const data = await response.json();
+
+  const tracks: Track[] = data.album.tracks.track.map((track: AlbumTrack) => {
+    return {
+      name: track.name,
+      duration: track.duration,
+      playcount: data.album.playcount,
+      listeners: data.album.listeners,
+      mbid: data.album.mbid,
+      url: track.url,
+      streamable: track.streamable,
+      artist: data.album.artist,
+      image: data.album.image,
+    };
+  });
+  const newData = { ...data.album, tracks };
+  return newData;
 }
