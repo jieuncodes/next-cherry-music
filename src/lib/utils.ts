@@ -64,8 +64,3 @@ export const generateTrackId = (url: string): number => {
   const urlLastPart = url.split("/");
   return simpleHash(urlLastPart[urlLastPart.length - 1]);
 };
-const getTotalDuration = (albumInfo: any): number => {
-  return albumInfo.tracks.reduce((totalDuration: number, track: any) => {
-    return totalDuration + track.duration;
-  }, 0);
-};

@@ -8,6 +8,6 @@ export const Logo = tw.span`font-bold tracking-normal justify-center align-middl
 
 export const NavUl = tw.ul`xl:w-50 flex flex-col h-full text-white p-0 m-1 last:bottom-0`;
 
-export const Menu = tw.li`w-full grid xl:grid-cols-[1fr_5fr] items-center mb-5 grid-cols-1 2xl:mb-10`;
+export const Menu = tw.li`w-full grid xl:grid-cols-[1fr_5fr] items-center mb-5 grid-cols-1 2xl:mb-10 hover:cursor-pointer`;
 
 export const MenuSpan = tw.span`font-bold tracking-normal text-lg ml-2 hidden xl:block 2xl:text-[1.5rem]`;

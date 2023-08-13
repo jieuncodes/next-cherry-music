@@ -13,23 +13,23 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] Vote for music
 - [ ] Search bar
 - [ ] Dark Mode
-- [ ] Responsive Design
+- [x] Responsive Design
     - [x] Shrink nav bar when md, sm window
 - [ ] Framer Motion
     - [x] Carousel
     - [ ] Nav shifting animation
-- [ ] Modern data fetching using React-Query
 - [ ] Infinite scrolling for dynamically loading 
 - [ ] Profile uploads (Avatar, nickname..)
 - [ ] User's Playlist Upload
-- [ ] Hashtag
+- [x] Hashtag
 - [ ] Friends online
 - [x] State management using Recoil
 - [ ] Edit account settings
 - [x] Loading - skeleton
 - [x] Data Caching - minimize api call
-- [ ] Music player
+- [x] Music player
 - [ ] beautiful dnd - drag cards to move position
+- [ ] Error handling using Next13 app router
 - [ ] Deploy
 
 

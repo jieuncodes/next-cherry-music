@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@supabase/auth-helpers-react";
 import { Icons } from "../app/Icons";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
@@ -31,6 +33,19 @@ export default function Nav() {
     await supabase.auth.signOut();
     router.refresh();
   };
+  const [selectedMenu, setSelectedMenu] = useState<string | null>(null);
+
+  const handleMenuClick = (menuName: string) => {
+    setSelectedMenu(menuName);
+  };
+
+  const renderSideline = (menuName: string) =>
+    selectedMenu === menuName ? (
+      <motion.div
+        layoutId="sideline"
+        className="absolute right-0 h-8 w-1 bg-white "
+      />
+    ) : null;
 
   return (
     <NavContainer>
@@ -54,25 +69,30 @@ export default function Nav() {
       <Search />
 
       <NavUl>
-        <Menu>
+        <Menu onClick={() => handleMenuClick("Chart")}>
+          {renderSideline("Chart")}
           <Icons.disc3 size={22} />
           <MenuSpan>Chart</MenuSpan>
         </Menu>
-        <Menu>
+        <Menu onClick={() => handleMenuClick("Albums")}>
+          {renderSideline("Albums")}
           <Icons.library size={22} />
           <MenuSpan>Albums</MenuSpan>
         </Menu>
-        <Menu>
+        <Menu onClick={() => handleMenuClick("Artists")}>
+          {renderSideline("Artists")}
           <Icons.listMusic size={22} />
           <MenuSpan>Playlist</MenuSpan>
         </Menu>
 
-        <Menu>
+        <Menu onClick={() => handleMenuClick("comments")}>
+          {renderSideline("comments")}
           <Icons.messageCircle size={22} />
           <MenuSpan>Comments</MenuSpan>
         </Menu>
 
-        <Menu>
+        <Menu onClick={() => handleMenuClick("setting")}>
+          {renderSideline("setting")}
           <Icons.settings size={22} />
           <MenuSpan>Settings</MenuSpan>
         </Menu>
