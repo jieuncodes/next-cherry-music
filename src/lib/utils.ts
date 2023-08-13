@@ -16,6 +16,16 @@ export function floatToTime(floatNumber: number) {
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
+export function secsToTime(secs: number) {
+  const minutes = Math.floor(secs / 60);
+  const seconds = Math.floor(secs % 60);
+
+  const formattedMinutes = String(minutes).padStart(2, "0");
+  const formattedSeconds = String(seconds).padStart(2, "0");
+
+  return `${formattedMinutes}min ${formattedSeconds}sec`;
+}
+
 export const simpleHash = (str: string) => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -53,4 +63,9 @@ export const truncateString = (str: string, num: number) => {
 export const generateTrackId = (url: string): number => {
   const urlLastPart = url.split("/");
   return simpleHash(urlLastPart[urlLastPart.length - 1]);
+};
+const getTotalDuration = (albumInfo: any): number => {
+  return albumInfo.tracks.reduce((totalDuration: number, track: any) => {
+    return totalDuration + track.duration;
+  }, 0);
 };

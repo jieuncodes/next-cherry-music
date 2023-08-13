@@ -33,12 +33,17 @@ function useLocalStoragePlaylist() {
     setPlaylist([]);
   };
 
+  const addTrackListToTopOfCurrPlaylist = (trackList: Track[]) => {
+    setPlaylist((prevPlaylist: Track[]) => [...trackList, ...prevPlaylist]);
+    setCurrPlaylistTrackIdx(0);
+  };
   return {
     playlist: recoilPlaylist,
     addToTopOfCurrPlaylist,
     addToBottomOfCurrPlaylist,
     removeFromPlaylist,
     emptyPlaylist,
+    addTrackListToTopOfCurrPlaylist,
   };
 }
 

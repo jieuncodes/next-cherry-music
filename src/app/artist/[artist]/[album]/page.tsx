@@ -1,11 +1,12 @@
 "use client";
 
-import { fetchAlbumInfo } from "@/app/api/lastFm/service";
+import { Icons } from "@/app/Icons";
+import AlbumPlaylist from "@/components/Album/AlbumPlaylist";
 import GradientHeader from "@/components/GradientHeader";
-import { LastFmAlbumInfo } from "@/types/trackTypes";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import Hashtags from "@/components/Hashtags";
+import useDbTracks from "@/hooks/useDbTracks";
+import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
+import { secsToTime } from "@/lib/utils";
 import {
   AlbumBtns,
   AlbumContainer,
@@ -14,17 +15,16 @@ import {
   AlbumTitle,
   HeaderAlbumInfo,
 } from "@/styles/Album/album";
-import { floatToTime, secsToTime } from "@/lib/utils";
+import { LastFmAlbumInfo } from "@/types/trackTypes";
 import { Button } from "@nextui-org/react";
-import { Icons } from "@/app/Icons";
-import useDbTracks from "@/hooks/useDbTracks";
-import AlbumPlaylist from "@/components/Album/AlbumPlaylist";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 function Album({ params }: { params: { artist: string; album: string } }) {
   const [albumInfo, setAlbumInfo] = useState<LastFmAlbumInfo | null>(null);
   const decodedAlbum = decodeURIComponent(params.album);
   const decodedArtist = decodeURIComponent(params.artist);
-
+  const { addTrackListToTopOfCurrPlaylist } = useLocalStoragePlaylist();
   const { isSaved, isLoading, reqTracks } = useDbTracks({
     trackCategory: "albumTracks",
     query: "album-tracks",
@@ -34,14 +34,13 @@ function Album({ params }: { params: { artist: string; album: string } }) {
 
   useEffect(() => {
     const getAlbumInfo = async () => {
-      const albumInfo = await fetchAlbumInfo({
-        album: params.album,
-        artist: params.artist,
-      });
-      setAlbumInfo(albumInfo);
+      const response = await fetch(
+        `/api/lastFm/album/get-info?artist=${params.artist}&album=${params.album}`
+      );
+      const albumInfo = await response.json();
+      setAlbumInfo(albumInfo.album);
     };
     getAlbumInfo();
-    console.log("reqTracks", reqTracks);
   }, []);
 
   const allTrackTimesSum = albumInfo?.tracks.track.reduce(
@@ -82,10 +81,11 @@ function Album({ params }: { params: { artist: string; album: string } }) {
               radius="full"
               variant="flat"
               startContent={<Icons.play size={20} fill="black" />}
-              onPress={() => console.log("play")}
+              onPress={() => addTrackListToTopOfCurrPlaylist(reqTracks)}
             >
               Play
             </Button>
+            {/* TODO: make playlist list modal so user can add to specific playlist */}
             <Button
               radius="full"
               variant="ghost"

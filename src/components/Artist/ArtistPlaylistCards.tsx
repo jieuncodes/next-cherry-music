@@ -6,7 +6,7 @@ import ArtistPlaylistCard from "./ArtistPlaylistCard";
 
 export function ArtistPlaylistCards({ playlist }: { playlist: Track[] }) {
   const playingTrack = useRecoilValue(currPlayingTrackYoutubeId);
-
+  console.log("", playlist);
   return (
     <PlaylistGrid>
       {playlist.map((track, index) => (

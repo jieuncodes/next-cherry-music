@@ -40,3 +40,10 @@ export const isValidPlayer = (playerRef: RefObject<YouTubePlayer>): boolean => {
     typeof playerRef.current.getDuration() === "function"
   );
 };
+
+export const getTotalDuration = (albumInfo: any): number => {
+  console.log("", albumInfo);
+  return albumInfo.tracks.reduce((totalDuration: number, track: any) => {
+    return totalDuration + track.duration;
+  }, 0);
+};

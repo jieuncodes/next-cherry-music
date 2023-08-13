@@ -16,7 +16,7 @@ function Hashtags({ tags }: { tags: Tag[] }) {
           onClick={() => goToHashtagPage(tag.name)}
           key={index}
           classNames={{
-            base: "bg-cherry/40 hover:bg-cherry/60 hover:cursor-pointer",
+            base: "bg-cherry/50 hover:bg-cherry/60 hover:cursor-pointer",
             content: "drop-shadow shadow-black text-white",
           }}
         >

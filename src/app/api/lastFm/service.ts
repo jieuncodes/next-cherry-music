@@ -22,7 +22,6 @@ export async function fetchTrackDetail(track: LastFmTrack): Promise<any> {
   try {
     const trackTitleEncoded = encodeURIComponent(track.name);
     const artistEncoded = encodeURIComponent(track.artist.name);
-    console.log("track", track);
 
     const response = await fetch(
       `${process.env.URL}/api/lastFm/track/details?trackTitle=${trackTitleEncoded}&artist=${artistEncoded}`
