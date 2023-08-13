@@ -1,4 +1,4 @@
-import { Bomb, Minus, Trash2 } from "lucide-react";
+import { Bomb, CopyPlus, Minus, Trash2 } from "lucide-react";
 import {
   HeartIcon,
   User,
@@ -66,4 +66,5 @@ export const Icons = {
   minus: Minus,
   bomb: Bomb,
   trash2: Trash2,
+  copyPlus: CopyPlus,
 };

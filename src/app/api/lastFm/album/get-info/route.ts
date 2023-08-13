@@ -5,24 +5,25 @@ export async function GET(req: NextRequest, res: NextResponse) {
   validateEnvVariable(process.env.LAST_FM_BASE_URL, "LAST_FM_BASE_URL");
   validateEnvVariable(process.env.LAST_FM_API_KEY, "LAST_FM_API_KEY");
 
-  const trackTitle = req.nextUrl.searchParams.get("trackTitle") || "";
-  const artist = req.nextUrl.searchParams.get("artist") || "";
+  const album = req.nextUrl.searchParams.get("album");
+  const artist = req.nextUrl.searchParams.get("artist");
   try {
     const url = new URL(process.env.LAST_FM_BASE_URL!);
     const params = new URLSearchParams({
-      method: "track.getInfo",
+      method: "album.getinfo",
+      artist: artist as string,
+      album: album as string,
+      autocorrect: "1",
       api_key: process.env.LAST_FM_API_KEY!,
-      artist: artist,
-      track: trackTitle,
       format: "json",
     });
-    1;
+
     url.search = params.toString();
     const response = await fetch(url);
 
     const data = await response.json();
-    return NextResponse.json(data.track);
+    return NextResponse.json(data);
   } catch (error) {
-    handleError({ context: "lastFm API - track.getInfo", error });
+    handleError({ context: "lastFm API - album.getinfo", error });
   }
 }

@@ -2,6 +2,7 @@ import { generateTrackId } from "@/lib/utils";
 import { LastFmTrack } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 import {
+  fetchAlbumInfo,
   fetchArtistTopTracks,
   fetchTopTracks,
   fetchTrackDetail,
@@ -9,27 +10,52 @@ import {
 import { fetchYoutubeId } from "../../youtube/service";
 import { fetchTagTopTracks } from "../../lastFm/tag/services";
 
+async function fetchTracksByQueryType(
+  query: string,
+  req: NextRequest
+): Promise<LastFmTrack[]> {
+  switch (query) {
+    case "top":
+      return await fetchTopTracks();
+
+    case "artist-top":
+      const artist = req.nextUrl.searchParams.get("artist");
+      if (!artist) {
+        throw new Error("Artist name is required for artist-top query.");
+      }
+      return await fetchArtistTopTracks(artist);
+
+    case "tag-top":
+      const tag = req.nextUrl.searchParams.get("tag");
+      if (!tag) {
+        throw new Error("Tag name is required for tag-top query.");
+      }
+      return await fetchTagTopTracks(tag);
+
+    case "album-tracks":
+      const album = req.nextUrl.searchParams.get("album");
+      const artistName = req.nextUrl.searchParams.get("artist");
+      if (!album || !artistName) {
+        throw new Error(
+          "Album and artist name are required for album-tracks query."
+        );
+      }
+      const albumInfo = await fetchAlbumInfo({ artist: artistName, album });
+      return albumInfo.tracks.track;
+
+    default:
+      throw new Error("Invalid query parameter.");
+  }
+}
+
 export async function GET(req: NextRequest, res: NextResponse) {
   const query = req.nextUrl.searchParams.get("query");
+
   if (!query) {
     throw new Error("Query parameter is required.");
   }
-  let tracksToProcess;
-  if (query === "top") {
-    tracksToProcess = await fetchTopTracks();
-  } else if (query === "artist-top") {
-    const artist = req.nextUrl.searchParams.get("artist");
-    if (!artist)
-      throw new Error("Artist name is required for artist-top query.");
-    tracksToProcess = await fetchArtistTopTracks(artist);
-  } else if (query === "tag-top") {
-    const tag = req.nextUrl.searchParams.get("tag");
-    if (!tag) throw new Error("Tag name is required for tag-top query.");
-    tracksToProcess = await fetchTagTopTracks(tag);
-  } else {
-    throw new Error("Invalid query parameter.");
-  }
 
+  const tracksToProcess = await fetchTracksByQueryType(query, req);
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack) => {
       const trackDetail = await fetchTrackDetail(track);

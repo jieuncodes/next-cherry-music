@@ -6,9 +6,14 @@ import saveTracksToSupabase from "../lib/server/saveTracksToSupabase";
 import useLastFetchTime from "./supabase/useLastFetchTime";
 
 export interface UseDbTracksProps {
-  trackCategory: "topTracks" | "artistTopTracks" | "tagTopTracks";
-  query: "top" | "artist-top" | "tag-top";
+  trackCategory:
+    | "topTracks"
+    | "artistTopTracks"
+    | "tagTopTracks"
+    | "albumTracks";
+  query: "top" | "artist-top" | "tag-top" | "album-tracks";
   artist?: string;
+  album?: string;
   tag?: string;
   count?: number;
 }
@@ -17,6 +22,7 @@ function useDbTracks({
   trackCategory,
   query,
   artist,
+  album,
   tag,
   count,
 }: UseDbTracksProps) {
@@ -28,13 +34,13 @@ function useDbTracks({
 
   const fetchReqTracks = async () => {
     const reqTracksResponse = await fetch(
-      `/api/cherryMusic/track?query=${query}&artist=${artist}&tag=${tag}`
+      `/api/cherryMusic/track?query=${query}&artist=${artist}&album=${album}&tag=${tag}`
     );
-    console.log("reqTracksResponse", reqTracksResponse);
     if (!reqTracksResponse.ok) {
       throw new Error(reqTracksResponse.statusText);
     }
     const reqTracksList = await reqTracksResponse.json();
+    console.log("reqTracksList", reqTracksList);
     return reqTracksList.slice(0, count);
   };
 

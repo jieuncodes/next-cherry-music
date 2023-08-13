@@ -1,3 +1,6 @@
+import { Track } from "@/lib/server/database.types";
+import Album from "../app/artist/[artist]/[album]/page";
+
 type Streamable = { "#text": string; fulltrack: string };
 export type Artist = { name: string; mbid: string; url: string };
 type AlbumImage = { "#text": string; size: string };
@@ -59,4 +62,29 @@ export interface SpotifyBestMatchArtistInfo {
   popularity: number;
   type: string;
   uri: string;
+}
+
+export interface LastFmAlbumInfo {
+  artist: string;
+  image: AlbumImage[];
+  listeners: string;
+  mbid: string;
+  name: string;
+  playcount: string;
+  tags: { tag: { name: string; url: string }[] };
+  tracks: { track: LastFmTrack[] };
+  url: string;
+  wiki: { published: string; summary: string };
+}
+
+export interface AlbumTrack {
+  "@attr"?: {
+    rank: string;
+  };
+  name: string;
+  duration: string;
+  mbid: string;
+  url: string;
+  streamable: { "#text": string; fulltrack: string };
+  artist: Artist;
 }
