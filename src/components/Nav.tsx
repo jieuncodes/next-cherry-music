@@ -43,7 +43,7 @@ export default function Nav() {
     selectedMenu === menuName ? (
       <motion.div
         layoutId="sideline"
-        className="absolute right-0 h-8 w-1 bg-white "
+        className="absolute right-0 h-10 w-full bg-white/10 mt-0 rounded-l-full"
       />
     ) : null;
 
