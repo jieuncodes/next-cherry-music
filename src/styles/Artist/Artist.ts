@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import tw from "tailwind-styled-components";
 
-export const HeaderImg = tw.div`absolute -top-6 -left-6 w-full h-[400px] bg-cover bg-center bg-no-repeat filter overflow-hidden`;
+export const HeaderImg = tw.div`z-0 absolute -top-6 -left-6 w-full h-[400px] bg-cover bg-center bg-no-repeat filter overflow-hidden`;
 
 export const BlurredGradient = styled.div`
   position: absolute;
@@ -14,6 +14,7 @@ export const BlurredGradient = styled.div`
     rgba(244, 244, 245, 0.8) 90%,
     rgba(244, 244, 245, 1) 100%
   );
+  z-index: 1;
 `;
 
 export const ArtistInfo = tw.div`absolute z-10 text-black top-56 px-6`;

@@ -40,7 +40,6 @@ function useDbTracks({
       throw new Error(reqTracksResponse.statusText);
     }
     const reqTracksList = await reqTracksResponse.json();
-    console.log("reqTracksList", reqTracksList);
     return reqTracksList.slice(0, count);
   };
 
