@@ -8,7 +8,7 @@ function Home() {
       <div className="carousel-container h-80 relative">
         <Carousel />
       </div>
-      <TopTracks title="Weekly Top50" trackCategory="topTracks" query="top" />
+      <TopTracks title="Today Top50" trackCategory="topTracks" query="top" />
       {/* <TrendingArtists /> */}
       {/* <TopPlayLists /> */}
     </div>

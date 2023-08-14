@@ -2,6 +2,12 @@ import { SpotifyTrackData } from "@/types/spotify/types";
 import { fetchTrackDetail } from "../lastFm/service";
 import { LastFmTrack } from "@/types/trackTypes";
 
+export const fetchSpotifyAccessToken = async () => {
+  const tokenResponse = await fetch(process.env.SPOTIFY_TOKEN_URL as string);
+  const tokenData = await tokenResponse.json();
+  return tokenData.accessToken;
+};
+
 export async function fetchSpotifyTopTracks(): Promise<SpotifyTrackData[]> {
   const response = await fetch(`${process.env.URL}/api/spotify/top-tracks`);
   return response.json();

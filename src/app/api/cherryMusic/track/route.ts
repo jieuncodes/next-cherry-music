@@ -12,8 +12,9 @@ import {
   refineSpotifyTracksIntoLastFmTrack,
 } from "../../spotify/service";
 import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
+import { fetchSpotifyTrackData } from "../../spotify/fetch-track-img/route";
 
-async function fetchTracksByQueryType(
+async function fetchTrackListByQueryType(
   query: string,
   req: NextRequest
 ): Promise<LastFmTrack[]> {
@@ -65,20 +66,20 @@ export async function GET(req: NextRequest, res: NextResponse) {
     throw new Error("Query parameter is required.");
   }
 
-  let tracksToProcess = await fetchTracksByQueryType(query, req);
+  let tracksToProcess = await fetchTrackListByQueryType(query, req);
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack) => {
       const trackDetail = await fetchTrackDetail(track);
-
       const id = generateTrackId(trackDetail.url);
       const youtubeId = await fetchYouTubeVideoId(trackDetail.url);
+      const spoitfyImage = await fetchSpotifyTrackData(track.name);
       return {
         id,
         trackTitle: decodeURIComponent(track.name),
         artist: decodeURIComponent(track.artist.name),
         youtubeId,
         albumTitle: trackDetail.album?.title || "",
-        albumImgUrl: trackDetail.album?.image[3]["#text"],
+        albumImgUrl: spoitfyImage.tracks.items[0].album.images[0].url,
         tags: trackDetail.toptags?.tag,
         playCount: trackDetail.playcount,
       };
