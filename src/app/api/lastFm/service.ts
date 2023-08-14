@@ -1,8 +1,10 @@
 import { Track } from "@/lib/server/database.types";
+import { TrackWithTitleAndArtist } from "@/types/spotify/types";
 import { AlbumTrack, LastFmAlbumInfo, LastFmTrack } from "@/types/trackTypes";
 
 export async function fetchTopTracks(): Promise<LastFmTrack[]> {
   const response = await fetch(`${process.env.URL}/api/lastFm/top-tracks`);
+
   return response.json();
 }
 
@@ -18,7 +20,9 @@ export async function fetchArtistTopTracks(
   return data.toptracks.track;
 }
 
-export async function fetchTrackDetail(track: LastFmTrack): Promise<any> {
+export async function fetchTrackDetail(
+  track: TrackWithTitleAndArtist
+): Promise<any> {
   try {
     const trackTitleEncoded = encodeURIComponent(track.name);
     const artistEncoded = encodeURIComponent(track.artist.name);

@@ -8,7 +8,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const url = new URL(process.env.LAST_FM_BASE_URL!);
     const params = new URLSearchParams({
-      method: "chart.getTopTracks",
+      method: "user.getTopTracks",
+      user: "Enono18",
       api_key: process.env.LAST_FM_API_KEY!,
       format: "json",
     });
@@ -17,8 +18,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     const response = await fetch(url);
     const data = await response.json();
-    return NextResponse.json(data.tracks.track);
+    return NextResponse.json(data.toptracks.track);
   } catch (error) {
-    handleError({ context: "lastFm API - chart.getTopTracks", error });
+    handleError({ context: "lastFm API - geo.getTopTracks", error });
   }
 }

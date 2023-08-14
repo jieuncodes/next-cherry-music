@@ -4,11 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   fetchAlbumInfo,
   fetchArtistTopTracks,
-  fetchTopTracks,
   fetchTrackDetail,
 } from "../../lastFm/service";
-import { fetchYoutubeId } from "../../youtube/service";
 import { fetchTagTopTracks } from "../../lastFm/tag/services";
+import {
+  fetchSpotifyTopTracks,
+  refineSpotifyTracksIntoLastFmTrack,
+} from "../../spotify/service";
+import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
 
 async function fetchTracksByQueryType(
   query: string,
@@ -16,7 +19,14 @@ async function fetchTracksByQueryType(
 ): Promise<LastFmTrack[]> {
   switch (query) {
     case "top":
-      return await fetchTopTracks();
+      const spotifyTop = await fetchSpotifyTopTracks();
+      const refinedTracks: LastFmTrack[] = [];
+
+      for (const track of spotifyTop) {
+        const refined = await refineSpotifyTracksIntoLastFmTrack(track);
+        refinedTracks.push(refined);
+      }
+      return refinedTracks;
 
     case "artist-top":
       const artist = req.nextUrl.searchParams.get("artist");
@@ -55,12 +65,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
     throw new Error("Query parameter is required.");
   }
 
-  const tracksToProcess = await fetchTracksByQueryType(query, req);
+  let tracksToProcess = await fetchTracksByQueryType(query, req);
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack) => {
       const trackDetail = await fetchTrackDetail(track);
+
       const id = generateTrackId(trackDetail.url);
-      const youtubeId = await fetchYoutubeId(query, track, String(id));
+      const youtubeId = await fetchYouTubeVideoId(trackDetail.url);
       return {
         id,
         trackTitle: decodeURIComponent(track.name),

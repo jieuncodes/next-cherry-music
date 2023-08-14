@@ -1,6 +1,3 @@
-import { Track } from "@/lib/server/database.types";
-import Album from "../app/artist/[artist]/[album]/page";
-
 type Streamable = { "#text": string; fulltrack: string };
 export type Artist = { name: string; mbid: string; url: string };
 type AlbumImage = { "#text": string; size: string };
@@ -10,7 +7,7 @@ export interface LastFmTrack {
     rank: string;
   };
   name: string;
-  duration?: string;
+  duration: string;
   playcount: string;
   listeners: string;
   mbid: string;
