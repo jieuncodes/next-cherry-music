@@ -47,15 +47,24 @@ export interface Database {
       };
       lastFetchTimes: {
         Row: {
+          albumTracks: string | null;
+          artistTopTracks: string | null;
           id: number;
+          tagTopTracks: string | null;
           topTracks: string | null;
         };
         Insert: {
+          albumTracks?: string | null;
+          artistTopTracks?: string | null;
           id?: number;
+          tagTopTracks?: string | null;
           topTracks?: string | null;
         };
         Update: {
+          albumTracks?: string | null;
+          artistTopTracks?: string | null;
           id?: number;
+          tagTopTracks?: string | null;
           topTracks?: string | null;
         };
         Relationships: [];
@@ -67,6 +76,7 @@ export interface Database {
           artist: string | null;
           id: number;
           playCount: string | null;
+          rank: number | null;
           tags: string[] | null;
           trackTitle: string | null;
           youtubeId: string | null;
@@ -77,6 +87,7 @@ export interface Database {
           artist?: string | null;
           id?: number;
           playCount?: string | null;
+          rank?: number | null;
           tags?: string[] | null;
           trackTitle?: string | null;
           youtubeId?: string | null;
@@ -87,6 +98,7 @@ export interface Database {
           artist?: string | null;
           id?: number;
           playCount?: string | null;
+          rank?: number | null;
           tags?: string[] | null;
           trackTitle?: string | null;
           youtubeId?: string | null;

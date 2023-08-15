@@ -68,18 +68,20 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
   let tracksToProcess = await fetchTrackListByQueryType(query, req);
   const trackDetailsPromises = tracksToProcess.map(
-    async (track: LastFmTrack) => {
+    async (track: LastFmTrack, index) => {
       const trackDetail = await fetchTrackDetail(track);
       const id = generateTrackId(trackDetail.url);
       const youtubeId = await fetchYouTubeVideoId(trackDetail.url);
-      const spoitfyImage = await fetchSpotifyTrackData(track.name);
+      const spotifyData = await fetchSpotifyTrackData(track.name);
+      console.log("spotifyData", spotifyData);
       return {
+        rank: index,
         id,
         trackTitle: decodeURIComponent(track.name),
         artist: decodeURIComponent(track.artist.name),
         youtubeId,
         albumTitle: trackDetail.album?.title || "",
-        albumImgUrl: spoitfyImage.tracks.items[0].album.images[0].url,
+        albumImgUrl: spotifyData.tracks.items[0].album.images[0].url,
         tags: trackDetail.toptags?.tag,
         playCount: trackDetail.playcount,
       };
