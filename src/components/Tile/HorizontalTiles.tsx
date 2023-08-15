@@ -1,3 +1,4 @@
+"use client";
 import { Tiles } from "@/styles/Artist/Artist";
 import { SectionContainer, SectionTitle } from "@/styles/Section";
 import { useRouter } from "next/navigation";
@@ -41,7 +42,8 @@ function HorizontalTiles({
     );
     const spotifyArtistData = await spotifyArtistResponse.json();
     const url =
-      spotifyArtistData?.images[0]?.url || "/images/default_user_avatar.jpeg";
+      spotifyArtistData?.best_match?.items[0]?.images[0]?.url ||
+      "/images/default_user_avatar.jpeg";
 
     setArtistImgUrls((prevUrls) => {
       const newUrls = new Map(prevUrls);
@@ -52,9 +54,7 @@ function HorizontalTiles({
 
   useEffect(() => {
     arr.items.forEach((item) => {
-      if (item.artist?.name) {
-        getArtistImgUrl(item.artist.name);
-      }
+      getArtistImgUrl(item.name);
     });
   }, [arr.items]);
 
@@ -76,7 +76,7 @@ function HorizontalTiles({
               item={item}
               handleTileClick={() => handleTileClick(item.name)}
               isCircle={isCircle}
-              artistImgUrl={artistImgUrls.get(item.artist?.name ?? "")}
+              artistImgUrl={artistImgUrls.get(item.name!)}
             />
           ))}
       </Tiles>

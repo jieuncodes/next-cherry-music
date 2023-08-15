@@ -14,18 +14,19 @@ async function HashtagPage({ params }: { params: { hashtag: string } }) {
   };
 
   const tagTopArtistsResponse = await fetch(
-    `/api/lastFm/tag/get-top-artists?tag=${params.hashtag}`
+    `${process.env.URL}/api/lastFm/tag/get-top-artists?tag=${params.hashtag}`
   );
   const tagTopArtists = await tagTopArtistsResponse.json();
 
-  const spotifyArtistResponse = await fetch(
-    `/api/spotify/artist?artist=${tagTopArtists.tracks.track[0]}`
+  const firstArtistSpotifyRes = await fetch(
+    `${process.env.URL}/api/spotify/artist?artist=${tagTopArtists.topartists.artist[0]}`
   );
-  const spotifyArtistData = await spotifyArtistResponse.json();
-  const firstArtistImgUrl = spotifyArtistData?.images[0]?.url;
+  const spotifyArtistData = await firstArtistSpotifyRes.json();
+  const firstArtistImgUrl =
+    spotifyArtistData?.best_match?.items[0]?.images[0]?.url;
   const tagTopArtistsDataWithType = {
     type: "artist",
-    items: tagTopArtists.tracks.track,
+    items: tagTopArtists.topartists.artist,
   };
 
   const tagTopTracksResponse = await fetch(

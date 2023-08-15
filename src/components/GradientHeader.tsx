@@ -1,3 +1,5 @@
+"use client";
+
 import { HeaderImg, BlurredGradient } from "@/styles/Artist/Artist";
 import Image from "next/image";
 

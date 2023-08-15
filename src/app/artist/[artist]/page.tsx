@@ -14,7 +14,6 @@ async function ArtistPage({ params }: { params: { artist: string } }) {
   const artistImgUrl =
     spotifyArtistData.best_match?.items[0]?.images[0]?.url ||
     "/images/default_album_cover.webp";
-  console.log("spotifyArtistData", spotifyArtistData);
   const artistTopTracksResponse = await fetch(
     `${process.env.URL}/api/cherryMusic/track?query=artist-top&artist=${params.artist}`
   );

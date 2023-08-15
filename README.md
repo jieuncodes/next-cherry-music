@@ -8,6 +8,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [x] Social Login
 - [x] Login with magic link
 - [x] Music Top Chart
+- [x] Modern Data Caching
 - [ ] Create and Add user playlist
 - [ ] Create and vote for comments
 - [ ] Vote for music
@@ -17,7 +18,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
     - [x] Shrink nav bar when md, sm window
 - [ ] Framer Motion
     - [x] Carousel
-    - [ ] Nav shifting animation
+    - [] Nav shifting animation
 - [ ] Infinite scrolling for dynamically loading 
 - [ ] Profile uploads (Avatar, nickname..)
 - [ ] User's Playlist Upload
