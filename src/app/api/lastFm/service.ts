@@ -81,6 +81,5 @@ export async function fetchAlbumInfo({
     };
   });
   const newData = { ...data.album, tracks: { track: [...newTracks] } };
-  console.log("newData", newData);
   return newData;
 }

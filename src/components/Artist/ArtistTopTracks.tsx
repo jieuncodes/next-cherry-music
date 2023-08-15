@@ -1,21 +1,14 @@
-import useDbTracks from "@/hooks/useDbTracks";
+import { Track } from "@/lib/server/database.types";
 import { SectionContainer } from "../../styles/Section";
 import ArtsitPlaylist from "./ArtistPlaylist";
 import ArtistTrackCardsSkeleton from "./ArtistTopTrackCardSkeleton";
 
-function ArtistTopTracks({ artist }: { artist: string }) {
-  const { isSaved, isLoading, reqTracks } = useDbTracks({
-    trackCategory: "artistTopTracks",
-    query: "artist-top",
-    artist,
-  });
+function ArtistTopTracks({ tracks }: { tracks: Track[] }) {
   return (
+    // <ArtistTrackCardsSkeleton />
+
     <SectionContainer className="mb-12">
-      {!isSaved && isLoading ? (
-        <ArtistTrackCardsSkeleton />
-      ) : (
-        <ArtsitPlaylist playlist={reqTracks.slice(0, 6)} />
-      )}
+      <ArtsitPlaylist playlist={tracks.slice(0, 6)} />
     </SectionContainer>
   );
 }

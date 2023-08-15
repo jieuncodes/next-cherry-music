@@ -3,7 +3,7 @@ import { SectionContainer, SectionTitle } from "@/styles/Section";
 import { useRouter } from "next/navigation";
 import Tile from "./Tile";
 import SectionNavigator from "../SectionNavigator";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface HorizontalTilesProps {
   sectionTitle?: string;
@@ -24,6 +24,9 @@ function HorizontalTiles({
 }: HorizontalTilesProps) {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [artistImgUrls, setArtistImgUrls] = useState<Map<string, string>>(
+    new Map()
+  );
 
   if (arr.items.length === 0) return <></>;
 
@@ -31,6 +34,30 @@ function HorizontalTiles({
     router.push(`/${arr.type}/${name}`);
     return;
   };
+
+  const getArtistImgUrl = async (name: string) => {
+    const spotifyArtistResponse = await fetch(
+      `/api/spotify/artist?artist=${name}`
+    );
+    const spotifyArtistData = await spotifyArtistResponse.json();
+    const url =
+      spotifyArtistData?.images[0]?.url || "/images/default_user_avatar.jpeg";
+
+    setArtistImgUrls((prevUrls) => {
+      const newUrls = new Map(prevUrls);
+      newUrls.set(name, url);
+      return newUrls;
+    });
+  };
+
+  useEffect(() => {
+    arr.items.forEach((item) => {
+      if (item.artist?.name) {
+        getArtistImgUrl(item.artist.name);
+      }
+    });
+  }, [arr.items]);
+
   return (
     <SectionContainer>
       {nav && <SectionNavigator refContainer={ref} scrollAmount={650} />}
@@ -49,6 +76,7 @@ function HorizontalTiles({
               item={item}
               handleTileClick={() => handleTileClick(item.name)}
               isCircle={isCircle}
+              artistImgUrl={artistImgUrls.get(item.artist?.name ?? "")}
             />
           ))}
       </Tiles>

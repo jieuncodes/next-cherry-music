@@ -32,8 +32,6 @@ function useDropdownHandlers(props: DropDownProps) {
         break;
       case "go-to-album":
         if (props.track.albumTitle && props.track.artist) {
-          console.log("", props.track.albumTitle);
-          console.log("", props.track.artist);
           router.push(
             `/artist/${encodeURIComponent(
               props.track.artist

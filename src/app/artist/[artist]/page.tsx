@@ -1,66 +1,32 @@
-"use client";
+import Artist from "@/components/Artist/Artist";
+import { LastFmArtistInfo } from "@/types/trackTypes";
 
-import GradientHeader from "@/components/GradientHeader";
-import ArtistTopTracks from "@/components/Artist/ArtistTopTracks";
-import LikeButton from "@/components/Btns/LikeButton";
-import Hashtags from "@/components/Hashtags";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import HorizontalTiles from "@/components/Tile/HorizontalTiles";
-import { useArtistData } from "@/hooks/useArtistData";
-import { useArtistImage } from "@/hooks/useArtistImage";
-import { cleanedStr, truncateString } from "@/lib/utils";
-import {
-  ArtistDesc,
-  ArtistInfo,
-  ArtistInfoHeader,
-  ArtistName,
-  ArtistNameArea,
-  Desc,
-} from "@/styles/Artist/Artist";
-import { useState } from "react";
+async function ArtistPage({ params }: { params: { artist: string } }) {
+  const artistDataResponse = await fetch(
+    `${process.env.URL}/api/lastFm/artist?artist=${params.artist}`
+  );
+  const artistData: LastFmArtistInfo = await artistDataResponse.json();
 
-function Artist({ params }: { params: { artist: string } }) {
-  const artistData = useArtistData(params.artist);
-  const artistImageUrl = useArtistImage(params.artist);
-  const [liked, setLiked] = useState<boolean>(false);
-  if (!artistData) {
-    return <LoadingSpinner />;
-  }
-  const cleanedArtistBio = cleanedStr(artistData.artist.bio?.summary);
-
-  const similarArtistDataWithType = {
-    type: "artist",
-    items: artistData.artist.similar.artist,
-  };
+  const spotifyArtistResponse = await fetch(
+    `${process.env.URL}/api/spotify/artist?artist=${params.artist}`
+  );
+  const spotifyArtistData = await spotifyArtistResponse.json();
+  const artistImgUrl =
+    spotifyArtistData.best_match?.items[0]?.images[0]?.url ||
+    "/images/default_album_cover.webp";
+  console.log("spotifyArtistData", spotifyArtistData);
+  const artistTopTracksResponse = await fetch(
+    `${process.env.URL}/api/cherryMusic/track?query=artist-top&artist=${params.artist}`
+  );
+  const artistTopTracks = await artistTopTracksResponse.json();
 
   return (
-    <>
-      <GradientHeader imageUrl={artistImageUrl} name={artistData.artist.name} />
-      <ArtistInfo>
-        <ArtistInfoHeader>
-          <ArtistNameArea>
-            <ArtistName>{artistData.artist.name}</ArtistName>
-            <LikeButton liked={liked} setLiked={setLiked} iconColor="black" />
-          </ArtistNameArea>
-
-          <Hashtags tags={artistData.artist.tags.tag} />
-        </ArtistInfoHeader>
-
-        {cleanedArtistBio.length !== 1 && (
-          <ArtistDesc>
-            <Desc>{truncateString(cleanedArtistBio, 200)}</Desc>
-          </ArtistDesc>
-        )}
-        <ArtistTopTracks artist={params.artist} />
-        {/* <ArtistAlbums artist={params.artist} /> */}
-        <HorizontalTiles
-          sectionTitle="Fans might also like"
-          arr={similarArtistDataWithType}
-          isCircle
-        />
-      </ArtistInfo>
-    </>
+    <Artist
+      artistData={artistData}
+      artistImgUrl={artistImgUrl}
+      artistTopTracks={artistTopTracks}
+    />
   );
 }
 
-export default Artist;
+export default ArtistPage;

@@ -24,7 +24,6 @@ function TopTracks({ title, tag, count, trackList }: TopTracksProps) {
     useLocalStoragePlaylist();
   const [scrollX, setScrollX] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-  console.log("trackList", trackList);
   useEffect(() => {
     setScrollX(ref.current?.scrollLeft || 0);
   }, [scrollX]);

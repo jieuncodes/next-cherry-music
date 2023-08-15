@@ -1,4 +1,3 @@
-import { useArtistImage } from "@/hooks/useArtistImage";
 import Image from "next/image";
 import TileSkeleton from "./TileSkeleton";
 import { ItemProps } from "./HorizontalTiles";
@@ -7,12 +6,11 @@ interface TileProps {
   item: ItemProps;
   isCircle?: boolean;
   handleTileClick: (artist: string) => void;
+  artistImgUrl?: string;
 }
 
-function Tile({ item, isCircle, handleTileClick }: TileProps) {
-  const imgUrl = useArtistImage(item.name);
-
-  if (!imgUrl) {
+function Tile({ item, isCircle, handleTileClick, artistImgUrl }: TileProps) {
+  if (!artistImgUrl) {
     return <TileSkeleton isCircle={isCircle} />;
   }
 
@@ -29,7 +27,7 @@ function Tile({ item, isCircle, handleTileClick }: TileProps) {
         } overflow-hidden bg-cover aspect-square`}
       >
         <Image
-          src={imgUrl}
+          src={artistImgUrl || "/images/default_user_avatar.jpeg"}
           width={isCircle ? 120 : 170}
           height={isCircle ? 120 : 170}
           alt={`${item} image`}

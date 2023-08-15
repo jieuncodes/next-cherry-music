@@ -46,14 +46,17 @@ async function fetchTrackListByQueryType(
     case "album-tracks":
       const album = req.nextUrl.searchParams.get("album");
       const artistName = req.nextUrl.searchParams.get("artist");
-      console.log("", album, artistName);
       if (!album || !artistName) {
         throw new Error(
           "Album and artist name are required for album-tracks query."
         );
       }
       const albumInfo = await fetchAlbumInfo({ artist: artistName, album });
-      return albumInfo.tracks.track;
+
+      const tracksArray = Array.isArray(albumInfo.tracks.track)
+        ? albumInfo.tracks.track
+        : [albumInfo.tracks.track];
+      return tracksArray;
 
     default:
       throw new Error("Invalid query parameter.");
@@ -61,7 +64,6 @@ async function fetchTrackListByQueryType(
 }
 
 export async function GET(req: NextRequest, res: NextResponse) {
-  console.log("cherrt");
   const query = req.nextUrl.searchParams.get("query");
 
   if (!query) {
@@ -90,7 +92,10 @@ export async function GET(req: NextRequest, res: NextResponse) {
     }
   );
 
-  const allTrackDetailsWithYoutube = await Promise.all(trackDetailsPromises);
+  const resolvedTrackDetails = await Promise.all(trackDetailsPromises);
+  const allTrackDetailsWithYoutube = resolvedTrackDetails.filter(
+    (track) => track && track.youtubeId
+  );
 
   return NextResponse.json([...allTrackDetailsWithYoutube]);
 }
