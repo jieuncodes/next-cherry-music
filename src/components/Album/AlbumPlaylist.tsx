@@ -1,3 +1,4 @@
+"use client";
 import { Track } from "@/lib/server/database.types";
 import AlbumPlaylistCards from "./AlbumPlaylistCards";
 

@@ -4,7 +4,7 @@ import tw from "tailwind-styled-components";
 
 export const AlbumContainer = tw.div`p-6 pr-12 `;
 export const HeaderAlbumInfo = tw.div` text-black absolute grid grid-cols-[1fr_2fr] mt-7`;
-export const AlbumDetails = tw.div`flex flex-col pl-10 justify-center`;
+export const AlbumDetailsContainer = tw.div`flex flex-col pl-10 justify-center`;
 export const AlbumTitle = tw.h1`text-xl font-semibold mb-2`;
 export const AlbumDetail = tw.span`text-sm text-black/70`;
 export const AlbumBtns = tw.div`flex flex-row mt-10 w-64 justify-between`;

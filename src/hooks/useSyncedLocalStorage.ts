@@ -1,3 +1,5 @@
+"use client";
+
 import { SetterOrUpdater } from "recoil";
 import { useState, useEffect } from "react";
 

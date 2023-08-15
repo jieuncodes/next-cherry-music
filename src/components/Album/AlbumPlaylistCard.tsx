@@ -1,3 +1,5 @@
+"use client";
+
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { Track } from "@/lib/server/database.types";
 import { AlbumIndex, StyledCard, StyledHeader } from "@/styles/Album/album";

@@ -1,3 +1,4 @@
+import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
 import { generateTrackId } from "@/lib/utils";
 import { LastFmTrack } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,12 +8,11 @@ import {
   fetchTrackDetail,
 } from "../../lastFm/service";
 import { fetchTagTopTracks } from "../../lastFm/tag/services";
+import { fetchSpotifyTrackData } from "../../spotify/fetch-track-img/route";
 import {
   fetchSpotifyTopTracks,
   refineSpotifyTracksIntoLastFmTrack,
 } from "../../spotify/service";
-import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
-import { fetchSpotifyTrackData } from "../../spotify/fetch-track-img/route";
 
 async function fetchTrackListByQueryType(
   query: string,
@@ -46,6 +46,7 @@ async function fetchTrackListByQueryType(
     case "album-tracks":
       const album = req.nextUrl.searchParams.get("album");
       const artistName = req.nextUrl.searchParams.get("artist");
+      console.log("", album, artistName);
       if (!album || !artistName) {
         throw new Error(
           "Album and artist name are required for album-tracks query."
@@ -60,6 +61,7 @@ async function fetchTrackListByQueryType(
 }
 
 export async function GET(req: NextRequest, res: NextResponse) {
+  console.log("cherrt");
   const query = req.nextUrl.searchParams.get("query");
 
   if (!query) {
@@ -67,13 +69,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 
   let tracksToProcess = await fetchTrackListByQueryType(query, req);
+
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack, index) => {
       const trackDetail = await fetchTrackDetail(track);
       const id = generateTrackId(trackDetail.url);
       const youtubeId = await fetchYouTubeVideoId(trackDetail.url);
       const spotifyData = await fetchSpotifyTrackData(track.name);
-      console.log("spotifyData", spotifyData);
       return {
         rank: index,
         id,
@@ -89,5 +91,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   );
 
   const allTrackDetailsWithYoutube = await Promise.all(trackDetailsPromises);
+
   return NextResponse.json([...allTrackDetailsWithYoutube]);
 }

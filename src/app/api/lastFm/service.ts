@@ -58,25 +58,29 @@ export async function fetchAlbumInfo({
     `${process.env.URL}/api/lastFm/album/get-info?artist=${encodedArtist}&album=${encodedAlbum}`
   );
   const data = await response.json();
-  const newTracks: Track[] = data.album.tracks.track.map(
-    (track: AlbumTrack) => {
-      return {
-        name: track.name,
-        duration: track.duration,
-        playcount: data.album.playcount,
-        listeners: data.album.listeners,
-        mbid: data.album.mbid,
-        url: track.url,
-        streamable: track.streamable,
-        artist: {
-          name: data.album.artist,
-          mbid: data.album.artistMbid,
-          url: data.album.artistUrl,
-        },
-        image: data.album.image,
-      };
-    }
-  );
+
+  const tracksArray = Array.isArray(data.album.tracks.track)
+    ? data.album.tracks.track
+    : [data.album.tracks.track];
+
+  const newTracks: Track[] = tracksArray.map((track: AlbumTrack) => {
+    return {
+      name: track.name,
+      duration: track.duration,
+      playcount: data.album.playcount,
+      listeners: data.album.listeners,
+      mbid: data.album.mbid,
+      url: track.url,
+      streamable: track.streamable,
+      artist: {
+        name: data.album.artist,
+        mbid: data.album.artistMbid,
+        url: data.album.artistUrl,
+      },
+      image: data.album.image,
+    };
+  });
   const newData = { ...data.album, tracks: { track: [...newTracks] } };
+  console.log("newData", newData);
   return newData;
 }

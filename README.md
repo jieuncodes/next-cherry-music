@@ -30,6 +30,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [x] Music player
 - [ ] beautiful dnd - drag cards to move position
 - [ ] Error handling using Next13 app router
+- [ ] useLayoutEffect to prevent flickering
 - [ ] Deploy
 
 

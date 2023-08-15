@@ -2,9 +2,9 @@ import { handleError, validateEnvVariable } from "@/lib/helpers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, res: NextResponse) {
+  console.log("getinfo");
   validateEnvVariable(process.env.LAST_FM_BASE_URL, "LAST_FM_BASE_URL");
   validateEnvVariable(process.env.LAST_FM_API_KEY, "LAST_FM_API_KEY");
-
   const album = req.nextUrl.searchParams.get("album");
   const artist = req.nextUrl.searchParams.get("artist");
   try {
