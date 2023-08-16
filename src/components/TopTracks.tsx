@@ -6,11 +6,12 @@ import {
   SectionGridMain,
   SectionTitle,
 } from "@/styles/Section";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import SectionNavigator from "./SectionNavigator";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
 import { Track } from "@/lib/server/database.types";
+import { motion } from "framer-motion";
 
 interface TopTracksProps {
   title: string;
@@ -34,12 +35,14 @@ function TopTracks({ title, tag, count, trackList }: TopTracksProps) {
       <SectionTitle>{title}</SectionTitle>
       <SectionGridMain ref={ref}>
         {trackList?.map((track, index) => (
-          <TrackCard
-            key={index}
-            track={track}
-            addToTopOfCurrPlaylist={addToTopOfCurrPlaylist}
-            removeFromPlaylist={removeFromPlaylist}
-          />
+          <Suspense fallback={<TrackCardSkeleton />}>
+            <TrackCard
+              key={index}
+              track={track}
+              addToTopOfCurrPlaylist={addToTopOfCurrPlaylist}
+              removeFromPlaylist={removeFromPlaylist}
+            />
+          </Suspense>
         ))}
       </SectionGridMain>
     </SectionContainerMain>
