@@ -15,8 +15,9 @@ interface AlbumProps {
   albumTitle: string;
   artist: string;
 }
-
 function Album({ albumInfo, albumTracks, albumTitle, artist }: AlbumProps) {
+  console.log("albumInfoalbumInfoalbumInfoalbumInfoalbumInfo", albumInfo);
+
   return (
     <AlbumContainer>
       <GradientHeader

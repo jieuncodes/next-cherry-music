@@ -52,7 +52,7 @@ async function fetchTrackListByQueryType(
         );
       }
       const albumInfo = await fetchAlbumInfo({ artist: artistName, album });
-
+      console.log("#####albumInfo", albumInfo);
       const tracksArray = Array.isArray(albumInfo.tracks.track)
         ? albumInfo.tracks.track
         : [albumInfo.tracks.track];
@@ -65,13 +65,12 @@ async function fetchTrackListByQueryType(
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const query = req.nextUrl.searchParams.get("query");
-
+  console.log("query", query);
   if (!query) {
     throw new Error("Query parameter is required.");
   }
 
   let tracksToProcess = await fetchTrackListByQueryType(query, req);
-
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack, index) => {
       const trackDetail = await fetchTrackDetail(track);
@@ -96,6 +95,5 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const allTrackDetailsWithYoutube = resolvedTrackDetails.filter(
     (track) => track && track.youtubeId
   );
-
   return NextResponse.json([...allTrackDetailsWithYoutube]);
 }

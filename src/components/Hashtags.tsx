@@ -11,9 +11,10 @@ function Hashtags({ tags }: { tags: Tag[] }) {
   const goToHashtagPage = (tag: string) => {
     router.push(`/hashtag/${tag}`);
   };
+  const tagsArray = Array.isArray(tags) ? tags : [tags];
   return (
     <div className="flex gap-2 mb-3">
-      {tags.map((tag, index) => (
+      {tagsArray.map((tag, index) => (
         <Chip
           onClick={() => goToHashtagPage(tag.name)}
           key={index}
