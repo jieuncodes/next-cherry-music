@@ -58,7 +58,6 @@ export async function fetchAlbumInfo({
     `${process.env.URL}/api/lastFm/album/get-info?artist=${encodedArtist}&album=${encodedAlbum}`
   );
   const data = await response.json();
-  console.log("datadatadatadata", data);
   const tracksArray = Array.isArray(data.album.tracks.track)
     ? data.album.tracks.track
     : [data.album.tracks.track];

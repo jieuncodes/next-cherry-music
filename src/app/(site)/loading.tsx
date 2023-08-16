@@ -20,7 +20,7 @@ function LoadingSpinner() {
     },
   };
   return (
-    <div className="w-full h-full flex justify-center align-middle pr-12 items-center">
+    <div className="w-full h-full flex justify-center align-middle pr-12 items-center -mt-10">
       <motion.svg
         initial={{ rotate: 10 }}
         xmlns="http://www.w3.org/2000/svg"

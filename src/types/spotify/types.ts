@@ -60,6 +60,7 @@ export interface SpotifyImage {
 export type SpotifyTrackData = {
   name: string;
   artist: { name: string; mbid: string; url: string };
+  albumTitle: string;
   image: { "#text": string; size: string }[];
 };
 

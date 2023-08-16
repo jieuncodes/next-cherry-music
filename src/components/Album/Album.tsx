@@ -10,35 +10,42 @@ import { LastFmAlbumInfo } from "@/types/trackTypes";
 import Image from "next/image";
 
 interface AlbumProps {
-  albumInfo: LastFmAlbumInfo;
+  albumInfo?: LastFmAlbumInfo;
   albumTracks: Track[];
   albumTitle: string;
   artist: string;
+  isSingleAbum?: boolean;
 }
-function Album({ albumInfo, albumTracks, albumTitle, artist }: AlbumProps) {
-  console.log("albumInfoalbumInfoalbumInfoalbumInfoalbumInfo", albumInfo);
+function Album({
+  albumInfo,
+  albumTracks,
+  albumTitle,
+  artist,
+  isSingleAbum,
+}: AlbumProps) {
+  console.log("@@", albumTracks, albumTitle, artist, isSingleAbum);
+
+  const determineImageUrl = () => {
+    if (isSingleAbum) {
+      return albumTracks[0].albumImgUrl || "/images/default_album_cover.webp";
+    }
+    return albumInfo?.image[3]["#text"] || "/images/default_album_cover.webp";
+  };
 
   return (
     <AlbumContainer>
-      <GradientHeader
-        imageUrl={
-          albumInfo?.image[3]["#text"] || "/images/default_album_cover.webp"
-        }
-        name={albumTitle}
-      />
+      <GradientHeader imageUrl={determineImageUrl()} name={albumTitle} />
       {albumInfo?.tags?.tag && <Hashtags tags={albumInfo?.tags.tag} />}
       <HeaderAlbumInfo>
         <Image
-          src={
-            albumInfo.image[3]["#text"] || "/images/default_album_cover.webp"
-          }
+          src={determineImageUrl()}
           alt={albumTitle}
           width={200}
           height={200}
           className="rounded-md"
         />
         <AlbumDetails
-          albumTitle={albumTitle}
+          albumTitle={isSingleAbum ? "Single Album" : albumTitle}
           artist={artist}
           albumInfo={albumInfo}
           albumTracks={albumTracks}

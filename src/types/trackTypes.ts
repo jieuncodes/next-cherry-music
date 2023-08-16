@@ -14,6 +14,7 @@ export interface LastFmTrack {
   url: string;
   streamable: { "#text": string; fulltrack: string };
   artist: Artist;
+  albumTitle?: string;
   image: AlbumImage[];
 }
 

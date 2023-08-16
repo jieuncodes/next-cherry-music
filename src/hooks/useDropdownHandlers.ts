@@ -31,15 +31,21 @@ function useDropdownHandlers(props: DropDownProps) {
         props.setIsDropdownHover(false);
         break;
       case "go-to-album":
-        if (props.track.albumTitle && props.track.artist) {
+        if (
+          !props.track.albumTitle &&
+          props.track.artist &&
+          props.track.trackTitle
+        ) {
+          router.push(
+            `/artist/${encodeURIComponent(
+              props.track.artist
+            )}/singleAlbum/${encodeURIComponent(props.track.trackTitle)}`
+          );
+        } else if (props.track.albumTitle && props.track.artist) {
           router.push(
             `/artist/${encodeURIComponent(
               props.track.artist
             )}/${encodeURIComponent(props.track.albumTitle)}`
-          );
-        } else {
-          alert(
-            `No album or artist found artist: ${props.track.artist}, album: ${props.track.albumTitle}`
           );
         }
         break;

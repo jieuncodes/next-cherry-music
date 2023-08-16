@@ -1,4 +1,8 @@
 "use client";
+import { Icons } from "@/app/Icons";
+import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
+import { Track } from "@/lib/server/database.types";
+import { secsToTime } from "@/lib/utils";
 import {
   AlbumBtns,
   AlbumDetail,
@@ -7,15 +11,11 @@ import {
 } from "@/styles/Album/album";
 import { LastFmAlbumInfo } from "@/types/trackTypes";
 import { Button } from "@nextui-org/react";
-import { secsToTime } from "@/lib/utils";
-import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import { Icons } from "@/app/Icons";
-import { Track } from "@/lib/server/database.types";
 
 interface AlbumDetailsProps {
   albumTitle: string;
   artist: string;
-  albumInfo: LastFmAlbumInfo;
+  albumInfo?: LastFmAlbumInfo;
   albumTracks: Track[];
 }
 
@@ -31,8 +31,8 @@ function AlbumDetails({
     ? albumInfo?.tracks?.track
     : [albumInfo?.tracks?.track];
 
-  const allTrackTimesSum = tracksArray.reduce(
-    (acc, curr) => acc + Number(curr.duration),
+  const allTrackTimesSum = tracksArray?.reduce(
+    (acc, curr) => acc + (curr ? Number(curr.duration) : 0),
     0
   );
 
@@ -40,11 +40,15 @@ function AlbumDetails({
     <AlbumDetailsContainer>
       <AlbumTitle>{albumTitle}</AlbumTitle>
       <AlbumDetail>
-        {artist} • {albumInfo?.wiki?.published.split(" ")[2].replace(",", "")}
+        {artist}{" "}
+        {albumInfo &&
+          "•" + albumInfo.wiki?.published.split(" ")[2].replace(",", "")}
       </AlbumDetail>
       <AlbumDetail>
-        {albumInfo?.tracks?.track.length} Tracks •{" "}
-        {secsToTime(allTrackTimesSum || 0)}
+        {albumInfo?.tracks?.track?.length
+          ? albumInfo.tracks.track.length + " Tracks"
+          : "1 Track"}{" "}
+        • {(albumInfo && secsToTime(allTrackTimesSum || 0)) || "02:09"}
       </AlbumDetail>
       <AlbumBtns>
         <Button

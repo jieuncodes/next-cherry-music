@@ -20,7 +20,6 @@ export function TrackCard({ track }: TrackCardProps) {
   const iconColor = isCardHover || isDropdownHover ? "white" : "currentColor";
 
   if (!track) return null;
-
   return (
     <StyledCard
       disableAnimation

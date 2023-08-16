@@ -33,6 +33,7 @@ const fetchSpotifyTopTracks = async (): Promise<SpotifyTrackData[]> => {
       return {
         name: item.track.name,
         artist: { name: item.track.artists[0].name, mbid: "", url: "" },
+        albumTitle: item.track.album.name,
         image: item.track.album.images.map((image) => {
           return {
             "#text": image.url,

@@ -16,8 +16,8 @@ export async function fetchSpotifyTopTracks(): Promise<SpotifyTrackData[]> {
 export const refineSpotifyTracksIntoLastFmTrack = async (
   spotifyTrack: SpotifyTrackData
 ): Promise<LastFmTrack> => {
+  console.log("spotifyTrack", spotifyTrack);
   const lastFmDetails = await fetchTrackDetail(spotifyTrack);
-
   return {
     name: spotifyTrack.name,
     duration: lastFmDetails.duration,
@@ -27,6 +27,7 @@ export const refineSpotifyTracksIntoLastFmTrack = async (
     url: lastFmDetails.url,
     streamable: lastFmDetails.streamable,
     artist: spotifyTrack.artist,
+    albumTitle: spotifyTrack.albumTitle,
     image: spotifyTrack.image,
   };
 };

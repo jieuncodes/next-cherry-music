@@ -6,7 +6,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   validateEnvVariable(process.env.LAST_FM_API_KEY, "LAST_FM_API_KEY");
   const artist = req.nextUrl.searchParams.get("artist");
   const album = req.nextUrl.searchParams.get("album");
-  console.log("artistalbum", artist, album);
 
   try {
     const url = new URL(process.env.LAST_FM_BASE_URL!);
@@ -22,7 +21,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     url.search = params.toString();
     const response = await fetch(url);
     const data = await response.json();
-    console.log("datat###", data.tags);
     return NextResponse.json(data);
   } catch (error) {
     handleError({ context: "lastFm API - album.getinfo", error });
