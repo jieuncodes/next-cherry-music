@@ -5,15 +5,17 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   fetchAlbumInfo,
   fetchArtistTopTracks,
+  fetchTopArtists,
   fetchTrackDetail,
 } from "../../lastFm/service";
 import { fetchTagTopTracks } from "../../lastFm/tag/services";
 import { fetchSpotifyTrackData } from "../../spotify/track/route";
 import {
-  fetchSpotifyTopTracks,
+  fetchSpotifyPlaylist,
   refineSpotifyTracksIntoLastFmTrack,
 } from "../../spotify/service";
 import { SpotifyTrackData } from "@/types/spotify/types";
+import { validateEnvVariable } from "@/lib/helpers";
 
 async function fetchTrackListByQueryType(
   query: string,
@@ -23,11 +25,15 @@ async function fetchTrackListByQueryType(
   const tag = req.nextUrl.searchParams.get("tag");
   const album = req.nextUrl.searchParams.get("album");
   const trackTitle = req.nextUrl.searchParams.get("track");
+  const refinedTracks: LastFmTrack[] = [];
 
   switch (query) {
     case "top":
-      const spotifyTop = await fetchSpotifyTopTracks();
-      const refinedTracks: LastFmTrack[] = [];
+      validateEnvVariable(process.env.SPOTIFY_TODAY_TOP, "SPOTIFY_TODAY_TOP");
+
+      const spotifyTop = await fetchSpotifyPlaylist(
+        process.env.SPOTIFY_TODAY_TOP!
+      );
       for (const track of spotifyTop) {
         const refined = await refineSpotifyTracksIntoLastFmTrack(track);
         refinedTracks.push(refined);
@@ -59,7 +65,6 @@ async function fetchTrackListByQueryType(
       return tracksArray;
 
     case "track":
-      console.log("case track:", trackTitle);
       if (!trackTitle || !artist) {
         throw new Error("Track and artist name are required for track query.");
       }
@@ -89,7 +94,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   if (!query) {
     throw new Error("Query parameter is required.");
   }
-  console.log("query@", query);
 
   let tracksToProcess = await fetchTrackListByQueryType(query, req);
   const trackDetailsPromises = tracksToProcess.map(

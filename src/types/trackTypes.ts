@@ -86,3 +86,9 @@ export interface AlbumTrack {
   streamable: { "#text": string; fulltrack: string };
   artist: Artist;
 }
+
+export interface LastFmArtists {
+  artists: {
+    artist: Artist[];
+  };
+}

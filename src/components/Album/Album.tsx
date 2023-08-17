@@ -23,8 +23,6 @@ function Album({
   artist,
   isSingleAbum,
 }: AlbumProps) {
-  console.log("@@", albumTracks, albumTitle, artist, isSingleAbum);
-
   const determineImageUrl = () => {
     if (isSingleAbum) {
       return albumTracks[0].albumImgUrl || "/images/default_album_cover.webp";

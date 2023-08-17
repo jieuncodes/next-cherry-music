@@ -8,15 +8,18 @@ export const fetchSpotifyAccessToken = async () => {
   return tokenData.accessToken;
 };
 
-export async function fetchSpotifyTopTracks(): Promise<SpotifyTrackData[]> {
-  const response = await fetch(`${process.env.URL}/api/spotify/top-tracks`);
+export async function fetchSpotifyPlaylist(
+  playlistId: string
+): Promise<SpotifyTrackData[]> {
+  const response = await fetch(
+    `${process.env.URL}/api/spotify/top-tracks?playlistid=${playlistId}`
+  );
   return response.json();
 }
 
 export const refineSpotifyTracksIntoLastFmTrack = async (
   spotifyTrack: SpotifyTrackData
 ): Promise<LastFmTrack> => {
-  console.log("spotifyTrack", spotifyTrack);
   const lastFmDetails = await fetchTrackDetail(spotifyTrack);
   return {
     name: spotifyTrack.name,

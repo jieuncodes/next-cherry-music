@@ -12,7 +12,6 @@ async function SingleAlbumPage({
     `${process.env.URL}/api/cherryMusic/track?query=track&track=${params.track}&artist=${params.artist}`
   );
   const trackInfo = await trackInfoResponse.json();
-  console.log("trackInfo", trackInfo);
   return (
     <Album
       albumTracks={trackInfo}
