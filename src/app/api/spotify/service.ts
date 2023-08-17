@@ -4,7 +4,9 @@ import { LastFmTrack } from "@/types/trackTypes";
 import { ensureEncoded } from "@/lib/helpers";
 
 export const fetchSpotifyAccessToken = async () => {
-  const tokenResponse = await fetch(process.env.SPOTIFY_TOKEN_URL as string);
+  const tokenResponse = await fetch(
+    process.env.NEXT_PUBLIC_SPOTIFY_TOKEN_URL as string
+  );
   const tokenData = await tokenResponse.json();
   return tokenData.accessToken;
 };

@@ -12,6 +12,7 @@ async function Home() {
     type: "artist",
     items: topArtistsData.artists.artist,
   };
+
   return (
     <div className="grid-cols-4">
       <div className="carousel-container h-80 relative">

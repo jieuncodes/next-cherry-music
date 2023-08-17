@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import TileSkeleton from "./TileSkeleton";
-import { ItemProps } from "./HorizontalTiles";
+import { ItemProps } from "@/types/itemTypes";
 
 interface TileProps {
   item: ItemProps;
@@ -29,7 +29,7 @@ function Tile({ item, isCircle, handleTileClick, artistImgUrl }: TileProps) {
         } overflow-hidden bg-cover aspect-square`}
       >
         <Image
-          src={artistImgUrl || "/images/default_user_avatar.jpeg"}
+          src={artistImgUrl}
           width={isCircle ? 120 : 170}
           height={isCircle ? 120 : 170}
           alt={`${item} image`}

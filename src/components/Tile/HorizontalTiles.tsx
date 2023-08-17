@@ -1,22 +1,19 @@
 "use client";
-
+import useArtistImgUrl from "@/hooks/useArtistImgUrl";
 import { Tiles } from "@/styles/Artist/Artist";
 import { SectionContainer, SectionTitle } from "@/styles/Section";
 import { useRouter } from "next/navigation";
-import Tile from "./Tile";
+import { useRef } from "react";
 import SectionNavigator from "../SectionNavigator";
-import { useEffect, useRef, useState } from "react";
-import { fetchSpotifyArtist } from "@/app/api/spotify/service";
+import Tile from "./Tile";
+import TileSkeleton from "./TileSkeleton";
+import { ItemProps, arrWithType } from "@/types/itemTypes";
 
 interface HorizontalTilesProps {
   sectionTitle?: string;
-  arr: { type: string; items: any[] };
+  arr: arrWithType;
   isCircle?: boolean;
   nav?: boolean;
-}
-export interface ItemProps {
-  name: string;
-  artist?: { name: string };
 }
 
 function HorizontalTiles({
@@ -27,38 +24,13 @@ function HorizontalTiles({
 }: HorizontalTilesProps) {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const [artistImgUrls, setArtistImgUrls] = useState<Map<string, string>>(
-    new Map()
-  );
+  const { artistImgUrls, loading } = useArtistImgUrl(arr.items);
 
   if (arr.items.length === 0) return <></>;
 
   const handleTileClick = (name: string) => {
     router.push(`/${arr.type}/${name}`);
-    return;
   };
-
-  const getArtistImgUrl = async (name: string) => {
-    try {
-      const spotifyArtistData = await fetchSpotifyArtist(name);
-      const url =
-        spotifyArtistData?.best_match?.items[0]?.images[0]?.url ||
-        "/images/default_user_avatar.jpeg";
-      setArtistImgUrls((prevUrls) => {
-        const newUrls = new Map(prevUrls);
-        newUrls.set(name, url);
-        return newUrls;
-      });
-    } catch (error) {
-      console.error("Error fetching artist image for", name, error);
-    }
-  };
-
-  useEffect(() => {
-    arr.items.forEach((item) => {
-      getArtistImgUrl(item.name);
-    });
-  }, [arr.items]);
 
   return (
     <SectionContainer>
@@ -72,17 +44,22 @@ function HorizontalTiles({
       >
         {arr.items
           .slice(0, arr.items.length - 1)
-          .map((item: ItemProps, index) => (
-            <Tile
-              key={index}
-              item={item}
-              handleTileClick={() => handleTileClick(item.name)}
-              isCircle={isCircle}
-              artistImgUrl={artistImgUrls.get(item.name!)}
-            />
-          ))}
+          .map((item: ItemProps, index) =>
+            loading.has(index) ? (
+              <TileSkeleton key={index} isCircle={isCircle} />
+            ) : (
+              <Tile
+                key={index}
+                item={item}
+                handleTileClick={() => handleTileClick(item.name)}
+                isCircle={isCircle}
+                artistImgUrl={artistImgUrls.get(item.name!)}
+              />
+            )
+          )}
       </Tiles>
     </SectionContainer>
   );
 }
+
 export default HorizontalTiles;

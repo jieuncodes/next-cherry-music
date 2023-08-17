@@ -35,6 +35,7 @@ function Artist({ artist, artistImgUrl }: ArtistProps) {
     };
     getLastFmArtist();
   }, []);
+
   const cleanedArtistBio = cleanedStr(artistData?.artist?.bio?.summary || "");
 
   const similarArtistDataWithType = {

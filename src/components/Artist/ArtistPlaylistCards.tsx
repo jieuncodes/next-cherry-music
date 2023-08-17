@@ -1,41 +1,46 @@
 "use client";
+import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import { Track } from "@/lib/server/database.types";
 import { PlaylistGrid } from "@/styles/Panel/PlaylistCard";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Suspense, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { currPlayingTrackYoutubeId } from "../../atoms";
 import ArtistPlaylistCard from "./ArtistPlaylistCard";
-import { Suspense } from "react";
 import ArtistTrackCardsSkeleton from "./ArtistTopTrackCardSkeleton";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 
 export function ArtistPlaylistCards({ artist }: { artist: string }) {
   const playingTrack = useRecoilValue(currPlayingTrackYoutubeId);
+  const [artistTopTracks, setArtistTopTracks] = useState<Track[] | null>(null);
 
-  const artistTopTracks = async () =>
-    await fetchCherryMusicTracks({
-      query: "artisttop",
-      artist,
-    });
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchCherryMusicTracks({
+        query: "artisttop",
+        artist,
+      });
+      setArtistTopTracks(data);
+    };
 
-  const { data: tracks } = useSuspenseQuery({
-    queryKey: ["artistTopTracks", artist],
-    queryFn: () => artistTopTracks(),
-  });
+    fetchData();
+  }, [artist]);
 
   return (
     <PlaylistGrid>
-      <Suspense fallback={<ArtistTrackCardsSkeleton />}>
-        {tracks &&
-          tracks.map((track: Track, index: number) => (
+      {artistTopTracks ? (
+        artistTopTracks
+          .slice(0, 6)
+          .map((track: Track, index: number) => (
             <ArtistPlaylistCard
               key={index}
               track={track}
               index={index}
               isPlayingTrack={track.youtubeId === playingTrack}
             />
-          ))}
-      </Suspense>
+          ))
+      ) : (
+        <ArtistTrackCardsSkeleton />
+      )}
     </PlaylistGrid>
   );
 }

@@ -14,7 +14,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
 }
 
 const fetchSpotifyAccessToken = async () => {
-  const tokenResponse = await fetch(process.env.SPOTIFY_TOKEN_URL as string);
+  const tokenResponse = await fetch(
+    process.env.NEXT_PUBLIC_SPOTIFY_TOKEN_URL as string
+  );
   const tokenData = await tokenResponse.json();
   return tokenData.accessToken;
 };
@@ -22,12 +24,15 @@ const fetchSpotifyAccessToken = async () => {
 const fetchSpotifyPlaylist = async (
   playlistId: string
 ): Promise<SpotifyTrackData[]> => {
-  validateEnvVariable(process.env.SPOTIFY_BASE_URL, "SPOTIFY_BASE_URL");
+  validateEnvVariable(
+    process.env.NEXT_PUBLIC_SPOTIFY_BASE_URL,
+    "NEXT_PUBLIC_SPOTIFY_BASE_URL"
+  );
 
   const token = await fetchSpotifyAccessToken();
   try {
     const url = new URL(
-      `${process.env.SPOTIFY_BASE_URL}/playlists/${playlistId}/tracks`
+      `${process.env.NEXT_PUBLIC_SPOTIFY_BASE_URL}/playlists/${playlistId}/tracks`
     );
 
     const response = await fetch(url, {

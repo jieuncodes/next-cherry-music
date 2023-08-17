@@ -28,10 +28,13 @@ async function fetchTrackListByQueryType(
 
   switch (query) {
     case "top":
-      validateEnvVariable(process.env.SPOTIFY_TODAY_TOP, "SPOTIFY_TODAY_TOP");
+      validateEnvVariable(
+        process.env.NEXT_PUBLIC_SPOTIFY_TODAY_TOP,
+        "NEXT_PUBLIC_SPOTIFY_TODAY_TOP"
+      );
 
       const spotifyTop = await fetchSpotifyPlaylist(
-        process.env.SPOTIFY_TODAY_TOP!
+        process.env.NEXT_PUBLIC_SPOTIFY_TODAY_TOP!
       );
       for (const track of spotifyTop) {
         const refined = await refineSpotifyTracksIntoLastFmTrack(track);

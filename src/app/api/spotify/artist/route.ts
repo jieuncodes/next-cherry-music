@@ -11,10 +11,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
 }
 
 const fetchSpotifyArtistData = async (artistName: string) => {
-  validateEnvVariable(process.env.SPOTIFY_BASE_URL, "SPOTIFY_BASE_URL");
+  validateEnvVariable(
+    process.env.NEXT_PUBLIC_SPOTIFY_BASE_URL,
+    "NEXT_PUBLIC_SPOTIFY_BASE_URL"
+  );
   const token = await fetchSpotifyAccessToken();
   try {
-    const url = new URL(`${process.env.SPOTIFY_BASE_URL}/search`);
+    const url = new URL(`${process.env.NEXT_PUBLIC_SPOTIFY_BASE_URL}/search`);
     const params = new URLSearchParams({
       type: "artist",
       q: artistName,

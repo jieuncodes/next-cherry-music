@@ -1,5 +1,3 @@
-import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
-import { fetchArtistInfo } from "@/app/api/lastFm/service";
 import { fetchSpotifyArtist } from "@/app/api/spotify/service";
 import Artist from "@/components/Artist/Artist";
 

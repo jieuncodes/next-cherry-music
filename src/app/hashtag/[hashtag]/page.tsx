@@ -9,12 +9,6 @@ import TagPage from "@/components/Hashtag/TagPage";
 async function HashtagPage({ params }: { params: { hashtag: string } }) {
   const decodedHashtag = decodeURIComponent(params.hashtag);
 
-  const tagTopAlbums = await fetchTagTopAlbums(params.hashtag);
-  const tagTopAlbumsDataWithType = {
-    type: "album",
-    items: tagTopAlbums.albums.album,
-  };
-
   const tagTopArtists = await fetchTagTopArtists(params.hashtag);
 
   const spotifyFirstArtistData = await fetchSpotifyArtist(
@@ -23,24 +17,8 @@ async function HashtagPage({ params }: { params: { hashtag: string } }) {
   const firstArtistImgUrl =
     spotifyFirstArtistData?.best_match?.items[0]?.images[0]?.url;
 
-  const tagTopArtistsDataWithType = {
-    type: "artist",
-    items: tagTopArtists.topartists.artist,
-  };
-
-  const tagTopTracks = await fetchCherryMusicTracks({
-    query: "tagtop",
-    tag: params.hashtag,
-  });
-
   return (
-    <TagPage
-      hashtag={decodedHashtag}
-      tagTopAlbums={tagTopAlbumsDataWithType}
-      tagTopArtists={tagTopArtistsDataWithType}
-      firstArtistImgUrl={firstArtistImgUrl}
-      tagTopTracks={tagTopTracks}
-    />
+    <TagPage hashtag={decodedHashtag} firstArtistImgUrl={firstArtistImgUrl} />
   );
 }
 

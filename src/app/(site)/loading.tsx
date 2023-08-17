@@ -23,7 +23,7 @@ function CherryLoader() {
         fill="none"
         stroke="#ff2d57f1"
         variants={breatheAnimation}
-        animate={{ opacity: [0.1, 1, 0.1] }}
+        animate={{ opacity: [0.2, 1, 0.2] }}
         transition={{
           repeat: Infinity,
           duration: 2,

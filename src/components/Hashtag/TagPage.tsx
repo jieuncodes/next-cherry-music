@@ -1,23 +1,53 @@
+"use client";
+import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
+import {
+  fetchTagTopAlbums,
+  fetchTagTopArtists,
+} from "@/app/api/lastFm/service";
+import GradientHeader from "@/components/GradientHeader";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import TopTracks from "@/components/TopTracks";
-import GradientHeader from "@/components/GradientHeader";
 import { Track } from "@/lib/server/database.types";
+import { TrackArrayWithType } from "@/types/itemTypes";
+import { useEffect, useState } from "react";
+import TrackCardSkeleton from "../TrackCard/TrackCardSkeleton";
+import TrackCardsSkeleton from "../TrackCard/TrackCardSkeleton";
 
 interface TagPageProps {
   hashtag: string;
-  tagTopAlbums: { type: string; items: Track[] };
-  tagTopArtists: { type: string; items: Track[] };
   firstArtistImgUrl: string;
-  tagTopTracks: Track[];
 }
 
-function TagPage({
-  hashtag,
-  tagTopAlbums,
-  tagTopArtists,
-  firstArtistImgUrl,
-  tagTopTracks,
-}: TagPageProps) {
+function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
+  const [tagTopAlbums, setTagTopAlbums] = useState<TrackArrayWithType>();
+  const [tagTopArtists, setTagTopArtists] = useState<TrackArrayWithType>();
+  const [trackList, setTrackList] = useState<Track[]>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const tagTopAlbumsData = await fetchTagTopAlbums(hashtag);
+      const tagTopAlbumsDataWithType = {
+        type: "album",
+        items: tagTopAlbumsData.albums.album,
+      };
+      setTagTopAlbums(tagTopAlbumsDataWithType);
+
+      const tagTopArtistsData = await fetchTagTopArtists(hashtag);
+      const tagTopArtistsDataWithType = {
+        type: "artist",
+        items: tagTopArtistsData.topartists.artist,
+      };
+      setTagTopArtists(tagTopArtistsDataWithType);
+
+      const tagTopTracksData = await fetchCherryMusicTracks({
+        query: "tagtop",
+        tag: hashtag,
+      });
+      setTrackList(tagTopTracksData);
+    };
+    fetchData();
+  }, [hashtag]);
+
   return (
     <div className="flex flex-col gap-6 pt-32">
       <GradientHeader
@@ -28,21 +58,28 @@ function TagPage({
       <h1 className="absolute top-10 text-2xl font-bold">
         # {hashtag.toUpperCase()}
       </h1>
-      <HorizontalTiles sectionTitle="Top Tag Albums" arr={tagTopAlbums} nav />
+      {tagTopAlbums && (
+        <HorizontalTiles sectionTitle="Top Tag Albums" arr={tagTopAlbums} nav />
+      )}
+      {trackList ? (
+        <TopTracks
+          title={`Top30 of Tag #${hashtag}`}
+          tag={hashtag}
+          count={30}
+          trackList={trackList}
+        />
+      ) : (
+        <TrackCardsSkeleton />
+      )}
 
-      <TopTracks
-        title={`Top30 of Tag #${hashtag}`}
-        tag={hashtag}
-        count={30}
-        trackList={tagTopTracks}
-      />
-
-      <HorizontalTiles
-        sectionTitle="Related Artists"
-        arr={tagTopArtists}
-        isCircle
-        nav
-      />
+      {tagTopArtists && (
+        <HorizontalTiles
+          sectionTitle="Related Artists"
+          arr={tagTopArtists}
+          isCircle
+          nav
+        />
+      )}
     </div>
   );
 }
