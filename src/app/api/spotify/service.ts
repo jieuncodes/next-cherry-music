@@ -1,6 +1,7 @@
 import { SpotifyTrackData } from "@/types/spotify/types";
 import { fetchTrackDetail } from "../lastFm/service";
 import { LastFmTrack } from "@/types/trackTypes";
+import { ensureEncoded } from "@/lib/helpers";
 
 export const fetchSpotifyAccessToken = async () => {
   const tokenResponse = await fetch(process.env.SPOTIFY_TOKEN_URL as string);
@@ -9,8 +10,9 @@ export const fetchSpotifyAccessToken = async () => {
 };
 
 export async function fetchSpotifyArtist(artist: string) {
+  const encodedAritst = ensureEncoded(artist);
   const response = await fetch(
-    `${process.env.URL}/api/spotify/artist?artist=${artist}`
+    `${process.env.NEXT_PUBLIC_URL}/api/spotify/artist?artist=${encodedAritst}`
   );
   const data = await response.json();
   return data;
@@ -20,7 +22,7 @@ export async function fetchSpotifyPlaylist(
   playlistId: string
 ): Promise<SpotifyTrackData[]> {
   const response = await fetch(
-    `${process.env.URL}/api/spotify/top-tracks?playlistid=${playlistId}`
+    `${process.env.NEXT_PUBLIC_URL}/api/spotify/top-tracks?playlistid=${playlistId}`
   );
   return response.json();
 }

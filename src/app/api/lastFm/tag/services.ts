@@ -6,9 +6,11 @@ export async function fetchTagTopAlbums(tag: string) {
 
 export async function fetchTagTopTracks(tag: string) {
   const response = await fetch(
-    `${process.env.URL}/api/lastFm/tag/get-top-tracks?tag=${tag}`
+    `${process.env.NEXT_PUBLIC_URL}/api/lastFm/tag/get-top-tracks?tag=${tag}`
   );
+  console.log("response", response);
   const data = await response.json();
+  console.log("datadatadata", data);
   return data.tracks.track;
 }
 

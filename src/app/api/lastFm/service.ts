@@ -9,20 +9,22 @@ import {
 } from "@/types/trackTypes";
 
 export async function fetchTopTracks(): Promise<LastFmTrack[]> {
-  const response = await fetch(`${process.env.URL}/api/lastFm/top-tracks`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/api/lastFm/top-tracks`
+  );
 
   return response.json();
 }
 export async function fetchTopArtists(): Promise<LastFmArtists> {
   const response = await fetch(
-    `${process.env.URL}/api/lastFm/artist/top-artists`
+    `${process.env.NEXT_PUBLIC_URL}/api/lastFm/artist/top-artists`
   );
   return response.json();
 }
 
 export async function fetchArtistInfo(artist: string) {
   const response = await fetch(
-    `${process.env.URL}/api/lastFm/artist?artist=${artist}`
+    `${process.env.NEXT_PUBLIC_URL}/api/lastFm/artist?artist=${artist}`
   );
   const data: LastFmArtistInfo = await response.json();
   return data;
@@ -34,7 +36,7 @@ export async function fetchArtistTopTracks(
   const artistEncoded = encodeURIComponent(artist);
 
   const response = await fetch(
-    `${process.env.URL}/api/lastFm/artist/get-top-tracks?artist=${artistEncoded}`
+    `${process.env.NEXT_PUBLIC_URL}/api/lastFm/artist/get-top-tracks?artist=${artistEncoded}`
   );
   const data = await response.json();
   return data.toptracks.track;
@@ -48,7 +50,7 @@ export async function fetchTrackDetail(
     const artistEncoded = encodeURIComponent(track.artist.name);
 
     const response = await fetch(
-      `${process.env.URL}/api/lastFm/track/details?trackTitle=${trackTitleEncoded}&artist=${artistEncoded}`
+      `${process.env.NEXT_PUBLIC_URL}/api/lastFm/track/details?trackTitle=${trackTitleEncoded}&artist=${artistEncoded}`
     );
 
     if (!response.ok) {
@@ -73,7 +75,7 @@ export async function fetchAlbumInfo({
   album: string;
 }): Promise<LastFmAlbumInfo> {
   const response = await fetch(
-    `${process.env.URL}/api/lastFm/album/get-info?artist=${artist}&album=${album}`
+    `${process.env.NEXT_PUBLIC_URL}/api/lastFm/album/get-info?artist=${artist}&album=${album}`
   );
   const data = await response.json();
   const tracksArray = Array.isArray(data.album.tracks.track)
@@ -102,7 +104,7 @@ export async function fetchAlbumInfo({
 
 export async function fetchTagTopArtists(hashtag: string) {
   const response = await fetch(
-    `${process.env.URL}/api/lastFm/tag/get-top-artists?tag=${hashtag}`
+    `${process.env.NEXT_PUBLIC_URL}/api/lastFm/tag/get-top-artists?tag=${hashtag}`
   );
   const data = await response.json();
   return data;
@@ -110,7 +112,7 @@ export async function fetchTagTopArtists(hashtag: string) {
 
 export async function fetchTagTopAlbums(hashtag: string) {
   const response = await fetch(
-    `${process.env.URL}/api/lastFm/tag/get-top-albums?tag=${hashtag}`
+    `${process.env.NEXT_PUBLIC_URL}/api/lastFm/tag/get-top-albums?tag=${hashtag}`
   );
   const data = await response.json();
   return data;

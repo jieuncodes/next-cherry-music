@@ -11,7 +11,7 @@ async function ArtistPage({ params }: { params: { artist: string } }) {
     "/images/default_album_cover.webp";
 
   const artistTopTracks = await fetchCherryMusicTracks({
-    query: "artist-top",
+    query: "artisttop",
     artist: params.artist,
   });
 

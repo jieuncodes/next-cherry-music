@@ -11,7 +11,7 @@ async function AlbumPage({
   const decodedArtist = decodeURIComponent(params.artist);
 
   const albumTracks = await fetchCherryMusicTracks({
-    query: "album-tracks",
+    query: "albumtracks",
     artist: params.artist,
     album: params.album,
   });

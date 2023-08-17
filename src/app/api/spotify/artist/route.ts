@@ -1,17 +1,18 @@
 import { handleError, validateEnvVariable } from "@/lib/helpers";
 import { NextRequest, NextResponse } from "next/server";
 import { fetchSpotifyAccessToken } from "../service";
+import { decode } from "punycode";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const params = req.nextUrl.searchParams;
   const artistName = params.get("artist") as string;
+  console.log("", artistName);
   const spotifyData = await fetchSpotifyArtistData(artistName);
   return NextResponse.json(spotifyData);
 }
 
 const fetchSpotifyArtistData = async (artistName: string) => {
   validateEnvVariable(process.env.SPOTIFY_BASE_URL, "SPOTIFY_BASE_URL");
-
   const token = await fetchSpotifyAccessToken();
   try {
     const url = new URL(`${process.env.SPOTIFY_BASE_URL}/search`);

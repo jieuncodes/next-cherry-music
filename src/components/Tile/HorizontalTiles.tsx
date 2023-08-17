@@ -1,4 +1,5 @@
 "use client";
+
 import { Tiles } from "@/styles/Artist/Artist";
 import { SectionContainer, SectionTitle } from "@/styles/Section";
 import { useRouter } from "next/navigation";
@@ -38,20 +39,27 @@ function HorizontalTiles({
   };
 
   const getArtistImgUrl = async (name: string) => {
-    const spotifyArtistData = await fetchSpotifyArtist(name);
-    const url =
-      spotifyArtistData?.best_match?.items[0]?.images[0]?.url ||
-      "/images/default_user_avatar.jpeg";
-
-    setArtistImgUrls((prevUrls) => {
-      const newUrls = new Map(prevUrls);
-      newUrls.set(name, url);
-      return newUrls;
-    });
+    console.log("getArtistImgUrl");
+    try {
+      const spotifyArtistData = await fetchSpotifyArtist(name);
+      console.log("spotifyArtistData", spotifyArtistData);
+      const url =
+        spotifyArtistData?.best_match?.items[0]?.images[0]?.url ||
+        "/images/default_user_avatar.jpeg";
+      console.log("url***", url);
+      setArtistImgUrls((prevUrls) => {
+        const newUrls = new Map(prevUrls);
+        newUrls.set(name, url);
+        return newUrls;
+      });
+    } catch (error) {
+      console.error("Error fetching artist image for", name, error);
+    }
   };
 
   useEffect(() => {
     arr.items.forEach((item) => {
+      console.log("item", item);
       getArtistImgUrl(item.name);
     });
   }, [arr.items]);

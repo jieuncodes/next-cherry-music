@@ -10,10 +10,9 @@ async function HashtagPage({ params }: { params: { hashtag: string } }) {
   const decodedHashtag = decodeURIComponent(params.hashtag);
 
   const tagTopAlbums = await fetchTagTopAlbums(params.hashtag);
-
   const tagTopAlbumsDataWithType = {
     type: "album",
-    items: tagTopAlbums.tracks.track,
+    items: tagTopAlbums.albums.album,
   };
 
   const tagTopArtists = await fetchTagTopArtists(params.hashtag);
@@ -30,7 +29,7 @@ async function HashtagPage({ params }: { params: { hashtag: string } }) {
   };
 
   const tagTopTracks = await fetchCherryMusicTracks({
-    query: "tag-top",
+    query: "tagtop",
     tag: params.hashtag,
   });
 

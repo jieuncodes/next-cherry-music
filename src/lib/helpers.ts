@@ -40,3 +40,10 @@ export const isValidPlayer = (playerRef: RefObject<YouTubePlayer>): boolean => {
     typeof playerRef.current.getDuration() === "function"
   );
 };
+
+export const ensureEncoded = (str: string): string => {
+  if (str !== decodeURIComponent(str)) {
+    return str;
+  }
+  return encodeURIComponent(str);
+};

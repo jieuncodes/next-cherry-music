@@ -39,22 +39,22 @@ async function fetchTrackListByQueryType(
       }
       return refinedTracks;
 
-    case "artist-top":
+    case "artisttop":
       if (!artist) {
-        throw new Error("Artist name is required for artist-top query.");
+        throw new Error("Artist name is required for artisttop query.");
       }
       return await fetchArtistTopTracks(artist);
 
-    case "tag-top":
+    case "tagtop":
       if (!tag) {
-        throw new Error("Tag name is required for tag-top query.");
+        throw new Error("Tag name is required for tagtop query.");
       }
       return await fetchTagTopTracks(tag);
 
-    case "album-tracks":
+    case "albumtracks":
       if (!album || !artist) {
         throw new Error(
-          "Album and artist name are required for album-tracks query."
+          "Album and artist name are required for albumtracks query."
         );
       }
       const albumInfo = await fetchAlbumInfo({ artist: artist, album });
