@@ -1,27 +1,23 @@
+import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
+import { fetchArtistInfo } from "@/app/api/lastFm/service";
+import { fetchSpotifyArtist } from "@/app/api/spotify/service";
 import Artist from "@/components/Artist/Artist";
-import { LastFmArtistInfo } from "@/types/trackTypes";
 
 async function ArtistPage({ params }: { params: { artist: string } }) {
-  const artistDataResponse = await fetch(
-    `${process.env.URL}/api/lastFm/artist?artist=${params.artist}`
-  );
-  const artistData: LastFmArtistInfo = await artistDataResponse.json();
-
-  const spotifyArtistResponse = await fetch(
-    `${process.env.URL}/api/spotify/artist?artist=${params.artist}`
-  );
-  const spotifyArtistData = await spotifyArtistResponse.json();
+  const lastFmArtist = await fetchArtistInfo(params.artist);
+  const spotifyArtist = await fetchSpotifyArtist(params.artist);
   const artistImgUrl =
-    spotifyArtistData.best_match?.items[0]?.images[0]?.url ||
+    spotifyArtist.best_match?.items[0]?.images[0]?.url ||
     "/images/default_album_cover.webp";
-  const artistTopTracksResponse = await fetch(
-    `${process.env.URL}/api/cherryMusic/track?query=artist-top&artist=${params.artist}`
-  );
-  const artistTopTracks = await artistTopTracksResponse.json();
+
+  const artistTopTracks = await fetchCherryMusicTracks({
+    query: "artist-top",
+    artist: params.artist,
+  });
 
   return (
     <Artist
-      artistData={artistData}
+      artistData={lastFmArtist}
       artistImgUrl={artistImgUrl}
       artistTopTracks={artistTopTracks}
     />

@@ -8,6 +8,14 @@ export const fetchSpotifyAccessToken = async () => {
   return tokenData.accessToken;
 };
 
+export async function fetchSpotifyArtist(artist: string) {
+  const response = await fetch(
+    `${process.env.URL}/api/spotify/artist?artist=${artist}`
+  );
+  const data = await response.json();
+  return data;
+}
+
 export async function fetchSpotifyPlaylist(
   playlistId: string
 ): Promise<SpotifyTrackData[]> {

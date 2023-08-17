@@ -1,3 +1,4 @@
+import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import TagPage from "@/components/Hashtag/TagPage";
 
 async function HashtagPage({ params }: { params: { hashtag: string } }) {
@@ -29,10 +30,10 @@ async function HashtagPage({ params }: { params: { hashtag: string } }) {
     items: tagTopArtists.topartists.artist,
   };
 
-  const tagTopTracksResponse = await fetch(
-    `${process.env.URL}/api/cherryMusic/track?query=tag-top&tag=${params.hashtag}`
-  );
-  const tagTopTracks = await tagTopTracksResponse.json();
+  const tagTopTracks = await fetchCherryMusicTracks({
+    query: "tag-top",
+    tag: params.hashtag,
+  });
 
   return (
     <TagPage

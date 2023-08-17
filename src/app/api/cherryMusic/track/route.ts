@@ -1,21 +1,20 @@
 import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
+import { validateEnvVariable } from "@/lib/helpers";
 import { generateTrackId } from "@/lib/utils";
+import { SpotifyTrackData } from "@/types/spotify/types";
 import { LastFmTrack } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
 import {
   fetchAlbumInfo,
   fetchArtistTopTracks,
-  fetchTopArtists,
   fetchTrackDetail,
 } from "../../lastFm/service";
 import { fetchTagTopTracks } from "../../lastFm/tag/services";
-import { fetchSpotifyTrackData } from "../../spotify/track/route";
 import {
   fetchSpotifyPlaylist,
   refineSpotifyTracksIntoLastFmTrack,
 } from "../../spotify/service";
-import { SpotifyTrackData } from "@/types/spotify/types";
-import { validateEnvVariable } from "@/lib/helpers";
+import { fetchSpotifyTrackData } from "../../spotify/track/route";
 
 async function fetchTrackListByQueryType(
   query: string,

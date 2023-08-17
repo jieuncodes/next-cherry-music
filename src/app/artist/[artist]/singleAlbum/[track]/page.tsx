@@ -1,3 +1,4 @@
+import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import Album from "@/components/Album/Album";
 
 async function SingleAlbumPage({
@@ -8,10 +9,12 @@ async function SingleAlbumPage({
   const decodedTrack = decodeURIComponent(params.track);
   const decodedArtist = decodeURIComponent(params.artist);
 
-  const trackInfoResponse = await fetch(
-    `${process.env.URL}/api/cherryMusic/track?query=track&track=${params.track}&artist=${params.artist}`
-  );
-  const trackInfo = await trackInfoResponse.json();
+  const trackInfo = await fetchCherryMusicTracks({
+    query: "track",
+    artist: params.artist,
+    trackTitle: params.track,
+  });
+
   return (
     <Album
       albumTracks={trackInfo}

@@ -1,14 +1,11 @@
 import Carousel from "@/components/Carousel/Carousel";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
-
 import TopTracks from "@/components/TopTracks";
+import { fetchCherryMusicTracks } from "../api/cherryMusic/track/service";
 import { fetchTopArtists } from "../api/lastFm/service";
 
 async function Home() {
-  const todayTop50 = await fetch(
-    `${process.env.URL}/api/cherryMusic/track?query=top`
-  );
-  const todayTop50Data = await todayTop50.json();
+  const todayTop50 = await fetchCherryMusicTracks({ query: "top" });
 
   const topArtistsData = await fetchTopArtists();
   const topArtistsDataWithType = {
@@ -20,7 +17,7 @@ async function Home() {
       <div className="carousel-container h-80 relative">
         <Carousel />
       </div>
-      <TopTracks title="Today Top50" trackList={todayTop50Data} />
+      <TopTracks title="Today Top50" trackList={todayTop50} />
 
       <HorizontalTiles
         sectionTitle="Top Artists"
