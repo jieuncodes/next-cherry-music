@@ -1,4 +1,5 @@
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
+import { fetchAlbumInfo } from "@/app/api/lastFm/service";
 import Album from "@/components/Album/Album";
 
 async function AlbumPage({
@@ -15,14 +16,14 @@ async function AlbumPage({
     album: params.album,
   });
 
-  const albumInfoResponse = await fetch(
-    `${process.env.URL}/api/lastFm/album/get-info?artist=${params.artist}&album=${params.album}`
-  );
-  const albumInfo = await albumInfoResponse.json();
+  const albumInfo = await fetchAlbumInfo({
+    artist: params.artist,
+    album: params.album,
+  });
 
   return (
     <Album
-      albumInfo={albumInfo.album}
+      albumInfo={albumInfo}
       albumTracks={albumTracks}
       albumTitle={decodedAlbum}
       artist={decodedArtist}

@@ -72,10 +72,8 @@ export async function fetchAlbumInfo({
   artist: string;
   album: string;
 }): Promise<LastFmAlbumInfo> {
-  const encodedArtist = encodeURIComponent(artist);
-  const encodedAlbum = encodeURIComponent(album);
   const response = await fetch(
-    `${process.env.URL}/api/lastFm/album/get-info?artist=${encodedArtist}&album=${encodedAlbum}`
+    `${process.env.URL}/api/lastFm/album/get-info?artist=${artist}&album=${album}`
   );
   const data = await response.json();
   const tracksArray = Array.isArray(data.album.tracks.track)
@@ -100,4 +98,20 @@ export async function fetchAlbumInfo({
   });
   const newData = { ...data.album, tracks: { track: [...newTracks] } };
   return newData;
+}
+
+export async function fetchTagTopArtists(hashtag: string) {
+  const response = await fetch(
+    `${process.env.URL}/api/lastFm/tag/get-top-artists?tag=${hashtag}`
+  );
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchTagTopAlbums(hashtag: string) {
+  const response = await fetch(
+    `${process.env.URL}/api/lastFm/tag/get-top-albums?tag=${hashtag}`
+  );
+  const data = await response.json();
+  return data;
 }

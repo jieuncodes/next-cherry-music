@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Tile from "./Tile";
 import SectionNavigator from "../SectionNavigator";
 import { useEffect, useRef, useState } from "react";
+import { fetchSpotifyArtist } from "@/app/api/spotify/service";
 
 interface HorizontalTilesProps {
   sectionTitle?: string;
@@ -37,10 +38,7 @@ function HorizontalTiles({
   };
 
   const getArtistImgUrl = async (name: string) => {
-    const spotifyArtistResponse = await fetch(
-      `/api/spotify/artist?artist=${name}`
-    );
-    const spotifyArtistData = await spotifyArtistResponse.json();
+    const spotifyArtistData = await fetchSpotifyArtist(name);
     const url =
       spotifyArtistData?.best_match?.items[0]?.images[0]?.url ||
       "/images/default_user_avatar.jpeg";
