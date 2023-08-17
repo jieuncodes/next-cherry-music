@@ -1,11 +1,12 @@
 "use client";
+
+import { fetchArtistInfo } from "@/app/api/lastFm/service";
 import ArtistTopTracks from "@/components/Artist/ArtistTopTracks";
 import LikeButton from "@/components/Btns/LikeButton";
 import GradientHeader from "@/components/GradientHeader";
 import Hashtags from "@/components/Hashtags";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
-import { Track } from "@/lib/server/database.types";
 import { cleanedStr, truncateString } from "@/lib/utils";
 import {
   ArtistDesc,
@@ -16,21 +17,29 @@ import {
   Desc,
 } from "@/styles/Artist/Artist";
 import { LastFmArtistInfo } from "@/types/trackTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ArtistProps {
-  artistData: LastFmArtistInfo;
+  artist: string;
   artistImgUrl: string;
-  artistTopTracks: Track[];
 }
 
-function Artist({ artistData, artistImgUrl, artistTopTracks }: ArtistProps) {
+function Artist({ artist, artistImgUrl }: ArtistProps) {
   const [liked, setLiked] = useState<boolean>(false);
-  const cleanedArtistBio = cleanedStr(artistData.artist.bio?.summary);
+  const [artistData, setArtistData] = useState<LastFmArtistInfo | null>(null);
+
+  useEffect(() => {
+    const getLastFmArtist = async () => {
+      const artistInfo = await fetchArtistInfo(artist);
+      setArtistData(artistInfo);
+    };
+    getLastFmArtist();
+  }, []);
+  const cleanedArtistBio = cleanedStr(artistData?.artist?.bio?.summary || "");
 
   const similarArtistDataWithType = {
     type: "artist",
-    items: artistData.artist.similar.artist,
+    items: artistData?.artist.similar.artist || [],
   };
 
   if (!artistData) {
@@ -54,7 +63,7 @@ function Artist({ artistData, artistImgUrl, artistTopTracks }: ArtistProps) {
             <Desc>{truncateString(cleanedArtistBio, 200)}</Desc>
           </ArtistDesc>
         )}
-        <ArtistTopTracks tracks={artistTopTracks} />
+        <ArtistTopTracks artist={artistData.artist.name} />
         {/* <ArtistAlbums artist={params.artist} /> */}
         <HorizontalTiles
           sectionTitle="Fans might also like"

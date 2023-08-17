@@ -61,11 +61,6 @@ export const AlbumPageDropdownItems: DropdownItemData[] = [
     label: "Add to playlist",
   },
   {
-    key: "go-to-album",
-    icon: <Icons.disc strokeWidth={1.5} />,
-    label: "Go to album",
-  },
-  {
     key: "go-to-artist",
     icon: <Icons.mic2 strokeWidth={1.5} />,
     label: "Go to artist",

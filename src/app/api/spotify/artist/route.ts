@@ -6,7 +6,6 @@ import { decode } from "punycode";
 export async function GET(req: NextRequest, res: NextResponse) {
   const params = req.nextUrl.searchParams;
   const artistName = params.get("artist") as string;
-  console.log("", artistName);
   const spotifyData = await fetchSpotifyArtistData(artistName);
   return NextResponse.json(spotifyData);
 }

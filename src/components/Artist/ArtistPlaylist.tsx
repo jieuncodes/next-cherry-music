@@ -1,13 +1,12 @@
-import { Track } from "@/lib/server/database.types";
 import { RowSection, SectionTitle } from "@/styles/Section";
-import ArtistPlaylistCards from "./ArtistPlaylistCards";
+import { ArtistPlaylistCards } from "./ArtistPlaylistCards";
 
-function ArtsitPlaylist({ playlist }: { playlist: Track[] }) {
+function ArtsitPlaylist({ artist }: { artist: string }) {
   return (
     <>
       <RowSection>
         <SectionTitle>Popular</SectionTitle>
-        <ArtistPlaylistCards playlist={playlist} />
+        <ArtistPlaylistCards artist={artist} />
       </RowSection>
     </>
   );

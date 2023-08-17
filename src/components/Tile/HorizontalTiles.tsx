@@ -39,14 +39,11 @@ function HorizontalTiles({
   };
 
   const getArtistImgUrl = async (name: string) => {
-    console.log("getArtistImgUrl");
     try {
       const spotifyArtistData = await fetchSpotifyArtist(name);
-      console.log("spotifyArtistData", spotifyArtistData);
       const url =
         spotifyArtistData?.best_match?.items[0]?.images[0]?.url ||
         "/images/default_user_avatar.jpeg";
-      console.log("url***", url);
       setArtistImgUrls((prevUrls) => {
         const newUrls = new Map(prevUrls);
         newUrls.set(name, url);
@@ -59,7 +56,6 @@ function HorizontalTiles({
 
   useEffect(() => {
     arr.items.forEach((item) => {
-      console.log("item", item);
       getArtistImgUrl(item.name);
     });
   }, [arr.items]);
