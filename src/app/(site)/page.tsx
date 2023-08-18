@@ -2,12 +2,12 @@ import Carousel from "@/components/Carousel/Carousel";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import TopTracks from "@/components/TopTracks";
 import { fetchCherryMusicTracks } from "../api/cherryMusic/track/service";
-import { fetchTopArtists } from "../api/lastFm/service";
+import { lastFmFetcher } from "../api/lastFm/fetcher";
 
 async function Home() {
   const todayTop50 = await fetchCherryMusicTracks({ query: "top" });
 
-  const topArtistsData = await fetchTopArtists();
+  const topArtistsData = await lastFmFetcher.fetchTopArtists();
   const topArtistsDataWithType = {
     type: "artist",
     items: topArtistsData.artists.artist,

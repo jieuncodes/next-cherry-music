@@ -17,10 +17,10 @@ async function SingleAlbumPage({
 
   return (
     <Album
-      albumTracks={trackInfo}
+      singleTrack={trackInfo}
       albumTitle={`${decodedTrack}- Single Album`}
       artist={decodedArtist}
-      isSingleAbum={true}
+      isSingleAlbum={true}
     />
   );
 }

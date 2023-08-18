@@ -1,9 +1,6 @@
 "use client";
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
-import {
-  fetchTagTopAlbums,
-  fetchTagTopArtists,
-} from "@/app/api/lastFm/service";
+
 import GradientHeader from "@/components/GradientHeader";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import TopTracks from "@/components/TopTracks";
@@ -12,6 +9,7 @@ import { TrackArrayWithType } from "@/types/itemTypes";
 import { useEffect, useState } from "react";
 import TrackCardSkeleton from "../TrackCard/TrackCardSkeleton";
 import TrackCardsSkeleton from "../TrackCard/TrackCardSkeleton";
+import { lastFmFetcher } from "../../app/api/lastFm/fetcher";
 
 interface TagPageProps {
   hashtag: string;
@@ -25,14 +23,14 @@ function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const tagTopAlbumsData = await fetchTagTopAlbums(hashtag);
+      const tagTopAlbumsData = await lastFmFetcher.fetchTagTopAlbums(hashtag);
       const tagTopAlbumsDataWithType = {
         type: "album",
         items: tagTopAlbumsData.albums.album,
       };
       setTagTopAlbums(tagTopAlbumsDataWithType);
 
-      const tagTopArtistsData = await fetchTagTopArtists(hashtag);
+      const tagTopArtistsData = await lastFmFetcher.fetchTagTopArtists(hashtag);
       const tagTopArtistsDataWithType = {
         type: "artist",
         items: tagTopArtistsData.topartists.artist,

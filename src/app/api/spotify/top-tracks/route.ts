@@ -1,6 +1,7 @@
 import { handleError, validateEnvVariable } from "@/lib/helpers";
 import { SpotifyTrack, SpotifyTrackData } from "@/types/spotify/types";
 import { NextRequest, NextResponse } from "next/server";
+import { fetchSpotifyAccessToken } from "../service";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const playlistId = req.nextUrl.searchParams.get("playlistid");
@@ -12,14 +13,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const spotifyData = await fetchSpotifyPlaylist(playlistId);
   return NextResponse.json(spotifyData);
 }
-
-const fetchSpotifyAccessToken = async () => {
-  const tokenResponse = await fetch(
-    process.env.NEXT_PUBLIC_SPOTIFY_TOKEN_URL as string
-  );
-  const tokenData = await tokenResponse.json();
-  return tokenData.accessToken;
-};
 
 const fetchSpotifyPlaylist = async (
   playlistId: string

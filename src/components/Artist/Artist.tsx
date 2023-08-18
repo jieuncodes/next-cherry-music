@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchArtistInfo } from "@/app/api/lastFm/service";
+import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 import ArtistTopTracks from "@/components/Artist/ArtistTopTracks";
 import LikeButton from "@/components/Btns/LikeButton";
 import GradientHeader from "@/components/GradientHeader";
@@ -30,7 +30,7 @@ function Artist({ artist, artistImgUrl }: ArtistProps) {
 
   useEffect(() => {
     const getLastFmArtist = async () => {
-      const artistInfo = await fetchArtistInfo(artist);
+      const artistInfo = await lastFmFetcher.fetchArtistInfo(artist);
       setArtistData(artistInfo);
     };
     getLastFmArtist();

@@ -1,15 +1,11 @@
-import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
-import {
-  fetchTagTopAlbums,
-  fetchTagTopArtists,
-} from "@/app/api/lastFm/service";
 import { fetchSpotifyArtist } from "@/app/api/spotify/service";
 import TagPage from "@/components/Hashtag/TagPage";
+import { lastFmFetcher } from "../../api/lastFm/fetcher";
 
 async function HashtagPage({ params }: { params: { hashtag: string } }) {
   const decodedHashtag = decodeURIComponent(params.hashtag);
 
-  const tagTopArtists = await fetchTagTopArtists(params.hashtag);
+  const tagTopArtists = await lastFmFetcher.fetchTagTopArtists(params.hashtag);
 
   const spotifyFirstArtistData = await fetchSpotifyArtist(
     tagTopArtists.topartists.artist[0]

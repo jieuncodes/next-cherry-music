@@ -60,6 +60,7 @@ export const truncateString = (str: string, num: number) => {
   }
   return str.slice(0, num) + "...";
 };
+
 export const generateTrackId = (url: string): number => {
   const urlLastPart = url.split("/");
   return simpleHash(urlLastPart[urlLastPart.length - 1]);

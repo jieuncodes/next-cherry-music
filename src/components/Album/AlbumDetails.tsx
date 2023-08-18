@@ -15,7 +15,7 @@ import { Button } from "@nextui-org/react";
 interface AlbumDetailsProps {
   albumTitle: string;
   artist: string;
-  albumInfo?: LastFmAlbumInfo;
+  albumInfo?: LastFmAlbumInfo | null;
   albumTracks: Track[];
 }
 

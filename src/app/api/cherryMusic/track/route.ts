@@ -1,15 +1,10 @@
 import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
-import { validateEnvVariable } from "@/lib/helpers";
+import { validateEnvVariable, ensureEncoded } from "@/lib/helpers";
 import { generateTrackId } from "@/lib/utils";
 import { SpotifyTrackData } from "@/types/spotify/types";
 import { LastFmTrack } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
-import {
-  fetchAlbumInfo,
-  fetchArtistTopTracks,
-  fetchTrackDetail,
-} from "../../lastFm/service";
-import { fetchTagTopTracks } from "../../lastFm/tag/services";
+import { lastFmFetcher } from "../../lastFm/fetcher";
 import {
   fetchSpotifyPlaylist,
   refineSpotifyTracksIntoLastFmTrack,
@@ -46,13 +41,15 @@ async function fetchTrackListByQueryType(
       if (!artist) {
         throw new Error("Artist name is required for artisttop query.");
       }
-      return await fetchArtistTopTracks(artist);
+      const data = await lastFmFetcher.fetchArtistTopTracks(artist);
+      return data.toptracks.track;
 
     case "tagtop":
       if (!tag) {
         throw new Error("Tag name is required for tagtop query.");
       }
-      return await fetchTagTopTracks(tag);
+      const result = await lastFmFetcher.fetchTagTopTracks(tag);
+      return result.tracks.trac;
 
     case "albumtracks":
       if (!album || !artist) {
@@ -60,7 +57,10 @@ async function fetchTrackListByQueryType(
           "Album and artist name are required for albumtracks query."
         );
       }
-      const albumInfo = await fetchAlbumInfo({ artist: artist, album });
+      const albumInfo = await lastFmFetcher.fetchAlbumInfo({
+        artist: ensureEncoded(artist),
+        album,
+      });
       const tracksArray = Array.isArray(albumInfo.tracks.track)
         ? albumInfo.tracks.track
         : [albumInfo.tracks.track];
@@ -71,6 +71,7 @@ async function fetchTrackListByQueryType(
         throw new Error("Track and artist name are required for track query.");
       }
       const spotifyTrackData = await fetchSpotifyTrackData(trackTitle);
+      console.log("spotifyTrackData", spotifyTrackData);
       const spotifyTrack: SpotifyTrackData = {
         name: spotifyTrackData.tracks.items[0].name,
         artist: {
@@ -100,17 +101,22 @@ export async function GET(req: NextRequest, res: NextResponse) {
   let tracksToProcess = await fetchTrackListByQueryType(query, req);
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack, index) => {
-      const trackDetail = await fetchTrackDetail(track);
-      const id = generateTrackId(trackDetail.url);
-      const youtubeId = await fetchYouTubeVideoId(trackDetail.url);
+      const trackDetail = await lastFmFetcher.fetchTrackDetail(track);
+
+      const id = generateTrackId(trackDetail.track.url);
+      const youtubeId = await fetchYouTubeVideoId(trackDetail.track.url);
       const spotifyData = await fetchSpotifyTrackData(track.name);
       return {
+        key: id,
         rank: index,
         id,
         trackTitle: decodeURIComponent(track.name),
         artist: decodeURIComponent(track.artist.name),
         youtubeId,
-        albumTitle: spotifyData.albumTitle || trackDetail.album?.title || "",
+        albumTitle:
+          spotifyData.tracks.items[0].album.name ||
+          trackDetail.album?.title ||
+          "",
         albumImgUrl: spotifyData.tracks.items[0].album.images[0].url,
         tags: trackDetail.toptags?.tag,
         playCount: trackDetail.playcount,

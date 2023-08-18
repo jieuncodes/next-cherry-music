@@ -1,7 +1,7 @@
 import { SpotifyTrackData } from "@/types/spotify/types";
-import { fetchTrackDetail } from "../lastFm/service";
 import { LastFmTrack } from "@/types/trackTypes";
 import { ensureEncoded } from "@/lib/helpers";
+import { lastFmFetcher } from "../lastFm/fetcher";
 
 export const fetchSpotifyAccessToken = async () => {
   const tokenResponse = await fetch(
@@ -32,7 +32,7 @@ export async function fetchSpotifyPlaylist(
 export const refineSpotifyTracksIntoLastFmTrack = async (
   spotifyTrack: SpotifyTrackData
 ): Promise<LastFmTrack> => {
-  const lastFmDetails = await fetchTrackDetail(spotifyTrack);
+  const lastFmDetails = await lastFmFetcher.fetchTrackDetail(spotifyTrack);
   return {
     name: spotifyTrack.name,
     duration: lastFmDetails.duration,
