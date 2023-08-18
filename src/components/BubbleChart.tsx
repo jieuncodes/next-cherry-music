@@ -1,109 +1,4 @@
-type Streamable = { "#text": string; fulltrack: string };
-export type Artist = { name: string; mbid: string; url: string };
-type AlbumImage = { "#text": string; size: string };
-
-export interface LastFmTrack {
-  "@attr"?: {
-    rank: string;
-  };
-  name: string;
-  duration: string;
-  playcount: string;
-  listeners: string;
-  mbid: string;
-  url: string;
-  streamable: { "#text": string; fulltrack: string };
-  artist: Artist;
-  albumTitle?: string;
-  image: AlbumImage[];
-}
-
-export interface LastFmTrackDetails {
-  name: string;
-  duration: string;
-  playcount: string;
-  listeners: string;
-  mbid: string;
-  url: string;
-  streamable: Streamable;
-  artist: Artist;
-  image: AlbumImage[];
-}
-
-export interface LastFmArtistInfo {
-  artist: {
-    name: string;
-    mbid: string;
-    url: string;
-    image: string[];
-    streamable: string;
-    ontour: string;
-    stats: { listeners: string; playcount: string };
-    similar: { artist: Artist[] };
-    tags: { tag: { name: string; url: string }[] };
-    bio: {
-      links: { link: { "#text": string; rel: string; href: string }[] };
-      published: string;
-      summary: string;
-    };
-  };
-}
-
-export interface SpotifyBestMatchArtistInfo {
-  external_urls: { spotify: string };
-  followers: { href: string | null; total: number };
-  genres: string[];
-  href: string;
-  id: string;
-  images: { height: number; url: string; width: number }[];
-  name: string;
-  popularity: number;
-  type: string;
-  uri: string;
-}
-
-export interface LastFmAlbumInfo {
-  artist: string;
-  image: AlbumImage[];
-  listeners: string;
-  mbid: string;
-  name: string;
-  playcount: string;
-  tags: { tag: { name: string; url: string }[] };
-  tracks: { track: LastFmTrack[] };
-  url: string;
-  wiki: { published: string; summary: string };
-}
-
-export interface AlbumTrack {
-  "@attr"?: {
-    rank: string;
-  };
-  name: string;
-  duration: string;
-  mbid: string;
-  url: string;
-  streamable: { "#text": string; fulltrack: string };
-  artist: Artist;
-}
-
-export interface LastFmArtists {
-  artists: {
-    artist: Artist[];
-  };
-}
-
-export interface ArtistDetail {
-  name: string;
-  playcount: string;
-  listeners: string;
-  mbid: string;
-  url: string;
-  image: AlbumImage[];
-  streamable: string;
-}
-
-("use client");
+"use client";
 import useArtistImgUrl from "@/hooks/useArtistImgUrl";
 import { ArtistDetail } from "@/types/trackTypes";
 import * as d3 from "d3";
@@ -114,7 +9,6 @@ interface EnrichedArtist extends ArtistDetail {
   y: number;
   vx: number;
   vy: number;
-  imgUrl?: string;
 }
 
 function BubbleChart({
@@ -126,19 +20,18 @@ function BubbleChart({
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (loading) return;
-
+    if (loading.size !== 0) return;
     const svg = d3
       .select(chartRef.current)
       .append("svg")
       .attr("width", 800)
       .attr("height", 600);
 
-    const maxListeners = d3.max(arr.items, (d) => Number(d.listeners));
+    const maxListenersVal = d3.max(arr.items, (d) => Number(d.listeners));
 
     const sizeScale = d3
       .scaleLinear()
-      .domain([0, maxListeners as number])
+      .domain([0, maxListenersVal as number])
       .range([30, 100]);
 
     const enrichedArtists = arr.items.map((artist, index) => ({
@@ -151,6 +44,7 @@ function BubbleChart({
     }));
 
     const defs = svg.append("defs");
+
     enrichedArtists.forEach((artist, index) => {
       const imageUrl = artistImgUrls.get(artist.name);
       const pattern = defs
@@ -165,6 +59,7 @@ function BubbleChart({
         .attr("width", sizeScale(Number(artist.listeners)) * 2)
         .attr("height", sizeScale(Number(artist.listeners)) * 2);
     });
+
     d3.forceSimulation(enrichedArtists)
       .force("x", d3.forceX(800 / 2).strength(0.05))
       .force("y", d3.forceY(600 / 2).strength(0.05))
@@ -208,8 +103,6 @@ function BubbleChart({
       .attr("fill", "white")
       .attr("text-anchor", "middle")
       .attr("alignment-baseline", "middle");
-
-    // The rest of the code for the simulation and rendering remains unchanged...
   }, [arr.items, artistImgUrls, loading]);
 
   return <div ref={chartRef}></div>;
