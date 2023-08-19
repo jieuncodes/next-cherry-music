@@ -2,7 +2,7 @@
 import useArtistImgUrl from "@/hooks/useArtistImgUrl";
 import { ArtistDetail } from "@/types/trackTypes";
 import * as d3 from "d3";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface EnrichedArtist extends ArtistDetail {
   x: number;
@@ -18,62 +18,46 @@ function BubbleChart({
 }) {
   const { artistImgUrls, loading } = useArtistImgUrl(arr.items);
   const chartRef = useRef(null);
+  const margin = 200;
 
   useEffect(() => {
     if (loading.size !== 0) return;
-    const svg = d3
-      .select(chartRef.current)
-      .append("svg")
-      .attr("width", 800)
-      .attr("height", 600);
+    let svg: d3.Selection<SVGSVGElement, unknown, null, undefined>;
+    svg = d3.select(chartRef.current).select("svg");
+
+    if (svg.empty()) {
+      svg = d3
+        .select(chartRef.current)
+        .append("svg")
+        .attr("width", window.innerWidth)
+        .attr("height", window.innerHeight);
+    } else {
+      svg.selectAll("*").remove();
+    }
 
     const maxListenersVal = d3.max(arr.items, (d) => Number(d.listeners));
 
     const sizeScale = d3
       .scaleLinear()
       .domain([0, maxListenersVal as number])
-      .range([30, 100]);
+      .range([10, 100]);
 
-    const enrichedArtists = arr.items.map((artist, index) => ({
-      ...artist,
-      x: Math.random() * 800,
-      y: Math.random() * 600,
-      vx: 0,
-      vy: 0,
-      imgUrl: artistImgUrls.get(artist.name),
-    }));
+    const width = 800;
+    const height = 600;
 
-    const defs = svg.append("defs");
-
-    enrichedArtists.forEach((artist, index) => {
-      const imageUrl = artistImgUrls.get(artist.name);
-      const pattern = defs
-        .append("pattern")
-        .attr("id", `artist-${index}`)
-        .attr("width", 1)
-        .attr("height", 1);
-
-      pattern
-        .append("image")
-        .attr("href", imageUrl || "images/default_band.png")
-        .attr("width", sizeScale(Number(artist.listeners)) * 2)
-        .attr("height", sizeScale(Number(artist.listeners)) * 2);
+    const enrichedArtists = arr.items.map((artist, index) => {
+      const radius = sizeScale(Number(artist.listeners));
+      return {
+        ...artist,
+        x: Math.random() * (width - 2 * (margin + radius)) + margin + radius,
+        y: Math.random() * (height - 2 * (margin + radius)) + margin + radius,
+        vx: 0,
+        vy: 0,
+        imgUrl: artistImgUrls.get(artist.name),
+      };
     });
 
-    d3.forceSimulation(enrichedArtists)
-      .force("x", d3.forceX(800 / 2).strength(0.05))
-      .force("y", d3.forceY(600 / 2).strength(0.05))
-      .force(
-        "collide",
-        d3.forceCollide(
-          (d: EnrichedArtist) => sizeScale(Number(d.listeners)) + 1
-        )
-      )
-      .on("tick", () => {
-        circles
-          .attr("cx", (d: EnrichedArtist) => d.x)
-          .attr("cy", (d: EnrichedArtist) => d.y);
-      });
+    const defs = svg.append("defs");
 
     const circles = svg
       .selectAll("circle")
@@ -91,21 +75,45 @@ function BubbleChart({
         d3.select(this).attr("opacity", 1);
       });
 
-    svg
-      .selectAll("text")
-      .data(enrichedArtists)
-      .enter()
-      .append("text")
-      .attr("x", (d: EnrichedArtist) => d.x)
-      .attr("y", (d: EnrichedArtist) => d.y)
-      .text((d) => d.name)
-      .attr("font-size", "10px")
-      .attr("fill", "white")
-      .attr("text-anchor", "middle")
-      .attr("alignment-baseline", "middle");
-  }, [arr.items, artistImgUrls, loading]);
+    enrichedArtists.forEach((artist, index) => {
+      const imageUrl = artistImgUrls.get(artist.name);
+      const pattern = defs
+        .append("pattern")
+        .attr("id", `artist-${index}`)
+        .attr("patternContentUnits", "objectBoundingBox")
+        .attr("width", 1)
+        .attr("height", 1);
 
-  return <div ref={chartRef}></div>;
+      const imageWidth = 1;
+      const imageHeight = 1;
+
+      pattern
+        .append("image")
+        .attr("preserveAspectRatio", "xMidYMid slice")
+        .attr("href", imageUrl || "images/default_band.png")
+        .attr("width", imageWidth)
+        .attr("height", imageHeight)
+        .attr("x", (1 - imageWidth) / 2)
+        .attr("y", (1 - imageHeight) / 2);
+    });
+
+    d3.forceSimulation(enrichedArtists)
+      .force("x", d3.forceX(800 / 2).strength(0.05))
+      .force("y", d3.forceY(600 / 2).strength(0.05))
+      .force(
+        "collide",
+        d3.forceCollide(
+          (d: EnrichedArtist) => sizeScale(Number(d.listeners)) + 10
+        )
+      )
+      .on("tick", () => {
+        circles
+          .attr("cx", (d: EnrichedArtist) => d.x)
+          .attr("cy", (d: EnrichedArtist) => d.y);
+      });
+  }, [loading]);
+
+  return <div ref={chartRef} className="-m-6"></div>;
 }
 
 export default BubbleChart;
