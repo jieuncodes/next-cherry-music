@@ -55,6 +55,14 @@ export const renderBubbleChart = (
     .attr("stroke-width", 2);
 
   const defs = svg.append("defs");
+  const tooltipText = svg
+    .append("text")
+    .attr("class", "bubble-tooltip")
+    .attr("opacity", 0)
+    .attr("text-anchor", "middle")
+    .attr("pointer-events", "none")
+    .style("font-size", "12px")
+    .style("fill", "#fff");
 
   const circles = svg
     .selectAll("circle")
@@ -67,10 +75,13 @@ export const renderBubbleChart = (
     .style("fill", (item) => `url(#artist-pattern-${sanitizeName(item.name)})`)
     .on("mouseover", function (d, i) {
       d3.select(this).attr("opacity", 0.7);
+      tooltipText.attr("opacity", 1).attr("x", d.x).attr("y", d.y).text(d.name);
     })
     .on("mouseout", function (d, i) {
       d3.select(this).attr("opacity", 1);
+      tooltipText.attr("opacity", 0); // Hide the tooltip text
     });
+  circles.append("title").text((d) => d.name);
 
   enrichedArtists.forEach((artist, index) => {
     const imageUrl = artistImgUrls.get(artist.name);

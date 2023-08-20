@@ -56,12 +56,8 @@ function BubbleChart({
   }, [loading]);
   return (
     <div className="-ml-6 w-full -mt-6 flex justify-center align-middle">
-      <svg
-        className="border-2 border-sky-500"
-        width={window.innerWidth}
-        height={CHART_HEIGHT}
-        ref={chartRef}
-      ></svg>
+      <svg width={window.innerWidth} height={CHART_HEIGHT} ref={chartRef}></svg>
+      <div id="tooltip" className="absolute opacity-0"></div>
     </div>
   );
 }
