@@ -1,3 +1,4 @@
+import d3Tip from "d3-tip";
 import { sanitizeName } from "@/lib/helpers";
 import { ArtistDetail, EnrichedArtist } from "@/types/trackTypes";
 import * as d3 from "d3";
@@ -45,6 +46,7 @@ export const renderBubbleChart = (
   sizeScale: d3.ScaleLinear<number, number>,
   artistImgUrls: Map<string, string>
 ) => {
+  console.log("enrichedArtists", enrichedArtists);
   svg
     .append("circle")
     .attr("cx", CHART_WIDTH / 2)
@@ -55,15 +57,6 @@ export const renderBubbleChart = (
     .attr("stroke-width", 2);
 
   const defs = svg.append("defs");
-  const tooltipText = svg
-    .append("text")
-    .attr("class", "bubble-tooltip")
-    .attr("opacity", 0)
-    .attr("text-anchor", "middle")
-    .attr("pointer-events", "none")
-    .style("font-size", "12px")
-    .style("fill", "#fff");
-
   const circles = svg
     .selectAll("circle")
     .data(enrichedArtists.filter((artist) => artist.name !== centerArtist.name))
@@ -75,13 +68,27 @@ export const renderBubbleChart = (
     .style("fill", (item) => `url(#artist-pattern-${sanitizeName(item.name)})`)
     .on("mouseover", function (d, i) {
       d3.select(this).attr("opacity", 0.7);
-      tooltipText.attr("opacity", 1).attr("x", d.x).attr("y", d.y).text(d.name);
+      const title = d3.select(this).select("title").text();
+      const cx = parseFloat(d3.select(this).attr("cx"));
+      const cy = parseFloat(d3.select(this).attr("cy"));
+      svg
+        .append("text")
+        .attr("x", cx)
+        .attr("y", cy)
+        .attr("text-anchor", "middle")
+        .attr("dy", ".35em")
+        .attr("pointer-events", "none")
+        .attr("fill", "black")
+        .attr("font-size", "1em")
+        .attr("font-weight", "bold")
+        .attr("id", "hoverTitle")
+        .text(title);
     })
     .on("mouseout", function (d, i) {
       d3.select(this).attr("opacity", 1);
-      tooltipText.attr("opacity", 0); // Hide the tooltip text
+      d3.select("#hoverTitle").remove();
     });
-  circles.append("title").text((d) => d.name);
+  circles.append("title").text((d: EnrichedArtist) => d.name);
 
   enrichedArtists.forEach((artist, index) => {
     const imageUrl = artistImgUrls.get(artist.name);

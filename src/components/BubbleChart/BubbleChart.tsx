@@ -23,9 +23,10 @@ function BubbleChart({
   );
 
   useEffect(() => {
+    console.log("loading", loading);
     if (!chartRef.current || loading.size !== 0 || !centerArtist) return;
     let svg = d3.select(chartRef.current);
-    if (svg.empty()) {
+    if (!svg) {
       svg = d3
         .select(chartRef.current)
         .append("svg")
@@ -57,7 +58,6 @@ function BubbleChart({
   return (
     <div className="-ml-6 w-full -mt-6 flex justify-center align-middle">
       <svg width={window.innerWidth} height={CHART_HEIGHT} ref={chartRef}></svg>
-      <div id="tooltip" className="absolute opacity-0"></div>
     </div>
   );
 }
