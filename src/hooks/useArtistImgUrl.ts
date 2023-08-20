@@ -11,28 +11,30 @@ const useArtistImgUrl = (items: ItemProps[]) => {
   );
 
   useEffect(() => {
-    items.forEach(async (item, index) => {
-      try {
-        const spotifyArtistData = await fetchSpotifyArtist(item.name);
-        const url =
-          spotifyArtistData?.best_match?.items[0]?.images[0]?.url ||
-          "/images/default_user_avatar.jpeg";
+    const fetchAllArtists = async () => {
+      const updatedUrls = new Map(artistImgUrls);
+      const updatedLoading = new Set(loading);
 
-        setArtistImgUrls((prevUrls) => {
-          const newUrls = new Map(prevUrls);
-          newUrls.set(item.name, url);
-          return newUrls;
-        });
+      const fetchPromises = items.map(async (item, index) => {
+        try {
+          const spotifyArtistData = await fetchSpotifyArtist(item.name);
+          const url =
+            spotifyArtistData?.best_match?.items[0]?.images[0]?.url ||
+            "/images/default_user_avatar.jpeg";
 
-        setLoading((prevLoading) => {
-          const newLoading = new Set(prevLoading);
-          newLoading.delete(index);
-          return newLoading;
-        });
-      } catch (error) {
-        console.error("Error fetching artist image for", item.name, error);
-      }
-    });
+          updatedUrls.set(item.name, url);
+          updatedLoading.delete(index);
+        } catch (error) {
+          console.error("Error fetching artist image for", item.name, error);
+        }
+      });
+
+      await Promise.all(fetchPromises);
+      setArtistImgUrls(updatedUrls);
+      setLoading(updatedLoading);
+    };
+
+    fetchAllArtists();
   }, [items]);
 
   return { artistImgUrls, loading };

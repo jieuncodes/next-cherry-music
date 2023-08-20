@@ -13,6 +13,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     };
 
     const data = await fetchFromLastFM(params);
+
     return NextResponse.json(data);
   } catch (error) {
     handleError({ context: `lastFm API chart.${method}`, error });

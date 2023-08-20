@@ -102,3 +102,10 @@ export interface ArtistDetail {
   image: AlbumImage[];
   streamable: string;
 }
+
+export interface EnrichedArtist extends ArtistDetail {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+}

@@ -47,3 +47,6 @@ export const ensureEncoded = (str: string): string => {
   }
   return encodeURIComponent(str);
 };
+export function sanitizeName(text: string) {
+  return text.replace(/[^a-zA-Z0-9]/g, "-");
+}
