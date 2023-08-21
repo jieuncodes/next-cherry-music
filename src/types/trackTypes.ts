@@ -1,6 +1,7 @@
 type Streamable = { "#text": string; fulltrack: string };
 export type Artist = { name: string; mbid: string; url: string };
 type AlbumImage = { "#text": string; size: string };
+type ArtistImage = { "#text": string; size: string };
 
 export interface LastFmTrack {
   "@attr"?: {
@@ -108,4 +109,20 @@ export interface EnrichedArtist extends ArtistDetail {
   y: number;
   vx: number;
   vy: number;
+}
+interface SimilarArtist {
+  name: string;
+  match: string;
+  mbid: string;
+  url: string;
+  image: ArtistImage[];
+  streamable: string;
+}
+export interface SimilarArtists {
+  similarartists: {
+    "@attr": {
+      artist: string;
+    };
+    artist: SimilarArtist[];
+  };
 }

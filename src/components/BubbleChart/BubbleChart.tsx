@@ -1,60 +1,108 @@
 "use client";
 
 import useArtistImgUrl from "@/hooks/useArtistImgUrl";
-import { ArtistDetail } from "@/types/trackTypes";
+import { ArtistDetail, LastFmArtistInfo } from "@/types/trackTypes";
 import * as d3 from "d3";
 import { useEffect, useRef, useState } from "react";
-import {
-  CHART_HEIGHT,
-  CHART_WIDTH,
-  enrichArtists,
-  renderBubbleChart,
-} from "./bubbleChartHelpers";
+import { CHART_HEIGHT, enrichArtists } from "./bubbleChartHelpers";
+import renderBubbleChart from "./RenderBubbleChart";
+import useRefinedSimilarArtists from "@/hooks/useRefinedArtists";
+import { fetchSpotifyArtist } from "@/app/api/spotify/service";
 
 function BubbleChart({
   arr,
 }: {
   arr: { type: string; items: ArtistDetail[] };
 }) {
-  const { artistImgUrls, loading } = useArtistImgUrl(arr.items);
   const chartRef = useRef<SVGSVGElement>(null);
-  const [centerArtist, setCenterArtist] = useState<ArtistDetail | null>(
-    arr.items[0]
-  );
+  const [centerArtist, setCenterArtist] = useState<ArtistDetail>(arr.items[0]);
+  const { refinedSimilarArtists } = useRefinedSimilarArtists(centerArtist);
+  const [maxListeneresVal, setMaxListenersVal] = useState<number>(0);
+
+  const sourceArtists =
+    centerArtist === arr.items[0] ? arr.items : refinedSimilarArtists;
+  const { artistImgUrls, loading } = useArtistImgUrl(sourceArtists);
+
+  const [centerArtistImgUrl, setCenterArtistImgUrl] = useState<string>("");
+  useEffect(() => {
+    console.log("centerArtist", centerArtist);
+    const getCenterArtistImgUrl = async () => {
+      const centerArtistData = await fetchSpotifyArtist(centerArtist.name);
+      console.log(
+        "centerArtistData.best_match?.items[0]?.images[0]?.url",
+        centerArtistData.best_match?.items[0]?.images[0]?.url
+      );
+      setCenterArtistImgUrl(
+        centerArtistData.best_match?.items[0]?.images[0]?.url
+      );
+    };
+    getCenterArtistImgUrl();
+  }, [centerArtist]);
 
   useEffect(() => {
-    console.log("loading", loading);
-    if (!chartRef.current || loading.size !== 0 || !centerArtist) return;
+    const getMaxListeners = (arr: ArtistDetail[]) => {
+      const maxListenersVal = d3.max(refinedSimilarArtists, (item) => {
+        return Number(item.listeners);
+      });
+      if (maxListenersVal) setMaxListenersVal(maxListenersVal);
+    };
+    getMaxListeners(refinedSimilarArtists);
+  }, [refinedSimilarArtists]);
+
+  useEffect(() => {
+    if (
+      !chartRef.current ||
+      loading.size !== 0 ||
+      !centerArtist ||
+      !refinedSimilarArtists
+    )
+      return;
     let svg = d3.select(chartRef.current);
-    if (!svg) {
-      svg = d3
-        .select(chartRef.current)
-        .append("svg")
-        .attr("width", window.innerWidth)
-        .attr("height", window.innerHeight);
+    svg.selectAll("*").remove();
+
+    if (centerArtist === arr.items[0]) {
+      console.log("first render");
+      const enrichedArtists = enrichArtists(
+        arr.items,
+        centerArtist,
+        artistImgUrls
+      );
+
+      loading.size == 0 &&
+        renderBubbleChart({
+          svg,
+          enrichedArtists,
+          centerArtist,
+          sizeScale: d3
+            .scaleLinear()
+            .domain([0, maxListeneresVal])
+            .range([10, 55]),
+          artistImgUrls,
+          centerArtistImgUrl,
+          setCenterArtist,
+        });
     } else {
-      svg.selectAll("*").remove();
+      const enrichedArtists = enrichArtists(
+        refinedSimilarArtists,
+        centerArtist,
+        artistImgUrls
+      );
+      loading.size == 0 &&
+        renderBubbleChart({
+          svg,
+          enrichedArtists,
+          centerArtist,
+          sizeScale: d3
+            .scaleLinear()
+            .domain([0, maxListeneresVal])
+            .range([30, 80]),
+          artistImgUrls,
+          centerArtistImgUrl,
+          setCenterArtist,
+        });
     }
+  }, [maxListeneresVal, centerArtistImgUrl]);
 
-    const maxListenersVal = d3.max(arr.items, (item) => Number(item.listeners));
-    const sizeScale = d3
-      .scaleLinear()
-      .domain([0, maxListenersVal!])
-      .range([10, 90]);
-
-    const enrichedArtists = enrichArtists(
-      arr.items,
-      centerArtist,
-      artistImgUrls
-    );
-    renderBubbleChart(
-      svg,
-      enrichedArtists,
-      centerArtist,
-      sizeScale,
-      artistImgUrls
-    );
-  }, [loading]);
   return (
     <div className="-ml-6 w-full -mt-6 flex justify-center align-middle">
       <svg width={window.innerWidth} height={CHART_HEIGHT} ref={chartRef}></svg>

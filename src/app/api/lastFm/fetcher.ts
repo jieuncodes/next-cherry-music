@@ -38,6 +38,11 @@ export const lastFmFetcher = {
       "/api/lastFm/artist",
       `method=gettoptracks&artist=${ensureEncoded(artist)}`
     ),
+  fetchSimilarArtists: (artist: string) =>
+    fetchResource(
+      "/api/lastFm/artist",
+      `method=getsimilar&artist=${ensureEncoded(artist)}`
+    ),
 
   //track
   fetchTrackDetail: (track: TrackWithTitleAndArtist) =>
