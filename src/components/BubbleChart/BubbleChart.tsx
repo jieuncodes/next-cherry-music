@@ -2,15 +2,13 @@
 
 import useMaxListeners from "@/hooks/useMaxListeners";
 import useRefinedSimilarArtists from "@/hooks/useRefinedArtists";
-import { BubbleChartContainer } from "@/styles/BubbleChart";
-import { ArtistDetail, EnrichedArtist } from "@/types/trackTypes";
+import { ArtistDetail } from "@/types/trackTypes";
 import * as d3 from "d3";
-import { motion } from "framer-motion";
 import { memo, useEffect, useRef, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
 import renderBubbleChart from "./RenderBubbleChart";
-import { bubbleChartConstants, enrichArtists } from "./bubbleChartHelpers";
-import { AnimatedCirclesForwarded } from "./AnimatedCircle";
+import { CHART_HEIGHT, enrichArtists } from "./bubbleChartHelpers";
+import { motion } from "framer-motion";
 
 function BubbleChart({
   arr,
@@ -18,22 +16,19 @@ function BubbleChart({
   arr: { type: string; items: ArtistDetail[] };
 }) {
   const chartRef = useRef<SVGSVGElement>(null);
-  const [centerArtist, setCenterArtist] = useState<ArtistDetail>(
-    () => arr.items[0]
-  );
+  const [centerArtist, setCenterArtist] = useState<ArtistDetail>(arr.items[0]);
   const { refinedSimilarArtists } = useRefinedSimilarArtists(centerArtist);
   const maxListenersVal = useMaxListeners(refinedSimilarArtists);
-
   const [chartLoading, setChartLoading] = useState<boolean>(true);
   const [isTopArtistChart, setIsTopArtistChart] = useState<boolean>(true);
   const [isCenterArtistLoading, setIsCenterArtistLoading] =
     useState<boolean>(true);
-  const [enrichedArtists, setEnrichedArtists] = useState<EnrichedArtist[]>([]);
 
   useEffect(() => {
-    setChartLoading(true);
+    console.log("isCenterArtistLoading", isCenterArtistLoading);
+  }, [isCenterArtistLoading]);
+  useEffect(() => {
     const fetchEnrichedArtists = async () => {
-      console.log("fetching");
       if (
         !chartRef.current ||
         !centerArtist ||
@@ -41,7 +36,7 @@ function BubbleChart({
         maxListenersVal === 0
       )
         return;
-
+      console.log("centerArtist", centerArtist);
       let svg = d3.select(chartRef.current);
       svg.selectAll("*").remove();
 
@@ -50,46 +45,53 @@ function BubbleChart({
           isTopArtistChart ? arr.items : refinedSimilarArtists,
           centerArtist
         );
-        setEnrichedArtists(enrichedArtists);
+        renderBubbleChart({
+          svg,
+          enrichedArtists,
+          centerArtist,
+          setCenterArtist,
+          sizeScale: d3
+            .scaleLinear()
+            .domain([0, maxListenersVal])
+            .range(isTopArtistChart ? [20, 55] : [40, 80]),
+          setIsTopArtistChart,
+          setIsCenterArtistLoading,
+        });
+
         setChartLoading(false);
       } catch (error) {
         console.error("Failed to fetch enriched artists:", error);
-        setChartLoading(false);
       }
     };
 
     fetchEnrichedArtists();
-    console.log("chartLoading", chartLoading);
   }, [isCenterArtistLoading, maxListenersVal]);
 
   return (
-    <BubbleChartContainer>
+    <div className="flex h-full w-full -ml-6 -mt-6">
       <motion.h1
         layoutId="chart-title"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 1 }}
-        className="absolute m-6 font-bold text-2xl left-0"
+        className="absolute m-6 font-bold text-2xl"
       >
         {isTopArtistChart
           ? "Top Artists"
           : `Similar Artists - ${centerArtist.name}`}
       </motion.h1>
       {chartLoading && (
-        <LoadingSpinner className={`absolute top-1/3 left-96`} />
+        <LoadingSpinner className={`absolute top-1/3 left-96 `} />
       )}
-
-      <AnimatedCirclesForwarded
-        ref={chartRef}
-        enrichedArtists={enrichedArtists}
-        centerArtistMbid={centerArtist.mbid}
-        maxListenersVal={maxListenersVal}
-        isTopArtistChart={isTopArtistChart}
-        setChartLoading={setChartLoading}
-        setCenterArtist={setCenterArtist}
-      />
-    </BubbleChartContainer>
+      <div className=" w-full mr-6 flex justify-center align-middle ">
+        <svg
+          width={window.innerWidth}
+          height={CHART_HEIGHT}
+          ref={chartRef}
+        ></svg>
+      </div>
+    </div>
   );
 }
 
