@@ -23,7 +23,6 @@ function renderBubbleChart({
   centerArtist,
   sizeScale,
   artistImgUrls,
-  centerArtistImgUrl,
   setCenterArtist,
 }: renderBubbleChartProps) {
   console.log(enrichedArtists);
@@ -75,7 +74,6 @@ function renderBubbleChart({
   });
 
   enrichedArtists.forEach((artist, index) => {
-    const imageUrl = artistImgUrls.get(artist.name);
     const pattern = defs
       .append("pattern")
       .attr("id", `artist-pattern-${sanitizeName(artist.name)}`)
@@ -86,7 +84,7 @@ function renderBubbleChart({
     pattern
       .append("image")
       .attr("preserveAspectRatio", "xMidYMid slice")
-      .attr("href", imageUrl || "images/default_band.png")
+      .attr("href", String(artist.image))
       .attr("width", 1)
       .attr("height", 1);
   });

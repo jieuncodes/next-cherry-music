@@ -1,13 +1,13 @@
 "use client";
 
 import useArtistImgUrl from "@/hooks/useArtistImgUrl";
-import { ArtistDetail, LastFmArtistInfo } from "@/types/trackTypes";
+import { ArtistDetail } from "@/types/trackTypes";
 import * as d3 from "d3";
 import { useEffect, useRef, useState } from "react";
 import { CHART_HEIGHT, enrichArtists } from "./bubbleChartHelpers";
 import renderBubbleChart from "./RenderBubbleChart";
 import useRefinedSimilarArtists from "@/hooks/useRefinedArtists";
-import { fetchSpotifyArtist } from "@/app/api/spotify/service";
+import { getSpotifyArtistImg } from "@/app/api/spotify/service";
 
 function BubbleChart({
   arr,
@@ -27,14 +27,8 @@ function BubbleChart({
   useEffect(() => {
     console.log("centerArtist", centerArtist);
     const getCenterArtistImgUrl = async () => {
-      const centerArtistData = await fetchSpotifyArtist(centerArtist.name);
-      console.log(
-        "centerArtistData.best_match?.items[0]?.images[0]?.url",
-        centerArtistData.best_match?.items[0]?.images[0]?.url
-      );
-      setCenterArtistImgUrl(
-        centerArtistData.best_match?.items[0]?.images[0]?.url
-      );
+      const centerArtistImage = await getSpotifyArtistImg(centerArtist.name);
+      setCenterArtistImgUrl(centerArtistImage);
     };
     getCenterArtistImgUrl();
   }, [centerArtist]);
@@ -101,7 +95,7 @@ function BubbleChart({
           setCenterArtist,
         });
     }
-  }, [maxListeneresVal, centerArtistImgUrl]);
+  }, [maxListeneresVal, centerArtist]);
 
   return (
     <div className="-ml-6 w-full -mt-6 flex justify-center align-middle">

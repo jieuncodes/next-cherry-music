@@ -19,6 +19,10 @@ export async function fetchSpotifyArtist(artist: string) {
   const data = await response.json();
   return data;
 }
+export const getSpotifyArtistImg = async (artist: string) => {
+  const spotifyArtist = await fetchSpotifyArtist(artist);
+  return spotifyArtist.best_match?.items[0]?.images[0]?.url;
+};
 
 export async function fetchSpotifyPlaylist(
   playlistId: string

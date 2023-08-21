@@ -1,4 +1,5 @@
 import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
+import { getSpotifyArtistImg } from "@/app/api/spotify/service";
 import { Artist, ArtistDetail, SimilarArtists } from "@/types/trackTypes";
 import { useEffect, useState } from "react";
 
@@ -37,13 +38,15 @@ const refineSimilarArtistTypeToArtistDetail = async (
   const refinedSimilarArtists = await Promise.all(
     arr.map(async (artist: Artist) => {
       const artistData = await lastFmFetcher.fetchArtistInfo(artist.name);
+      const artistImg = await getSpotifyArtistImg(artist.name);
+      console.log("artistImg", artistImg);
       return {
         name: artistData.artist.name,
         playcount: artistData.artist.stats?.playcount,
         listeners: artistData.artist.stats?.listeners,
         mbid: artistData.artist.mbid || "",
-        url: artistData.artist.url,
-        image: [],
+        url: artistData.artist.url || "images/default_band.png",
+        image: artistImg,
         streamable: artistData.streamable,
       };
     })
