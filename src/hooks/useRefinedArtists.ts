@@ -29,24 +29,19 @@ export default useRefinedSimilarArtists;
 const refineSimilarArtistTypeToArtistDetail = async (
   similarArtists: SimilarArtists
 ) => {
-  console.log(
-    "similarArtists.similarartists.artist",
-    similarArtists.similarartists.artist
-  );
   const RANGE = 15;
   const arr = similarArtists.similarartists.artist.slice(0, RANGE);
   const refinedSimilarArtists = await Promise.all(
     arr.map(async (artist: Artist) => {
       const artistData = await lastFmFetcher.fetchArtistInfo(artist.name);
       const artistImg = await getSpotifyArtistImg(artist.name);
-      console.log("artistImg", artistImg);
       return {
         name: artistData.artist.name,
         playcount: artistData.artist.stats?.playcount,
         listeners: artistData.artist.stats?.listeners,
         mbid: artistData.artist.mbid || "",
-        url: artistData.artist.url || "images/default_band.png",
-        image: artistImg,
+        url: artistData.artist.url,
+        image: artistImg || "images/default_band.png",
         streamable: artistData.streamable,
       };
     })

@@ -9,9 +9,8 @@ interface renderBubbleChartProps {
   enrichedArtists: EnrichedArtist[];
   centerArtist: ArtistDetail;
   sizeScale: d3.ScaleLinear<number, number>;
-  artistImgUrls: Map<string, string>;
-  centerArtistImgUrl: string;
   setCenterArtist: Dispatch<SetStateAction<ArtistDetail>>;
+  setIsTopArtistChart: Dispatch<SetStateAction<boolean>>;
 }
 
 const CENTER_RADIUS = 100;
@@ -21,21 +20,38 @@ function renderBubbleChart({
   svg,
   enrichedArtists,
   centerArtist,
-  sizeScale,
-  artistImgUrls,
   setCenterArtist,
+  sizeScale,
+  setIsTopArtistChart,
 }: renderBubbleChartProps) {
-  console.log(enrichedArtists);
+  const defs = svg.append("defs");
+
+  enrichedArtists.forEach((artist, index) => {
+    const pattern = defs
+      .append("pattern")
+      .attr("id", `artist-pattern-${sanitizeName(artist.name)}`)
+      .attr("patternContentUnits", "objectBoundingBox")
+      .attr("width", 1)
+      .attr("height", 1);
+
+    pattern
+      .append("image")
+      .attr("preserveAspectRatio", "xMidYMid slice")
+      .attr("href", artist.imgUrl)
+      .attr("width", 1)
+      .attr("height", 1);
+  });
+
   svg
     .append("circle")
     .attr("cx", CHART_WIDTH / 2)
     .attr("cy", CHART_HEIGHT / 2)
     .attr("r", () => CENTER_RADIUS + RING_RADIUS_OFFSET)
     .attr("fill", `url(#artist-pattern-${sanitizeName(centerArtist.name)})`)
+
     .attr("stroke", "#ff5173")
     .attr("stroke-width", 2);
 
-  const defs = svg.append("defs");
   const circles = svg
     .selectAll("circle")
     .data(enrichedArtists.filter((artist) => artist.name !== centerArtist.name))
@@ -70,23 +86,12 @@ function renderBubbleChart({
   circles.append("title").text((d: EnrichedArtist) => d.name);
 
   circles.on("click", function (event, artistData) {
-    handleArtistClick({ clickedArtist: artistData, svg, setCenterArtist });
-  });
-
-  enrichedArtists.forEach((artist, index) => {
-    const pattern = defs
-      .append("pattern")
-      .attr("id", `artist-pattern-${sanitizeName(artist.name)}`)
-      .attr("patternContentUnits", "objectBoundingBox")
-      .attr("width", 1)
-      .attr("height", 1);
-
-    pattern
-      .append("image")
-      .attr("preserveAspectRatio", "xMidYMid slice")
-      .attr("href", String(artist.image))
-      .attr("width", 1)
-      .attr("height", 1);
+    handleArtistClick({
+      clickedArtist: artistData,
+      svg,
+      setCenterArtist,
+      setIsTopArtistChart,
+    });
   });
 
   d3.forceSimulation(enrichedArtists)
@@ -142,14 +147,17 @@ interface handleArtistClickProps {
   clickedArtist: EnrichedArtist;
   svg: d3.Selection<SVGSVGElement, unknown, null, undefined>;
   setCenterArtist: (artist: ArtistDetail) => void;
+  setIsTopArtistChart: Dispatch<SetStateAction<boolean>>;
 }
 
 const handleArtistClick = ({
   clickedArtist,
   svg,
   setCenterArtist,
+  setIsTopArtistChart,
 }: handleArtistClickProps) => {
   const newCenterArtist = clickedArtist;
   svg.selectAll("*").remove();
   setCenterArtist(newCenterArtist);
+  setIsTopArtistChart(false);
 };

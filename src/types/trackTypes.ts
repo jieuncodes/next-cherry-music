@@ -109,6 +109,7 @@ export interface EnrichedArtist extends ArtistDetail {
   y: number;
   vx: number;
   vy: number;
+  imgUrl: string;
 }
 interface SimilarArtist {
   name: string;

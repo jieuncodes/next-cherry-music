@@ -1,13 +1,14 @@
 "use client";
 
-import useArtistImgUrl from "@/hooks/useArtistImgUrl";
+import useMaxListeners from "@/hooks/useMaxListeners";
+import useRefinedSimilarArtists from "@/hooks/useRefinedArtists";
 import { ArtistDetail } from "@/types/trackTypes";
 import * as d3 from "d3";
-import { useEffect, useRef, useState } from "react";
-import { CHART_HEIGHT, enrichArtists } from "./bubbleChartHelpers";
+import { memo, useEffect, useRef, useState } from "react";
+import LoadingSpinner from "../LoadingSpinner";
 import renderBubbleChart from "./RenderBubbleChart";
-import useRefinedSimilarArtists from "@/hooks/useRefinedArtists";
-import { getSpotifyArtistImg } from "@/app/api/spotify/service";
+import { CHART_HEIGHT, enrichArtists } from "./bubbleChartHelpers";
+import { motion } from "framer-motion";
 
 function BubbleChart({
   arr,
@@ -17,89 +18,79 @@ function BubbleChart({
   const chartRef = useRef<SVGSVGElement>(null);
   const [centerArtist, setCenterArtist] = useState<ArtistDetail>(arr.items[0]);
   const { refinedSimilarArtists } = useRefinedSimilarArtists(centerArtist);
-  const [maxListeneresVal, setMaxListenersVal] = useState<number>(0);
-
-  const sourceArtists =
-    centerArtist === arr.items[0] ? arr.items : refinedSimilarArtists;
-  const { artistImgUrls, loading } = useArtistImgUrl(sourceArtists);
-
-  const [centerArtistImgUrl, setCenterArtistImgUrl] = useState<string>("");
-  useEffect(() => {
-    console.log("centerArtist", centerArtist);
-    const getCenterArtistImgUrl = async () => {
-      const centerArtistImage = await getSpotifyArtistImg(centerArtist.name);
-      setCenterArtistImgUrl(centerArtistImage);
-    };
-    getCenterArtistImgUrl();
-  }, [centerArtist]);
+  const maxListenersVal = useMaxListeners(refinedSimilarArtists);
+  const [chartLoading, setChartLoading] = useState<boolean>(true);
+  const [isTopArtistChart, setIsTopArtistChart] = useState<boolean>(true);
+  const [isCenterArtistLoading, setIsCenterArtistLoading] =
+    useState<boolean>(true);
 
   useEffect(() => {
-    const getMaxListeners = (arr: ArtistDetail[]) => {
-      const maxListenersVal = d3.max(refinedSimilarArtists, (item) => {
-        return Number(item.listeners);
-      });
-      if (maxListenersVal) setMaxListenersVal(maxListenersVal);
-    };
-    getMaxListeners(refinedSimilarArtists);
-  }, [refinedSimilarArtists]);
-
+    console.log("isCenterArtistLoading", isCenterArtistLoading);
+  }, [isCenterArtistLoading]);
   useEffect(() => {
-    if (
-      !chartRef.current ||
-      loading.size !== 0 ||
-      !centerArtist ||
-      !refinedSimilarArtists
-    )
-      return;
-    let svg = d3.select(chartRef.current);
-    svg.selectAll("*").remove();
+    const fetchEnrichedArtists = async () => {
+      if (
+        !chartRef.current ||
+        !centerArtist ||
+        !refinedSimilarArtists ||
+        maxListenersVal === 0
+      )
+        return;
+      console.log("centerArtist", centerArtist);
+      let svg = d3.select(chartRef.current);
+      svg.selectAll("*").remove();
 
-    if (centerArtist === arr.items[0]) {
-      console.log("first render");
-      const enrichedArtists = enrichArtists(
-        arr.items,
-        centerArtist,
-        artistImgUrls
-      );
-
-      loading.size == 0 &&
+      try {
+        const enrichedArtists = await enrichArtists(
+          isTopArtistChart ? arr.items : refinedSimilarArtists,
+          centerArtist
+        );
         renderBubbleChart({
           svg,
           enrichedArtists,
           centerArtist,
+          setCenterArtist,
           sizeScale: d3
             .scaleLinear()
-            .domain([0, maxListeneresVal])
-            .range([10, 55]),
-          artistImgUrls,
-          centerArtistImgUrl,
-          setCenterArtist,
+            .domain([0, maxListenersVal])
+            .range(isTopArtistChart ? [20, 55] : [40, 80]),
+          setIsTopArtistChart,
+          setIsCenterArtistLoading,
         });
-    } else {
-      const enrichedArtists = enrichArtists(
-        refinedSimilarArtists,
-        centerArtist,
-        artistImgUrls
-      );
-      loading.size == 0 &&
-        renderBubbleChart({
-          svg,
-          enrichedArtists,
-          centerArtist,
-          sizeScale: d3
-            .scaleLinear()
-            .domain([0, maxListeneresVal])
-            .range([30, 80]),
-          artistImgUrls,
-          centerArtistImgUrl,
-          setCenterArtist,
-        });
-    }
-  }, [maxListeneresVal, centerArtist]);
+
+        setChartLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch enriched artists:", error);
+      }
+    };
+
+    fetchEnrichedArtists();
+  }, [isCenterArtistLoading, maxListenersVal]);
 
   return (
-    <div className="-ml-6 w-full -mt-6 flex justify-center align-middle">
-      <svg width={window.innerWidth} height={CHART_HEIGHT} ref={chartRef}></svg>
+    <div className="flex h-full w-full -ml-6 -mt-6">
+      <motion.h1
+        layoutId="chart-title"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+        className="absolute m-6 font-bold text-2xl"
+      >
+        {isTopArtistChart
+          ? "Top Artists"
+          : `Similar Artists - ${centerArtist.name}`}
+      </motion.h1>
+      {chartLoading && (
+        <LoadingSpinner className={`absolute top-1/3 left-96 `} />
+      )}
+      <div className=" w-full mr-6 flex justify-center align-middle ">
+        <svg
+          width={window.innerWidth}
+          height={CHART_HEIGHT}
+          ref={chartRef}
+        ></svg>
+      </div>
     </div>
   );
 }

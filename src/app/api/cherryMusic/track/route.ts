@@ -71,7 +71,6 @@ async function fetchTrackListByQueryType(
         throw new Error("Track and artist name are required for track query.");
       }
       const spotifyTrackData = await fetchSpotifyTrackData(trackTitle);
-      console.log("spotifyTrackData", spotifyTrackData);
       const spotifyTrack: SpotifyTrackData = {
         name: spotifyTrackData.tracks.items[0].name,
         artist: {
