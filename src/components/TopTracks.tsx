@@ -35,7 +35,7 @@ function TopTracks({ title, tag, count, trackList }: TopTracksProps) {
       <SectionTitle>{title}</SectionTitle>
       <SectionGridMain ref={ref}>
         {trackList?.map((track, index) => (
-          <Suspense fallback={<TrackCardSkeleton />}>
+          <Suspense key={index} fallback={<TrackCardSkeleton />}>
             <TrackCard
               key={index}
               track={track}

@@ -2,7 +2,7 @@ import { sanitizeName } from "@/lib/helpers";
 import { ArtistDetail, EnrichedArtist } from "@/types/trackTypes";
 import * as d3 from "d3";
 import { Dispatch, SetStateAction } from "react";
-import { CHART_HEIGHT, CHART_WIDTH } from "./bubbleChartHelpers";
+import { bubbleChartConstants } from "./bubbleChartHelpers";
 
 interface renderBubbleChartProps {
   svg: d3.Selection<SVGSVGElement, unknown, null, undefined>;
@@ -13,9 +13,6 @@ interface renderBubbleChartProps {
   setIsTopArtistChart: Dispatch<SetStateAction<boolean>>;
 }
 
-const CENTER_RADIUS = 100;
-const RING_RADIUS_OFFSET = 5;
-
 function renderBubbleChart({
   svg,
   enrichedArtists,
@@ -24,34 +21,6 @@ function renderBubbleChart({
   sizeScale,
   setIsTopArtistChart,
 }: renderBubbleChartProps) {
-  const defs = svg.append("defs");
-
-  enrichedArtists.forEach((artist, index) => {
-    const pattern = defs
-      .append("pattern")
-      .attr("id", `artist-pattern-${sanitizeName(artist.name)}`)
-      .attr("patternContentUnits", "objectBoundingBox")
-      .attr("width", 1)
-      .attr("height", 1);
-
-    pattern
-      .append("image")
-      .attr("preserveAspectRatio", "xMidYMid slice")
-      .attr("href", artist.imgUrl)
-      .attr("width", 1)
-      .attr("height", 1);
-  });
-
-  svg
-    .append("circle")
-    .attr("cx", CHART_WIDTH / 2)
-    .attr("cy", CHART_HEIGHT / 2)
-    .attr("r", () => CENTER_RADIUS + RING_RADIUS_OFFSET)
-    .attr("fill", `url(#artist-pattern-${sanitizeName(centerArtist.name)})`)
-
-    .attr("stroke", "#ff5173")
-    .attr("stroke-width", 2);
-
   const circles = svg
     .selectAll("circle")
     .data(enrichedArtists.filter((artist) => artist.name !== centerArtist.name))
@@ -99,7 +68,9 @@ function renderBubbleChart({
       "x",
       d3
         .forceX((item: EnrichedArtist) =>
-          item.name === centerArtist.name ? CHART_WIDTH / 2 : item.x
+          item.name === centerArtist.name
+            ? bubbleChartConstants.CHART_WIDTH / 2
+            : item.x
         )
         .strength((item: EnrichedArtist) =>
           item.name === centerArtist.name ? 0.5 : 0.01
@@ -109,7 +80,9 @@ function renderBubbleChart({
       "y",
       d3
         .forceY((item: EnrichedArtist) =>
-          item.name === centerArtist.name ? CHART_HEIGHT / 2 : item.y
+          item.name === centerArtist.name
+            ? bubbleChartConstants.CHART_HEIGHT / 2
+            : item.y
         )
         .strength((item: EnrichedArtist) =>
           item.name === centerArtist.name ? 0.5 : 0.07
@@ -128,18 +101,6 @@ function renderBubbleChart({
         .attr("cx", (item: EnrichedArtist) => item.x)
         .attr("cy", (item: EnrichedArtist) => item.y);
     });
-
-  svg
-    .append("text")
-    .attr("x", CHART_WIDTH / 2)
-    .attr("y", CHART_HEIGHT / 2)
-    .attr("text-anchor", "middle")
-    .attr("dy", ".3em")
-    .attr("fill", "white")
-    .attr("font-size", "1.5em")
-    .attr("font-weight", "bold")
-    .attr("class", "text-stroke-black")
-    .text(centerArtist.name);
 }
 export default renderBubbleChart;
 
