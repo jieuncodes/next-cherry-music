@@ -5,7 +5,7 @@ async function ArtistsPage() {
   const topArtists = await lastFmFetcher.fetchTopArtists();
   const topArtistsDataWithType = {
     type: "artist",
-    items: topArtists.artists.artist.slice(0, 15),
+    items: topArtists.artists.artist.slice(0, 20),
   };
   return (
     <div className="-pl-12">

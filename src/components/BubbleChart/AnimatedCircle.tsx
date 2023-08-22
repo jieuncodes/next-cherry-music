@@ -1,8 +1,16 @@
 import { bubbleChartConstants } from "@/components/BubbleChart/bubbleChartHelpers";
 import { sanitizeName } from "@/lib/helpers";
-import { EnrichedArtist } from "@/types/trackTypes";
+import { ArtistDetail, EnrichedArtist } from "@/types/trackTypes";
 import { motion } from "framer-motion";
-import { Fragment, RefObject, forwardRef, useEffect, useState } from "react";
+import {
+  Dispatch,
+  Fragment,
+  RefObject,
+  SetStateAction,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
 import * as d3 from "d3";
 import { useForceSimulation } from "@/hooks/useForceSimulation";
 
@@ -14,6 +22,7 @@ export const AnimatedCirclesForwarded = forwardRef<
     maxListenersVal: number;
     isTopArtistChart: boolean;
     setChartLoading: (loading: boolean) => void;
+    setCenterArtist: Dispatch<SetStateAction<ArtistDetail>>;
   }
 >(function AnimatedCircles(
   {
@@ -22,6 +31,7 @@ export const AnimatedCirclesForwarded = forwardRef<
     maxListenersVal,
     isTopArtistChart,
     setChartLoading,
+    setCenterArtist,
   },
   ref
 ) {
@@ -69,6 +79,15 @@ export const AnimatedCirclesForwarded = forwardRef<
     circleElement.style.opacity = "1";
   };
 
+  const handleBubbleClick = (artistMbid: string) => {
+    console.log("artistMbid", artistMbid);
+    const centerArtist = enrichedArtists.find(
+      (artist) => artist.mbid === artistMbid
+    );
+    if (!centerArtist) return;
+    setCenterArtist(centerArtist);
+  };
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -76,8 +95,8 @@ export const AnimatedCirclesForwarded = forwardRef<
       height={bubbleChartConstants.CHART_HEIGHT}
       ref={ref}
     >
-      {enrichedArtists.map((artist) => (
-        <defs key={`def-${artist.mbid}`}>
+      {enrichedArtists.map((artist, index) => (
+        <defs key={index}>
           <pattern
             key={artist.name}
             id={`artist-pattern-${sanitizeName(artist.name)}`}
@@ -89,9 +108,9 @@ export const AnimatedCirclesForwarded = forwardRef<
           </pattern>
         </defs>
       ))}
-      {enrichedArtists.map((artist) =>
+      {enrichedArtists.map((artist, index) =>
         artist.mbid === centerArtistMbid ? (
-          <Fragment key="center-artist">
+          <Fragment key={`center-${index}`}>
             <motion.circle
               layoutId={artist.mbid}
               initial={{ opacity: 0, scale: 0.5 }}
@@ -118,24 +137,19 @@ export const AnimatedCirclesForwarded = forwardRef<
             </text>
           </Fragment>
         ) : (
-          <Fragment key={artist.mbid}>
+          <Fragment key={`similar-${index}`}>
             <motion.circle
-              layoutId={artist.mbid}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 2 }}
               cx={artist.x}
               cy={artist.y}
               r={sizeScale(Number(artist.listeners))}
               fill={`url(#artist-pattern-${sanitizeName(artist.name)})`}
               className="cursor-pointer"
-              onClick={() => {
-                console.log("onclickhandle");
-                // setIsCenterArtistLoading(true);
-                // setCenterArtist(artist);
-                // setIsCenterArtistLoading(false);
-              }}
+              layoutId={artist.mbid}
+              onClick={() => handleBubbleClick(artist.mbid)}
               onMouseOver={(e) => handleHoverCircleStart(e, artist)}
               onMouseLeave={(e) => handleHoverCircleEnd(e)}
             ></motion.circle>

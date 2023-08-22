@@ -15,6 +15,7 @@ export const useForceSimulation = ({
   sizeScale,
 }: ForceSimulationProps) => {
   const [collideLoading, setCollideLoading] = useState<boolean>(true);
+
   useEffect(() => {
     const simulation = d3
       .forceSimulation(enrichedArtists)
@@ -56,5 +57,6 @@ export const useForceSimulation = ({
       simulation.stop();
     };
   }, [enrichedArtists, centerArtistMbid, sizeScale, collideLoading]);
+
   return { collideLoading };
 };

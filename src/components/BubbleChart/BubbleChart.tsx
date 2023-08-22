@@ -50,7 +50,6 @@ function BubbleChart({
           isTopArtistChart ? arr.items : refinedSimilarArtists,
           centerArtist
         );
-        console.log("enrichedArtists", enrichedArtists);
         setEnrichedArtists(enrichedArtists);
         setChartLoading(false);
       } catch (error) {
@@ -88,6 +87,7 @@ function BubbleChart({
         maxListenersVal={maxListenersVal}
         isTopArtistChart={isTopArtistChart}
         setChartLoading={setChartLoading}
+        setCenterArtist={setCenterArtist}
       />
     </BubbleChartContainer>
   );
