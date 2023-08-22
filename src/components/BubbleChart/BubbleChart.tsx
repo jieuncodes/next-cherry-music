@@ -17,7 +17,6 @@ function BubbleChart({
 }: {
   arr: { type: string; items: ArtistDetail[] };
 }) {
-  console.log("render");
   const chartRef = useRef<SVGSVGElement>(null);
   const [centerArtist, setCenterArtist] = useState<ArtistDetail>(
     () => arr.items[0]
@@ -32,7 +31,6 @@ function BubbleChart({
   const [enrichedArtists, setEnrichedArtists] = useState<EnrichedArtist[]>([]);
 
   useEffect(() => {
-    console.log("useEffedt");
     setChartLoading(true);
     const fetchEnrichedArtists = async () => {
       console.log("fetching");
@@ -54,26 +52,15 @@ function BubbleChart({
         );
         console.log("enrichedArtists", enrichedArtists);
         setEnrichedArtists(enrichedArtists);
-        // renderBubbleChart({
-        //   svg,
-        //   enrichedArtists,
-        //   centerArtist,
-        //   setCenterArtist,
-        //   sizeScale: d3
-        //     .scaleLinear()
-        //     .domain([0, maxListenersVal])
-        //     .range(isTopArtistChart ? [20, 55] : [40, 80]),
-        //   setIsTopArtistChart,
-        // });
-
         setChartLoading(false);
-        console.log("now chart loading is false");
       } catch (error) {
         console.error("Failed to fetch enriched artists:", error);
+        setChartLoading(false);
       }
     };
 
     fetchEnrichedArtists();
+    console.log("chartLoading", chartLoading);
   }, [isCenterArtistLoading, maxListenersVal]);
 
   return (
@@ -84,14 +71,14 @@ function BubbleChart({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 1 }}
-        className="absolute m-6 font-bold text-2xl"
+        className="absolute m-6 font-bold text-2xl left-0"
       >
         {isTopArtistChart
           ? "Top Artists"
           : `Similar Artists - ${centerArtist.name}`}
       </motion.h1>
       {chartLoading && (
-        <LoadingSpinner className={`absolute top-1/3 left-96 `} />
+        <LoadingSpinner className={`absolute top-1/3 left-96`} />
       )}
 
       <AnimatedCirclesForwarded
@@ -100,6 +87,7 @@ function BubbleChart({
         centerArtistMbid={centerArtist.mbid}
         maxListenersVal={maxListenersVal}
         isTopArtistChart={isTopArtistChart}
+        setChartLoading={setChartLoading}
       />
     </BubbleChartContainer>
   );
