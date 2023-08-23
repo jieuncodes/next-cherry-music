@@ -11,38 +11,43 @@ import {
 } from "../../spotify/service";
 import { fetchSpotifyTrackData } from "../../spotify/track/route";
 
+const getSpotifyPlaylistId = (query: string) => {
+  switch (query) {
+    case "koreatop":
+      return {
+        envVar: process.env.NEXT_PUBLIC_SPOTIFY_KOREA_TOP,
+        envVarName: "NEXT_PUBLIC_SPOTIFY_KOREA_TOP",
+      };
+    case "top":
+      return {
+        envVar: process.env.NEXT_PUBLIC_SPOTIFY_TODAY_TOP,
+        envVarName: "NEXT_PUBLIC_SPOTIFY_TODAY_TOP",
+      };
+    default:
+      throw new Error("Invalid query provided");
+  }
+};
+
 async function fetchTrackListByQueryType(
   query: string,
   req: NextRequest
 ): Promise<LastFmTrack[]> {
+  console.log("fetchTrackListByQueryType");
   const artist = req.nextUrl.searchParams.get("artist");
   const tag = req.nextUrl.searchParams.get("tag");
   const album = req.nextUrl.searchParams.get("album");
   const trackTitle = req.nextUrl.searchParams.get("track");
   const refinedTracks: LastFmTrack[] = [];
 
-  const getSpotifyPlaylistId = (query: string) => {
-    switch (query) {
-      case "koreatop":
-        return {
-          envVar: process.env.NEXT_PUBLIC_SPOTIFY_KOREA_TOP,
-          envVarName: "NEXT_PUBLIC_SPOTIFY_KOREA_TOP",
-        };
-      case "top":
-        return {
-          envVar: process.env.NEXT_PUBLIC_SPOTIFY_TODAY_TOP,
-          envVarName: "NEXT_PUBLIC_SPOTIFY_TODAY_TOP",
-        };
-      default:
-        throw new Error("Invalid query provided");
-    }
-  };
   switch (query) {
-    case "top" || "koreatop" || "ustop" || "africatop":
+    case "top":
+    case "koreatop":
+    case "ustop":
+    case "africatop":
       const { envVar, envVarName } = getSpotifyPlaylistId(query);
 
       validateEnvVariable(envVar, envVarName);
-
+      console.log("envVar, envVarName", envVar, envVarName);
       const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
 
       for (const track of spotifyPlaylist) {
@@ -110,8 +115,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
   if (!query) {
     throw new Error("Query parameter is required.");
   }
-
   let tracksToProcess = await fetchTrackListByQueryType(query, req);
+  console.log("tracksToProcess", tracksToProcess);
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack, index) => {
       const trackDetail = await lastFmFetcher.fetchTrackDetail(track);
