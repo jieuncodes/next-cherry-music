@@ -21,17 +21,31 @@ async function fetchTrackListByQueryType(
   const trackTitle = req.nextUrl.searchParams.get("track");
   const refinedTracks: LastFmTrack[] = [];
 
+  const getSpotifyPlaylistId = (query: string) => {
+    switch (query) {
+      case "koreatop":
+        return {
+          envVar: process.env.NEXT_PUBLIC_SPOTIFY_KOREA_TOP,
+          envVarName: "NEXT_PUBLIC_SPOTIFY_KOREA_TOP",
+        };
+      case "top":
+        return {
+          envVar: process.env.NEXT_PUBLIC_SPOTIFY_TODAY_TOP,
+          envVarName: "NEXT_PUBLIC_SPOTIFY_TODAY_TOP",
+        };
+      default:
+        throw new Error("Invalid query provided");
+    }
+  };
   switch (query) {
-    case "top":
-      validateEnvVariable(
-        process.env.NEXT_PUBLIC_SPOTIFY_TODAY_TOP,
-        "NEXT_PUBLIC_SPOTIFY_TODAY_TOP"
-      );
+    case "top" || "koreatop" || "ustop" || "africatop":
+      const { envVar, envVarName } = getSpotifyPlaylistId(query);
 
-      const spotifyTop = await fetchSpotifyPlaylist(
-        process.env.NEXT_PUBLIC_SPOTIFY_TODAY_TOP!
-      );
-      for (const track of spotifyTop) {
+      validateEnvVariable(envVar, envVarName);
+
+      const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
+
+      for (const track of spotifyPlaylist) {
         const refined = await refineSpotifyTracksIntoLastFmTrack(track);
         refinedTracks.push(refined);
       }
