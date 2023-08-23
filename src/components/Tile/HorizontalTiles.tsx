@@ -1,4 +1,5 @@
 "use client";
+
 import useArtistImgUrl from "@/hooks/useArtistImgUrl";
 import { Tiles } from "@/styles/Artist/Artist";
 import { SectionContainer, SectionTitle } from "@/styles/Section";
@@ -14,6 +15,7 @@ interface HorizontalTilesProps {
   arr: arrWithType;
   isCircle?: boolean;
   nav?: boolean;
+  isHashtag?: boolean;
 }
 
 function HorizontalTiles({
@@ -21,6 +23,7 @@ function HorizontalTiles({
   arr,
   isCircle,
   nav,
+  isHashtag,
 }: HorizontalTilesProps) {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -54,6 +57,7 @@ function HorizontalTiles({
                 handleTileClick={() => handleTileClick(item.name)}
                 isCircle={isCircle}
                 artistImgUrl={artistImgUrls.get(item.name!)}
+                isHashtag={isHashtag}
               />
             )
           )}

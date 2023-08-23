@@ -127,3 +127,11 @@ export interface SimilarArtists {
     artist: SimilarArtist[];
   };
 }
+export interface Tag {
+  name: string;
+  url: string;
+  reach: string;
+  taggings: string;
+  streamable: string;
+  wiki: {};
+}

@@ -25,7 +25,6 @@ function renderBubbleChart({
   setIsTopArtistChart,
 }: renderBubbleChartProps) {
   const defs = svg.append("defs");
-  console.log("defs appended");
   enrichedArtists.forEach((artist, index) => {
     const pattern = defs
       .append("pattern")

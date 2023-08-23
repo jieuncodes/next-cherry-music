@@ -24,7 +24,6 @@ function BubbleChart({
   useState<boolean>(true);
 
   useEffect(() => {
-    console.log(" maxListenersVal, ", maxListenersVal);
     const fetchEnrichedArtists = async () => {
       if (
         !chartRef.current ||
@@ -33,7 +32,6 @@ function BubbleChart({
         maxListenersVal === 0
       )
         return;
-      console.log("useEffect");
       let svg = d3.select(chartRef.current);
       svg.selectAll("*").remove();
 
@@ -46,7 +44,7 @@ function BubbleChart({
         const centerArtistImgUrl = enrichedArtists.filter(
           (artist: EnrichedArtist) => artist.name === centerArtist.name
         )[0].imgUrl;
-        img.src = centerArtistImgUrl;
+        img.src = centerArtistImgUrl || "images/default_band.png";
         img.onload = () => {
           renderBubbleChart({
             svg,
@@ -59,7 +57,6 @@ function BubbleChart({
               .range(isTopArtistChart ? [20, 55] : [40, 80]),
             setIsTopArtistChart,
           });
-          console.log("chart rendered");
         };
         img.onerror = () => {
           console.error("Failed to load centerArtist image");

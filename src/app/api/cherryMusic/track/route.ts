@@ -49,7 +49,7 @@ async function fetchTrackListByQueryType(
         throw new Error("Tag name is required for tagtop query.");
       }
       const result = await lastFmFetcher.fetchTagTopTracks(tag);
-      return result.tracks.trac;
+      return result.tracks.track;
 
     case "albumtracks":
       if (!album || !artist) {

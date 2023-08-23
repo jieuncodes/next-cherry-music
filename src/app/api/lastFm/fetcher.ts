@@ -26,6 +26,7 @@ export const lastFmFetcher = {
     fetchResource("/api/lastFm/chart", "method=gettoptracks"),
   fetchTopArtists: () =>
     fetchResource("/api/lastFm/chart", "method=gettopartists"),
+  fetchTopTags: () => fetchResource("/api/lastFm/chart", "method=gettoptags"),
 
   //artist
   fetchArtistInfo: (artist: string) =>

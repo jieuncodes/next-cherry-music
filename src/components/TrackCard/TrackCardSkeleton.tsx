@@ -14,7 +14,7 @@ function TrackCardsSkeleton() {
         {Array(50)
           .fill(null)
           .map((_, index) => (
-            <StyledCard className="flex flex-row p-3">
+            <StyledCard key={index} className="flex flex-row p-3">
               <Skeleton className="relative flex rounded-md w-12 h-10" />
               <div className="w-full flex flex-col gap-2 pt-1 ml-3">
                 <Skeleton className="h-3 w-3/5 rounded-lg" />

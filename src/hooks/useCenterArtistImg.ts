@@ -12,7 +12,6 @@ export const useCenterArtistImage = (centerArtist: ArtistDetail) => {
       setImgLoading(false);
     };
     fetchCenterArtistImgUrl();
-    console.log("", centerArtistImgUrl);
   }, [centerArtist]);
 
   return { centerArtistImgUrl, imgLoading };

@@ -1,26 +1,26 @@
 "use client";
 
-import { Righteous } from "next/font/google";
-import Image from "next/image";
-import Link from "next/link";
-import Search from "./Search";
+import { Database } from "@/lib/server/database.types";
 import {
-  MenuSpan,
-  LogoImage,
   Logo,
-  NavContainer,
+  LogoImage,
   Menu,
+  MenuSpan,
+  NavContainer,
   NavUl,
 } from "@/styles/Nav";
 import { Button } from "@nextui-org/button";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/lib/server/database.types";
-import { useRouter } from "next/navigation";
 import { useUser } from "@supabase/auth-helpers-react";
-import { Icons } from "../app/Icons";
-import ThemeSwitcher from "./ThemeSwitcher";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { Righteous } from "next/font/google";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Icons } from "../app/Icons";
+import Search from "./Search";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
@@ -37,6 +37,7 @@ export default function Nav() {
 
   const handleMenuClick = (menuName: string) => {
     setSelectedMenu(menuName);
+    router.push(`/${menuName.toLowerCase()}`);
   };
 
   const renderSideline = (menuName: string) =>
