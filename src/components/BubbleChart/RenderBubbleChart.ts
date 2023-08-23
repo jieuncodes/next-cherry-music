@@ -25,7 +25,7 @@ function renderBubbleChart({
   setIsTopArtistChart,
 }: renderBubbleChartProps) {
   const defs = svg.append("defs");
-
+  console.log("defs appended");
   enrichedArtists.forEach((artist, index) => {
     const pattern = defs
       .append("pattern")
@@ -48,7 +48,7 @@ function renderBubbleChart({
     .attr("cy", CHART_HEIGHT / 2)
     .attr("r", () => CENTER_RADIUS + RING_RADIUS_OFFSET)
     .attr("fill", `url(#artist-pattern-${sanitizeName(centerArtist.name)})`)
-
+    .attr("layoutId", `${centerArtist.mbid}`)
     .attr("stroke", "#ff5173")
     .attr("stroke-width", 2);
 
@@ -61,6 +61,7 @@ function renderBubbleChart({
     .attr("cy", (item: EnrichedArtist) => item.y)
     .attr("r", (item) => sizeScale(Number(item.listeners)))
     .style("fill", (item) => `url(#artist-pattern-${sanitizeName(item.name)})`)
+    .attr("layoutId", (item) => `${item.mbid}`)
     .on("mouseover", function (d, i) {
       d3.select(this).attr("opacity", 0.7);
       const title = d3.select(this).select("title").text();
@@ -93,7 +94,6 @@ function renderBubbleChart({
       setIsTopArtistChart,
     });
   });
-
   d3.forceSimulation(enrichedArtists)
     .force(
       "x",
@@ -157,7 +157,6 @@ const handleArtistClick = ({
   setIsTopArtistChart,
 }: handleArtistClickProps) => {
   const newCenterArtist = clickedArtist;
-  svg.selectAll("*").remove();
   setCenterArtist(newCenterArtist);
   setIsTopArtistChart(false);
 };
