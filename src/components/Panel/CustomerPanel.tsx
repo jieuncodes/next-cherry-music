@@ -28,7 +28,6 @@ function CustomerPanel() {
           radius="full"
           isIconOnly
           onPress={() => setIsOpen(true)}
-          color="foreground"
         />
       )}
     </CustomerPanelContainer>

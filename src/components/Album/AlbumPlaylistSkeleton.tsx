@@ -9,7 +9,7 @@ function AlbumPlaylistSkeleton() {
         {Array(5)
           .fill(null)
           .map((_, index) => (
-            <StyledCard>
+            <StyledCard key={index}>
               <StyledHeader>
                 <Skeleton className="ml-6 h-4 w-4 rounded-lg pb-2" />
                 <Skeleton className="ml-8 h-4 w-72 rounded-lg pb-2" />

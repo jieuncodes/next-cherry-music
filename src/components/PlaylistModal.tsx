@@ -16,7 +16,6 @@ import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 
 export default function PlaylistModal() {
   const [isOpen, setIsOpen] = useRecoilState(PlaylistModalState);
-  const [scrollBehavior, setScrollBehavior] = useState("inside");
   const { emptyPlaylist } = useLocalStoragePlaylist();
   const { playlist } = useLocalStoragePlaylist();
 
@@ -25,7 +24,7 @@ export default function PlaylistModal() {
       <Modal
         isOpen={isOpen}
         onOpenChange={() => setIsOpen(!isOpen)}
-        scrollBehavior={scrollBehavior}
+        scrollBehavior="inside"
       >
         <ModalContent>
           {(onClose) => (

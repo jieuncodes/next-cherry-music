@@ -9,7 +9,7 @@ import {
   AlbumDetailsContainer,
   AlbumTitle,
 } from "@/styles/Album/album";
-import { LastFmAlbumInfo } from "@/types/trackTypes";
+import { LastFmAlbumInfo, LastFmTrack } from "@/types/trackTypes";
 import { Button } from "@nextui-org/react";
 
 interface AlbumDetailsProps {
@@ -31,10 +31,11 @@ function AlbumDetails({
     ? albumInfo?.tracks?.track
     : [albumInfo?.tracks?.track];
 
-  const allTrackTimesSum = tracksArray?.reduce(
-    (acc, curr) => acc + (curr ? Number(curr.duration) : 0),
-    0
-  );
+  const allTrackTimesSum =
+    (tracksArray as LastFmTrack[])?.reduce(
+      (acc, curr) => acc + (curr ? Number(curr.duration) : 0),
+      0
+    ) ?? 0;
 
   return (
     <AlbumDetailsContainer>

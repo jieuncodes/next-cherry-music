@@ -1,6 +1,6 @@
 import { currTrackDurationAtom, progressBarDraggingState } from "@/atoms";
-import { calculatePercentage } from "@/lib/utils";
-import { RefObject, useRef, useState } from "react";
+import { CustomMouseEvent, calculatePercentage } from "@/lib/utils";
+import { MouseEvent, RefObject, useRef, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -16,8 +16,13 @@ function useMouseAction({ playerRef, progressBarRef }: useMouseActionProps) {
 
   const duration = useRecoilValue(currTrackDurationAtom);
 
-  const onMouseDown = (event: MouseEvent) => {
-    const newPercentage = calculatePercentage(event, progressBarRef);
+  const onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    const customEvent: CustomMouseEvent = {
+      clientX: event.clientX,
+      target: event.currentTarget,
+    };
+
+    const newPercentage = calculatePercentage(customEvent, progressBarRef);
     uiPercentageRef.current = newPercentage;
     setDraggingProgress(newPercentage);
 
@@ -25,9 +30,15 @@ function useMouseAction({ playerRef, progressBarRef }: useMouseActionProps) {
     document.addEventListener("mouseup", onMouseUp);
   };
 
-  const handleMouseMove = (event: MouseEvent) => {
+  const handleMouseMove = (event: globalThis.MouseEvent) => {
     setIsDragging(true);
-    const newPercentage = calculatePercentage(event, progressBarRef);
+    const newPercentage = calculatePercentage(
+      {
+        clientX: event.clientX,
+        target: event.target as Element,
+      },
+      progressBarRef
+    );
     uiPercentageRef.current = newPercentage;
     setDraggingProgress(newPercentage);
   };

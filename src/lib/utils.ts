@@ -1,5 +1,5 @@
 import { ClassValue, clsx } from "clsx";
-import { RefObject } from "react";
+import { MouseEvent, RefObject } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -36,8 +36,13 @@ export const simpleHash = (str: string) => {
   return Math.abs(hash);
 };
 
+export interface CustomMouseEvent {
+  clientX: number;
+  target: Element;
+}
+
 export const calculatePercentage = (
-  event: MouseEvent,
+  event: CustomMouseEvent,
   progressBarRef: RefObject<HTMLDivElement>
 ): number => {
   const rect = progressBarRef.current?.getBoundingClientRect();
