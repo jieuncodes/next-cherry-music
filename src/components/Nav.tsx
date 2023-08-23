@@ -75,18 +75,18 @@ export default function Nav() {
           <Icons.disc3 size={22} />
           <MenuSpan>Chart</MenuSpan>
         </Menu>
-        <Menu onClick={() => handleMenuClick("Albums")}>
-          {renderSideline("Albums")}
-          <Icons.library size={22} />
-          <MenuSpan>Albums</MenuSpan>
+        <Menu onClick={() => handleMenuClick("geo")}>
+          {renderSideline("geo")}
+          <Icons.globe size={22} />
+          <MenuSpan>World</MenuSpan>
         </Menu>
-        <Menu onClick={() => handleMenuClick("Artists")}>
+        {/* <Menu onClick={() => handleMenuClick("Artists")}>
           {renderSideline("Artists")}
           <Icons.listMusic size={22} />
           <MenuSpan>Playlist</MenuSpan>
-        </Menu>
+        </Menu> */}
 
-        <Menu onClick={() => handleMenuClick("comments")}>
+        {/* <Menu onClick={() => handleMenuClick("comments")}>
           {renderSideline("comments")}
           <Icons.messageCircle size={22} />
           <MenuSpan>Comments</MenuSpan>
@@ -96,11 +96,12 @@ export default function Nav() {
           {renderSideline("setting")}
           <Icons.settings size={22} />
           <MenuSpan>Settings</MenuSpan>
-        </Menu>
+        </Menu> */}
 
-        <Menu>
+        {/* <Menu>
           <ThemeSwitcher />
-        </Menu>
+        </Menu> */}
+
         {user && (
           <Button
             onPress={handleSignOut}
@@ -110,6 +111,9 @@ export default function Nav() {
             className="text-white text-2xl mt-auto mb-2 -ml-1 z-50"
           />
         )}
+        <span className="absolute bottom-0 mb-1">
+          The site has been deployed, but still under construction!!
+        </span>
       </NavUl>
     </NavContainer>
   );
