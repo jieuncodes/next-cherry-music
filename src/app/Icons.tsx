@@ -30,6 +30,7 @@ import {
   ChevronDown,
   Sun,
   Moon,
+  Globe,
 } from "lucide-react";
 
 export const Icons = {
@@ -67,4 +68,5 @@ export const Icons = {
   bomb: Bomb,
   trash2: Trash2,
   copyPlus: CopyPlus,
+  globe: Globe,
 };

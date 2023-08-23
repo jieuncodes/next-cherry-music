@@ -32,7 +32,6 @@ async function fetchTrackListByQueryType(
   query: string,
   req: NextRequest
 ): Promise<LastFmTrack[]> {
-  console.log("fetchTrackListByQueryType");
   const artist = req.nextUrl.searchParams.get("artist");
   const tag = req.nextUrl.searchParams.get("tag");
   const album = req.nextUrl.searchParams.get("album");
@@ -47,7 +46,6 @@ async function fetchTrackListByQueryType(
       const { envVar, envVarName } = getSpotifyPlaylistId(query);
 
       validateEnvVariable(envVar, envVarName);
-      console.log("envVar, envVarName", envVar, envVarName);
       const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
 
       for (const track of spotifyPlaylist) {
@@ -116,7 +114,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     throw new Error("Query parameter is required.");
   }
   let tracksToProcess = await fetchTrackListByQueryType(query, req);
-  console.log("tracksToProcess", tracksToProcess);
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack, index) => {
       const trackDetail = await lastFmFetcher.fetchTrackDetail(track);
