@@ -9,7 +9,7 @@ import {
   fetchSpotifyPlaylist,
   refineSpotifyTracksIntoLastFmTrack,
 } from "../../spotify/service";
-import { fetchSpotifyTrackData } from "../../spotify/track/route";
+import { fetchSpotifyTrackData } from "../../spotify/spotifyHelpers";
 
 const getSpotifyPlaylistId = (query: string) => {
   switch (query) {
