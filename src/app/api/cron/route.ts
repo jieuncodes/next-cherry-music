@@ -9,9 +9,10 @@ export async function GET() {
     query: "top",
     count: 20,
   });
+
   const { data, error } = await supabase
     .from("todayTop")
-    .upsert(partOfTodayTop50)
+    .insert([...partOfTodayTop50])
     .select();
 
   if (error) throw error;

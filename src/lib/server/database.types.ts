@@ -75,6 +75,7 @@ export interface Database {
           albumTitle: string | null;
           artist: string | null;
           id: number;
+          key: string | null;
           playCount: string | null;
           rank: number | null;
           tags: Json[] | null;
@@ -87,6 +88,7 @@ export interface Database {
           albumTitle?: string | null;
           artist?: string | null;
           id?: number;
+          key?: string | null;
           playCount?: string | null;
           rank?: number | null;
           tags?: Json[] | null;
@@ -99,6 +101,7 @@ export interface Database {
           albumTitle?: string | null;
           artist?: string | null;
           id?: number;
+          key?: string | null;
           playCount?: string | null;
           rank?: number | null;
           tags?: Json[] | null;

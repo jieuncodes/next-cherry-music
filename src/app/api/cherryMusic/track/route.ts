@@ -52,5 +52,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const allTrackDetailsWithYoutube = resolvedTrackDetails.filter(
     (track) => track && track.youtubeId
   );
+  console.log("allTrackDetailsWithYoutube", allTrackDetailsWithYoutube);
   return NextResponse.json([...allTrackDetailsWithYoutube]);
 }
