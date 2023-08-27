@@ -14,7 +14,6 @@ const baseURL =
   process.env.NODE_ENV === "development"
     ? process.env.NEXT_PUBLIC_URL
     : process.env.NEXT_PUBLIC_VERCEL_URL;
-let url = new URL("/api/cherryMusic/track?query=top", baseURL);
 
 export async function fetchSpotifyArtist(artist: string) {
   const encodedAritst = ensureEncoded(artist);
