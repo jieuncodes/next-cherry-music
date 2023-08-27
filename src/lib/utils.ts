@@ -1,5 +1,5 @@
 import { ClassValue, clsx } from "clsx";
-import { MouseEvent, RefObject } from "react";
+import { RefObject } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -64,9 +64,4 @@ export const truncateString = (str: string, num: number) => {
     return str;
   }
   return str.slice(0, num) + "...";
-};
-
-export const generateTrackId = (url: string): number => {
-  const urlLastPart = url.split("/");
-  return simpleHash(urlLastPart[urlLastPart.length - 1]);
 };

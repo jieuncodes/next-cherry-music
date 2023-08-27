@@ -28,6 +28,7 @@ export async function fetchCherryMusicTracks({
       `FetchCherryMusicTracks response was not ok: ${response.status},
       url: ${url}`
     );
+
   const data = await response.json();
   return data;
 }

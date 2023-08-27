@@ -1,6 +1,5 @@
 import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
-import { validateEnvVariable, ensureEncoded } from "@/lib/helpers";
-import { generateTrackId } from "@/lib/utils";
+import { ensureEncoded, validateEnvVariable } from "@/lib/helpers";
 import { SpotifyTrackData } from "@/types/spotify/types";
 import { LastFmTrack } from "@/types/trackTypes";
 import { NextRequest, NextResponse } from "next/server";
@@ -10,33 +9,7 @@ import {
   refineSpotifyTracksIntoLastFmTrack,
 } from "../../spotify/service";
 import { fetchSpotifyTrackData } from "../../spotify/spotifyHelpers";
-
-const getSpotifyPlaylistId = (query: string) => {
-  switch (query) {
-    case "koreatop":
-      return {
-        envVar: process.env.NEXT_PUBLIC_SPOTIFY_KOREA_TOP,
-        envVarName: "NEXT_PUBLIC_SPOTIFY_KOREA_TOP",
-      };
-    case "ustop":
-      return {
-        envVar: process.env.NEXT_PUBLIC_SPOTIFY_US_TOP,
-        envVarName: "NEXT_PUBLIC_SPOTIFY_US_TOP",
-      };
-    case "africatop":
-      return {
-        envVar: process.env.NEXT_PUBLIC_SPOTIFY_AFRICA_TOP,
-        envVarName: "NEXT_PUBLIC_SPOTIFY_AFRICA_TOP",
-      };
-    case "top":
-      return {
-        envVar: process.env.NEXT_PUBLIC_SPOTIFY_TODAY_TOP,
-        envVarName: "NEXT_PUBLIC_SPOTIFY_TODAY_TOP",
-      };
-    default:
-      throw new Error("Invalid query provided");
-  }
-};
+import { getSpotifyPlaylistId } from "./helper";
 
 async function fetchTrackListByQueryType(
   query: string,
@@ -48,37 +21,6 @@ async function fetchTrackListByQueryType(
   const trackTitle = req.nextUrl.searchParams.get("track");
   const refinedTracks: LastFmTrack[] = [];
 
-  //dummy data for debugging
-  const dummyData: LastFmTrack[] = [
-    {
-      name: "Last Night",
-      duration: "161000",
-      playcount: "1489547",
-      listeners: "167135",
-      mbid: "167135",
-      url: "https://www.last.fm/music/Morgan+Wallen/_/Last+Night",
-      streamable: { "#text": "0", fulltrack: "0" },
-      artist: { name: "Morgan Wallen", mbid: "", url: "" },
-      albumTitle: "3 Songs At A Time Sampler",
-      image: [
-        {
-          "#text":
-            "https://i.scdn.co/image/ab67616d0000b273fabd32dd9cefca8714c0ed41",
-          size: "640",
-        },
-        {
-          "#text":
-            "https://i.scdn.co/image/ab67616d00001e02fabd32dd9cefca8714c0ed41",
-          size: "300",
-        },
-        {
-          "#text":
-            "https://i.scdn.co/image/ab67616d00004851fabd32dd9cefca8714c0ed41",
-          size: "64",
-        },
-      ],
-    },
-  ];
   switch (query) {
     case "top":
     case "koreatop":
@@ -87,15 +29,13 @@ async function fetchTrackListByQueryType(
       const { envVar, envVarName } = getSpotifyPlaylistId(query);
 
       validateEnvVariable(envVar, envVarName);
-      // const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
+      const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
 
-      // for (const track of spotifyPlaylist) {
-      //   const refined = await refineSpotifyTracksIntoLastFmTrack(track);
-      //   refinedTracks.push(refined);
-      // }
-      // console.log("refinedTracks", refinedTracks);
-      // return refinedTracks;
-      return dummyData;
+      for (const track of spotifyPlaylist) {
+        const refined = await refineSpotifyTracksIntoLastFmTrack(track);
+        refinedTracks.push(refined);
+      }
+      return refinedTracks;
 
     case "artisttop":
       if (!artist) {
@@ -161,13 +101,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
     async (track: LastFmTrack, index) => {
       const trackDetail = await lastFmFetcher.fetchTrackDetail(track);
 
-      const id = generateTrackId(trackDetail.track.url);
       const youtubeId = await fetchYouTubeVideoId(trackDetail.track.url);
       const spotifyData = await fetchSpotifyTrackData(track.name);
       return {
-        key: id,
+        key: spotifyData.tracks.items[0].id,
         rank: index,
-        id,
         trackTitle: decodeURIComponent(track.name),
         artist: decodeURIComponent(track.artist.name),
         youtubeId,

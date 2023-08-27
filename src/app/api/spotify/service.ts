@@ -40,17 +40,59 @@ export async function fetchSpotifyPlaylist(
 export const refineSpotifyTracksIntoLastFmTrack = async (
   spotifyTrack: SpotifyTrackData
 ): Promise<LastFmTrack> => {
-  const lastFmDetails = await lastFmFetcher.fetchTrackDetail(spotifyTrack);
+  // const lastFmDetails = await lastFmFetcher.fetchTrackDetail(spotifyTrack);
   return {
     name: spotifyTrack.name,
-    duration: lastFmDetails.track.duration,
-    playcount: lastFmDetails.track.playcount,
-    listeners: lastFmDetails.track.listeners,
-    mbid: lastFmDetails.track.mbid,
-    url: lastFmDetails.track.url,
-    streamable: lastFmDetails.track.streamable,
+    duration: "",
+    playcount: "",
+    listeners: "",
+    mbid: "",
+    url: "",
+    streamable: { "#text": "0", fulltrack: "0" },
     artist: spotifyTrack.artist,
     albumTitle: spotifyTrack.albumTitle,
     image: spotifyTrack.image,
   };
 };
+
+// lastFmDetails {
+//   track: {
+//     name: "Baby Don't Hurt Me",
+//     url: 'https://www.last.fm/music/David+Guetta/_/Baby+Don%27t+Hurt+Me',
+//     duration: '140000',
+//     streamable: { '#text': '0', fulltrack: '0' },
+//     listeners: '154178',
+//     playcount: '650185',
+//     artist: {
+//       name: 'David Guetta',
+//       mbid: '302bd7b9-d012-4360-897a-93b00c855680',
+//       url: 'https://www.last.fm/music/David+Guetta'
+//     },
+//     album: {
+//       artist: 'David Guetta',
+//       title: "Baby Don't Hurt Me",
+//       url: 'https://www.last.fm/music/David+Guetta/Baby+Don%27t+Hurt+Me',
+//       image: [Array]
+//     },
+//     toptags: { tag: [Array] }
+//   }
+// }
+// spotifyTrack {
+//   name: "Baby Don't Hurt Me",
+//   artist: { name: 'David Guetta', mbid: '', url: '' },
+//   albumTitle: "Baby Don't Hurt Me",
+//   image: [
+//     {
+//       '#text': 'https://i.scdn.co/image/ab67616d0000b2730b4ef75c3728599aa4104f7a',
+//       size: 640
+//     },
+//     {
+//       '#text': 'https://i.scdn.co/image/ab67616d00001e020b4ef75c3728599aa4104f7a',
+//       size: 300
+//     },
+//     {
+//       '#text': 'https://i.scdn.co/image/ab67616d000048510b4ef75c3728599aa4104f7a',
+//       size: 64
+//     }
+//   ]
+// }
