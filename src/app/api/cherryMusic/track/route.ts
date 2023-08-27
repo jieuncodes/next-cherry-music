@@ -30,7 +30,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
           "",
         albumImgUrl: spotifyData.tracks.items[0].album.images[0].url,
         tags: lastFmTrackDetail.track?.toptags?.tag || [],
-        playCount: lastFmTrackDetail.playcount,
+        playCount: lastFmTrackDetail.track.playcount,
         wiki: lastFmTrackDetail.track.wiki,
       };
     }

@@ -11,12 +11,6 @@ export const currPlaylistTrackIdx = atom<number>({
   default: 0,
 });
 
-//api
-export const topTracksLastFetchTime = atom<Date | null>({
-  key: "topTracksLastFetchTime",
-  default: null,
-});
-
 //player
 export const playerReadyStateAtom = atom<boolean>({
   key: "playerReadyState",

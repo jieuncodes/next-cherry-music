@@ -11,7 +11,6 @@ async function Home() {
     fetchCherryMusicTracks({ query: "top" }),
     lastFmFetcher.fetchTopArtists(),
   ]);
-
   const topArtistsDataWithType = {
     type: "artist",
     items: topArtistsData.artists.artist,
