@@ -3,7 +3,10 @@ import { Track } from "@/lib/server/database.types";
 import { TrackWithTitleAndArtist } from "@/types/spotify/types";
 import { AlbumTrack } from "@/types/trackTypes";
 
-const baseURL = process.env.NEXT_PUBLIC_URL;
+const baseURL =
+  process.env.NODE_ENV === "development"
+    ? process.env.NEXT_PUBLIC_URL
+    : process.env.NEXT_PUBLIC_VERCEL_URL;
 
 async function fetchResource(
   endpoint: string,

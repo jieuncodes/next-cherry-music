@@ -10,11 +10,16 @@ export const fetchSpotifyAccessToken = async () => {
   const tokenData = await tokenResponse.json();
   return tokenData.accessToken;
 };
+const baseURL =
+  process.env.NODE_ENV === "development"
+    ? process.env.NEXT_PUBLIC_URL
+    : process.env.NEXT_PUBLIC_VERCEL_URL;
+let url = new URL("/api/cherryMusic/track?query=top", baseURL);
 
 export async function fetchSpotifyArtist(artist: string) {
   const encodedAritst = ensureEncoded(artist);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/api/spotify/artist?artist=${encodedAritst}`
+    `${baseURL}/api/spotify/artist?artist=${encodedAritst}`
   );
   const data = await response.json();
   return data;
@@ -28,7 +33,7 @@ export async function fetchSpotifyPlaylist(
   playlistId: string
 ): Promise<SpotifyTrackData[]> {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/api/spotify/top-tracks?playlistid=${playlistId}`
+    `${baseURL}/api/spotify/top-tracks?playlistid=${playlistId}`
   );
   return response.json();
 }

@@ -11,12 +11,16 @@ export async function fetchCherryMusicTracks({
   album?: string;
   trackTitle?: string;
 }) {
-  let url = `${process.env.NEXT_PUBLIC_URL}/api/cherryMusic/track?query=${query}`;
+  const baseURL =
+    process.env.NODE_ENV === "development"
+      ? process.env.NEXT_PUBLIC_URL
+      : process.env.NEXT_PUBLIC_VERCEL_URL;
+  let url = new URL("/api/cherryMusic/track?query=top", baseURL);
 
-  if (artist) url += `&artist=${artist}`;
-  if (tag) url += `&tag=${tag}`;
-  if (album) url += `&album=${album}`;
-  if (trackTitle) url += `&track=${trackTitle}`;
+  if (artist) url.searchParams.append("artist", artist);
+  if (tag) url.searchParams.append("tag", tag);
+  if (album) url.searchParams.append("album", album);
+  if (trackTitle) url.searchParams.append("track", trackTitle);
 
   const response = await fetch(url);
   if (!response.ok)
