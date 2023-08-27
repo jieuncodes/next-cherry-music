@@ -41,7 +41,6 @@ export const fetchTrackListByQueryType = async (
   const artist = req.nextUrl.searchParams.get("artist");
   const tag = req.nextUrl.searchParams.get("tag");
   const album = req.nextUrl.searchParams.get("album");
-  const trackTitle = req.nextUrl.searchParams.get("track");
   const refinedTracks: LastFmTrack[] = [];
 
   switch (query) {
@@ -54,10 +53,10 @@ export const fetchTrackListByQueryType = async (
       validateEnvVariable(envVar, envVarName);
       const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
 
-      for (const track of spotifyPlaylist) {
-        const refined = await refineSpotifyTracksIntoLastFmTrack(track);
-        refinedTracks.push(refined);
-      }
+      const refinedTracksPromises = spotifyPlaylist.map((track) =>
+        refineSpotifyTracksIntoLastFmTrack(track)
+      );
+      const refinedTracks = await Promise.all(refinedTracksPromises);
       return refinedTracks;
 
     case "artisttop":
