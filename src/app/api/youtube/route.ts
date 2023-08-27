@@ -18,7 +18,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   let { data: track, error } = await supabase
     .from("tracks")
     .select("youtubeId")
-    .eq("id", id)
+    .eq("id", id!)
     .single();
 
   if (!track) {

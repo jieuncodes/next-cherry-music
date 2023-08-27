@@ -64,17 +64,17 @@ async function fetchTrackListByQueryType(
         {
           "#text":
             "https://i.scdn.co/image/ab67616d0000b273fabd32dd9cefca8714c0ed41",
-          size: 640,
+          size: "640",
         },
         {
           "#text":
             "https://i.scdn.co/image/ab67616d00001e02fabd32dd9cefca8714c0ed41",
-          size: 300,
+          size: "300",
         },
         {
           "#text":
             "https://i.scdn.co/image/ab67616d00004851fabd32dd9cefca8714c0ed41",
-          size: 64,
+          size: "64",
         },
       ],
     },
