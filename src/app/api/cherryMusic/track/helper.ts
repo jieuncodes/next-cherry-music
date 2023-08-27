@@ -91,27 +91,6 @@ export const fetchTrackListByQueryType = async (
         : [albumInfo.tracks.track];
       return tracksArray;
 
-    case "track":
-      if (!trackTitle || !artist) {
-        throw new Error("Track and artist name are required for track query.");
-      }
-      const SpotifyTrackInfo = await fetchSpotifyTrackInfo(trackTitle);
-      console.log("SpotifyTrackInfo", SpotifyTrackInfo);
-      const spotifyTrack: SpotifyTrackInfo = {
-        name: SpotifyTrackInfo.tracks.items[0].name,
-        artist: {
-          name: SpotifyTrackInfo.tracks.items[0].artists[0].name,
-          mbid: "",
-          url: SpotifyTrackInfo.tracks.items[0].artists[0].external_urls
-            .spotify,
-        },
-        albumTitle: SpotifyTrackInfo.tracks.items[0].album.name,
-        image: SpotifyTrackInfo.tracks.items[0].album.images[0].url,
-      };
-      const refinedTrack: LastFmTrack =
-        await refineSpotifyTracksIntoLastFmTrack(spotifyTrack);
-      return [refinedTrack];
-
     default:
       throw new Error("Invalid query parameter.");
   }

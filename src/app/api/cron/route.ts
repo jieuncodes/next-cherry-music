@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { fetchCherryMusicTracks } from "../cherryMusic/track/service";
 import { supabase } from "@/lib/server/client";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const todayTop50 = await fetchCherryMusicTracks({ query: "top" });
 
