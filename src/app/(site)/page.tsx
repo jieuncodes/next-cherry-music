@@ -5,7 +5,6 @@ import { fetchCherryMusicTracks } from "../api/cherryMusic/track/service";
 import { lastFmFetcher } from "../api/lastFm/fetcher";
 
 export const dynamic = "force-dynamic";
-
 async function Home() {
   const todayTop50 = await fetchCherryMusicTracks({ query: "top" });
 
