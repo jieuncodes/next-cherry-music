@@ -47,6 +47,10 @@ export const ensureEncoded = (str: string): string => {
   }
   return encodeURIComponent(str);
 };
+export const encodeWithPlus = (str: string): string => {
+  return encodeURIComponent(str).replace(/%20/g, "+").replace(/'/g, "%27");
+};
+
 export function sanitizeName(text: string) {
   return text.replace(/[^a-zA-Z0-9]/g, "-");
 }

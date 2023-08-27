@@ -26,7 +26,7 @@ export interface CherryTrack {
   youtubeId: string | null;
   albumTitle: string;
   albumImgUrl: string;
-  tags: Tag[];
-  playCount: string;
-  wiki: { published: string; summary: string };
+  tags?: Tag[];
+  playCount?: string;
+  wiki?: { published: string; summary: string };
 }
