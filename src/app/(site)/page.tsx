@@ -4,6 +4,8 @@ import TopTracks from "@/components/TopTracks";
 import { fetchCherryMusicTracks } from "../api/cherryMusic/track/service";
 import { lastFmFetcher } from "../api/lastFm/fetcher";
 
+export const dynamic = "auto";
+
 async function Home() {
   const todayTop50 = await fetchCherryMusicTracks({ query: "top" });
 
