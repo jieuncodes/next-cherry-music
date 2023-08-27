@@ -33,15 +33,18 @@ export const getSpotifyPlaylistId = (query: string) => {
       throw new Error("Invalid query provided");
   }
 };
+interface fetchTrackListByQueryTypeProps {
+  query: string;
+  count?: number | null;
+}
 
 export const fetchTrackListByQueryType = async (
-  query: string,
+  { query, count }: fetchTrackListByQueryTypeProps,
   req: NextRequest
 ): Promise<LastFmTrack[]> => {
   const artist = req.nextUrl.searchParams.get("artist");
   const tag = req.nextUrl.searchParams.get("tag");
   const album = req.nextUrl.searchParams.get("album");
-  const refinedTracks: LastFmTrack[] = [];
 
   switch (query) {
     case "top":
@@ -52,8 +55,9 @@ export const fetchTrackListByQueryType = async (
 
       validateEnvVariable(envVar, envVarName);
       const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
+      const slicedSpotifyPlaylist = spotifyPlaylist.slice(0, Number(count));
 
-      const refinedTracksPromises = spotifyPlaylist.map((track) =>
+      const refinedTracksPromises = slicedSpotifyPlaylist.map((track) =>
         refineSpotifyTracksIntoLastFmTrack(track)
       );
       const refinedTracks = await Promise.all(refinedTracksPromises);

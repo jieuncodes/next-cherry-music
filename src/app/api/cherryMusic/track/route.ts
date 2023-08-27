@@ -8,11 +8,17 @@ import { CherryTrack } from "@/types/itemTypes";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const query = req.nextUrl.searchParams.get("query");
+  const rawCount = req.nextUrl.searchParams.get("count");
+  const count = rawCount ? Number(rawCount) : null;
+
+  if (count && isNaN(count)) {
+    throw new Error("Invalid count parameter.");
+  }
   if (!query) {
     throw new Error("Query parameter is required.");
   }
   console.time("fetchTrackListByQueryType");
-  let tracksToProcess = await fetchTrackListByQueryType(query, req);
+  let tracksToProcess = await fetchTrackListByQueryType({ query, count }, req);
   console.timeEnd("fetchTrackListByQueryType");
   console.time("trackDetailsPromises");
 

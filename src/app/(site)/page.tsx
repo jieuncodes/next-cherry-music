@@ -8,7 +8,9 @@ export const dynamic = "force-dynamic";
 
 async function Home() {
   const [todayTop50, topArtistsData] = await Promise.all([
-    fetchCherryMusicTracks({ query: "top" }),
+    //debugging
+    fetchCherryMusicTracks({ query: "top", count: 20 }),
+    // fetchCherryMusicTracks({ query: "top" }),
     lastFmFetcher.fetchTopArtists(),
   ]);
   const topArtistsDataWithType = {

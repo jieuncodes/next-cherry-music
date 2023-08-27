@@ -1,16 +1,19 @@
-export async function fetchCherryMusicTracks({
-  query,
-  artist,
-  tag,
-  album,
-  trackTitle,
-}: {
+interface fetchCherryMusicTracksProps {
   query: string;
+  count?: number | null;
   artist?: string;
   tag?: string;
   album?: string;
   trackTitle?: string;
-}) {
+}
+export async function fetchCherryMusicTracks({
+  query,
+  count,
+  artist,
+  tag,
+  album,
+  trackTitle,
+}: fetchCherryMusicTracksProps) {
   const baseURL =
     process.env.NODE_ENV === "development"
       ? process.env.NEXT_PUBLIC_URL
@@ -18,6 +21,7 @@ export async function fetchCherryMusicTracks({
 
   let url = new URL(`/api/cherryMusic/track?query=${query}`, baseURL);
 
+  if (count) url.searchParams.append("count", count.toString());
   if (artist) url.searchParams.append("artist", artist);
   if (tag) url.searchParams.append("tag", tag);
   if (album) url.searchParams.append("album", album);
