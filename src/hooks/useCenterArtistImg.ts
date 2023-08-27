@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getSpotifyArtistImg } from "@/app/api/spotify/service";
-import { ArtistDetail } from "@/types/trackTypes";
+import { ArtistDetail } from "@/types/lastFmTypes";
 
 export const useCenterArtistImage = (centerArtist: ArtistDetail) => {
   const [centerArtistImgUrl, setCenterArtistImgUrl] = useState<string>("");

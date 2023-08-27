@@ -1,6 +1,6 @@
 import { currPlayingTrackYoutubeId } from "@/atoms";
 import { PlaylistGrid } from "@/styles/Artist/ArtistPlaylist";
-import { AlbumTrack } from "@/types/trackTypes";
+import { AlbumTrack } from "@/types/lastFmTypes";
 import { useRecoilValue } from "recoil";
 import ArtistPlaylistCard from "../Artist/ArtistPlaylistCard";
 import { Track } from "@/lib/server/database.types";

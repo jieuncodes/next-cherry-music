@@ -7,7 +7,7 @@ import GradientHeader from "@/components/GradientHeader";
 import Hashtags from "@/components/Hashtags";
 import { Track } from "@/lib/server/database.types";
 import { AlbumContainer, HeaderAlbumInfo } from "@/styles/Album/album";
-import { LastFmAlbumInfo } from "@/types/trackTypes";
+import { LastFmAlbumInfo } from "@/types/lastFmTypes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import AlbumPlaylistSkeleton from "./AlbumPlaylistSkeleton";

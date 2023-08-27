@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { TrackArrayWithType } from "@/types/itemTypes";
 import { Track } from "@/lib/server/database.types";
 import LoadingSpinner from "./LoadingSpinner";
-import { ArtistDetail } from "@/types/trackTypes";
+import { ArtistDetail } from "@/types/lastFmTypes";
 
 function Chart() {
   const [topArtistsDataWithType, setTopArtistsDataWithType] = useState<{

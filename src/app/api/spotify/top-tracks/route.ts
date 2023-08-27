@@ -1,5 +1,5 @@
 import { handleError, validateEnvVariable } from "@/lib/helpers";
-import { SpotifyTrack, SpotifyTrackData } from "@/types/spotify/types";
+import { SpotifyTrack, SpotifyTrackInfo } from "@/types/spotifyTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { fetchSpotifyAccessToken } from "../service";
 
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
 const fetchSpotifyPlaylist = async (
   playlistId: string
-): Promise<SpotifyTrackData[]> => {
+): Promise<SpotifyTrackInfo[]> => {
   validateEnvVariable(
     process.env.NEXT_PUBLIC_SPOTIFY_BASE_URL,
     "NEXT_PUBLIC_SPOTIFY_BASE_URL"
@@ -35,20 +35,7 @@ const fetchSpotifyPlaylist = async (
     });
 
     const data = await response.json();
-    const trackData = data.items.map((item: SpotifyTrack) => {
-      return {
-        name: item.track.name,
-        artist: { name: item.track.artists[0].name, mbid: "", url: "" },
-        albumTitle: item.track.album.name,
-        image: item.track.album.images.map((image) => {
-          return {
-            "#text": image.url,
-            size: image.width,
-          };
-        }),
-      };
-    });
-    return trackData;
+    return data;
   } catch (error) {
     handleError({ context: "Spotify API - Top Tracks Data", error });
     throw error;

@@ -1,7 +1,7 @@
 import { handleError, validateEnvVariable } from "@/lib/helpers";
 import { fetchSpotifyAccessToken } from "./service";
 
-export const fetchSpotifyTrackData = async (trackTitle: string) => {
+export const fetchSpotifyTrackInfo = async (trackTitle: string) => {
   validateEnvVariable(
     process.env.NEXT_PUBLIC_SPOTIFY_BASE_URL,
     "NEXT_PUBLIC_SPOTIFY_BASE_URL"

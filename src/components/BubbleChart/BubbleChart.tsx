@@ -2,7 +2,7 @@
 
 import useMaxListeners from "@/hooks/useMaxListeners";
 import useRefinedSimilarArtists from "@/hooks/useRefinedArtists";
-import { ArtistDetail, EnrichedArtist } from "@/types/trackTypes";
+import { ArtistDetail, EnrichedArtist } from "@/types/lastFmTypes";
 import * as d3 from "d3";
 import { motion } from "framer-motion";
 import { memo, useEffect, useRef, useState } from "react";

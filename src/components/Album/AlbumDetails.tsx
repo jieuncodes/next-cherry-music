@@ -9,7 +9,7 @@ import {
   AlbumDetailsContainer,
   AlbumTitle,
 } from "@/styles/Album/album";
-import { LastFmAlbumInfo, LastFmTrack } from "@/types/trackTypes";
+import { LastFmAlbumInfo, LastFmTrack } from "@/types/lastFmTypes";
 import { Button } from "@nextui-org/react";
 
 interface AlbumDetailsProps {

@@ -1,5 +1,5 @@
 import { sanitizeName } from "@/lib/helpers";
-import { ArtistDetail, EnrichedArtist } from "@/types/trackTypes";
+import { ArtistDetail, EnrichedArtist } from "@/types/lastFmTypes";
 import * as d3 from "d3";
 import { Dispatch, SetStateAction } from "react";
 import { CHART_HEIGHT, CHART_WIDTH } from "./bubbleChartHelpers";

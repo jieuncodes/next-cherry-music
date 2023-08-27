@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import * as d3 from "d3";
-import { ArtistDetail } from "@/types/trackTypes";
+import { ArtistDetail } from "@/types/lastFmTypes";
 
 export const useMaxListeners = (refinedSimilarArtists: ArtistDetail[]) => {
   const [maxListenersVal, setMaxListenersVal] = useState<number>(0);

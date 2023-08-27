@@ -16,7 +16,7 @@ import {
   ArtistNameArea,
   Desc,
 } from "@/styles/Artist/Artist";
-import { LastFmArtistInfo } from "@/types/trackTypes";
+import { LastFmArtistInfo } from "@/types/lastFmTypes";
 import { useEffect, useState } from "react";
 
 interface ArtistProps {

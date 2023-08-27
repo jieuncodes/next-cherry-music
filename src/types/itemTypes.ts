@@ -17,3 +17,16 @@ export interface TrackArrayWithType {
   type: string;
   items: Track[];
 }
+
+export interface CherryTrack {
+  key: string;
+  rank: number;
+  trackTitle: string;
+  artist: string;
+  youtubeId: string | null;
+  albumTitle: string;
+  albumImgUrl: string;
+  tags: { name: string; url: string }[];
+  playCount: string;
+  wiki: { published: string; summary: string };
+}

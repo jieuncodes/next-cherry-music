@@ -1,6 +1,6 @@
 import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 import { getSpotifyArtistImg } from "@/app/api/spotify/service";
-import { Artist, ArtistDetail, SimilarArtists } from "@/types/trackTypes";
+import { Artist, ArtistDetail, SimilarArtists } from "@/types/lastFmTypes";
 import { useEffect, useState } from "react";
 
 function useRefinedSimilarArtists(centerArtist: ArtistDetail | undefined) {

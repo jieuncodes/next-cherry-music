@@ -1,7 +1,7 @@
 import { ensureEncoded } from "@/lib/helpers";
 import { Track } from "@/lib/server/database.types";
-import { TrackWithTitleAndArtist } from "@/types/spotify/types";
-import { AlbumTrack } from "@/types/trackTypes";
+import { TrackWithTitleAndArtist } from "@/types/spotifyTypes";
+import { AlbumTrack } from "@/types/lastFmTypes";
 
 const baseURL =
   process.env.NODE_ENV === "development"

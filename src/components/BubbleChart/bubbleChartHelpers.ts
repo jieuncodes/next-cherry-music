@@ -1,5 +1,5 @@
 import { getSpotifyArtistImg } from "@/app/api/spotify/service";
-import { ArtistDetail, EnrichedArtist } from "@/types/trackTypes";
+import { ArtistDetail, EnrichedArtist } from "@/types/lastFmTypes";
 
 export const CHART_WIDTH = 800;
 export const CHART_HEIGHT = 600;

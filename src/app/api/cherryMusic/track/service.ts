@@ -15,7 +15,8 @@ export async function fetchCherryMusicTracks({
     process.env.NODE_ENV === "development"
       ? process.env.NEXT_PUBLIC_URL
       : process.env.NEXT_PUBLIC_VERCEL_URL;
-  let url = new URL("/api/cherryMusic/track?query=top", baseURL);
+
+  let url = new URL(`/api/cherryMusic/track?query=${query}`, baseURL);
 
   if (artist) url.searchParams.append("artist", artist);
   if (tag) url.searchParams.append("tag", tag);
