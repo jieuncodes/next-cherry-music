@@ -5,22 +5,22 @@ import AlbumDetails from "@/components/Album/AlbumDetails";
 import AlbumPlaylist from "@/components/Album/AlbumPlaylist";
 import GradientHeader from "@/components/GradientHeader";
 import Hashtags from "@/components/Hashtags";
-import { Track } from "@/lib/server/database.types";
 import { AlbumContainer, HeaderAlbumInfo } from "@/styles/Album/album";
 import { LastFmAlbumInfo } from "@/types/lastFmTypes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import AlbumPlaylistSkeleton from "./AlbumPlaylistSkeleton";
 import { lastFmFetcher } from "../../app/api/lastFm/fetcher";
+import { CherryTrack } from "@/types/itemTypes";
 
 interface AlbumProps {
-  singleTrack?: Track[];
+  singleTrack?: CherryTrack[];
   albumTitle: string;
   artist: string;
   isSingleAlbum?: boolean;
 }
 function Album({ albumTitle, artist, isSingleAlbum, singleTrack }: AlbumProps) {
-  const [albumTracks, setAlbumTracks] = useState<Track[] | null>(null);
+  const [albumTracks, setAlbumTracks] = useState<CherryTrack[] | null>(null);
   const [albumInfo, setAlbumInfo] = useState<LastFmAlbumInfo | null>(null);
   useEffect(() => {
     if (!isSingleAlbum) {

@@ -1,13 +1,11 @@
 import { ensureEncoded, validateEnvVariable } from "@/lib/helpers";
-import { SpotifyTrackInfo } from "@/types/spotifyTypes";
 import { LastFmTrack } from "@/types/lastFmTypes";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { lastFmFetcher } from "../../lastFm/fetcher";
 import {
   fetchSpotifyPlaylist,
   refineSpotifyTracksIntoLastFmTrack,
 } from "../../spotify/service";
-import { fetchSpotifyTrackInfo } from "../../spotify/spotifyHelpers";
 
 export const getSpotifyPlaylistId = (query: string) => {
   switch (query) {

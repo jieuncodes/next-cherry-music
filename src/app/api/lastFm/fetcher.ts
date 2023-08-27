@@ -1,7 +1,7 @@
 import { ensureEncoded } from "@/lib/helpers";
-import { Track } from "@/lib/server/database.types";
 import { TrackWithTitleAndArtist } from "@/types/spotifyTypes";
 import { AlbumTrack } from "@/types/lastFmTypes";
+import { CherryTrack } from "@/types/itemTypes";
 
 const baseURL =
   process.env.NODE_ENV === "development"
@@ -91,7 +91,7 @@ export const lastFmFetcher = {
     const tracksArray = Array.isArray(data.album.tracks.track)
       ? data.album.tracks.track
       : [data.album.tracks.track];
-    const newTracks: Track[] = tracksArray.map((track: AlbumTrack) => {
+    const newTracks: CherryTrack[] = tracksArray.map((track: AlbumTrack) => {
       return {
         name: track.name,
         duration: track.duration,

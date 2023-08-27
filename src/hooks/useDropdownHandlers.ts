@@ -1,11 +1,10 @@
-import { Track } from "@/lib/server/database.types";
-import { DropdownItemData } from "@/types/itemTypes";
+import { CherryTrack, DropdownItemData } from "@/types/itemTypes";
 import { Dispatch, Key, MutableRefObject, SetStateAction } from "react";
 import useLocalStoragePlaylist from "./useLocalStoragePlaylist";
 import { useRouter } from "next/navigation";
 
 interface DropDownProps {
-  track: Track;
+  track: CherryTrack;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   dropdownItems: DropdownItemData[];

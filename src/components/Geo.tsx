@@ -1,15 +1,15 @@
 "use client";
 
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
-import { Track } from "@/lib/server/database.types";
 import { useEffect, useState } from "react";
 import TopTracks from "./TopTracks";
 import TrackCardsSkeleton from "./TrackCard/TrackCardSkeleton";
 import { Tab, Tabs } from "@nextui-org/react";
+import { CherryTrack } from "@/types/itemTypes";
 
 function Geo() {
   const [country, setCountry] = useState<string>("korea");
-  const [countryTop, setCountryTop] = useState<Track[]>([]);
+  const [countryTop, setCountryTop] = useState<CherryTrack[]>([]);
   const [top50Loading, setTop50Loading] = useState<boolean>(true);
   useEffect(() => {
     setTop50Loading(true);

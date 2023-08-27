@@ -1,4 +1,3 @@
-import { Track } from "@/lib/server/database.types";
 import { Buttons } from "@/styles/TrackCard";
 import { Dispatch, SetStateAction } from "react";
 import LikeButton from "../Btns/LikeButton";
@@ -7,6 +6,7 @@ import {
   trackActionDropdownItems,
 } from "../Dropdowns/DropdownItems";
 import TrackCardDropDown from "./TrackCardDropDown";
+import { CherryTrack } from "@/types/itemTypes";
 
 interface TrackCardButtonsProps {
   isCardHover: boolean;
@@ -15,8 +15,7 @@ interface TrackCardButtonsProps {
   iconColor: string;
   liked: boolean;
   setLiked: Dispatch<SetStateAction<boolean>>;
-
-  track: Track;
+  track: CherryTrack;
 }
 function TrackCardButtons({
   track,

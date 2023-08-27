@@ -10,14 +10,13 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import SectionNavigator from "./SectionNavigator";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
-import { Track } from "@/lib/server/database.types";
-import { motion } from "framer-motion";
+import { CherryTrack } from "@/types/itemTypes";
 
 interface TopTracksProps {
   title: string;
   tag?: string;
   count?: number;
-  trackList: Track[];
+  trackList: CherryTrack[];
 }
 
 function TopTracks({ title, tag, count, trackList }: TopTracksProps) {

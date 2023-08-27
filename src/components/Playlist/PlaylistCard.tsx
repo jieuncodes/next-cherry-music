@@ -2,13 +2,13 @@ import TrackCardDetails from "@/components/TrackCard/TrackCardDetails";
 import CardDropDown from "@/components/TrackCard/TrackCardDropDown";
 import TrackCardImage from "@/components/TrackCard/TrackCardImage";
 import usePlayerControls from "@/hooks/usePlayerControls";
-import { Track } from "@/lib/server/database.types";
 import { StyledCard, StyledHeader } from "@/styles/Panel/PlaylistCard";
 import { useRef, useState } from "react";
 import { playlistActionDropdownItems } from "../Dropdowns/DropdownItems";
+import { CherryTrack } from "@/types/itemTypes";
 
 interface PlaylistCardProps {
-  track: Track;
+  track: CherryTrack;
   index: number;
   isPlayingTrack?: boolean;
 }

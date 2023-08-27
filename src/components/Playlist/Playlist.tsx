@@ -1,5 +1,4 @@
 import { PlaylistModalState } from "@/atoms";
-import { Track } from "@/lib/server/database.types";
 import {
   PanelSectionTitle,
   PlaylistContainer,
@@ -7,12 +6,13 @@ import {
 } from "@/styles/Panel/Playlist";
 import { useRecoilState } from "recoil";
 import PlaylistCards from "./PlaylistCards";
+import { CherryTrack } from "@/types/itemTypes";
 
 function Playlist({
   playlist,
   height,
 }: {
-  playlist: Track[];
+  playlist: CherryTrack[];
   height: number | null;
 }) {
   const [isOpen, setIsOpen] = useRecoilState(PlaylistModalState);

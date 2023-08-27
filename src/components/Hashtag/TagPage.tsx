@@ -4,8 +4,7 @@ import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import GradientHeader from "@/components/GradientHeader";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import TopTracks from "@/components/TopTracks";
-import { Track } from "@/lib/server/database.types";
-import { TrackArrayWithType } from "@/types/itemTypes";
+import { CherryTrack, TrackArrayWithType } from "@/types/itemTypes";
 import { useEffect, useState } from "react";
 import TrackCardSkeleton from "../TrackCard/TrackCardSkeleton";
 import TrackCardsSkeleton from "../TrackCard/TrackCardSkeleton";
@@ -19,7 +18,7 @@ interface TagPageProps {
 function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
   const [tagTopAlbums, setTagTopAlbums] = useState<TrackArrayWithType>();
   const [tagTopArtists, setTagTopArtists] = useState<TrackArrayWithType>();
-  const [trackList, setTrackList] = useState<Track[]>();
+  const [trackList, setTrackList] = useState<CherryTrack[]>();
 
   useEffect(() => {
     const fetchData = async () => {

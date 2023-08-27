@@ -1,8 +1,8 @@
 "use client";
-import { Track } from "@/lib/server/database.types";
+import { CherryTrack } from "@/types/itemTypes";
 import AlbumPlaylistCards from "./AlbumPlaylistCards";
 
-function AlbumPlaylist({ playlist }: { playlist: Track[] }) {
+function AlbumPlaylist({ playlist }: { playlist: CherryTrack[] }) {
   return (
     <div className="relative top-72">
       <AlbumPlaylistCards playlist={playlist} />

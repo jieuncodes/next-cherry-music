@@ -1,4 +1,4 @@
-import { Track } from "@/lib/server/database.types";
+import { Tag } from "./lastFmTypes";
 
 export interface DropdownItemData {
   key: string;
@@ -15,18 +15,18 @@ export interface ItemProps {
 }
 export interface TrackArrayWithType {
   type: string;
-  items: Track[];
+  items: CherryTrack[];
 }
 
 export interface CherryTrack {
-  key: string;
+  key?: string;
   rank: number;
   trackTitle: string;
   artist: string;
   youtubeId: string | null;
   albumTitle: string;
   albumImgUrl: string;
-  tags: { name: string; url: string }[];
+  tags: Tag[];
   playCount: string;
   wiki: { published: string; summary: string };
 }

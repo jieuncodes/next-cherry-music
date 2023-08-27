@@ -1,14 +1,14 @@
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import { Track } from "@/lib/server/database.types";
 import { StyledCard, StyledHeader } from "@/styles/TrackCard";
 import { useState } from "react";
 import TrackCardButtons from "./TrackCardBtns";
 import TrackCardDetails from "./TrackCardDetails";
 import TrackCardImage from "./TrackCardImage";
+import { CherryTrack } from "@/types/itemTypes";
 
 interface TrackCardProps {
-  track: Track;
-  addToTopOfCurrPlaylist: (track: Track) => void;
+  track: CherryTrack;
+  addToTopOfCurrPlaylist: (track: CherryTrack) => void;
   removeFromPlaylist: (trackId: number) => void;
 }
 

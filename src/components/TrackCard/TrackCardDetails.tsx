@@ -1,11 +1,11 @@
 import { Artist, TrackTitle, CardDetails } from "@/styles/TrackCard";
 import Marquee from "@/animations/marquee";
-import { Database } from "@/lib/server/database.types";
 import { useRouter } from "next/navigation";
+import { CherryTrack } from "@/types/itemTypes";
 
 interface TrackCardDetailsProps {
   isCardHover: boolean;
-  track: Database["public"]["Tables"]["tracks"]["Row"];
+  track: CherryTrack;
   size?: "small" | "medium" | "large";
   onPlaylist?: boolean;
   isPlayingTrack?: boolean;

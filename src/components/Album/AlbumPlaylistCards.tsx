@@ -3,10 +3,10 @@ import { PlaylistGrid } from "@/styles/Artist/ArtistPlaylist";
 import { AlbumTrack } from "@/types/lastFmTypes";
 import { useRecoilValue } from "recoil";
 import ArtistPlaylistCard from "../Artist/ArtistPlaylistCard";
-import { Track } from "@/lib/server/database.types";
 import AlbumPlaylistCard from "./AlbumPlaylistCard";
+import { CherryTrack } from "@/types/itemTypes";
 
-export function AlbumPlaylistCards({ playlist }: { playlist: Track[] }) {
+export function AlbumPlaylistCards({ playlist }: { playlist: CherryTrack[] }) {
   const playingTrack = useRecoilValue(currPlayingTrackYoutubeId);
 
   return (

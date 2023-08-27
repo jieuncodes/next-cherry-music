@@ -1,11 +1,11 @@
 import { CardDetails } from "@/styles/TrackCard";
-import { Database } from "@/lib/server/database.types";
 import { useRouter } from "next/navigation";
 import { TrackTitle } from "@/styles/Album/album";
+import { CherryTrack } from "@/types/itemTypes";
 
 interface TrackCardDetailsProps {
   isCardHover: boolean;
-  track: Database["public"]["Tables"]["tracks"]["Row"];
+  track: CherryTrack;
   size?: "small" | "medium" | "large";
   isPlayingTrack?: boolean;
 }

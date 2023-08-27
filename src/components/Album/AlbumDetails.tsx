@@ -1,7 +1,6 @@
 "use client";
 import { Icons } from "@/app/Icons";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import { Track } from "@/lib/server/database.types";
 import { secsToTime } from "@/lib/utils";
 import {
   AlbumBtns,
@@ -9,6 +8,7 @@ import {
   AlbumDetailsContainer,
   AlbumTitle,
 } from "@/styles/Album/album";
+import { CherryTrack } from "@/types/itemTypes";
 import { LastFmAlbumInfo, LastFmTrack } from "@/types/lastFmTypes";
 import { Button } from "@nextui-org/react";
 
@@ -16,7 +16,7 @@ interface AlbumDetailsProps {
   albumTitle: string;
   artist: string;
   albumInfo?: LastFmAlbumInfo | null;
-  albumTracks: Track[];
+  albumTracks: CherryTrack[];
 }
 
 function AlbumDetails({

@@ -69,7 +69,7 @@ export interface Database {
         };
         Relationships: [];
       };
-      tracks: {
+      todayTop: {
         Row: {
           albumImgUrl: string | null;
           albumTitle: string | null;
@@ -77,8 +77,9 @@ export interface Database {
           id: number;
           playCount: string | null;
           rank: number | null;
-          tags: string[] | null;
+          tags: Json[] | null;
           trackTitle: string | null;
+          wiki: Json | null;
           youtubeId: string | null;
         };
         Insert: {
@@ -88,8 +89,9 @@ export interface Database {
           id?: number;
           playCount?: string | null;
           rank?: number | null;
-          tags?: string[] | null;
+          tags?: Json[] | null;
           trackTitle?: string | null;
+          wiki?: Json | null;
           youtubeId?: string | null;
         };
         Update: {
@@ -99,8 +101,9 @@ export interface Database {
           id?: number;
           playCount?: string | null;
           rank?: number | null;
-          tags?: string[] | null;
+          tags?: Json[] | null;
           trackTitle?: string | null;
+          wiki?: Json | null;
           youtubeId?: string | null;
         };
         Relationships: [];
@@ -120,5 +123,3 @@ export interface Database {
     };
   };
 }
-
-export type Track = Database["public"]["Tables"]["tracks"]["Row"];

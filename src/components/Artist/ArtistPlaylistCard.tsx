@@ -2,14 +2,14 @@ import LikeButton from "@/components/Btns/LikeButton";
 import CardDropDown from "@/components/TrackCard/TrackCardDropDown";
 import TrackCardImage from "@/components/TrackCard/TrackCardImage";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import { Track } from "@/lib/server/database.types";
 import { StyledCard, StyledHeader } from "@/styles/Artist/ArtistTrackCard";
 import { useRef, useState } from "react";
 import { artistPageDropdownItems } from "../Dropdowns/DropdownItems";
 import ArtistPlaylistCardDetails from "./ArtistPlaylistCardDetails";
+import { CherryTrack } from "@/types/itemTypes";
 
 interface PlaylistCardProps {
-  track: Track;
+  track: CherryTrack;
   index: number;
   isPlayingTrack?: boolean;
 }

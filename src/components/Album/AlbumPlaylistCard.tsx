@@ -1,16 +1,16 @@
 "use client";
 
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import { Track } from "@/lib/server/database.types";
 import { AlbumIndex, StyledCard, StyledHeader } from "@/styles/Album/album";
 import { useRef, useState } from "react";
 import LikeButton from "../Btns/LikeButton";
 import { AlbumPageDropdownItems } from "../Dropdowns/DropdownItems";
 import TrackCardDropDown from "../TrackCard/TrackCardDropDown";
 import AlbumTrackCardDetails from "./AlbumTrackCardDetails";
+import { CherryTrack } from "@/types/itemTypes";
 
 interface PlaylistCardProps {
-  track: Track;
+  track: CherryTrack;
   index: number;
   isPlayingTrack?: boolean;
 }
