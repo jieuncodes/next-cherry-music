@@ -8,7 +8,6 @@ export const dynamic = "force-dynamic";
 
 async function Home() {
   const todayTop50 = await fetchCherryMusicTracks({ query: "top" });
-
   const topArtistsData = await lastFmFetcher.fetchTopArtists();
   const topArtistsDataWithType = {
     type: "artist",

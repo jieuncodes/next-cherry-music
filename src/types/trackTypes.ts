@@ -1,7 +1,7 @@
 type Streamable = { "#text": string; fulltrack: string };
 export type Artist = { name: string; mbid: string; url: string };
-type AlbumImage = { "#text": string; size: string };
-type ArtistImage = { "#text": string; size: string };
+type AlbumImage = { "#text": string; size: number };
+type ArtistImage = { "#text": string; size: number };
 
 export interface LastFmTrack {
   "@attr"?: {

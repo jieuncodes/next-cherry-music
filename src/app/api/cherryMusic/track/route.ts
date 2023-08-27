@@ -48,6 +48,37 @@ async function fetchTrackListByQueryType(
   const trackTitle = req.nextUrl.searchParams.get("track");
   const refinedTracks: LastFmTrack[] = [];
 
+  //dummy data for debugging
+  const dummyData: LastFmTrack[] = [
+    {
+      name: "Last Night",
+      duration: "161000",
+      playcount: "1489547",
+      listeners: "167135",
+      mbid: "167135",
+      url: "https://www.last.fm/music/Morgan+Wallen/_/Last+Night",
+      streamable: { "#text": "0", fulltrack: "0" },
+      artist: { name: "Morgan Wallen", mbid: "", url: "" },
+      albumTitle: "3 Songs At A Time Sampler",
+      image: [
+        {
+          "#text":
+            "https://i.scdn.co/image/ab67616d0000b273fabd32dd9cefca8714c0ed41",
+          size: 640,
+        },
+        {
+          "#text":
+            "https://i.scdn.co/image/ab67616d00001e02fabd32dd9cefca8714c0ed41",
+          size: 300,
+        },
+        {
+          "#text":
+            "https://i.scdn.co/image/ab67616d00004851fabd32dd9cefca8714c0ed41",
+          size: 64,
+        },
+      ],
+    },
+  ];
   switch (query) {
     case "top":
     case "koreatop":
@@ -56,13 +87,15 @@ async function fetchTrackListByQueryType(
       const { envVar, envVarName } = getSpotifyPlaylistId(query);
 
       validateEnvVariable(envVar, envVarName);
-      const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
+      // const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
 
-      for (const track of spotifyPlaylist) {
-        const refined = await refineSpotifyTracksIntoLastFmTrack(track);
-        refinedTracks.push(refined);
-      }
-      return refinedTracks;
+      // for (const track of spotifyPlaylist) {
+      //   const refined = await refineSpotifyTracksIntoLastFmTrack(track);
+      //   refinedTracks.push(refined);
+      // }
+      // console.log("refinedTracks", refinedTracks);
+      // return refinedTracks;
+      return dummyData;
 
     case "artisttop":
       if (!artist) {

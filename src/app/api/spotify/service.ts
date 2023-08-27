@@ -43,12 +43,12 @@ export const refineSpotifyTracksIntoLastFmTrack = async (
   const lastFmDetails = await lastFmFetcher.fetchTrackDetail(spotifyTrack);
   return {
     name: spotifyTrack.name,
-    duration: lastFmDetails.duration,
-    playcount: lastFmDetails.playcount,
-    listeners: lastFmDetails.listeners,
-    mbid: lastFmDetails.mbid,
-    url: lastFmDetails.url,
-    streamable: lastFmDetails.streamable,
+    duration: lastFmDetails.track.duration,
+    playcount: lastFmDetails.track.playcount,
+    listeners: lastFmDetails.track.listeners,
+    mbid: lastFmDetails.track.mbid,
+    url: lastFmDetails.track.url,
+    streamable: lastFmDetails.track.streamable,
     artist: spotifyTrack.artist,
     albumTitle: spotifyTrack.albumTitle,
     image: spotifyTrack.image,
