@@ -16,7 +16,11 @@ function GradientHeader({ imageUrl, name }: GradientHeaderProps) {
         alt={name}
         fill
         sizes="(min-width: 808px) 50vw, 100vw"
-        style={{ objectFit: "cover", objectPosition: "center 40%" }}
+        style={{
+          objectFit: "cover",
+          objectPosition: "center 40%",
+          opacity: 0.8,
+        }}
         priority
       />
       <BlurredGradient />

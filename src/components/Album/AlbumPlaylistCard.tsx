@@ -7,10 +7,10 @@ import LikeButton from "../Btns/LikeButton";
 import { AlbumPageDropdownItems } from "../Dropdowns/DropdownItems";
 import TrackCardDropDown from "../TrackCard/TrackCardDropDown";
 import AlbumTrackCardDetails from "./AlbumTrackCardDetails";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 interface PlaylistCardProps {
-  track: CherryTrack;
+  track: Track;
   index: number;
   isPlayingTrack?: boolean;
 }

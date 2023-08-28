@@ -3,8 +3,9 @@ import { currPlaylistTrackIdx } from "@/atoms";
 import { PlaylistGrid } from "@/styles/Panel/PlaylistCard";
 import PlaylistCard from "./PlaylistCard";
 import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
-export function PlaylistCards({ playlist }: { playlist: CherryTrack[] }) {
+export function PlaylistCards({ playlist }: { playlist: Track[] }) {
   const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currPlaylistTrackIdx);
   return (
     <PlaylistGrid>

@@ -1,8 +1,8 @@
 import { atom } from "recoil";
-import { CherryTrack } from "./types/itemTypes";
+import { Track } from "./lib/server/database.types";
 
 //playlist
-export const localStoragePlaylist = atom<CherryTrack[]>({
+export const localStoragePlaylist = atom<Track[]>({
   key: "localStorageState",
   default: [],
 });

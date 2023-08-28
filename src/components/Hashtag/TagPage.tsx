@@ -4,11 +4,12 @@ import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import GradientHeader from "@/components/GradientHeader";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import TopTracks from "@/components/TopTracks";
-import { CherryTrack, TrackArrayWithType } from "@/types/itemTypes";
+import { TrackArrayWithType } from "@/types/itemTypes";
 import { useEffect, useState } from "react";
 import TrackCardSkeleton from "../TrackCard/TrackCardsSkeleton";
 import TrackCardsSkeleton from "../TrackCard/TrackCardsSkeleton";
 import { lastFmFetcher } from "../../app/api/lastFm/fetcher";
+import { Track } from "@/lib/server/database.types";
 
 interface TagPageProps {
   hashtag: string;
@@ -18,7 +19,7 @@ interface TagPageProps {
 function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
   const [tagTopAlbums, setTagTopAlbums] = useState<TrackArrayWithType>();
   const [tagTopArtists, setTagTopArtists] = useState<TrackArrayWithType>();
-  const [trackList, setTrackList] = useState<CherryTrack[]>();
+  const [trackList, setTrackList] = useState<Track[]>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +62,6 @@ function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
       {trackList ? (
         <TopTracks
           title={`Top30 of Tag #${hashtag}`}
-          tag={hashtag}
           count={30}
           trackList={trackList}
         />

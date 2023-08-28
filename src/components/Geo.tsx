@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import TopTracks from "./TopTracks";
 import TrackCardsSkeleton from "./TrackCard/TrackCardsSkeleton";
 import { Tab, Tabs } from "@nextui-org/react";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 function Geo() {
   const [country, setCountry] = useState<string>("korea");
-  const [countryTop, setCountryTop] = useState<CherryTrack[]>([]);
+  const [countryTop, setCountryTop] = useState<Track[]>([]);
   const [top50Loading, setTop50Loading] = useState<boolean>(true);
   useEffect(() => {
     setTop50Loading(true);

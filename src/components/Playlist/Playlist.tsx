@@ -6,13 +6,13 @@ import {
 } from "@/styles/Panel/Playlist";
 import { useRecoilState } from "recoil";
 import PlaylistCards from "./PlaylistCards";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 function Playlist({
   playlist,
   height,
 }: {
-  playlist: CherryTrack[];
+  playlist: Track[];
   height: number | null;
 }) {
   const [isOpen, setIsOpen] = useRecoilState(PlaylistModalState);

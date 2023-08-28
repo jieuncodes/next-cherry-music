@@ -6,13 +6,11 @@ import { useRecoilValue } from "recoil";
 import { currPlayingTrackYoutubeId } from "../../atoms";
 import ArtistPlaylistCard from "./ArtistPlaylistCard";
 import ArtistTrackCardsSkeleton from "./ArtistTopTrackCardSkeleton";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 export function ArtistPlaylistCards({ artist }: { artist: string }) {
   const playingTrack = useRecoilValue(currPlayingTrackYoutubeId);
-  const [artistTopTracks, setArtistTopTracks] = useState<CherryTrack[] | null>(
-    null
-  );
+  const [artistTopTracks, setArtistTopTracks] = useState<Track[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +29,7 @@ export function ArtistPlaylistCards({ artist }: { artist: string }) {
       {artistTopTracks ? (
         artistTopTracks
           .slice(0, 6)
-          .map((track: CherryTrack, index: number) => (
+          .map((track: Track, index: number) => (
             <ArtistPlaylistCard
               key={index}
               track={track}

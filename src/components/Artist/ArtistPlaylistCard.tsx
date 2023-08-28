@@ -6,10 +6,10 @@ import { StyledCard, StyledHeader } from "@/styles/Artist/ArtistTrackCard";
 import { useRef, useState } from "react";
 import { artistPageDropdownItems } from "../Dropdowns/DropdownItems";
 import ArtistPlaylistCardDetails from "./ArtistPlaylistCardDetails";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 interface PlaylistCardProps {
-  track: CherryTrack;
+  track: Track;
   index: number;
   isPlayingTrack?: boolean;
 }

@@ -11,16 +11,16 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import AlbumPlaylistSkeleton from "./AlbumPlaylistSkeleton";
 import { lastFmFetcher } from "../../app/api/lastFm/fetcher";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 interface AlbumProps {
-  singleTrack?: CherryTrack[];
+  singleTrack?: Track[];
   albumTitle: string;
   artist: string;
   isSingleAlbum?: boolean;
 }
 function Album({ albumTitle, artist, isSingleAlbum, singleTrack }: AlbumProps) {
-  const [albumTracks, setAlbumTracks] = useState<CherryTrack[] | null>(null);
+  const [albumTracks, setAlbumTracks] = useState<Track[] | null>(null);
   const [albumInfo, setAlbumInfo] = useState<LastFmAlbumInfo | null>(null);
   useEffect(() => {
     if (!isSingleAlbum) {

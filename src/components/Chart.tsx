@@ -6,16 +6,17 @@ import TrackCardsSkeleton from "@/components/TrackCard/TrackCardsSkeleton";
 import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import { useEffect, useState } from "react";
-import { CherryTrack, TrackArrayWithType } from "@/types/itemTypes";
+import { TrackArrayWithType } from "@/types/itemTypes";
 import LoadingSpinner from "./LoadingSpinner";
 import { ArtistDetail } from "@/types/lastFmTypes";
+import { Track } from "@/lib/server/database.types";
 
 function Chart() {
   const [topArtistsDataWithType, setTopArtistsDataWithType] = useState<{
     type: string;
     items: ArtistDetail[];
   }>();
-  const [todayTop50, setTodayTop50] = useState<CherryTrack[]>();
+  const [todayTop50, setTodayTop50] = useState<Track[]>();
   const [tagTopAlbumsDataWithType, setTagTopAlbumsDataWithType] =
     useState<TrackArrayWithType>();
 

@@ -1,4 +1,5 @@
 import Marquee from "@/animations/marquee";
+import { Track } from "@/lib/server/database.types";
 import { AlbumTitleSpan } from "@/styles/Artist/Artist";
 import {
   AlbumTitle,
@@ -6,12 +7,11 @@ import {
   CardDetails,
   TrackTitle,
 } from "@/styles/Artist/ArtistTrackCard";
-import { CherryTrack } from "@/types/itemTypes";
 import { useRouter } from "next/navigation";
 
 interface ArtistPlaylistCardDetailsProps {
   isCardHover: boolean;
-  track: CherryTrack;
+  track: Track;
   size?: "small" | "medium" | "large";
   onPlaylist?: boolean;
   isPlayingTrack?: boolean;

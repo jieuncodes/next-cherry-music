@@ -5,10 +5,10 @@ import usePlayerControls from "@/hooks/usePlayerControls";
 import { StyledCard, StyledHeader } from "@/styles/Panel/PlaylistCard";
 import { useRef, useState } from "react";
 import { playlistActionDropdownItems } from "../Dropdowns/DropdownItems";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 interface PlaylistCardProps {
-  track: CherryTrack;
+  track: Track;
   index: number;
   isPlayingTrack?: boolean;
 }
