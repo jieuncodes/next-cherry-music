@@ -58,7 +58,7 @@ function Chart() {
       )}
 
       <>
-        <SectionTitle>Today's Top50</SectionTitle>
+        <SectionTitle>{`Today's Top50`}</SectionTitle>
         {todayTop50 ? (
           <TopTracks trackList={todayTop50} />
         ) : (

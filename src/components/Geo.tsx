@@ -7,19 +7,21 @@ import TrackCardsSkeleton from "./TrackCard/TrackCardsSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { Tab, Tabs } from "@nextui-org/react";
 import { SectionTitle } from "@/styles/Section";
-import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 import { Track } from "@/lib/server/database.types";
+import { fetchSpotifyArtist } from "@/app/api/spotify/service";
+import { SpotifyArtist } from "@/types/spotifyTypes";
+import HorizontalTiles from "./Tile/HorizontalTiles";
 
 function Geo() {
   const [country, setCountry] = useState<string>("korea");
-
+  const [countryTopArtists, setCountryTopArtists] = useState<SpotifyArtist[]>(
+    []
+  );
   const fetchCountryTopTracks = async (selectedCountry: string) => {
-    console.log("selectedCountry", selectedCountry);
     return await fetchCherryMusicTracks({
       query: "top",
       country: `${selectedCountry.toLowerCase()}`,
     });
-    //then fetchSpotifyArtistData(artist) for each artist in the list
   };
   const { data: countryTop, isLoading: top50Loading } = useQuery({
     queryKey: ["countryTop", country],
@@ -32,7 +34,15 @@ function Geo() {
     { id: "CO", label: "Colombia" },
   ];
 
-  console.log("countryTop", countryTop);
+  useEffect(() => {
+    if (countryTop) {
+      const artists: SpotifyArtist[] = countryTop.map((track: Track) => {
+        if (!track.artist) return;
+        return { name: track.artist, artist: { name: track.artist } };
+      });
+      setCountryTopArtists(artists);
+    }
+  }, [countryTop]);
 
   return (
     <div className="flex w-full flex-col">
@@ -49,6 +59,16 @@ function Geo() {
               <TopTracks trackList={countryTop} count={50} />
             ) : (
               <TrackCardsSkeleton />
+            )}
+            {countryTopArtists && (
+              <HorizontalTiles
+                sectionTitle={`Popular Artists in this country`}
+                arr={{
+                  type: "artist",
+                  items: countryTopArtists,
+                }}
+                nav
+              />
             )}
           </Tab>
         )}

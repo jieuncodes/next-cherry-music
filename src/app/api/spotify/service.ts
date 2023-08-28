@@ -21,6 +21,7 @@ export async function fetchSpotifyArtist(artist: string) {
     `${baseURL}/api/spotify/artist?artist=${encodedAritst}`
   );
   const data = await response.json();
+
   return data;
 }
 export const getSpotifyArtistImg = async (artist: string) => {

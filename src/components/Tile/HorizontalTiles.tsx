@@ -2,7 +2,7 @@
 
 import useArtistImgUrl from "@/hooks/useArtistImgUrl";
 import { Tiles } from "@/styles/Artist/Artist";
-import { SectionContainer, SectionTitle } from "@/styles/Section";
+import { SectionGridContainer, SectionTitle } from "@/styles/Section";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import SectionNavigator from "../SectionNavigator";
@@ -36,14 +36,14 @@ function HorizontalTiles({
   };
 
   return (
-    <SectionContainer>
+    <SectionGridContainer>
       {nav && <SectionNavigator refContainer={ref} scrollAmount={650} />}
       <SectionTitle>{sectionTitle}</SectionTitle>
       <Tiles
         ref={ref}
         className={`snap-x ${nav ? "gap-3" : "w-fit gap-10"} ${
           isCircle ? "gap-5" : ""
-        }`}
+        } row-start-2 col-start-1 col-span-2`}
       >
         {arr.items
           .slice(0, arr.items.length - 1)
@@ -62,7 +62,7 @@ function HorizontalTiles({
             )
           )}
       </Tiles>
-    </SectionContainer>
+    </SectionGridContainer>
   );
 }
 

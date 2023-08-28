@@ -5,7 +5,6 @@ import fetchFromLastFM, { FetchFromLastFMParamsProps } from "../handler";
 export async function GET(req: NextRequest, res: NextResponse) {
   const artist = req.nextUrl.searchParams.get("artist");
   const method = req.nextUrl.searchParams.get("method");
-
   try {
     const params: FetchFromLastFMParamsProps = {
       method: `artist.${method}`,

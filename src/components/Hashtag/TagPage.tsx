@@ -10,6 +10,7 @@ import TrackCardSkeleton from "../TrackCard/TrackCardsSkeleton";
 import TrackCardsSkeleton from "../TrackCard/TrackCardsSkeleton";
 import { lastFmFetcher } from "../../app/api/lastFm/fetcher";
 import { Track } from "@/lib/server/database.types";
+import { SectionTitle } from "@/styles/Section";
 
 interface TagPageProps {
   hashtag: string;
@@ -60,11 +61,10 @@ function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
         <HorizontalTiles sectionTitle="Top Tag Albums" arr={tagTopAlbums} nav />
       )}
       {trackList ? (
-        <TopTracks
-          title={`Top30 of Tag #${hashtag}`}
-          count={30}
-          trackList={trackList}
-        />
+        <>
+          <SectionTitle>{`Top30 of Tag #${hashtag}`}</SectionTitle>
+          <TopTracks count={30} trackList={trackList} />
+        </>
       ) : (
         <TrackCardsSkeleton />
       )}
