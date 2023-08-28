@@ -22,7 +22,10 @@ export default function RootLayout({
           <main>
             <Nav />
             <ContentsContainer>
-              <Contents>{children}</Contents>
+              <Contents>
+                {children}
+                <div className="w-full h-10"></div>
+              </Contents>
             </ContentsContainer>
             <Panel />
             <PlayBar />

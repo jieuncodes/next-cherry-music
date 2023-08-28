@@ -1,4 +1,8 @@
-import { SectionContainerMain, SectionGrid } from "@/styles/Section";
+import {
+  SectionContainerMain,
+  SectionGrid,
+  SectionTitle,
+} from "@/styles/Section";
 import { StyledCard } from "@/styles/TrackCard";
 import { Skeleton } from "@nextui-org/react";
 import SectionNavigator from "../SectionNavigator";
@@ -9,7 +13,6 @@ function TrackCardsSkeleton() {
 
   return (
     <SectionContainerMain>
-      <SectionNavigator refContainer={ref} scrollAmount={300} />
       <SectionGrid ref={ref}>
         {Array(50)
           .fill(null)

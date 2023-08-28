@@ -12,12 +12,11 @@ import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
 
 interface TopTracksProps {
-  title: string;
   count?: number;
   trackList?: Track[];
 }
 
-function TopTracks({ title, count, trackList = [] }: TopTracksProps) {
+function TopTracks({ count, trackList = [] }: TopTracksProps) {
   const [scrollX, setScrollX] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -39,7 +38,6 @@ function TopTracks({ title, count, trackList = [] }: TopTracksProps) {
   return (
     <SectionContainerMain>
       <SectionNavigator refContainer={ref} scrollAmount={300} />
-      <SectionTitle>{title}</SectionTitle>
       <SectionGrid ref={ref}>{renderedCards}</SectionGrid>
     </SectionContainerMain>
   );

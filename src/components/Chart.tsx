@@ -10,6 +10,7 @@ import { TrackArrayWithType } from "@/types/itemTypes";
 import LoadingSpinner from "./LoadingSpinner";
 import { ArtistDetail } from "@/types/lastFmTypes";
 import { Track } from "@/lib/server/database.types";
+import { SectionTitle } from "@/styles/Section";
 
 function Chart() {
   const [topArtistsDataWithType, setTopArtistsDataWithType] = useState<{
@@ -30,7 +31,7 @@ function Chart() {
       setTopArtistsDataWithType(dataWithType);
     };
     const fetchTodayTop50 = async () => {
-      const data = await fetchCherryMusicTracks({ query: "top" });
+      const data = await fetchCherryMusicTracks({ query: "top", count: 50 });
       setTodayTop50(data);
     };
     const fetchTopTags = async () => {
@@ -56,11 +57,15 @@ function Chart() {
         <LoadingSpinner />
       )}
 
-      {todayTop50 ? (
-        <TopTracks title="Today Top50" trackList={todayTop50} />
-      ) : (
-        <TrackCardsSkeleton />
-      )}
+      <>
+        <SectionTitle>Today's Top50</SectionTitle>
+        {todayTop50 ? (
+          <TopTracks trackList={todayTop50} />
+        ) : (
+          <TrackCardsSkeleton />
+        )}
+      </>
+
       {tagTopAlbumsDataWithType && (
         <HorizontalTiles
           sectionTitle="Top Tag Albums"

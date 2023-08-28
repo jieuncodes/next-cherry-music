@@ -15,6 +15,7 @@ export interface FetchFromLastFMParamsProps {
   autocorrect?: string;
   tag?: string;
   track?: string;
+  country?: string;
 }
 
 async function fetchFromLastFM(params: FetchFromLastFMParamsProps) {

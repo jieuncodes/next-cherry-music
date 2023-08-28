@@ -19,10 +19,10 @@ export const getSpotifyPlaylistId = (query: string) => {
         envVar: process.env.NEXT_PUBLIC_SPOTIFY_US_TOP,
         envVarName: "NEXT_PUBLIC_SPOTIFY_US_TOP",
       };
-    case "africatop":
+    case "colombiatop":
       return {
-        envVar: process.env.NEXT_PUBLIC_SPOTIFY_AFRICA_TOP,
-        envVarName: "NEXT_PUBLIC_SPOTIFY_AFRICA_TOP",
+        envVar: process.env.NEXT_PUBLIC_SPOTIFY_COLOMBIA_TOP,
+        envVarName: "NEXT_PUBLIC_SPOTIFY_COLOMBIA_TOP",
       };
     case "top":
       return {
@@ -51,16 +51,21 @@ export const fetchTrackListByQueryType = async (
     case "top":
     case "koreatop":
     case "ustop":
-    case "africatop":
+    case "colombiatop":
       const { envVar, envVarName } = getSpotifyPlaylistId(query);
-
       validateEnvVariable(envVar, envVarName);
       const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
-      const slicedSpotifyPlaylist = spotifyPlaylist.slice(
-        offset || 0,
-        Number(count)
-      );
 
+      let startIdx = 0;
+      let endIdx = spotifyPlaylist.length;
+
+      if (offset) {
+        startIdx = Number(offset);
+      }
+      if (count) {
+        endIdx = Number(count);
+      }
+      const slicedSpotifyPlaylist = spotifyPlaylist.slice(startIdx, endIdx);
       const refinedTracksPromises = slicedSpotifyPlaylist.map((track) =>
         refineSpotifyTracksIntoLastFmTrack(track)
       );

@@ -6,6 +6,7 @@ interface fetchCherryMusicTracksProps {
   tag?: string;
   album?: string;
   trackTitle?: string;
+  country?: string;
 }
 export async function fetchCherryMusicTracks({
   query,
@@ -15,6 +16,7 @@ export async function fetchCherryMusicTracks({
   tag,
   album,
   trackTitle,
+  country,
 }: fetchCherryMusicTracksProps) {
   const baseURL =
     process.env.NODE_ENV === "development"
@@ -29,7 +31,8 @@ export async function fetchCherryMusicTracks({
   if (tag) url.searchParams.append("tag", tag);
   if (album) url.searchParams.append("album", album);
   if (trackTitle) url.searchParams.append("track", trackTitle);
-
+  if (country) url.searchParams.append("country", country);
+  console.log("url", url);
   const response = await fetch(url);
   if (!response.ok)
     throw new Error(

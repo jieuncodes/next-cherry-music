@@ -4,39 +4,35 @@ import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import { useEffect, useState } from "react";
 import TopTracks from "./TopTracks";
 import TrackCardsSkeleton from "./TrackCard/TrackCardsSkeleton";
+import { useQuery } from "@tanstack/react-query";
 import { Tab, Tabs } from "@nextui-org/react";
+import { SectionTitle } from "@/styles/Section";
+import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 import { Track } from "@/lib/server/database.types";
 
 function Geo() {
   const [country, setCountry] = useState<string>("korea");
-  const [countryTop, setCountryTop] = useState<Track[]>([]);
-  const [top50Loading, setTop50Loading] = useState<boolean>(true);
-  useEffect(() => {
-    setTop50Loading(true);
-    const fetchCountryTop = async () => {
-      const data = await fetchCherryMusicTracks({
-        query: `${country.toLowerCase()}top`,
-      });
-      setCountryTop(data);
-      setTop50Loading(false);
-    };
-    fetchCountryTop();
-  }, [country]);
+
+  const fetchCountryTopTracks = async (selectedCountry: string) => {
+    console.log("selectedCountry", selectedCountry);
+    return await fetchCherryMusicTracks({
+      query: "top",
+      country: `${selectedCountry.toLowerCase()}`,
+    });
+    //then fetchSpotifyArtistData(artist) for each artist in the list
+  };
+  const { data: countryTop, isLoading: top50Loading } = useQuery({
+    queryKey: ["countryTop", country],
+    queryFn: () => fetchCountryTopTracks(country),
+  });
 
   let tabs = [
-    {
-      id: "korea",
-      label: "Korea",
-    },
-    {
-      id: "us",
-      label: "US",
-    },
-    {
-      id: "africa",
-      label: "Africa",
-    },
+    { id: "KR", label: "Korea" },
+    { id: "US", label: "US" },
+    { id: "CO", label: "Colombia" },
   ];
+
+  console.log("countryTop", countryTop);
 
   return (
     <div className="flex w-full flex-col">
@@ -48,8 +44,9 @@ function Geo() {
       >
         {(item) => (
           <Tab key={item.id} title={item.label}>
+            <SectionTitle>Top50</SectionTitle>
             {!top50Loading ? (
-              <TopTracks title="Top50" trackList={countryTop} />
+              <TopTracks trackList={countryTop} count={50} />
             ) : (
               <TrackCardsSkeleton />
             )}
@@ -59,4 +56,5 @@ function Geo() {
     </div>
   );
 }
+
 export default Geo;

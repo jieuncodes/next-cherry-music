@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import TopTracks from "./TopTracks";
 import { Track } from "@/lib/server/database.types";
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
+import { SectionTitle } from "@/styles/Section";
 
 interface TopTracksContainerProps {
   todayTop20?: Track[];
@@ -26,6 +27,11 @@ function TopTracksContainer({ todayTop20 }: TopTracksContainerProps) {
     fetchAdditionalTracks();
   }, []);
 
-  return <TopTracks title="Today Top50" trackList={topTracks} count={50} />;
+  return (
+    <>
+      <SectionTitle>Today Top50</SectionTitle>
+      <TopTracks trackList={topTracks} count={50} />;
+    </>
+  );
 }
 export default TopTracksContainer;
