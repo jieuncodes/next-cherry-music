@@ -1,49 +1,46 @@
 "use client";
 
-import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
+import { Track } from "@/lib/server/database.types";
 import {
   SectionContainerMain,
-  SectionGridMain,
+  SectionGrid,
   SectionTitle,
 } from "@/styles/Section";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SectionNavigator from "./SectionNavigator";
 import TrackCard from "./TrackCard/TrackCard";
 import TrackCardSkeleton from "./TrackCard/TrackCardSkeleton";
-import { CherryTrack } from "@/types/itemTypes";
 
 interface TopTracksProps {
   title: string;
-  tag?: string;
   count?: number;
-  trackList: CherryTrack[];
+  trackList?: Track[];
 }
 
-function TopTracks({ title, tag, count, trackList }: TopTracksProps) {
-  const { playlist, addToTopOfCurrPlaylist, removeFromPlaylist } =
-    useLocalStoragePlaylist();
+function TopTracks({ title, count, trackList = [] }: TopTracksProps) {
   const [scrollX, setScrollX] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     setScrollX(ref.current?.scrollLeft || 0);
   }, [scrollX]);
+
+  const renderedCards = [];
+
+  for (let i = 0; i < trackList.length; i++) {
+    renderedCards.push(<TrackCard key={i} track={trackList[i]} />);
+  }
+  if (count) {
+    for (let i = trackList.length; i < count; i++) {
+      renderedCards.push(<TrackCardSkeleton key={`skeleton-${i}`} />);
+    }
+  }
 
   return (
     <SectionContainerMain>
       <SectionNavigator refContainer={ref} scrollAmount={300} />
       <SectionTitle>{title}</SectionTitle>
-      <SectionGridMain ref={ref}>
-        {trackList?.map((track, index) => (
-          <Suspense key={index} fallback={<TrackCardSkeleton />}>
-            <TrackCard
-              key={index}
-              track={track}
-              addToTopOfCurrPlaylist={addToTopOfCurrPlaylist}
-              removeFromPlaylist={removeFromPlaylist}
-            />
-          </Suspense>
-        ))}
-      </SectionGridMain>
+      <SectionGrid ref={ref}>{renderedCards}</SectionGrid>
     </SectionContainerMain>
   );
 }

@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { Icons } from "../../app/Icons";
 import { TrackImgBox } from "@/styles/TrackCard";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 interface TrackCardImageProps {
   isCardHover: boolean;
-  track: CherryTrack;
+  track: Track;
   size?: "small" | "medium" | "large";
 }
 

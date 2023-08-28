@@ -1,25 +1,25 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { currPlaylistTrackIdx, localStoragePlaylist } from "@/atoms";
 import useSyncedLocalStorage from "./useSyncedLocalStorage";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 function useLocalStoragePlaylist() {
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
   const setCurrPlaylistTrackIdx = useSetRecoilState(currPlaylistTrackIdx);
 
-  const { setValue: setPlaylist } = useSyncedLocalStorage<CherryTrack[]>({
+  const { setValue: setPlaylist } = useSyncedLocalStorage<Track[]>({
     key: "playlist",
     initialValue: [],
     setRecoilState: setRecoilPlaylist,
   });
 
-  const addToTopOfCurrPlaylist = (track: CherryTrack) => {
-    setPlaylist((prevPlaylist: CherryTrack[]) => [track, ...prevPlaylist]);
+  const addToTopOfCurrPlaylist = (track: Track) => {
+    setPlaylist((prevPlaylist: Track[]) => [track, ...prevPlaylist]);
     setCurrPlaylistTrackIdx(0);
   };
-  const addToBottomOfCurrPlaylist = (track: CherryTrack) => {
-    setPlaylist((prevPlaylist: CherryTrack[]) => [...prevPlaylist, track]);
+  const addToBottomOfCurrPlaylist = (track: Track) => {
+    setPlaylist((prevPlaylist: Track[]) => [...prevPlaylist, track]);
   };
 
   const removeFromPlaylist = (index: number) => {
@@ -33,11 +33,8 @@ function useLocalStoragePlaylist() {
     setPlaylist([]);
   };
 
-  const addTrackListToTopOfCurrPlaylist = (trackList: CherryTrack[]) => {
-    setPlaylist((prevPlaylist: CherryTrack[]) => [
-      ...trackList,
-      ...prevPlaylist,
-    ]);
+  const addTrackListToTopOfCurrPlaylist = (trackList: Track[]) => {
+    setPlaylist((prevPlaylist: Track[]) => [...trackList, ...prevPlaylist]);
     setCurrPlaylistTrackIdx(0);
   };
   return {

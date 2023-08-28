@@ -6,7 +6,7 @@ import {
   trackActionDropdownItems,
 } from "../Dropdowns/DropdownItems";
 import TrackCardDropDown from "./TrackCardDropDown";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 interface TrackCardButtonsProps {
   isCardHover: boolean;
@@ -15,7 +15,7 @@ interface TrackCardButtonsProps {
   iconColor: string;
   liked: boolean;
   setLiked: Dispatch<SetStateAction<boolean>>;
-  track: CherryTrack;
+  track: Track;
 }
 function TrackCardButtons({
   track,

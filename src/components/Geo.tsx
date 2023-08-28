@@ -3,7 +3,7 @@
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import { useEffect, useState } from "react";
 import TopTracks from "./TopTracks";
-import TrackCardsSkeleton from "./TrackCard/TrackCardSkeleton";
+import TrackCardsSkeleton from "./TrackCard/TrackCardsSkeleton";
 import { Tab, Tabs } from "@nextui-org/react";
 import { CherryTrack } from "@/types/itemTypes";
 

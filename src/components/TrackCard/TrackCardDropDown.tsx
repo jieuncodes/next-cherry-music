@@ -1,4 +1,4 @@
-import { CherryTrack, DropdownItemData } from "@/types/itemTypes";
+import { DropdownItemData } from "@/types/itemTypes";
 import { Button } from "@nextui-org/button";
 import {
   Dropdown,
@@ -9,9 +9,10 @@ import {
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { Icons } from "../../app/Icons";
 import useDropdownHandlers from "@/hooks/useDropdownHandlers";
+import { Track } from "@/lib/server/database.types";
 
 interface DropDownProps {
-  track: CherryTrack;
+  track: Track;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   dropdownItems: DropdownItemData[];

@@ -35,11 +35,12 @@ export const getSpotifyPlaylistId = (query: string) => {
 };
 interface fetchTrackListByQueryTypeProps {
   query: string;
+  offset?: number | null;
   count?: number | null;
 }
 
 export const fetchTrackListByQueryType = async (
-  { query, count }: fetchTrackListByQueryTypeProps,
+  { query, offset, count }: fetchTrackListByQueryTypeProps,
   req: NextRequest
 ): Promise<LastFmTrack[]> => {
   const artist = req.nextUrl.searchParams.get("artist");
@@ -55,7 +56,10 @@ export const fetchTrackListByQueryType = async (
 
       validateEnvVariable(envVar, envVarName);
       const spotifyPlaylist = await fetchSpotifyPlaylist(envVar!);
-      const slicedSpotifyPlaylist = spotifyPlaylist.slice(0, Number(count));
+      const slicedSpotifyPlaylist = spotifyPlaylist.slice(
+        offset || 0,
+        Number(count)
+      );
 
       const refinedTracksPromises = slicedSpotifyPlaylist.map((track) =>
         refineSpotifyTracksIntoLastFmTrack(track)

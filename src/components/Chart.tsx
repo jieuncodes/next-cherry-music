@@ -2,7 +2,7 @@
 import BubbleChart from "@/components/BubbleChart/BubbleChart";
 import TopTracks from "@/components/TopTracks";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
-import TrackCardsSkeleton from "@/components/TrackCard/TrackCardSkeleton";
+import TrackCardsSkeleton from "@/components/TrackCard/TrackCardsSkeleton";
 import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import { useEffect, useState } from "react";

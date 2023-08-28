@@ -4,12 +4,12 @@ import { useState } from "react";
 import TrackCardButtons from "./TrackCardBtns";
 import TrackCardDetails from "./TrackCardDetails";
 import TrackCardImage from "./TrackCardImage";
-import { CherryTrack } from "@/types/itemTypes";
+import { Track } from "@/lib/server/database.types";
 
 interface TrackCardProps {
-  track: CherryTrack;
-  addToTopOfCurrPlaylist: (track: CherryTrack) => void;
-  removeFromPlaylist: (trackId: number) => void;
+  track: Track;
+  // addToTopOfCurrPlaylist: (track: Track) => void;
+  // removeFromPlaylist: (trackId: number) => void;
 }
 
 export function TrackCard({ track }: TrackCardProps) {

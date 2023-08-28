@@ -6,8 +6,8 @@ import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import TopTracks from "@/components/TopTracks";
 import { CherryTrack, TrackArrayWithType } from "@/types/itemTypes";
 import { useEffect, useState } from "react";
-import TrackCardSkeleton from "../TrackCard/TrackCardSkeleton";
-import TrackCardsSkeleton from "../TrackCard/TrackCardSkeleton";
+import TrackCardSkeleton from "../TrackCard/TrackCardsSkeleton";
+import TrackCardsSkeleton from "../TrackCard/TrackCardsSkeleton";
 import { lastFmFetcher } from "../../app/api/lastFm/fetcher";
 
 interface TagPageProps {

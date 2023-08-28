@@ -126,3 +126,4 @@ export interface Database {
     };
   };
 }
+export type Track = Database["public"]["Tables"]["todayTop"]["Row"];

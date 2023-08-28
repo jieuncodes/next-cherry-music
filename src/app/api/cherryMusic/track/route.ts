@@ -8,7 +8,9 @@ import { CherryTrack } from "@/types/itemTypes";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const query = req.nextUrl.searchParams.get("query");
+  const rawOffset = req.nextUrl.searchParams.get("offset");
   const rawCount = req.nextUrl.searchParams.get("count");
+  const offset = rawOffset ? Number(rawOffset) : null;
   const count = rawCount ? Number(rawCount) : null;
 
   if (count && isNaN(count)) {
@@ -18,7 +20,10 @@ export async function GET(req: NextRequest, res: NextResponse) {
     throw new Error("Query parameter is required.");
   }
   console.time("fetchTrackListByQueryType");
-  let tracksToProcess = await fetchTrackListByQueryType({ query, count }, req);
+  let tracksToProcess = await fetchTrackListByQueryType(
+    { query, offset, count },
+    req
+  );
   console.timeEnd("fetchTrackListByQueryType");
   console.time("trackDetailsPromises");
 
@@ -52,6 +57,5 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const allTrackDetailsWithYoutube = resolvedTrackDetails.filter(
     (track) => track && track.youtubeId
   );
-  console.log("allTrackDetailsWithYoutube", allTrackDetailsWithYoutube);
   return NextResponse.json([...allTrackDetailsWithYoutube]);
 }

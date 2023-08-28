@@ -1,6 +1,7 @@
 interface fetchCherryMusicTracksProps {
   query: string;
   count?: number | null;
+  offset?: number | null;
   artist?: string;
   tag?: string;
   album?: string;
@@ -9,6 +10,7 @@ interface fetchCherryMusicTracksProps {
 export async function fetchCherryMusicTracks({
   query,
   count,
+  offset,
   artist,
   tag,
   album,
@@ -22,6 +24,7 @@ export async function fetchCherryMusicTracks({
   let url = new URL(`/api/cherryMusic/track?query=${query}`, baseURL);
 
   if (count) url.searchParams.append("count", count.toString());
+  if (offset) url.searchParams.append("offset", offset.toString());
   if (artist) url.searchParams.append("artist", artist);
   if (tag) url.searchParams.append("tag", tag);
   if (album) url.searchParams.append("album", album);
