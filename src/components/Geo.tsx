@@ -10,8 +10,10 @@ import { SectionTitle } from "@/styles/Section";
 import { Track } from "@/lib/server/database.types";
 import HorizontalTiles from "./Tile/HorizontalTiles";
 import { SliderItemProps } from "@/types/itemTypes";
+import { GeoContainer } from "@/styles/Geo/Geo";
+import TopTracksContainer from "./TopTracksContainer";
 
-function Geo() {
+function Geo({ countryTops }: { countryTops: any }) {
   const [country, setCountry] = useState<string>("korea");
   const [countryTopArtists, setCountryTopArtists] = useState<SliderItemProps[]>(
     []
@@ -46,7 +48,7 @@ function Geo() {
     { id: "colombia", label: "Colombia" },
   ];
   return (
-    <div className="flex w-full flex-col">
+    <GeoContainer>
       <Tabs
         aria-label="Dynamic tabs"
         items={tabs}
@@ -55,12 +57,10 @@ function Geo() {
       >
         {(item) => (
           <Tab key={item.id} title={item.label}>
-            <SectionTitle>Top50</SectionTitle>
-            {!top50Loading ? (
-              <TopTracks trackList={countryTop} count={50} />
-            ) : (
-              <TrackCardsSkeleton />
-            )}
+            <TopTracksContainer
+              query={"koreatop"}
+              top20={countryTops.koreaTop}
+            />
             {countryTopArtists && (
               <HorizontalTiles
                 sectionTitle={`Popular Artists in this country`}
@@ -74,7 +74,7 @@ function Geo() {
           </Tab>
         )}
       </Tabs>
-    </div>
+    </GeoContainer>
   );
 }
 

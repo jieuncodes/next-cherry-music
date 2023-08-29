@@ -7,18 +7,19 @@ import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import { SectionTitle } from "@/styles/Section";
 
 interface TopTracksContainerProps {
-  todayTop20?: Track[];
+  query: "top" | "koreatop" | "ustop" | "colombiatop";
+  top20?: Track[];
 }
 
-function TopTracksContainer({ todayTop20 }: TopTracksContainerProps) {
+function TopTracksContainer({ query, top20 }: TopTracksContainerProps) {
   const [topTracks, setTopTracks] = useState<Track[]>([]);
 
   useEffect(() => {
-    setTopTracks(todayTop20 || []);
+    setTopTracks(top20 || []);
     const fetchAdditionalTracks = async () => {
       const additionalTracks = await fetchCherryMusicTracks({
         query: "top",
-        offset: todayTop20 ? todayTop20.length : 0,
+        offset: top20 ? top20.length : 0,
         count: 50,
       });
       setTopTracks((prevTracks) => [...prevTracks, ...additionalTracks]);

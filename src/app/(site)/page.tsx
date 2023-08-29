@@ -7,7 +7,7 @@ import TopTracksContainer from "@/components/TopTracksContainer";
 export const dynamic = "force-dynamic";
 
 async function Home() {
-  let { data: todayTop20, error } = await supabase.from("todayTop").select("*");
+  let { data: top20, error } = await supabase.from("todayTop").select("*");
 
   if (error) {
     console.log(error);
@@ -19,11 +19,11 @@ async function Home() {
   };
 
   return (
-    <div>
+    <>
       <div className="carousel-container h-80 relative">
         <Carousel />
       </div>
-      <TopTracksContainer todayTop20={todayTop20 || []} />
+      <TopTracksContainer query={"top"} top20={top20 || []} />
       <HorizontalTiles
         sectionTitle="Top Artists"
         arr={topArtistsDataWithType}
@@ -31,7 +31,7 @@ async function Home() {
         nav
       />
       {/* <TopPlayLists /> */}
-    </div>
+    </>
   );
 }
 export default Home;

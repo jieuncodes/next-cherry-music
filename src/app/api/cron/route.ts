@@ -15,17 +15,20 @@ export async function GET() {
     const { error: deleteError } = await supabase
       .from(tableName)
       .delete()
-      .neq("id", 0);
+      .neq("updated_at", 0);
 
     const partOfWholeData = await fetchCherryMusicTracks({
       query,
       count: 20,
     });
+    console.log("partOfWholeData", partOfWholeData);
 
     const { data, error: insertError } = await supabase
       .from(tableName)
       .insert([...partOfWholeData])
       .select();
+
+    console.log("data has added to supabase", data);
 
     if (deleteError) throw Error(deleteError.message);
     if (insertError) throw Error(insertError.message);
@@ -33,7 +36,12 @@ export async function GET() {
     console.log(`** ${partOfWholeData.length} has uploaded on the Supabase`);
   };
 
-  replaceWithNewData({ query: "top", tableName: "todayTop" });
+  await Promise.all([
+    replaceWithNewData({ query: "top", tableName: "todayTop" }),
+    replaceWithNewData({ query: "koreatop", tableName: "koreaTop" }),
+    replaceWithNewData({ query: "ustop", tableName: "usTop" }),
+    replaceWithNewData({ query: "colombiatop", tableName: "colombiaTop" }),
+  ]);
 
   return NextResponse.json({ ok: true });
 }

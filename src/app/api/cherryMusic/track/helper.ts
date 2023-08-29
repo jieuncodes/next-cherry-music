@@ -8,7 +8,6 @@ import {
 } from "../../spotify/service";
 
 export const getSpotifyPlaylistId = (query: string) => {
-  console.log("query", query);
   switch (query) {
     case "koreatop":
       return {

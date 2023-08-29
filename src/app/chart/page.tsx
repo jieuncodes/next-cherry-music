@@ -4,12 +4,12 @@ import TopTracksContainer from "@/components/TopTracksContainer";
 import { supabase } from "@/lib/server/client";
 
 async function ChartPage() {
-  let { data: todayTop20, error } = await supabase.from("todayTop").select("*");
+  let { data: top20, error } = await supabase.from("todayTop").select("*");
 
   return (
     <>
       <TopArtistsChart />
-      <TopTracksContainer todayTop20={todayTop20 || []} />
+      <TopTracksContainer top20={top20 || []} />
       <TopTags />
     </>
   );
