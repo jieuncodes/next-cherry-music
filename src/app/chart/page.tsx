@@ -9,7 +9,7 @@ async function ChartPage() {
   return (
     <>
       <TopArtistsChart />
-      <TopTracksContainer top20={top20 || []} />
+      <TopTracksContainer query={"top"} top20={top20 || []} />
       <TopTags />
     </>
   );
