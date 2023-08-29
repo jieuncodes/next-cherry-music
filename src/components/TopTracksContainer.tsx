@@ -29,8 +29,8 @@ function TopTracksContainer({ todayTop20 }: TopTracksContainerProps) {
 
   return (
     <>
-      <SectionTitle>Today Top50</SectionTitle>
-      <TopTracks trackList={topTracks} count={50} />;
+      <SectionTitle>{`Today's Top50`}</SectionTitle>
+      <TopTracks trackList={topTracks} count={50} />
     </>
   );
 }

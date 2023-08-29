@@ -9,6 +9,7 @@ import { memo, useEffect, useRef, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
 import renderBubbleChart from "./RenderBubbleChart";
 import { CHART_HEIGHT, CHART_WIDTH, enrichArtists } from "./bubbleChartHelpers";
+import { useRouter } from "next/navigation";
 
 function BubbleChart({
   arr,
@@ -22,7 +23,7 @@ function BubbleChart({
   const [chartLoading, setChartLoading] = useState<boolean>(true);
   const [isTopArtistChart, setIsTopArtistChart] = useState<boolean>(true);
   useState<boolean>(true);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchEnrichedArtists = async () => {
       if (
@@ -56,6 +57,9 @@ function BubbleChart({
               .domain([0, maxListenersVal])
               .range(isTopArtistChart ? [20, 55] : [40, 80]),
             setIsTopArtistChart,
+            handleCenterArtistClick: (artistName) => {
+              router.push(`/artist/${artistName}`);
+            },
           });
         };
         img.onerror = () => {

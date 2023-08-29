@@ -25,6 +25,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     { query, offset, count },
     req
   );
+
   console.timeEnd("fetchTrackListByQueryType");
 
   console.time("trackDetailsPromises");

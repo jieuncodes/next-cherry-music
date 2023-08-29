@@ -1,11 +1,7 @@
 "use client";
 
 import { Track } from "@/lib/server/database.types";
-import {
-  SectionContainerMain,
-  SectionGrid,
-  SectionTitle,
-} from "@/styles/Section";
+import { SectionContainerMain, SectionGrid } from "@/styles/Section";
 import { useEffect, useRef, useState } from "react";
 import SectionNavigator from "./SectionNavigator";
 import TrackCard from "./TrackCard/TrackCard";

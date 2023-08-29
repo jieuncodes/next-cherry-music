@@ -11,6 +11,7 @@ interface renderBubbleChartProps {
   sizeScale: d3.ScaleLinear<number, number>;
   setCenterArtist: Dispatch<SetStateAction<ArtistDetail>>;
   setIsTopArtistChart: Dispatch<SetStateAction<boolean>>;
+  handleCenterArtistClick: (artistName: string) => void;
 }
 
 const CENTER_RADIUS = 100;
@@ -23,6 +24,7 @@ function renderBubbleChart({
   setCenterArtist,
   sizeScale,
   setIsTopArtistChart,
+  handleCenterArtistClick,
 }: renderBubbleChartProps) {
   const defs = svg.append("defs");
   enrichedArtists.forEach((artist, index) => {
@@ -48,8 +50,8 @@ function renderBubbleChart({
     .attr("r", () => CENTER_RADIUS + RING_RADIUS_OFFSET)
     .attr("fill", `url(#artist-pattern-${sanitizeName(centerArtist.name)})`)
     .attr("layoutId", `${centerArtist.mbid}`)
-    .attr("stroke", "#ff5173")
-    .attr("stroke-width", 2);
+    .attr("class", "centerArtistBubble")
+    .on("click", () => handleCenterArtistClick(centerArtist.name));
 
   const circles = svg
     .selectAll("circle")
@@ -70,12 +72,7 @@ function renderBubbleChart({
         .append("text")
         .attr("x", cx)
         .attr("y", cy)
-        .attr("text-anchor", "middle")
-        .attr("dy", ".35em")
-        .attr("pointer-events", "none")
-        .attr("fill", "black")
-        .attr("font-size", "1em")
-        .attr("font-weight", "bold")
+        .attr("class", "bubbleText")
         .attr("id", "hoverTitle")
         .text(title);
     })
@@ -132,12 +129,7 @@ function renderBubbleChart({
     .append("text")
     .attr("x", CHART_WIDTH / 2)
     .attr("y", CHART_HEIGHT / 2)
-    .attr("text-anchor", "middle")
-    .attr("dy", ".3em")
-    .attr("fill", "white")
-    .attr("font-size", "1.5em")
-    .attr("font-weight", "bold")
-    .attr("class", "text-stroke-black")
+    .attr("class", "centerArtistBubbleText")
     .text(centerArtist.name);
 }
 export default renderBubbleChart;
@@ -151,7 +143,6 @@ interface handleArtistClickProps {
 
 const handleArtistClick = ({
   clickedArtist,
-  svg,
   setCenterArtist,
   setIsTopArtistChart,
 }: handleArtistClickProps) => {

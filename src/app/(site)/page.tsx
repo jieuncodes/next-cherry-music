@@ -3,7 +3,6 @@ import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import { lastFmFetcher } from "../api/lastFm/fetcher";
 import { supabase } from "@/lib/server/client";
 import TopTracksContainer from "@/components/TopTracksContainer";
-import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -24,9 +23,7 @@ async function Home() {
       <div className="carousel-container h-80 relative">
         <Carousel />
       </div>
-      <Suspense fallback={<div>loading$$$</div>}>
-        <TopTracksContainer todayTop20={todayTop20 || []} />
-      </Suspense>
+      <TopTracksContainer todayTop20={todayTop20 || []} />
       <HorizontalTiles
         sectionTitle="Top Artists"
         arr={topArtistsDataWithType}

@@ -33,6 +33,38 @@
 
 }
 
+.bubbleText {
+  text-anchor: middle;
+  fill: black;
+  font-weight: bold;
+  font-size: 1em;
+  pointer-events: none;
+}
+
+.centerArtistBubbleText {
+  text-anchor: middle;
+  margin-top: 10px;
+  fill: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  pointer-events: none;
+
+}
+
+.centerArtistBubbleText:hover {
+  cursor: pointer
+}
+
+.centerArtistBubble {
+  stroke: #ff5173;
+  stroke-width: 2px;
+}
+
+.centerArtistBubble:hover {
+  cursor: pointer
+}
+
 body {
   width: 100vw;
   height: 100vh;
