@@ -5,24 +5,35 @@ import { supabase } from "@/lib/server/client";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const partOfTodayTop50 = await fetchCherryMusicTracks({
-    query: "top",
-    count: 20,
-  });
+  const replaceWithNewData = async ({
+    query,
+    tableName,
+  }: {
+    query: "top" | "koreatop" | "ustop" | "colombiatop";
+    tableName: string;
+  }) => {
+    const { error: deleteError } = await supabase
+      .from(tableName)
+      .delete()
+      .neq("id", 0);
 
-  const { error: supabaseDeleteError } = await supabase
-    .from("todayTop")
-    .delete();
+    const partOfWholeData = await fetchCherryMusicTracks({
+      query,
+      count: 20,
+    });
 
-  const { data, error: supabaseInsertError } = await supabase
-    .from("todayTop")
-    .insert([...partOfTodayTop50])
-    .select();
+    const { data, error: insertError } = await supabase
+      .from(tableName)
+      .insert([...partOfWholeData])
+      .select();
 
-  if (supabaseDeleteError) throw Error(supabaseDeleteError.message);
-  if (supabaseInsertError) throw Error(supabaseInsertError.message);
+    if (deleteError) throw Error(deleteError.message);
+    if (insertError) throw Error(insertError.message);
 
-  console.log(`** ${partOfTodayTop50.length} has uploaded on the Supabase`);
+    console.log(`** ${partOfWholeData.length} has uploaded on the Supabase`);
+  };
+
+  replaceWithNewData({ query: "top", tableName: "todayTop" });
 
   return NextResponse.json({ ok: true });
 }
