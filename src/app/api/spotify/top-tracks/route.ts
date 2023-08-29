@@ -24,6 +24,7 @@ const fetchSpotifyPlaylist = async (
 
   const token = await fetchSpotifyAccessToken();
   try {
+    console.log("playlistId", playlistId);
     const url = new URL(
       `${process.env.NEXT_PUBLIC_SPOTIFY_BASE_URL}/playlists/${playlistId}/tracks`
     );

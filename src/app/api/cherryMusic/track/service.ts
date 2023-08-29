@@ -32,7 +32,7 @@ export async function fetchCherryMusicTracks({
   if (album) url.searchParams.append("album", album);
   if (trackTitle) url.searchParams.append("track", trackTitle);
   if (country) url.searchParams.append("country", country);
-  console.log("url", url);
+
   const response = await fetch(url);
   if (!response.ok)
     throw new Error(

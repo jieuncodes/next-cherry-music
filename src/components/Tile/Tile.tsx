@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import TileSkeleton from "./TileSkeleton";
-import { ItemProps } from "@/types/itemTypes";
+import { SliderItemProps } from "@/types/itemTypes";
 
 interface TileProps {
-  item: ItemProps;
+  item: SliderItemProps;
   isCircle?: boolean;
   handleTileClick: (artist: string) => void;
   artistImgUrl?: string;

@@ -9,7 +9,7 @@ export interface arrWithType {
   type: string;
   items: any[];
 }
-export interface ItemProps {
+export interface SliderItemProps {
   name: string;
   artist?: { name: string };
 }

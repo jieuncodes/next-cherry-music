@@ -24,7 +24,7 @@ function TopTags() {
     <>
       {tagTopAlbumsDataWithType && (
         <HorizontalTiles
-          sectionTitle="Top Tag Albums"
+          sectionTitle="Top Tags"
           arr={tagTopAlbumsDataWithType}
           nav
           isHashtag

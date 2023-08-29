@@ -10,12 +10,18 @@ export async function GET() {
     count: 20,
   });
 
-  const { data, error } = await supabase
+  const { error: supabaseDeleteError } = await supabase
+    .from("todayTop")
+    .delete();
+
+  const { data, error: supabaseInsertError } = await supabase
     .from("todayTop")
     .insert([...partOfTodayTop50])
     .select();
 
-  if (error) throw error;
+  if (supabaseDeleteError) throw Error(supabaseDeleteError.message);
+  if (supabaseInsertError) throw Error(supabaseInsertError.message);
+
   console.log(`** ${partOfTodayTop50.length} has uploaded on the Supabase`);
 
   return NextResponse.json({ ok: true });

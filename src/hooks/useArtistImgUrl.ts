@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { fetchSpotifyArtist } from "@/app/api/spotify/service";
-import { ItemProps } from "@/types/itemTypes";
+import { SliderItemProps } from "@/types/itemTypes";
 
-const useArtistImgUrl = (items: ItemProps[]) => {
+const useArtistImgUrl = (items: SliderItemProps[]) => {
   const [artistImgUrls, setArtistImgUrls] = useState<Map<string, string>>(
     new Map()
   );

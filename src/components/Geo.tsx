@@ -8,19 +8,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Tab, Tabs } from "@nextui-org/react";
 import { SectionTitle } from "@/styles/Section";
 import { Track } from "@/lib/server/database.types";
-import { fetchSpotifyArtist } from "@/app/api/spotify/service";
-import { SpotifyArtist } from "@/types/spotifyTypes";
 import HorizontalTiles from "./Tile/HorizontalTiles";
+import { SliderItemProps } from "@/types/itemTypes";
 
 function Geo() {
   const [country, setCountry] = useState<string>("korea");
-  const [countryTopArtists, setCountryTopArtists] = useState<SpotifyArtist[]>(
+  const [countryTopArtists, setCountryTopArtists] = useState<SliderItemProps[]>(
     []
   );
   const fetchCountryTopTracks = async (selectedCountry: string) => {
     return await fetchCherryMusicTracks({
-      query: "top",
-      country: `${selectedCountry.toLowerCase()}`,
+      query: `${selectedCountry.toLowerCase()}top`,
     });
   };
   const { data: countryTop, isLoading: top50Loading } = useQuery({
@@ -28,22 +26,25 @@ function Geo() {
     queryFn: () => fetchCountryTopTracks(country),
   });
 
-  let tabs = [
-    { id: "KR", label: "Korea" },
-    { id: "US", label: "US" },
-    { id: "CO", label: "Colombia" },
-  ];
-
   useEffect(() => {
     if (countryTop) {
-      const artists: SpotifyArtist[] = countryTop.map((track: Track) => {
-        if (!track.artist) return;
-        return { name: track.artist, artist: { name: track.artist } };
+      const artistNames = new Set();
+      const artists: SliderItemProps[] = [];
+      countryTop.forEach((track: Track) => {
+        if (track.artist && !artistNames.has(track.artist)) {
+          artistNames.add(track.artist);
+          artists.push({ name: track.artist });
+        }
       });
       setCountryTopArtists(artists);
     }
   }, [countryTop]);
 
+  let tabs = [
+    { id: "korea", label: "Korea" },
+    { id: "us", label: "US" },
+    { id: "colombia", label: "Colombia" },
+  ];
   return (
     <div className="flex w-full flex-col">
       <Tabs

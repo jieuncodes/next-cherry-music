@@ -8,7 +8,7 @@ import { useRef } from "react";
 import SectionNavigator from "../SectionNavigator";
 import Tile from "./Tile";
 import TileSkeleton from "./TileSkeleton";
-import { ItemProps, arrWithType } from "@/types/itemTypes";
+import { SliderItemProps, arrWithType } from "@/types/itemTypes";
 
 interface HorizontalTilesProps {
   sectionTitle?: string;
@@ -47,7 +47,7 @@ function HorizontalTiles({
       >
         {arr.items
           .slice(0, arr.items.length - 1)
-          .map((item: ItemProps, index) =>
+          .map((item: SliderItemProps, index) =>
             loading.has(index) ? (
               <TileSkeleton key={index} isCircle={isCircle} />
             ) : (
