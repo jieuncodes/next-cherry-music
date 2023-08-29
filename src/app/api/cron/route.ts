@@ -15,7 +15,7 @@ export async function GET() {
     const { error: deleteError } = await supabase
       .from(tableName)
       .delete()
-      .neq("updated_at", 0);
+      .neq("id", 0);
 
     const partOfWholeData = await fetchCherryMusicTracks({
       query,
