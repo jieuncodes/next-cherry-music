@@ -30,3 +30,5 @@ export interface CherryTrack {
   playCount?: string;
   wiki?: { published: string; summary: string };
 }
+
+export type QueryTypes = "top" | "koreatop" | "ustop" | "colombiatop";

@@ -17,11 +17,17 @@ async function geo() {
     return countryTop;
   };
 
-  const countryTops = await Promise.all([
+  const [koreaTop, usTop, colombiaTop] = await Promise.all([
     getCountryTopFromSupabase({ tableName: "koreaTop" }),
     getCountryTopFromSupabase({ tableName: "usTop" }),
     getCountryTopFromSupabase({ tableName: "colombiaTop" }),
   ]);
+  const countryTops = {
+    korea: koreaTop ?? [],
+    us: usTop ?? [],
+    colombia: colombiaTop ?? [],
+  };
+
   return (
     <>
       <Geo countryTops={countryTops} />

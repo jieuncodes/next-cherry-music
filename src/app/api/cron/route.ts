@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { fetchCherryMusicTracks } from "../cherryMusic/track/service";
 import { supabase } from "@/lib/server/client";
+import { QueryTypes } from "@/types/itemTypes";
 
 export const dynamic = "force-dynamic";
 
@@ -9,13 +10,13 @@ export async function GET() {
     query,
     tableName,
   }: {
-    query: "top" | "koreatop" | "ustop" | "colombiatop";
+    query: QueryTypes;
     tableName: string;
   }) => {
     const { error: deleteError } = await supabase
       .from(tableName)
       .delete()
-      .neq("id", 0);
+      .neq("key", "0");
 
     const partOfWholeData = await fetchCherryMusicTracks({
       query,

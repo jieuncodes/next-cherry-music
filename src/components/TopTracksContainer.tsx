@@ -18,7 +18,7 @@ function TopTracksContainer({ query, top20 }: TopTracksContainerProps) {
     setTopTracks(top20 || []);
     const fetchAdditionalTracks = async () => {
       const additionalTracks = await fetchCherryMusicTracks({
-        query: "top",
+        query,
         offset: top20 ? top20.length : 0,
         count: 50,
       });
