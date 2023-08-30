@@ -1,17 +1,47 @@
 "use client";
 
-import { SearchContainer, SearchInput } from "@/styles/Search";
+import { SearchForm, SearchInput } from "@/styles/Search";
 import { Icons } from "../app/Icons";
-import { useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { searchModalState } from "@/atoms";
+import SearchModal from "./Modals/SearchModal";
+import { Track } from "@/lib/server/database.types";
+import { Artist, TrackSearchResult } from "@/types/lastFmTypes";
+import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
+import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 
 export default function Search() {
+  const [isOpen, setIsOpen] = useRecoilState(searchModalState);
   const [value, setValue] = useState<string>("");
-  const debouncedValue = useDebounce<string>(value, 500);
+  const [searchValue, setSearchValue] = useState<string | null>(null);
+  const [res, setRes] = useState<Track[]>([]);
 
-  console.log("value", debouncedValue);
+  const search = async (keyword: string) => {
+    try {
+      const res = await lastFmFetcher.fetchTitleSearchResults(keyword);
+      const tracksArr = res.results.trackmatches.track;
+      console.log("resresres", tracksArr);
+      setRes(tracksArr);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleSearchFormSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setIsOpen(true);
+    setSearchValue(value);
+    setValue("");
+  };
+
+  useEffect(() => {
+    searchValue && search(searchValue);
+  }, [searchValue]);
+
   return (
-    <SearchContainer>
+    <SearchForm onSubmit={handleSearchFormSubmit}>
       <Icons.searchIcon
         size={20}
         className="absolute font-bold ml-2 2xl:mt-[0.7rem] mt-2.5 "
@@ -19,8 +49,9 @@ export default function Search() {
       <SearchInput
         placeholder="Search"
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(e) => setValue(e.target.value)}
       />
-    </SearchContainer>
+      {searchValue && <SearchModal keyword={searchValue} results={res} />}
+    </SearchForm>
   );
 }

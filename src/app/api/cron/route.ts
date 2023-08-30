@@ -13,16 +13,12 @@ export async function GET() {
     query: QueryTypes;
     tableName: string;
   }) => {
-    const { error: deleteError } = await supabase
-      .from(tableName)
-      .delete()
-      .neq("key", "0");
+    const { error: deleteError } = await supabase.from(tableName).delete();
 
     const partOfWholeData = await fetchCherryMusicTracks({
       query,
       count: 20,
     });
-    console.log("partOfWholeData", partOfWholeData);
 
     const { data, error: insertError } = await supabase
       .from(tableName)

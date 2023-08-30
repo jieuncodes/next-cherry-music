@@ -73,6 +73,17 @@ export const lastFmFetcher = {
       "/api/lastFm/tag",
       `method=gettoptracks&tag=${ensureEncoded(tag)}`
     ),
+  //search
+  fetchTitleSearchResults: (keyword: string) =>
+    fetchResource(
+      "/api/lastFm/track",
+      `method=search&trackTitle=${ensureEncoded(keyword)}`
+    ),
+  fetchArtistSearchResults: (keyword: string) =>
+    fetchResource(
+      "/api/lastFm/artist",
+      `method=search&artist=${ensureEncoded(keyword)}`
+    ),
 
   //album
   fetchAlbumInfo: async ({

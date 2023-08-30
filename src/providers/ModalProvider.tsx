@@ -1,7 +1,7 @@
 "use client";
 
-import AuthModal from "@/components/AuthModal";
-import PlaylistModal from "@/components/PlaylistModal";
+import AuthModal from "@/components/Modals/AuthModal";
+import PlaylistModal from "@/components/Modals/PlaylistModal";
 
 function ModalProvider({}) {
   return (

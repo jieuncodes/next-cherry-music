@@ -39,6 +39,10 @@ export const authModalState = atom<boolean>({
   key: "authModalState",
   default: false,
 });
+export const searchModalState = atom<boolean>({
+  key: "searchModalState",
+  default: false,
+});
 
 //progress bar
 export const currTrackCurrentTimeAtom = atom<number>({

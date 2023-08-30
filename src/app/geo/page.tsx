@@ -12,7 +12,7 @@ async function geo() {
       .select("*");
 
     if (countryTopError) {
-      console.log(countryTopError);
+      console.warn(countryTopError);
     }
     return countryTop;
   };

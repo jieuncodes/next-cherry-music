@@ -25,15 +25,15 @@ export async function GET(req: NextRequest, res: NextResponse) {
     { query, offset, count },
     req
   );
-
   console.timeEnd("fetchTrackListByQueryType");
 
   console.time("trackDetailsPromises");
+
   const trackDetailsPromises = tracksToProcess.map(
     async (track: LastFmTrack, index): Promise<CherryTrack> => {
       const lastFmTrackDetail = await lastFmFetcher.fetchTrackDetail(track);
       const [youtubeId, spotifyData] = await Promise.all([
-        fetchYouTubeVideoId(lastFmTrackDetail.track.url),
+        fetchYouTubeVideoId(lastFmTrackDetail.track?.url),
         fetchSpotifyTrackInfo(track.name),
       ]);
       const spotifyTrack = spotifyData.tracks?.items?.[0];
@@ -49,8 +49,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
           spotifyTrack?.album?.images[0].url ||
           "/images/default_album_cover.webp",
         tags: lastFmTrackDetail.track?.toptags?.tag || [],
-        playCount: lastFmTrackDetail.track.playcount,
-        wiki: lastFmTrackDetail.track.wiki,
+        playCount: lastFmTrackDetail.track?.playcount || 0,
+        wiki: lastFmTrackDetail.track?.wiki,
       };
     }
   );

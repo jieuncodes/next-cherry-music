@@ -1,5 +1,4 @@
 import { PlaylistModalState } from "@/atoms";
-import usePlayerControls from "@/hooks/usePlayerControls";
 import {
   Button,
   Modal,
@@ -8,10 +7,9 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { Icons } from "../app/Icons";
-import PlaylistCards from "./Playlist/PlaylistCards";
+import { Icons } from "../../app/Icons";
+import PlaylistCards from "../Playlist/PlaylistCards";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 
 export default function PlaylistModal() {

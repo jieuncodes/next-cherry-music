@@ -47,8 +47,6 @@ export default function Nav() {
       />
     ) : null;
 
-  // const pathname = usePathname();
-  // console.log("pathname", pathname);
   return (
     <NavContainer>
       <Link

@@ -29,6 +29,7 @@ export const getSpotifyPlaylistId = (query: string) => {
         envVar: process.env.NEXT_PUBLIC_SPOTIFY_TODAY_TOP,
         envVarName: "NEXT_PUBLIC_SPOTIFY_TODAY_TOP",
       };
+
     default:
       throw new Error("Invalid query provided");
   }
@@ -46,7 +47,7 @@ export const fetchTrackListByQueryType = async (
   const artist = req.nextUrl.searchParams.get("artist");
   const tag = req.nextUrl.searchParams.get("tag");
   const album = req.nextUrl.searchParams.get("album");
-
+  const keyword = req.nextUrl.searchParams.get("keyword");
   switch (query) {
     case "top":
     case "koreatop":
@@ -100,6 +101,26 @@ export const fetchTrackListByQueryType = async (
         ? albumInfo.tracks.track
         : [albumInfo.tracks.track];
       return tracksArray;
+
+    case "searchTitle":
+      if (!keyword) {
+        throw new Error("Keyword is required for search query.");
+      }
+      const searchResult = await lastFmFetcher.fetchTitleSearchResults(keyword);
+      if (!searchResult) return [];
+
+      return searchResult.results.trackmatches.track;
+
+    case "searchArtist":
+      if (!keyword) {
+        throw new Error("Keyword is required for search query.");
+      }
+      const artistSearchResult = await lastFmFetcher.fetchArtistSearchResults(
+        keyword
+      );
+      if (!artistSearchResult) return [];
+
+      return artistSearchResult.artistmatches.artist;
 
     default:
       throw new Error("Invalid query parameter.");

@@ -14,7 +14,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       api_key: process.env.LAST_FM_API_KEY!,
       format: "json",
     };
-
     const data = await fetchFromLastFM(params);
     return NextResponse.json(data);
   } catch (error) {

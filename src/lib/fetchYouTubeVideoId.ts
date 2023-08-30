@@ -13,7 +13,7 @@ async function fetchYouTubeVideoId(trackUrl: string) {
       return youtubeId;
     }
   } catch (error) {
-    console.error("Error fetching YouTube video ID:", error);
+    console.error("Error fetching YouTube video ID");
   }
 
   return null;
