@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import { Righteous } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Icons } from "../app/Icons";
 import Search from "./Search";
@@ -28,7 +28,6 @@ export default function Nav() {
   const supabase = createClientComponentClient<Database>();
   const router = useRouter();
   const user = useUser();
-
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     router.refresh();
@@ -48,6 +47,8 @@ export default function Nav() {
       />
     ) : null;
 
+  // const pathname = usePathname();
+  // console.log("pathname", pathname);
   return (
     <NavContainer>
       <Link
