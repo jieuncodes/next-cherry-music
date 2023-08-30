@@ -6,6 +6,9 @@ import {
   fetchSpotifyPlaylist,
   refineSpotifyTracksIntoLastFmTrack,
 } from "../../spotify/service";
+import { CherryTrack } from "@/types/itemTypes";
+import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
+import { fetchSpotifyTrackInfo } from "../../spotify/spotifyHelpers";
 
 export const getSpotifyPlaylistId = (query: string) => {
   switch (query) {
@@ -129,4 +132,40 @@ export const fetchTrackListByQueryType = async (
     default:
       throw new Error("Invalid query parameter.");
   }
+};
+
+export const processTrack = async (
+  track: LastFmTrack | LastFmSearchResTrack,
+  index: number
+): Promise<CherryTrack> => {
+  const isSearchResTrack =
+    "artist" in track && typeof track.artist === "string";
+  const trackTitle = track.name;
+  const artistName = isSearchResTrack
+    ? (track as LastFmSearchResTrack).artist
+    : (track as LastFmTrack).artist.name;
+
+  const lastFmTrackDetail = await lastFmFetcher.fetchTrackDetail({
+    trackTitle: trackTitle,
+    artist: artistName,
+  });
+  const [youtubeId, spotifyData] = await Promise.all([
+    fetchYouTubeVideoId(lastFmTrackDetail.track?.url),
+    fetchSpotifyTrackInfo(trackTitle),
+  ]);
+  const spotifyTrack = spotifyData.tracks?.items?.[0];
+  return {
+    key: index + "",
+    rank: index,
+    trackTitle: decodeURIComponent(trackTitle),
+    artist: decodeURIComponent(artistName) || "",
+    youtubeId,
+    albumTitle:
+      lastFmTrackDetail.album?.title || spotifyTrack?.album?.name || "",
+    albumImgUrl:
+      spotifyTrack?.album?.images[0].url || "/images/default_album_cover.webp",
+    tags: lastFmTrackDetail?.track?.toptags?.tag || [],
+    playCount: lastFmTrackDetail?.track?.playcount || 0,
+    wiki: lastFmTrackDetail?.track?.wiki || "",
+  };
 };

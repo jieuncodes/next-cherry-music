@@ -46,7 +46,10 @@ export default function Search() {
     <SearchForm onSubmit={handleSearchFormSubmit}>
       <Icons.searchIcon
         size={20}
-        className="absolute font-bold ml-2 2xl:mt-[0.7rem] mt-2.5 "
+        className="absolute font-bold ml-2 2xl:mt-[0.7rem] mt-2.5 hover:cursor-pointer "
+        onClick={() => {
+          setIsOpen(true);
+        }}
       />
       <SearchInput
         placeholder="Search"
