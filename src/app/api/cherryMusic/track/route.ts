@@ -1,10 +1,6 @@
-import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
 import { LastFmSearchResTrack, LastFmTrack } from "@/types/lastFmTypes";
 import { NextRequest, NextResponse } from "next/server";
-import { lastFmFetcher } from "../../lastFm/fetcher";
-import { fetchSpotifyTrackInfo } from "../../spotify/spotifyHelpers";
-import { fetchTrackListByQueryType } from "./helper";
-import { CherryTrack } from "@/types/itemTypes";
+import { fetchTrackListByQueryType, processTrack } from "./helper";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const query = req.nextUrl.searchParams.get("query");
@@ -22,74 +18,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 
   console.time("fetchTrackListByQueryType");
-  let tracksToProcess: (LastFmTrack | LastFmSearchResTrack)[] =
+  const tracksToProcess: (LastFmTrack | LastFmSearchResTrack)[] =
     await fetchTrackListByQueryType({ query, offset, count }, req);
-
   console.timeEnd("fetchTrackListByQueryType");
 
   console.time("trackDetailsPromises");
-
-  let trackDetailsPromises;
-  if (query === "searchTitle") {
-    trackDetailsPromises = (tracksToProcess as LastFmSearchResTrack[]).map(
-      async (track, index): Promise<CherryTrack> => {
-        const lastFmTrackDetail = await lastFmFetcher.fetchTrackDetail({
-          trackTitle: track.name,
-          artist: track.artist,
-        });
-        const [youtubeId, spotifyData] = await Promise.all([
-          fetchYouTubeVideoId(lastFmTrackDetail.track?.url),
-          fetchSpotifyTrackInfo(track.name),
-        ]);
-        const spotifyTrack = spotifyData.tracks?.items?.[0];
-        return {
-          key: index + "",
-          rank: index,
-          trackTitle: decodeURIComponent(track.name),
-          artist: decodeURIComponent(track.artist) || "",
-          youtubeId,
-          albumTitle:
-            lastFmTrackDetail.album?.title || spotifyTrack?.album?.name || "",
-          albumImgUrl:
-            spotifyTrack?.album?.images[0].url ||
-            "/images/default_album_cover.webp",
-          tags: lastFmTrackDetail?.track?.toptags?.tag || [],
-          playCount: lastFmTrackDetail?.track?.playcount || 0,
-          wiki: lastFmTrackDetail?.track?.wiki || "",
-        };
-      }
-    );
-  } else {
-    trackDetailsPromises = (tracksToProcess as LastFmTrack[]).map(
-      async (track, index): Promise<CherryTrack> => {
-        const lastFmTrackDetail = await lastFmFetcher.fetchTrackDetail({
-          trackTitle: track.name,
-          artist: track.artist.name,
-        });
-        const [youtubeId, spotifyData] = await Promise.all([
-          fetchYouTubeVideoId(lastFmTrackDetail.track?.url),
-          fetchSpotifyTrackInfo(track.name),
-        ]);
-        const spotifyTrack = spotifyData.tracks?.items?.[0];
-        return {
-          key: index + "",
-          rank: index,
-          trackTitle: decodeURIComponent(track.name),
-          artist: decodeURIComponent(track.artist.name) || "",
-          youtubeId,
-          albumTitle:
-            lastFmTrackDetail.album?.title || spotifyTrack?.album?.name || "",
-          albumImgUrl:
-            spotifyTrack?.album?.images[0].url ||
-            "/images/default_album_cover.webp",
-          tags: lastFmTrackDetail?.track?.toptags?.tag || [],
-          playCount: lastFmTrackDetail?.track?.playcount || 0,
-          wiki: lastFmTrackDetail?.track?.wiki || "",
-        };
-      }
-    );
-  }
-
+  const trackDetailsPromises = tracksToProcess.map((track, index) =>
+    processTrack(track, index)
+  );
   console.timeEnd("trackDetailsPromises");
 
   const resolvedTrackDetails = await Promise.all(trackDetailsPromises);
