@@ -13,18 +13,16 @@ import PlaylistCards from "../Playlist/PlaylistCards";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { useEffect } from "react";
 import { Track } from "@/lib/server/database.types";
+import LoadingSpinner from "../LoadingSpinner";
+import SearchListCards from "../Search/SearchListCards";
 
 interface SearchModalProps {
-  keyword: string;
+  keyword: string | null;
   results: Track[];
+  isLoading: boolean;
 }
-function SearchModal({ keyword, results }: SearchModalProps) {
+function SearchModal({ keyword, results, isLoading }: SearchModalProps) {
   const [isOpen, setIsOpen] = useRecoilState(searchModalState);
-  const { playlist } = useLocalStoragePlaylist();
-
-  useEffect(() => {
-    console.log("keyword", keyword);
-  }, [keyword]);
   return (
     <div className="flex flex-col gap-2">
       <Modal
@@ -40,12 +38,17 @@ function SearchModal({ keyword, results }: SearchModalProps) {
                 <h1>{`Search result for "${keyword}"`}</h1>
               </ModalHeader>
               <ModalBody>
-                {results.length === 0 ? (
+                {isLoading && (
+                  <div className="flex w-full h-96 justify-center align-middle pl-12">
+                    <LoadingSpinner />
+                  </div>
+                )}
+                {!isLoading && results.length === 0 ? (
                   <div className="w-full text-center">
                     Sorry.. No tracks found.
                   </div>
                 ) : (
-                  <PlaylistCards playlist={results} />
+                  <SearchListCards playlist={results} />
                 )}
               </ModalBody>
             </>

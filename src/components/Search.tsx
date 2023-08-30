@@ -16,16 +16,17 @@ export default function Search() {
   const [value, setValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string | null>(null);
   const [res, setRes] = useState<Track[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const search = async (keyword: string) => {
     try {
+      setIsLoading(true);
       const res = await fetchCherryMusicTracks({
         query: "searchTitle",
         keyword: keyword,
       });
-      //res
-      console.log("res", res);
       setRes(res);
+      setIsLoading(false);
     } catch (e) {
       console.log(e);
     }
@@ -56,7 +57,13 @@ export default function Search() {
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      {searchValue && <SearchModal keyword={searchValue} results={res} />}
+      {
+        <SearchModal
+          keyword={searchValue}
+          results={res}
+          isLoading={isLoading}
+        />
+      }
     </SearchForm>
   );
 }
