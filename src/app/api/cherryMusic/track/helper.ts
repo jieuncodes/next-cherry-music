@@ -1,5 +1,5 @@
 import { ensureEncoded, validateEnvVariable } from "@/lib/helpers";
-import { LastFmTrack } from "@/types/lastFmTypes";
+import { LastFmSearchResTrack, LastFmTrack } from "@/types/lastFmTypes";
 import { NextRequest } from "next/server";
 import { lastFmFetcher } from "../../lastFm/fetcher";
 import {
@@ -43,7 +43,7 @@ interface fetchTrackListByQueryTypeProps {
 export const fetchTrackListByQueryType = async (
   { query, offset, count }: fetchTrackListByQueryTypeProps,
   req: NextRequest
-): Promise<LastFmTrack[]> => {
+): Promise<LastFmTrack[] | LastFmSearchResTrack[]> => {
   const artist = req.nextUrl.searchParams.get("artist");
   const tag = req.nextUrl.searchParams.get("tag");
   const album = req.nextUrl.searchParams.get("album");
@@ -78,6 +78,7 @@ export const fetchTrackListByQueryType = async (
         throw new Error("Artist name is required for artisttop query.");
       }
       const data = await lastFmFetcher.fetchArtistTopTracks(artist);
+      console.log("artisttop", data.toptracks.track);
       return data.toptracks.track;
 
     case "tagtop":
@@ -108,8 +109,11 @@ export const fetchTrackListByQueryType = async (
       }
       const searchResult = await lastFmFetcher.fetchTitleSearchResults(keyword);
       if (!searchResult) return [];
-
-      return searchResult.results.trackmatches.track;
+      console.log(
+        "searchResult.results.trackmatches.track",
+        searchResult.results.trackmatches.track
+      );
+      return [...searchResult.results.trackmatches.track];
 
     case "searchArtist":
       if (!keyword) {

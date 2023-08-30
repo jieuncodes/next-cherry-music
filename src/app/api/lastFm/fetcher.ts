@@ -49,12 +49,18 @@ export const lastFmFetcher = {
     ),
 
   //track
-  fetchTrackDetail: (track: TrackWithTitleAndArtist) =>
+  fetchTrackDetail: ({
+    trackTitle,
+    artist,
+  }: {
+    trackTitle: string;
+    artist: string;
+  }) =>
     fetchResource(
       "/api/lastFm/track",
       `method=getinfo&trackTitle=${ensureEncoded(
-        track.name
-      )}&artist=${ensureEncoded(track.artist.name)}`
+        trackTitle
+      )}&artist=${ensureEncoded(artist)}`
     ),
 
   //tag

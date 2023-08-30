@@ -1,3 +1,4 @@
+import LikeButton from "../components/Btns/LikeButton";
 type Streamable = { "#text": string; fulltrack: string };
 export type Artist = { name: string; mbid: string; url: string };
 type AlbumImage = { "#text": string; size: string };
@@ -148,4 +149,13 @@ export interface TrackSearchResult {
     opensearchTotalResults: string;
     trackmatches: { track: LastFmTrack[] };
   };
+}
+export interface LastFmSearchResTrack {
+  name: string;
+  artist: string;
+  url: string;
+  streamable: string;
+  Listeners: string;
+  image: [];
+  mbid: string;
 }

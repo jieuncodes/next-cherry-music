@@ -13,8 +13,6 @@ import PlaylistCards from "../Playlist/PlaylistCards";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { useEffect } from "react";
 import { Track } from "@/lib/server/database.types";
-import AlbumPlaylist from "../Album/AlbumPlaylist";
-import AlbumPlaylistSkeleton from "../Album/AlbumPlaylistSkeleton";
 
 interface SearchModalProps {
   keyword: string;
@@ -42,10 +40,12 @@ function SearchModal({ keyword, results }: SearchModalProps) {
                 <h1>{`Search result for "${keyword}"`}</h1>
               </ModalHeader>
               <ModalBody>
-                {results ? (
-                  <AlbumPlaylist playlist={results} />
+                {results.length === 0 ? (
+                  <div className="w-full text-center">
+                    Sorry.. No tracks found.
+                  </div>
                 ) : (
-                  <AlbumPlaylistSkeleton />
+                  <PlaylistCards playlist={results} />
                 )}
               </ModalBody>
             </>

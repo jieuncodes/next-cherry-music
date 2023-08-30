@@ -10,7 +10,6 @@ import SearchModal from "./Modals/SearchModal";
 import { Track } from "@/lib/server/database.types";
 import { Artist, TrackSearchResult } from "@/types/lastFmTypes";
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
-import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 
 export default function Search() {
   const [isOpen, setIsOpen] = useRecoilState(searchModalState);
@@ -20,10 +19,13 @@ export default function Search() {
 
   const search = async (keyword: string) => {
     try {
-      const res = await lastFmFetcher.fetchTitleSearchResults(keyword);
-      const tracksArr = res.results.trackmatches.track;
-      console.log("resresres", tracksArr);
-      setRes(tracksArr);
+      const res = await fetchCherryMusicTracks({
+        query: "searchTitle",
+        keyword: keyword,
+      });
+      //res
+      console.log("res", res);
+      setRes(res);
     } catch (e) {
       console.log(e);
     }
