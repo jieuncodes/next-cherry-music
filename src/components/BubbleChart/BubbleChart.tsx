@@ -10,6 +10,7 @@ import LoadingSpinner from "../LoadingSpinner";
 import renderBubbleChart from "./RenderBubbleChart";
 import { CHART_HEIGHT, CHART_WIDTH, enrichArtists } from "./bubbleChartHelpers";
 import { useRouter } from "next/navigation";
+import useWindowSize from "@/hooks/useWindowSize";
 
 function BubbleChart({
   arr,
@@ -24,6 +25,10 @@ function BubbleChart({
   const [isTopArtistChart, setIsTopArtistChart] = useState<boolean>(true);
   useState<boolean>(true);
   const router = useRouter();
+
+  const windowSize = useWindowSize();
+  console.log("windowSize", windowSize);
+
   useEffect(() => {
     const fetchEnrichedArtists = async () => {
       if (
@@ -77,7 +82,7 @@ function BubbleChart({
 
   return (
     <div className="flex justify-center align-middle h-full w-full -ml-6 -mt-6">
-      <div className="w-full h-600">
+      <div className="w-full h-600 ">
         <motion.h1
           layoutId="chart-title"
           initial={{ opacity: 0 }}
@@ -91,10 +96,15 @@ function BubbleChart({
             : `Similar Artists - ${centerArtist.name}`}
         </motion.h1>
         {chartLoading && (
-          <LoadingSpinner className={`absolute top-1/3 left-96 `} />
+          <LoadingSpinner className="absolute top-1/4 left-2/4 " />
         )}
-        <div className=" w-full mr-6 flex justify-center align-middle ">
-          <svg width={CHART_WIDTH} height={CHART_HEIGHT} ref={chartRef}></svg>
+        <div className=" w-full mr-6 flex justify-center align-middle  overflow-visible">
+          <svg
+            width={CHART_WIDTH}
+            height={CHART_HEIGHT}
+            ref={chartRef}
+            className="overflow-visible"
+          ></svg>
         </div>
       </div>
     </div>

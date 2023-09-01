@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  RepeatState,
   ShuffleState,
   currPlayingTrackYoutubeId,
   currPlaylistTrackIdx,
@@ -9,6 +10,7 @@ import {
   playerReadyStateAtom,
 } from "@/atoms";
 import usePlayerControls from "@/hooks/usePlayerControls";
+import { isRouteMatch } from "next/dist/server/future/route-matches/route-match";
 import React, { ReactNode, createContext, useContext, useRef } from "react";
 import YouTube, { YouTubePlayer } from "react-youtube";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -60,6 +62,7 @@ function PlayerProvider({ children }: PlayerProviderProps) {
   const playerRef = useRef<YouTubePlayer | null>(null);
 
   const isShuffleOn = useRecoilValue(ShuffleState);
+  const isRepeatOn = useRecoilValue(RepeatState);
   const { playShuffledNextTrack } = usePlayerControls();
 
   const setCurrPlaylingTrackYoutubeId = useSetRecoilState(
@@ -79,6 +82,11 @@ function PlayerProvider({ children }: PlayerProviderProps) {
     setIsPlaying(false);
     if (isShuffleOn) {
       playShuffledNextTrack();
+      return;
+    } else if (isRepeatOn) {
+      console.log("repeat on");
+      playerRef.current?.playVideo();
+
       return;
     }
     setCurrTrackIdx(currTrackIdx + 1);

@@ -4,6 +4,7 @@ import {
   localStoragePlaylist,
   playerReadyStateAtom,
 } from "@/atoms";
+import { isValidPlayer } from "@/lib/helpers";
 import { RefObject, useEffect, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
 import { useRecoilState, useRecoilValue } from "recoil";

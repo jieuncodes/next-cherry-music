@@ -81,8 +81,7 @@ export const fetchTrackListByQueryType = async (
         throw new Error("Artist name is required for artisttop query.");
       }
       const data = await lastFmFetcher.fetchArtistTopTracks(artist);
-      console.log("artisttop", data.toptracks.track);
-      return data.toptracks.track;
+      return data.toptracks.track.slice(0, 7);
 
     case "tagtop":
       if (!tag) {
