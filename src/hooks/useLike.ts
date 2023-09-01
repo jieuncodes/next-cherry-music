@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/server/client";
 import { Track } from "@/lib/server/database.types";
 import { User } from "@supabase/supabase-js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface UseLikeTrackProps {
   initialValue?: boolean;
@@ -15,6 +15,28 @@ function useLikeTrack({
   user,
 }: UseLikeTrackProps) {
   const [liked, setLiked] = useState(initialValue);
+
+  useEffect(() => {
+    if (user && track) {
+      const checkIfLiked = async () => {
+        let { data: likes, error } = await supabase
+          .from("like")
+          .select("*")
+          .eq("userId", user.id)
+          .eq("trackYoutubeId", track.youtubeId);
+
+        if (error) {
+          console.error("Error fetching like status:", error);
+        } else if (likes && likes.length > 0) {
+          setLiked(true);
+        } else {
+          setLiked(false);
+        }
+      };
+
+      checkIfLiked();
+    }
+  }, [user, track]);
 
   const toggleLike = () => {
     if (!user) {
@@ -31,9 +53,6 @@ function useLikeTrack({
       return !prevLiked;
     });
   };
-
-  console.log("track", track);
-  console.log("user", user);
 
   const likeTrack = async () => {
     const { data, error } = await supabase

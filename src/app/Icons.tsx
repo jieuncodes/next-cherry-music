@@ -1,4 +1,4 @@
-import { Bomb, CopyPlus, Minus, Trash2 } from "lucide-react";
+import { BarChart2, Bomb, CopyPlus, Minus, Trash2 } from "lucide-react";
 import {
   HeartIcon,
   User,
@@ -69,4 +69,5 @@ export const Icons = {
   trash2: Trash2,
   copyPlus: CopyPlus,
   globe: Globe,
+  barChart2: BarChart2,
 };

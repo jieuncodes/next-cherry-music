@@ -16,11 +16,10 @@ import { motion } from "framer-motion";
 import { Righteous } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Icons } from "../app/Icons";
 import Search from "./Search";
-import ThemeSwitcher from "./ThemeSwitcher";
 
 const righteous = Righteous({ weight: "400", subsets: ["latin"] });
 
@@ -71,7 +70,7 @@ export default function Nav() {
       <NavUl>
         <Menu onClick={() => handleMenuClick("Chart")}>
           {renderSideline("Chart")}
-          <Icons.disc3 size={22} />
+          <Icons.barChart2 size={22} />
           <MenuSpan>Chart</MenuSpan>
         </Menu>
         <Menu onClick={() => handleMenuClick("geo")}>
