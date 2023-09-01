@@ -7,6 +7,7 @@ interface TransparentRoundBtnProps {
   size?: "sm" | "md" | "lg";
   isDisabled?: boolean;
   isShuffleOn?: boolean;
+  isRepeatOn?: number;
 }
 
 function TransparentRoundBtn({
@@ -15,10 +16,11 @@ function TransparentRoundBtn({
   size,
   isDisabled,
   isShuffleOn,
+  isRepeatOn,
 }: TransparentRoundBtnProps) {
   return (
     <Button
-      color={isShuffleOn ? "danger" : "default"}
+      color={isShuffleOn || isRepeatOn === 0 ? "danger" : "default"}
       isDisabled={isDisabled}
       isIconOnly
       className=" data-[hover]:bg-foreground/10 "

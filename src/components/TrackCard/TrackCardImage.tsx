@@ -28,7 +28,6 @@ function TrackCardImage({ isCardHover, track, size }: TrackCardImageProps) {
         src={track.albumImgUrl || "/images/default_album_img.png"}
         height={size === "small" ? 36 : 47}
         width={size === "small" ? 36 : 47}
-        placeholder="blur"
         blurDataURL="/images/default_album_img.png"
       />
     </TrackImgBox>

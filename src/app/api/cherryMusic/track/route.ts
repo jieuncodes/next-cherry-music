@@ -4,7 +4,6 @@ import { fetchTrackListByQueryType, processTrack } from "./helper";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const query = req.nextUrl.searchParams.get("query");
-  console.log("queryqueryquery", query);
   const rawOffset = req.nextUrl.searchParams.get("offset");
   const rawCount = req.nextUrl.searchParams.get("count");
   const offset = rawOffset ? Number(rawOffset) : null;
@@ -27,7 +26,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     processTrack(track, index)
   );
   console.timeEnd("trackDetailsPromises");
-
   const resolvedTrackDetails = await Promise.all(trackDetailsPromises);
   const allTrackDetailsWithYoutube = resolvedTrackDetails.filter(
     (track) => track && track.youtubeId

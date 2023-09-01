@@ -19,16 +19,13 @@ function Carousel() {
   const variants: Variants = {
     enter: {
       opacity: 0,
-      backgroundColor: carouselItems[carouselIdx]?.bgColor || "lightblue",
     },
-    active: (custom) => ({
+    active: () => ({
       opacity: 1,
-      backgroundColor: custom,
       transition: { delay: 0.5, duration: 0.2 },
     }),
     exit: { opacity: 0 },
   };
-
   return (
     <CarouselContainer>
       <AnimatePresence>
@@ -38,6 +35,7 @@ function Carousel() {
           initial="enter"
           animate="active"
           exit="exit"
+          className={`bg-gradient-to-r from-pink-300 from-10% to-violet-300 to-90%`}
         >
           <CarouselItem carouselItem={carouselItems[carouselIdx]} />
         </CarouselBox>

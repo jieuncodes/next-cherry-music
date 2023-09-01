@@ -11,12 +11,13 @@ export interface Database {
     Tables: {
       carousel: {
         Row: {
-          bgColor: string | null;
           desc: string | null;
+          firstBgColor: string | null;
           height: string | null;
           id: number;
           marginLeft: string | null;
           marginTop: string | null;
+          secondBgColor: string | null;
           src: string | null;
           title: string | null;
           width: string | null;
@@ -24,10 +25,12 @@ export interface Database {
         Insert: {
           bgColor?: string | null;
           desc?: string | null;
+          firstBgColor?: string | null;
           height?: string | null;
           id?: number;
           marginLeft?: string | null;
           marginTop?: string | null;
+          secondBgColor?: string | null;
           src?: string | null;
           title?: string | null;
           width?: string | null;
@@ -35,37 +38,105 @@ export interface Database {
         Update: {
           bgColor?: string | null;
           desc?: string | null;
+          firstBgColor?: string | null;
           height?: string | null;
           id?: number;
           marginLeft?: string | null;
           marginTop?: string | null;
+          secondBgColor?: string | null;
           src?: string | null;
           title?: string | null;
           width?: string | null;
         };
         Relationships: [];
       };
-      lastFetchTimes: {
+      colombiaTop: {
         Row: {
-          albumTracks: string | null;
-          artistTopTracks: string | null;
+          albumImgUrl: string | null;
+          albumTitle: string | null;
+          artist: string | null;
           id: number;
-          tagTopTracks: string | null;
-          topTracks: string | null;
+          key: string | null;
+          playCount: string | null;
+          rank: number | null;
+          tags: Json[] | null;
+          trackTitle: string | null;
+          updated_at: string | null;
+          wiki: Json | null;
+          youtubeId: string | null;
         };
         Insert: {
-          albumTracks?: string | null;
-          artistTopTracks?: string | null;
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
           id?: number;
-          tagTopTracks?: string | null;
-          topTracks?: string | null;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
+          updated_at?: string | null;
+          wiki?: Json | null;
+          youtubeId?: string | null;
         };
         Update: {
-          albumTracks?: string | null;
-          artistTopTracks?: string | null;
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
           id?: number;
-          tagTopTracks?: string | null;
-          topTracks?: string | null;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
+          updated_at?: string | null;
+          wiki?: Json | null;
+          youtubeId?: string | null;
+        };
+        Relationships: [];
+      };
+      koreaTop: {
+        Row: {
+          albumImgUrl: string | null;
+          albumTitle: string | null;
+          artist: string | null;
+          id: number;
+          key: string | null;
+          playCount: string | null;
+          rank: number | null;
+          tags: Json[] | null;
+          trackTitle: string | null;
+          updated_at: string | null;
+          wiki: Json | null;
+          youtubeId: string | null;
+        };
+        Insert: {
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
+          id?: number;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
+          updated_at?: string | null;
+          wiki?: Json | null;
+          youtubeId?: string | null;
+        };
+        Update: {
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
+          id?: number;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
+          updated_at?: string | null;
+          wiki?: Json | null;
+          youtubeId?: string | null;
         };
         Relationships: [];
       };
@@ -80,6 +151,7 @@ export interface Database {
           rank: number | null;
           tags: Json[] | null;
           trackTitle: string | null;
+          updated_at: string | null;
           wiki: Json | null;
           youtubeId: string | null;
         };
@@ -93,6 +165,7 @@ export interface Database {
           rank?: number | null;
           tags?: Json[] | null;
           trackTitle?: string | null;
+          updated_at?: string | null;
           wiki?: Json | null;
           youtubeId?: string | null;
         };
@@ -106,6 +179,52 @@ export interface Database {
           rank?: number | null;
           tags?: Json[] | null;
           trackTitle?: string | null;
+          updated_at?: string | null;
+          wiki?: Json | null;
+          youtubeId?: string | null;
+        };
+        Relationships: [];
+      };
+      usTop: {
+        Row: {
+          albumImgUrl: string | null;
+          albumTitle: string | null;
+          artist: string | null;
+          id: number;
+          key: string | null;
+          playCount: string | null;
+          rank: number | null;
+          tags: Json[] | null;
+          trackTitle: string | null;
+          updated_at: string | null;
+          wiki: Json | null;
+          youtubeId: string | null;
+        };
+        Insert: {
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
+          id?: number;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
+          updated_at?: string | null;
+          wiki?: Json | null;
+          youtubeId?: string | null;
+        };
+        Update: {
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
+          id?: number;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
+          updated_at?: string | null;
           wiki?: Json | null;
           youtubeId?: string | null;
         };
@@ -126,4 +245,5 @@ export interface Database {
     };
   };
 }
+
 export type Track = Database["public"]["Tables"]["todayTop"]["Row"];

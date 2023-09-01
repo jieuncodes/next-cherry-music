@@ -25,6 +25,7 @@ function CarouselItem({
         exit="hidden"
       >
         <Image
+          priority
           src={carouselItem?.src || "/images/ariana.png"}
           alt="carousel image"
           style={{

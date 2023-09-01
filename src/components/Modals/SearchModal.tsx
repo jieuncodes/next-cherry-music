@@ -1,17 +1,7 @@
 import { searchModalState } from "@/atoms";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from "@nextui-org/react";
+import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { useRecoilState } from "recoil";
 import { Icons } from "../../app/Icons";
-import PlaylistCards from "../Playlist/PlaylistCards";
-import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import { useEffect } from "react";
 import { Track } from "@/lib/server/database.types";
 import LoadingSpinner from "../LoadingSpinner";
 import SearchListCards from "../Search/SearchListCards";
@@ -31,10 +21,10 @@ function SearchModal({ keyword, results, isLoading }: SearchModalProps) {
         scrollBehavior="inside"
       >
         <ModalContent>
-          {(onClose) => (
+          {
             <>
               <ModalHeader className="flex flex-row gap-3 items-center">
-                <Icons.listMusic />
+                <Icons.searchIcon />
                 <h1>{`Search result for "${keyword}"`}</h1>
               </ModalHeader>
               <ModalBody>
@@ -52,7 +42,7 @@ function SearchModal({ keyword, results, isLoading }: SearchModalProps) {
                 )}
               </ModalBody>
             </>
-          )}
+          }
         </ModalContent>
       </Modal>
     </div>

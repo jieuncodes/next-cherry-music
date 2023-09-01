@@ -1,5 +1,6 @@
 import { Icons } from "@/app/Icons";
 import {
+  RepeatState,
   ShuffleState,
   currPlaylistTrackIdx,
   localStoragePlaylist,
@@ -26,6 +27,7 @@ function PlayerController({
     useRecoilState(localStoragePlaylist);
   const { handleSkipBack, handleSkipForward } = usePlayerControls();
   const [isShuffleOn, setIsShuffleOn] = useRecoilState(ShuffleState);
+  const [isRepeatOn, setIsRepeatOn] = useRecoilState(RepeatState);
 
   return (
     <Controllers>
@@ -67,7 +69,8 @@ function PlayerController({
         <TransparentRoundBtn
           startContent={<Icons.repeat size={17} />}
           size="sm"
-          onPress={() => console.log("")}
+          onPress={() => setIsRepeatOn(isRepeatOn == 1 ? 0 : 1)}
+          isRepeatOn={isRepeatOn}
         />
       )}
     </Controllers>

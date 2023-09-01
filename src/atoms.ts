@@ -25,6 +25,11 @@ export const ShuffleState = atom<boolean>({
   key: "ShuffleState",
   default: false,
 });
+export const RepeatState = atom<number>({
+  key: "RepeatState",
+  default: 1,
+});
+
 export const currPlayingTrackYoutubeId = atom<string>({
   key: "currPlayingTrackId",
   default: "",

@@ -1,12 +1,11 @@
 import TrackCardDetails from "@/components/TrackCard/TrackCardDetails";
 import CardDropDown from "@/components/TrackCard/TrackCardDropDown";
 import TrackCardImage from "@/components/TrackCard/TrackCardImage";
-import usePlayerControls from "@/hooks/usePlayerControls";
-import { useRef, useState } from "react";
-import { playlistActionDropdownItems } from "../Dropdowns/DropdownItems";
+import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { Track } from "@/lib/server/database.types";
 import { StyledCard, StyledHeader } from "@/styles/Panel/PlaylistCard";
-import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
+import { useRef, useState } from "react";
+import { trackActionDropdownItems } from "../Dropdowns/DropdownItems";
 
 interface SearchListCardProps {
   track: Track;
@@ -50,7 +49,7 @@ function SearchListCard({ track, index, isPlayingTrack }: SearchListCardProps) {
             setIsDropdownHover={setIsDropdownHover}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
-            dropdownItems={playlistActionDropdownItems}
+            dropdownItems={trackActionDropdownItems}
             cardRef={trackCardRef}
           />
         </div>
