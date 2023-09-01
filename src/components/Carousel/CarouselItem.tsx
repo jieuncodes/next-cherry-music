@@ -25,20 +25,17 @@ function CarouselItem({
         exit="hidden"
       >
         <Image
-          priority
           src={carouselItem?.src || "/images/ariana.png"}
           alt="carousel image"
           style={{
             objectFit: "contain",
             marginTop: carouselItem?.marginTop || "-2.5rem",
             marginLeft: carouselItem?.marginLeft || "0",
-            width: "auto",
-            height: "auto",
           }}
-          width={300}
-          height={300}
+          width={carouselItem?.width || 300}
+          height={carouselItem?.height || 300}
           placeholder="blur"
-          blurDataURL="/images/ariana.png"
+          blurDataURL="/images/taylor.png"
         />
       </CarouselImg>
       <CarouselText

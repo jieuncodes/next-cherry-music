@@ -13,36 +13,37 @@ export interface Database {
         Row: {
           desc: string | null;
           firstBgColor: string | null;
-          height: string | null;
+          height: number | null;
           id: number;
           marginLeft: string | null;
           marginTop: string | null;
+          onClickPushRouter: string | null;
           secondBgColor: string | null;
           src: string | null;
           title: string | null;
-          width: string | null;
+          width: number | null;
         };
         Insert: {
-          bgColor?: string | null;
           desc?: string | null;
           firstBgColor?: string | null;
           height?: string | null;
           id?: number;
           marginLeft?: string | null;
           marginTop?: string | null;
+          onClickPushRouter?: string | null;
           secondBgColor?: string | null;
           src?: string | null;
           title?: string | null;
           width?: string | null;
         };
         Update: {
-          bgColor?: string | null;
           desc?: string | null;
           firstBgColor?: string | null;
           height?: string | null;
           id?: number;
           marginLeft?: string | null;
           marginTop?: string | null;
+          onClickPushRouter?: string | null;
           secondBgColor?: string | null;
           src?: string | null;
           title?: string | null;

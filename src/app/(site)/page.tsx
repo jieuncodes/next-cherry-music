@@ -20,7 +20,7 @@ async function Home() {
 
   return (
     <>
-      <div className="carousel-container h-80 relative">
+      <div className="h-80">
         <Carousel />
       </div>
       <TopTracksContainer query={"top"} top20={top20 || []} />
