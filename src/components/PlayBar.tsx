@@ -1,11 +1,12 @@
 "use client";
 
 import {
+  currPlaylistTrackIdx,
   currTrackCurrentTimeAtom,
   currTrackDurationAtom,
-  currPlaylistTrackIdx,
   localStoragePlaylist,
 } from "@/atoms";
+import { floatToTime } from "@/lib/utils";
 import { usePlayer } from "@/providers/PlayerProvider";
 import {
   AlbumCoverBox,
@@ -24,16 +25,19 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { Icons } from "../app/Icons";
 import PlayerController from "./Panel/PanelPlayer/PlayerControllers";
 import ProgressBar from "./Panel/PanelPlayer/ProgressBar";
-import { floatToTime } from "@/lib/utils";
+import useLikeTrack from "@/hooks/useLike";
+import { Track } from "@/lib/server/database.types";
+import { useUser } from "@supabase/auth-helpers-react";
 
 function PlayBar() {
   const { togglePlayPause, playerRef } = usePlayer();
-  const [liked, setLiked] = useState(false);
   const [recoilPlaylist, setRecoilPlaylist] =
     useRecoilState(localStoragePlaylist);
   const [currTrackIdx, setCurrTrackIdx] = useRecoilState(currPlaylistTrackIdx);
+  const user = useUser();
+  const currTrack: Track = recoilPlaylist[currTrackIdx] || {};
+  const { liked, toggleLike } = useLikeTrack({ track: currTrack, user });
 
-  const currTrack = recoilPlaylist[currTrackIdx] || "[]";
   const [currentTime, setCurrentTime] = useRecoilState(
     currTrackCurrentTimeAtom
   );
@@ -65,7 +69,8 @@ function PlayBar() {
             color="#ff5173"
             size={20}
             fill={liked ? "#ff5173" : "none"}
-            style={{ marginTop: 2 }}
+            className={`cursor-pointer mt-[1px]`}
+            onClick={() => toggleLike()}
           />
           <Icons.moreVertical style={{ marginLeft: 10, marginBottom: 3 }} />
         </Btns>

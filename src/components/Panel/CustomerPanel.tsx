@@ -1,10 +1,10 @@
-import { Button } from "@nextui-org/button";
-import { useUser } from "@supabase/auth-helpers-react";
-import { Avatar } from "@nextui-org/avatar";
-import { Icons } from "../../app/Icons";
-import { useRecoilState } from "recoil";
 import { authModalState } from "@/atoms";
 import { CustomerPanelContainer } from "@/styles/Panel/Panel";
+import { Avatar } from "@nextui-org/avatar";
+import { Button } from "@nextui-org/button";
+import { useUser } from "@supabase/auth-helpers-react";
+import { useRecoilState } from "recoil";
+import { Icons } from "../../app/Icons";
 
 function CustomerPanel() {
   const user = useUser();

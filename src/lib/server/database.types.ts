@@ -13,7 +13,7 @@ export interface Database {
         Row: {
           desc: string | null;
           firstBgColor: string | null;
-          height: number | null;
+          height: string | null;
           id: number;
           marginLeft: string | null;
           marginTop: string | null;
@@ -34,7 +34,7 @@ export interface Database {
           secondBgColor?: string | null;
           src?: string | null;
           title?: string | null;
-          width?: string | null;
+          width?: number | null;
         };
         Update: {
           desc?: string | null;
@@ -47,7 +47,7 @@ export interface Database {
           secondBgColor?: string | null;
           src?: string | null;
           title?: string | null;
-          width?: string | null;
+          width?: number | null;
         };
         Relationships: [];
       };
@@ -138,6 +138,24 @@ export interface Database {
           updated_at?: string | null;
           wiki?: Json | null;
           youtubeId?: string | null;
+        };
+        Relationships: [];
+      };
+      like: {
+        Row: {
+          id: number;
+          trackYoutubeId: number | null;
+          userId: string;
+        };
+        Insert: {
+          id?: number;
+          trackYoutubeId?: string | null;
+          userId?: string;
+        };
+        Update: {
+          id?: number;
+          trackYoutubeId?: number | null;
+          userId?: string;
         };
         Relationships: [];
       };
