@@ -1,19 +1,16 @@
 import { Buttons } from "@/styles/TrackCard";
 import { Dispatch, SetStateAction } from "react";
-import LikeButton from "../Btns/LikeButton";
-import {
-  playlistActionDropdownItems,
-  trackActionDropdownItems,
-} from "../Dropdowns/DropdownItems";
+import { trackActionDropdownItems } from "../Dropdowns/DropdownItems";
 import TrackCardDropDown from "./TrackCardDropDown";
 import { Track } from "@/lib/server/database.types";
+import LikeBtn from "../Btns/LikeBtn";
+import { useUser } from "@supabase/auth-helpers-react";
 
 interface TrackCardButtonsProps {
   isCardHover: boolean;
   setIsCardHover: Dispatch<SetStateAction<boolean>>;
   setIsDropdownHover: Dispatch<SetStateAction<boolean>>;
   iconColor: string;
-  liked: boolean;
   setLiked: Dispatch<SetStateAction<boolean>>;
   track: Track;
 }
@@ -21,16 +18,14 @@ function TrackCardButtons({
   track,
   isCardHover,
   setIsDropdownHover,
-  iconColor,
-  liked,
-  setLiked,
   setIsCardHover,
 }: TrackCardButtonsProps) {
+  const user = useUser();
   return (
     <>
       {isCardHover && (
         <Buttons>
-          <LikeButton liked={liked} setLiked={setLiked} iconColor={iconColor} />
+          <LikeBtn track={track} user={user} isBlack className="-top-[2px]" />
           <TrackCardDropDown
             track={track}
             onMouseEnter={() => setIsDropdownHover(true)}

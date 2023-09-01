@@ -22,11 +22,7 @@ function PanelPlayer() {
 
   return (
     <PanelPlayerContainer>
-      <AlbumCover
-        albumCoverURL={
-          currTrack?.albumImgUrl || "/images/default_album_img.png"
-        }
-      />
+      <AlbumCover track={currTrack} />
       <TrackInfo
         trackTitle={
           currTrack?.trackTitle || "⬅︎ Play the music by clicking the card!"

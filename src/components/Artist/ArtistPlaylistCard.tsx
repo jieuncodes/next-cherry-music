@@ -1,4 +1,3 @@
-import LikeButton from "@/components/Btns/LikeButton";
 import CardDropDown from "@/components/TrackCard/TrackCardDropDown";
 import TrackCardImage from "@/components/TrackCard/TrackCardImage";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
@@ -7,6 +6,8 @@ import { useRef, useState } from "react";
 import { artistPageDropdownItems } from "../Dropdowns/DropdownItems";
 import ArtistPlaylistCardDetails from "./ArtistPlaylistCardDetails";
 import { Track } from "@/lib/server/database.types";
+import LikeBtn from "../Btns/LikeBtn";
+import { useUser } from "@supabase/auth-helpers-react";
 
 interface PlaylistCardProps {
   track: Track;
@@ -19,6 +20,7 @@ function ArtistPlaylistCard({
   index,
   isPlayingTrack,
 }: PlaylistCardProps) {
+  const user = useUser();
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
   const [liked, setLiked] = useState<boolean>(false);
@@ -49,9 +51,7 @@ function ArtistPlaylistCard({
           isPlayingTrack={isPlayingTrack}
         />
         <div className="absolute right-0">
-          {isCardHover && (
-            <LikeButton liked={liked} setLiked={setLiked} iconColor="white" />
-          )}
+          {isCardHover && <LikeBtn track={track} user={user} isBlack />}
           <CardDropDown
             track={track}
             setIsCardHover={setIsCardHover}

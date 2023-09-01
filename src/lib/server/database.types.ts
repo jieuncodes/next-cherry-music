@@ -13,7 +13,7 @@ export interface Database {
         Row: {
           desc: string | null;
           firstBgColor: string | null;
-          height: string | null;
+          height: number | null;
           id: number;
           marginLeft: string | null;
           marginTop: string | null;

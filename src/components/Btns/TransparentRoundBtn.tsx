@@ -20,7 +20,7 @@ function TransparentRoundBtn({
 }: TransparentRoundBtnProps) {
   return (
     <Button
-      color={isShuffleOn || isRepeatOn === 0 ? "danger" : "default"}
+      color={isShuffleOn || isRepeatOn === 1 ? "danger" : "default"}
       isDisabled={isDisabled}
       isIconOnly
       className=" data-[hover]:bg-foreground/10 "

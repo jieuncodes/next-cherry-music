@@ -35,7 +35,7 @@ function Tile({
         } overflow-hidden bg-cover aspect-square`}
       >
         <Image
-          className={`${isHashtag && "opacity-70"}`}
+          className={`${isHashtag && "opacity-70 hover:opacity-100"}`}
           src={artistImgUrl}
           width={isCircle ? 120 : 170}
           height={isCircle ? 120 : 170}

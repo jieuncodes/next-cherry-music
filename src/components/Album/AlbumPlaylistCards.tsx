@@ -5,7 +5,6 @@ import { Track } from "@/lib/server/database.types";
 
 export function AlbumPlaylistCards({ playlist }: { playlist: Track[] }) {
   const playingTrack = useRecoilValue(currPlayingTrackYoutubeId);
-  console.log("playlist", playlist);
   return (
     <div className="grid grid-cols gap-1">
       {playlist.map((track, index) => (

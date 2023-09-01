@@ -71,7 +71,7 @@ function Geo({
           return (
             <Tab key={item.id} title={item.label}>
               <TopTracksContainer query={queryValue} top20={countryTopTracks} />
-              {countryTopArtists && (
+              {
                 <HorizontalTiles
                   sectionTitle={`Popular Artists in this country`}
                   arr={{
@@ -80,7 +80,7 @@ function Geo({
                   }}
                   nav
                 />
-              )}
+              }
             </Tab>
           );
         }}

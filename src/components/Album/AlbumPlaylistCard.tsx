@@ -8,6 +8,8 @@ import { AlbumPageDropdownItems } from "../Dropdowns/DropdownItems";
 import TrackCardDropDown from "../TrackCard/TrackCardDropDown";
 import AlbumTrackCardDetails from "./AlbumTrackCardDetails";
 import { Track } from "@/lib/server/database.types";
+import LikeBtn from "../Btns/LikeBtn";
+import { useUser } from "@supabase/auth-helpers-react";
 
 interface PlaylistCardProps {
   track: Track;
@@ -22,12 +24,11 @@ function AlbumPlaylistCard({
 }: PlaylistCardProps) {
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
-  const [liked, setLiked] = useState<boolean>(false);
 
   const { addToTopOfCurrPlaylist } = useLocalStoragePlaylist();
 
   const trackCardRef = useRef<HTMLButtonElement | null>(null);
-
+  const user = useUser();
   return (
     <StyledCard
       data-playlist-index={index}
@@ -54,7 +55,7 @@ function AlbumPlaylistCard({
         />
         <div className="absolute right-3">
           {isCardHover && (
-            <LikeButton liked={liked} setLiked={setLiked} iconColor="white" />
+            <LikeBtn track={track} user={user} isBlack className="-top-[2px]" />
           )}
           <TrackCardDropDown
             track={track}

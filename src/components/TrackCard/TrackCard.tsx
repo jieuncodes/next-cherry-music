@@ -39,7 +39,6 @@ export function TrackCard({ track }: TrackCardProps) {
         setIsCardHover={setIsCardHover}
         setIsDropdownHover={setIsDropdownHover}
         iconColor={iconColor}
-        liked={liked}
         setLiked={setLiked}
       />
     </StyledCard>
