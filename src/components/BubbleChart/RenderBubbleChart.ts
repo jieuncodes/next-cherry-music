@@ -64,7 +64,7 @@ function renderBubbleChart({
     .style("fill", (item) => `url(#artist-pattern-${sanitizeName(item.name)})`)
     .attr("layoutId", (item) => `${item.mbid}`)
     .on("mouseover", function (d, i) {
-      d3.select(this).attr("opacity", 0.7);
+      d3.select(this).attr("opacity", 0.7).attr("cursor", "pointer");
       const title = d3.select(this).select("title").text();
       const cx = parseFloat(d3.select(this).attr("cx"));
       const cy = parseFloat(d3.select(this).attr("cy"));

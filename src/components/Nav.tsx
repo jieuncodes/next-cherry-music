@@ -78,11 +78,11 @@ export default function Nav() {
           <Icons.globe size={22} />
           <MenuSpan>World</MenuSpan>
         </Menu>
-        {/* <Menu onClick={() => handleMenuClick("Artists")}>
-          {renderSideline("Artists")}
-          <Icons.listMusic size={22} />
-          <MenuSpan>Playlist</MenuSpan>
-        </Menu> */}
+        <Menu onClick={() => handleMenuClick("dashboard")}>
+          {renderSideline("dashboard")}
+          <Icons.layoutDashboard size={22} />
+          <MenuSpan>DashBoard</MenuSpan>
+        </Menu>
 
         {/* <Menu onClick={() => handleMenuClick("comments")}>
           {renderSideline("comments")}

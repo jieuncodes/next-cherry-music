@@ -1,4 +1,14 @@
-import { BarChart2, Bomb, CopyPlus, Minus, Trash2 } from "lucide-react";
+import {
+  BarChart2,
+  Bomb,
+  CopyPlus,
+  Gauge,
+  GaugeIcon,
+  LayoutDashboard,
+  LucideGauge,
+  Minus,
+  Trash2,
+} from "lucide-react";
 import {
   HeartIcon,
   User,
@@ -70,4 +80,6 @@ export const Icons = {
   copyPlus: CopyPlus,
   globe: Globe,
   barChart2: BarChart2,
+  gaugeCircle: Gauge,
+  layoutDashboard: LayoutDashboard,
 };
