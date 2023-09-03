@@ -7,7 +7,7 @@ async function ArtistPage({ params }: { params: { artist: string } }) {
     spotifyArtist.best_match?.items[0]?.images[0]?.url ||
     "/images/default_album_cover.webp";
 
-  return <Artist artist={params.artist} artistImgUrl={artistImgUrl} />;
+  return <Artist artistName={params.artist} artistImgUrl={artistImgUrl} />;
 }
 
 export default ArtistPage;

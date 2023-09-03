@@ -3,12 +3,11 @@
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { AlbumIndex, StyledCard, StyledHeader } from "@/styles/Album/album";
 import { useRef, useState } from "react";
-import LikeButton from "../Btns/LikeButton";
 import { AlbumPageDropdownItems } from "../Dropdowns/DropdownItems";
 import TrackCardDropDown from "../TrackCard/TrackCardDropDown";
 import AlbumTrackCardDetails from "./AlbumTrackCardDetails";
 import { Track } from "@/lib/server/database.types";
-import LikeBtn from "../Btns/LikeBtn";
+import LikeTrackBtn from "../Btns/LikeTrackBtn";
 import { useUser } from "@supabase/auth-helpers-react";
 
 interface PlaylistCardProps {
@@ -55,7 +54,12 @@ function AlbumPlaylistCard({
         />
         <div className="absolute right-3">
           {isCardHover && (
-            <LikeBtn track={track} user={user} isBlack className="-top-[2px]" />
+            <LikeTrackBtn
+              track={track}
+              user={user}
+              isBlack
+              className="-top-[2px]"
+            />
           )}
           <TrackCardDropDown
             track={track}

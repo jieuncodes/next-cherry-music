@@ -22,7 +22,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     .single();
 
   if (!track) {
-    console.log(
+    console.warn(
       `supabase doesnt have youtube id for this track: ${trackTitle}`
     );
   }

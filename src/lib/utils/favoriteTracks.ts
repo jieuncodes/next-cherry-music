@@ -13,7 +13,7 @@ export const fetchUserFavoriteTracks = async (
   userId: string
 ): Promise<Track[]> => {
   let { data: favorites } = await supabase
-    .from("like")
+    .from("favoriteTracks")
     .select("*")
     .eq("userId", userId);
 
@@ -48,12 +48,11 @@ export const subscribeToUserFavoriteTracks = ({
       {
         event: "*",
         schema: "public",
-        table: "like",
+        table: "favoriteTracks",
         filter: `userId=eq.${userId}`,
       },
       (payload) => {
         if (payload.new) {
-          console.log("payload.new", payload.new);
           setUserFavorites((prev) => [...prev, payload.new as Track]);
         }
       }

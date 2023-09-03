@@ -3,7 +3,7 @@ import { Track } from "@/lib/server/database.types";
 import { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 
-interface UseLikeTrackProps {
+interface useLikeTrackProps {
   initialValue?: boolean;
   track: Track;
   user: User | null;
@@ -13,14 +13,14 @@ function useLikeTrack({
   initialValue = false,
   track,
   user,
-}: UseLikeTrackProps) {
+}: useLikeTrackProps) {
   const [liked, setLiked] = useState(initialValue);
 
   useEffect(() => {
     if (user && track) {
       const checkIfLiked = async () => {
         let { data: likes, error } = await supabase
-          .from("like")
+          .from("favoriteTracks")
           .select("*")
           .eq("userId", user.id)
           .eq("trackYoutubeId", track.youtubeId || "");
@@ -55,9 +55,9 @@ function useLikeTrack({
   };
 
   const likeTrack = async () => {
-    if (!user) return;
+    if (!user || !track.youtubeId) return;
     const { data, error } = await supabase
-      .from("like")
+      .from("favoriteTracks")
       .insert([
         {
           userId: user.id,
@@ -82,7 +82,7 @@ function useLikeTrack({
   };
   const unlikeTrack = async () => {
     const { error } = await supabase
-      .from("like")
+      .from("favoriteTracks")
       .delete()
       .eq("userId", user!.id)
       .eq("trackYoutubeId", track.youtubeId || "");

@@ -1,6 +1,10 @@
-import LikeButton from "../components/Btns/LikeButton";
 type Streamable = { "#text": string; fulltrack: string };
-export type Artist = { name: string; mbid: string; url: string };
+export type Artist = {
+  name: string;
+  mbid: string;
+  url: string;
+  tags?: { tag: Tag[] };
+};
 type AlbumImage = { "#text": string; size: string };
 type ArtistImage = { "#text": string; size: string };
 

@@ -96,52 +96,31 @@ export interface Database {
         };
         Relationships: [];
       };
-      koreaTop: {
+      favoriteArtists: {
         Row: {
-          albumImgUrl: string | null;
-          albumTitle: string | null;
-          artist: string | null;
           id: number;
-          key: string | null;
-          playCount: string | null;
-          rank: number | null;
-          tags: Json[] | null;
-          trackTitle: string | null;
-          updated_at: string | null;
-          wiki: Json | null;
-          youtubeId: string | null;
+          mbid: string | null;
+          name: string;
+          url: string | null;
+          userId: string | null;
         };
         Insert: {
-          albumImgUrl?: string | null;
-          albumTitle?: string | null;
-          artist?: string | null;
           id?: number;
-          key?: string | null;
-          playCount?: string | null;
-          rank?: number | null;
-          tags?: Json[] | null;
-          trackTitle?: string | null;
-          updated_at?: string | null;
-          wiki?: Json | null;
-          youtubeId?: string | null;
+          mbid?: string | null;
+          name: string;
+          url?: string | null;
+          userId?: string | null;
         };
         Update: {
-          albumImgUrl?: string | null;
-          albumTitle?: string | null;
-          artist?: string | null;
           id?: number;
-          key?: string | null;
-          playCount?: string | null;
-          rank?: number | null;
-          tags?: Json[] | null;
-          trackTitle?: string | null;
-          updated_at?: string | null;
-          wiki?: Json | null;
-          youtubeId?: string | null;
+          mbid?: string | null;
+          name?: string;
+          url?: string | null;
+          userId?: string | null;
         };
         Relationships: [];
       };
-      like: {
+      favoriteTracks: {
         Row: {
           albumImgUrl: string | null;
           albumTitle: string | null;
@@ -186,6 +165,51 @@ export interface Database {
           updated_at?: string | null;
           userId?: string;
           wiki?: Json | null;
+        };
+        Relationships: [];
+      };
+      koreaTop: {
+        Row: {
+          albumImgUrl: string | null;
+          albumTitle: string | null;
+          artist: string | null;
+          id: number;
+          key: string | null;
+          playCount: string | null;
+          rank: number | null;
+          tags: Json[] | null;
+          trackTitle: string | null;
+          updated_at: string | null;
+          wiki: Json | null;
+          youtubeId: string | null;
+        };
+        Insert: {
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
+          id?: number;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
+          updated_at?: string | null;
+          wiki?: Json | null;
+          youtubeId?: string | null;
+        };
+        Update: {
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
+          id?: number;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
+          updated_at?: string | null;
+          wiki?: Json | null;
+          youtubeId?: string | null;
         };
         Relationships: [];
       };
@@ -296,4 +320,5 @@ export interface Database {
 }
 
 export type Track = Database["public"]["Tables"]["todayTop"]["Row"];
-export type LikeTrackData = Database["public"]["Tables"]["like"]["Row"];
+export type LikeTrackData =
+  Database["public"]["Tables"]["favoriteTracks"]["Row"];

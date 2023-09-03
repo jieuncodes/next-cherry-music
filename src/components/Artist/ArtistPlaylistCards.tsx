@@ -35,6 +35,7 @@ export function ArtistPlaylistCards({ artist }: { artist: string }) {
               track={track}
               index={index}
               isPlayingTrack={track.youtubeId === playingTrack}
+              pageType="artistPage"
             />
           ))
       ) : (

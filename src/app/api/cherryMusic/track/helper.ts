@@ -111,10 +111,6 @@ export const fetchTrackListByQueryType = async (
       }
       const searchResult = await lastFmFetcher.fetchTitleSearchResults(keyword);
       if (!searchResult) return [];
-      console.log(
-        "searchResult.results.trackmatches.track",
-        searchResult.results.trackmatches.track
-      );
       return [...searchResult.results.trackmatches.track];
 
     case "searchArtist":

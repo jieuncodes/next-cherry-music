@@ -27,7 +27,6 @@ function BubbleChart({
   const router = useRouter();
 
   const windowSize = useWindowSize();
-  console.log("windowSize", windowSize);
 
   useEffect(() => {
     const fetchEnrichedArtists = async () => {

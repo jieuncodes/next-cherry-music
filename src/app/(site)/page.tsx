@@ -10,7 +10,7 @@ async function Home() {
   let { data: top20, error } = await supabase.from("todayTop").select("*");
 
   if (error) {
-    console.log(error);
+    console.warn(error);
   }
   const [topArtistsData] = await Promise.all([lastFmFetcher.fetchTopArtists()]);
   const topArtistsDataWithType = {

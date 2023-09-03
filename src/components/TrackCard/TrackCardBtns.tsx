@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { trackActionDropdownItems } from "../Dropdowns/DropdownItems";
 import TrackCardDropDown from "./TrackCardDropDown";
 import { Track } from "@/lib/server/database.types";
-import LikeBtn from "../Btns/LikeBtn";
+import LikeTrackBtn from "../Btns/LikeTrackBtn";
 import { useUser } from "@supabase/auth-helpers-react";
 
 interface TrackCardButtonsProps {
@@ -25,7 +25,12 @@ function TrackCardButtons({
     <>
       {isCardHover && (
         <Buttons>
-          <LikeBtn track={track} user={user} isBlack className="-top-[2px]" />
+          <LikeTrackBtn
+            track={track}
+            user={user}
+            isBlack
+            className="-top-[2px]"
+          />
           <TrackCardDropDown
             track={track}
             onMouseEnter={() => setIsDropdownHover(true)}

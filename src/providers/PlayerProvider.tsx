@@ -83,7 +83,6 @@ function PlayerProvider({ children }: PlayerProviderProps) {
       playShuffledNextTrack();
       return;
     } else if (isRepeatOn) {
-      console.log("repeat on");
       playerRef.current?.playVideo();
 
       return;

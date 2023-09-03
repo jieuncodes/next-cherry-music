@@ -2,7 +2,6 @@
 
 import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 import ArtistTopTracks from "@/components/Artist/ArtistTopTracks";
-import LikeButton from "@/components/Btns/LikeButton";
 import GradientHeader from "@/components/GradientHeader";
 import Hashtags from "@/components/Hashtags";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -18,23 +17,25 @@ import {
 } from "@/styles/Artist/Artist";
 import { LastFmArtistInfo } from "@/types/lastFmTypes";
 import { useEffect, useState } from "react";
+import LikeArtistBtn from "../Btns/LikeArtistBtn";
+import { useUser } from "@supabase/auth-helpers-react";
 
 interface ArtistProps {
-  artist: string;
+  artistName: string;
   artistImgUrl: string;
 }
 
-function Artist({ artist, artistImgUrl }: ArtistProps) {
-  const [liked, setLiked] = useState<boolean>(false);
+function Artist({ artistName, artistImgUrl }: ArtistProps) {
   const [artistData, setArtistData] = useState<LastFmArtistInfo | null>(null);
+  const user = useUser();
 
   useEffect(() => {
     const getLastFmArtist = async () => {
-      const artistInfo = await lastFmFetcher.fetchArtistInfo(artist);
+      const artistInfo = await lastFmFetcher.fetchArtistInfo(artistName);
       setArtistData(artistInfo);
     };
     getLastFmArtist();
-  }, [artist]);
+  }, [artistName]);
 
   const cleanedArtistBio = cleanedStr(artistData?.artist?.bio?.summary || "");
 
@@ -53,7 +54,7 @@ function Artist({ artist, artistImgUrl }: ArtistProps) {
         <ArtistInfoHeader>
           <ArtistNameArea>
             <ArtistName>{artistData.artist.name}</ArtistName>
-            <LikeButton liked={liked} setLiked={setLiked} iconColor="black" />
+            <LikeArtistBtn user={user} artistName={artistName} isBlack />
           </ArtistNameArea>
 
           <Hashtags tags={artistData.artist.tags.tag} />

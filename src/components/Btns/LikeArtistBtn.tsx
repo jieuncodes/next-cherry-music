@@ -1,30 +1,34 @@
 import { Icons } from "@/app/Icons";
-import useLikeTrack from "@/hooks/useLike";
-import { Track } from "@/lib/server/database.types";
+import useLikeArtist from "@/hooks/useLikeArtist";
 import { Button } from "@nextui-org/react";
 import { User } from "@supabase/supabase-js";
 
-function LikeBtn({
-  track,
+function LikeArtistBtn({
   user,
   isBlack,
+  isFlat,
   className,
+  artistName,
+  isDisabled,
 }: {
-  track: Track;
-  user?: User | null;
+  user: User | null;
   isBlack?: boolean;
+  isFlat?: boolean;
   className?: string;
+  artistName: string | undefined;
+  isDisabled?: boolean;
 }) {
-  const { liked, toggleLike } = useLikeTrack({
-    track,
+  const { liked, toggleLike } = useLikeArtist({
     user: user ?? null,
+    artistName: artistName ?? null,
   });
   return (
     <Button
+      isDisabled={isDisabled}
       isIconOnly
       className={className}
       radius="full"
-      variant="light"
+      variant={isFlat ? "flat" : "light"}
       onPress={toggleLike}
       startContent={
         <Icons.heart
@@ -37,4 +41,4 @@ function LikeBtn({
   );
 }
 
-export default LikeBtn;
+export default LikeArtistBtn;

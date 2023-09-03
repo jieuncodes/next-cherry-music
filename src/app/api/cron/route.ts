@@ -25,12 +25,12 @@ export async function GET() {
       .insert([...partOfWholeData])
       .select();
 
-    console.log("data has added to supabase", data);
+    console.warn("data has added to supabase", data);
 
     if (deleteError) throw Error(deleteError.message);
     if (insertError) throw Error(insertError.message);
 
-    console.log(`** ${partOfWholeData.length} has uploaded on the Supabase`);
+    console.warn(`** ${partOfWholeData.length} has uploaded on the Supabase`);
   };
 
   await Promise.all([

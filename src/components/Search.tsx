@@ -28,7 +28,7 @@ export default function Search() {
       setRes(res);
       setIsLoading(false);
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     }
   };
 

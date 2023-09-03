@@ -3,9 +3,12 @@ import TrackCardImage from "@/components/TrackCard/TrackCardImage";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { StyledCard, StyledHeader } from "@/styles/Artist/ArtistTrackCard";
 import { useRef, useState } from "react";
-import { artistPageDropdownItems } from "../Dropdowns/DropdownItems";
+import {
+  artistPageDropdownItems,
+  trackActionDropdownItems,
+} from "../Dropdowns/DropdownItems";
 import { Track } from "@/lib/server/database.types";
-import LikeBtn from "../Btns/LikeBtn";
+import LikeTrackBtn from "../Btns/LikeTrackBtn";
 import { useUser } from "@supabase/auth-helpers-react";
 import LongPlaylistCardDetails from "./LongPlaylistCardDetails";
 
@@ -13,13 +16,18 @@ interface PlaylistCardProps {
   track: Track;
   index: number;
   isPlayingTrack?: boolean;
+  pageType?: "artistPage" | "dashboard";
 }
 
-function LongPlaylistCard({ track, index, isPlayingTrack }: PlaylistCardProps) {
+function LongPlaylistCard({
+  track,
+  index,
+  isPlayingTrack,
+  pageType,
+}: PlaylistCardProps) {
   const user = useUser();
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
-  const [liked, setLiked] = useState<boolean>(false);
 
   const { addToTopOfCurrPlaylist } = useLocalStoragePlaylist();
 
@@ -47,14 +55,18 @@ function LongPlaylistCard({ track, index, isPlayingTrack }: PlaylistCardProps) {
           isPlayingTrack={isPlayingTrack}
         />
         <div className="absolute right-0">
-          {isCardHover && <LikeBtn track={track} user={user} isBlack />}
+          {isCardHover && <LikeTrackBtn track={track} user={user} isBlack />}
           <CardDropDown
             track={track}
             setIsCardHover={setIsCardHover}
             setIsDropdownHover={setIsDropdownHover}
             onMouseEnter={() => setIsDropdownHover(true)}
             onMouseLeave={() => setIsDropdownHover(false)}
-            dropdownItems={artistPageDropdownItems}
+            dropdownItems={
+              pageType === "artistPage"
+                ? artistPageDropdownItems
+                : trackActionDropdownItems
+            }
             cardRef={trackCardRef}
           />
         </div>

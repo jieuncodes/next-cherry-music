@@ -16,7 +16,7 @@ import { Track } from "@/lib/server/database.types";
 import { useUser } from "@supabase/auth-helpers-react";
 import TimeDisplay from "./TimeDisplay";
 import PlayBarTrackInfo from "./PlayBarTrackInfo";
-import LikeBtn from "./Btns/LikeBtn";
+import LikeTrackBtn from "./Btns/LikeTrackBtn";
 
 function PlayBar() {
   const { togglePlayPause, playerRef } = usePlayer();
@@ -38,7 +38,7 @@ function PlayBar() {
         <TimeDisplay currentTime={currentTime} duration={duration} />
         <PlayBarTrackInfo track={currTrack} />
         <Btns>
-          <LikeBtn track={currTrack} user={user} />
+          <LikeTrackBtn track={currTrack} user={user} />
           <Icons.moreVertical style={{ marginLeft: 10, marginBottom: 3 }} />
         </Btns>
 
