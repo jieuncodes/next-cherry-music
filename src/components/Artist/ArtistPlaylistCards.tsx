@@ -4,9 +4,9 @@ import { PlaylistGrid } from "@/styles/Panel/PlaylistCard";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { currPlayingTrackYoutubeId } from "../../atoms";
-import ArtistPlaylistCard from "./ArtistPlaylistCard";
-import ArtistTrackCardsSkeleton from "./ArtistTopTrackCardSkeleton";
 import { Track } from "@/lib/server/database.types";
+import LongPlaylistCard from "../LongTrackCards/LongPlaylistCard";
+import LongTrackCardsSkeleton from "../LongTrackCards/LongTrackCardsSkeleton";
 
 export function ArtistPlaylistCards({ artist }: { artist: string }) {
   const playingTrack = useRecoilValue(currPlayingTrackYoutubeId);
@@ -30,7 +30,7 @@ export function ArtistPlaylistCards({ artist }: { artist: string }) {
         artistTopTracks
           .slice(0, 6)
           .map((track: Track, index: number) => (
-            <ArtistPlaylistCard
+            <LongPlaylistCard
               key={index}
               track={track}
               index={index}
@@ -38,7 +38,7 @@ export function ArtistPlaylistCards({ artist }: { artist: string }) {
             />
           ))
       ) : (
-        <ArtistTrackCardsSkeleton />
+        <LongTrackCardsSkeleton />
       )}
     </PlaylistGrid>
   );

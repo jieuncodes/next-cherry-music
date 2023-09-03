@@ -26,7 +26,7 @@ export interface Database {
         Insert: {
           desc?: string | null;
           firstBgColor?: string | null;
-          height?: string | null;
+          height?: number | null;
           id?: number;
           marginLeft?: string | null;
           marginTop?: string | null;
@@ -39,7 +39,7 @@ export interface Database {
         Update: {
           desc?: string | null;
           firstBgColor?: string | null;
-          height?: string | null;
+          height?: number | null;
           id?: number;
           marginLeft?: string | null;
           marginTop?: string | null;
@@ -143,19 +143,49 @@ export interface Database {
       };
       like: {
         Row: {
+          albumImgUrl: string | null;
+          albumTitle: string | null;
+          artist: string | null;
           id: number;
-          trackYoutubeId: number | null;
+          key: string | null;
+          playCount: string | null;
+          rank: number | null;
+          tags: Json[] | null;
+          trackTitle: string | null;
+          trackYoutubeId: string | null;
+          updated_at: string | null;
           userId: string;
+          wiki: Json | null;
         };
         Insert: {
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
           id?: number;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
           trackYoutubeId?: string | null;
+          updated_at?: string | null;
           userId?: string;
+          wiki?: Json | null;
         };
         Update: {
+          albumImgUrl?: string | null;
+          albumTitle?: string | null;
+          artist?: string | null;
           id?: number;
-          trackYoutubeId?: number | null;
+          key?: string | null;
+          playCount?: string | null;
+          rank?: number | null;
+          tags?: Json[] | null;
+          trackTitle?: string | null;
+          trackYoutubeId?: string | null;
+          updated_at?: string | null;
           userId?: string;
+          wiki?: Json | null;
         };
         Relationships: [];
       };
@@ -266,3 +296,4 @@ export interface Database {
 }
 
 export type Track = Database["public"]["Tables"]["todayTop"]["Row"];
+export type LikeTrackData = Database["public"]["Tables"]["like"]["Row"];

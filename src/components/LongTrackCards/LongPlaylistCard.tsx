@@ -4,10 +4,10 @@ import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { StyledCard, StyledHeader } from "@/styles/Artist/ArtistTrackCard";
 import { useRef, useState } from "react";
 import { artistPageDropdownItems } from "../Dropdowns/DropdownItems";
-import ArtistPlaylistCardDetails from "./ArtistPlaylistCardDetails";
 import { Track } from "@/lib/server/database.types";
 import LikeBtn from "../Btns/LikeBtn";
 import { useUser } from "@supabase/auth-helpers-react";
+import LongPlaylistCardDetails from "./LongPlaylistCardDetails";
 
 interface PlaylistCardProps {
   track: Track;
@@ -15,11 +15,7 @@ interface PlaylistCardProps {
   isPlayingTrack?: boolean;
 }
 
-function ArtistPlaylistCard({
-  track,
-  index,
-  isPlayingTrack,
-}: PlaylistCardProps) {
+function LongPlaylistCard({ track, index, isPlayingTrack }: PlaylistCardProps) {
   const user = useUser();
   const [isCardHover, setIsCardHover] = useState(false);
   const [isDropdownHover, setIsDropdownHover] = useState(false);
@@ -44,7 +40,7 @@ function ArtistPlaylistCard({
     >
       <StyledHeader>
         <TrackCardImage isCardHover={isCardHover} track={track} size="small" />
-        <ArtistPlaylistCardDetails
+        <LongPlaylistCardDetails
           isCardHover={isCardHover}
           track={track}
           onPlaylist={true}
@@ -66,4 +62,4 @@ function ArtistPlaylistCard({
     </StyledCard>
   );
 }
-export default ArtistPlaylistCard;
+export default LongPlaylistCard;

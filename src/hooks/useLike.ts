@@ -23,7 +23,7 @@ function useLikeTrack({
           .from("like")
           .select("*")
           .eq("userId", user.id)
-          .eq("trackYoutubeId", track.youtubeId);
+          .eq("trackYoutubeId", track.youtubeId || "");
 
         if (error) {
           console.error("Error fetching like status:", error);
@@ -45,9 +45,9 @@ function useLikeTrack({
     }
     setLiked((prevLiked) => {
       if (prevLiked) {
-        unlikeTrack();
+        user && unlikeTrack();
       } else {
-        likeTrack();
+        user && likeTrack();
       }
 
       return !prevLiked;
@@ -55,9 +55,25 @@ function useLikeTrack({
   };
 
   const likeTrack = async () => {
+    if (!user) return;
     const { data, error } = await supabase
       .from("like")
-      .insert([{ userId: user?.id, trackYoutubeId: track.youtubeId }])
+      .insert([
+        {
+          userId: user.id,
+          trackYoutubeId: track.youtubeId as string,
+          albumImgUrl: track.albumImgUrl,
+          albumTitle: track.albumTitle,
+          artist: track.artist,
+          key: track.key,
+          playCount: track.playCount,
+          rank: track.rank,
+          tags: track.tags || [],
+          trackTitle: track.trackTitle || "",
+          updated_at: new Date().toISOString(),
+          wiki: track.wiki || "",
+        },
+      ])
       .select();
     if (error) {
       console.error(error);
@@ -68,8 +84,8 @@ function useLikeTrack({
     const { error } = await supabase
       .from("like")
       .delete()
-      .eq("userId", user?.id)
-      .eq("trackYoutubeId", track.youtubeId);
+      .eq("userId", user!.id)
+      .eq("trackYoutubeId", track.youtubeId || "");
 
     if (error) {
       console.error("Error unliking track:", error);

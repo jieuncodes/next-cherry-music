@@ -1,8 +1,7 @@
 import { StyledCard } from "@/styles/Artist/ArtistPlaylist";
-import { RowSection, SectionTitle } from "@/styles/Section";
 import { Skeleton } from "@nextui-org/react";
 
-function ArtistTrackCardsSkeleton() {
+function LongTrackCardsSkeleton() {
   return (
     <>
       {Array(6)
@@ -23,4 +22,4 @@ function ArtistTrackCardsSkeleton() {
     </>
   );
 }
-export default ArtistTrackCardsSkeleton;
+export default LongTrackCardsSkeleton;

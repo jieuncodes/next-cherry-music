@@ -9,7 +9,7 @@ import {
 } from "@/styles/Artist/ArtistTrackCard";
 import { useRouter } from "next/navigation";
 
-interface ArtistPlaylistCardDetailsProps {
+interface LongPlaylistCardDetailsProps {
   isCardHover: boolean;
   track: Track;
   size?: "small" | "medium" | "large";
@@ -17,12 +17,12 @@ interface ArtistPlaylistCardDetailsProps {
   isPlayingTrack?: boolean;
 }
 
-function ArtistPlaylistCardDetails({
+function LongPlaylistCardDetails({
   isCardHover,
   track,
   onPlaylist,
   isPlayingTrack,
-}: ArtistPlaylistCardDetailsProps) {
+}: LongPlaylistCardDetailsProps) {
   const router = useRouter();
 
   const trackInfoClassNames = `${
@@ -60,4 +60,4 @@ function ArtistPlaylistCardDetails({
   );
 }
 
-export default ArtistPlaylistCardDetails;
+export default LongPlaylistCardDetails;
