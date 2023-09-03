@@ -7,7 +7,7 @@ import {
   refineSpotifyTracksIntoLastFmTrack,
 } from "../../spotify/service";
 import { CherryTrack } from "@/types/itemTypes";
-import fetchYouTubeVideoId from "@/lib/fetchYouTubeVideoId";
+import fetchYouTubeVideoId from "@/lib/utils/fetchYouTubeVideoId";
 import { fetchSpotifyTrackInfo } from "../../spotify/spotifyHelpers";
 
 export const getSpotifyPlaylistId = (query: string) => {

@@ -2,7 +2,7 @@
 import { Icons } from "@/app/Icons";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
 import { Track } from "@/lib/server/database.types";
-import { secsToTime } from "@/lib/utils";
+import { secsToTime } from "@/lib/utils/utils";
 import {
   AlbumBtns,
   AlbumDetail,

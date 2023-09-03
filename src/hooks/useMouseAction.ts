@@ -1,5 +1,5 @@
 import { currTrackDurationAtom, progressBarDraggingState } from "@/atoms";
-import { CustomMouseEvent, calculatePercentage } from "@/lib/utils";
+import { CustomMouseEvent, calculatePercentage } from "@/lib/utils/utils";
 import { RefObject, useRef, useState } from "react";
 import { YouTubePlayer } from "react-youtube";
 import { useRecoilState, useRecoilValue } from "recoil";

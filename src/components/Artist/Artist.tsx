@@ -7,7 +7,7 @@ import GradientHeader from "@/components/GradientHeader";
 import Hashtags from "@/components/Hashtags";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
-import { cleanedStr, truncateString } from "@/lib/utils";
+import { cleanedStr, truncateString } from "@/lib/utils/utils";
 import {
   ArtistDesc,
   ArtistInfo,

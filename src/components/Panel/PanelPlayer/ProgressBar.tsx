@@ -1,7 +1,7 @@
 import { progressBarDraggingState } from "@/atoms";
 import useMouseAction from "@/hooks/useMouseAction";
 import { usePlayerProgress } from "@/hooks/usePlayerProgress";
-import { cn, floatToTime } from "@/lib/utils";
+import { cn, floatToTime } from "@/lib/utils/utils";
 import { Progress } from "@nextui-org/react";
 import { RefObject, useRef } from "react";
 import { YouTubePlayer } from "react-youtube";

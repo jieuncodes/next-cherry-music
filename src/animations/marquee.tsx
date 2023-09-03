@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { TrackTitle } from "@/styles/TrackCard";
 import { Variants, motion } from "framer-motion";
 import useMeasure from "react-use-measure";

@@ -1,4 +1,4 @@
-import { floatToTime } from "@/lib/utils";
+import { floatToTime } from "@/lib/utils/utils";
 import { TimeFlow } from "@/styles/PlayBar";
 
 function TimeDisplay({
