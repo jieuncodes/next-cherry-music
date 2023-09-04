@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { debounce } from "lodash";
 
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
@@ -7,16 +8,20 @@ function useWindowSize() {
   });
 
   useEffect(() => {
-    function handleResize() {
+    const handleResize = debounce(() => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
       console.warn("window resized to", window.innerWidth);
-    }
+    }, 300);
 
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    return () => {
+      handleResize.cancel();
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return windowSize;
