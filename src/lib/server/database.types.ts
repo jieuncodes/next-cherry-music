@@ -101,6 +101,7 @@ export interface Database {
           id: number;
           mbid: string | null;
           name: string;
+          tags: Json[] | null;
           url: string | null;
           userId: string | null;
         };
@@ -108,6 +109,7 @@ export interface Database {
           id?: number;
           mbid?: string | null;
           name: string;
+          tags?: Json[] | null;
           url?: string | null;
           userId?: string | null;
         };
@@ -115,6 +117,7 @@ export interface Database {
           id?: number;
           mbid?: string | null;
           name?: string;
+          tags?: Json[] | null;
           url?: string | null;
           userId?: string | null;
         };
@@ -322,3 +325,6 @@ export interface Database {
 export type Track = Database["public"]["Tables"]["todayTop"]["Row"];
 export type LikeTrackData =
   Database["public"]["Tables"]["favoriteTracks"]["Row"];
+
+export type likeArtistData =
+  Database["public"]["Tables"]["favoriteArtists"]["Row"];

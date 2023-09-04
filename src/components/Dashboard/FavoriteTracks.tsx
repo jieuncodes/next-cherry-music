@@ -1,12 +1,11 @@
 import { currPlayingTrackYoutubeId } from "@/atoms";
-import { Database, Track } from "@/lib/server/database.types";
+import { Track } from "@/lib/server/database.types";
 import {
   fetchUserFavoriteTracks,
   subscribeToUserFavoriteTracks,
 } from "@/lib/utils/favoriteTracks";
 import { PlaylistGrid } from "@/styles/Artist/ArtistPlaylist";
 import { ColSection, SectionTitle } from "@/styles/Section";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -19,7 +18,6 @@ function FavoriteTracks({}: FavoriteTracksProps) {
   const [userFavorites, setUserFavorites] = useState<Track[]>([]);
 
   const playingTrack = useRecoilValue(currPlayingTrackYoutubeId);
-  const supabase = createClientComponentClient<Database>();
   const user = useUser();
 
   useEffect(() => {
@@ -31,34 +29,15 @@ function FavoriteTracks({}: FavoriteTracksProps) {
     };
 
     subscribeToUserFavoriteTracks({ userId: user.id, setUserFavorites });
-    const likeChannel = supabase
-      .channel("custom-filter-channel")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "favoriteTracks",
-          filter: `userId=eq.${user.id}`,
-        },
-        (payload) => {
-          if (payload.new) {
-            setUserFavorites((prev) => [...prev, payload.new as Track]);
-          }
-        }
-      )
-      .subscribe();
 
     fetchData();
-
-    return () => {
-      supabase.removeChannel(likeChannel);
-    };
   }, [user, userFavorites]);
   return (
     <ColSection>
       <SectionTitle>
-        {user ? `${user.user_metadata.name}'s Favorite Tracks` : "Dashboard"}
+        {user
+          ? `${user.user_metadata.name}'s Favorite Tracks`
+          : "Your Favorite Tracks"}
       </SectionTitle>
       <PlaylistGrid>
         {userFavorites ? (

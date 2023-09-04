@@ -1,7 +1,7 @@
 import tw from "tailwind-styled-components";
 
 export const RowSection = tw.div`grid grid-cols-[100px_auto]`;
-export const ColSection = tw.div`grid grid-rows-[60px_auto] w-full pr-12`;
+export const ColSection = tw.div`grid grid-rows-[60px_auto] w-full pr-12 mb-20`;
 export const SectionContainerMain = tw.div`relative w-full pr-12 `;
 export const SectionGridContainer = tw.div`relative w-full mt-12 pr-6 mb-12 grid grid-cols-2 grid-rows-[50px_auto]`;
 

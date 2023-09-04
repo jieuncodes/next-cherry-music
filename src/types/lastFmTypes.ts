@@ -1,9 +1,11 @@
+import { Json } from "@/lib/server/database.types";
+
 type Streamable = { "#text": string; fulltrack: string };
 export type Artist = {
   name: string;
   mbid: string;
   url: string;
-  tags?: { tag: Tag[] };
+  tags?: { tag: Json[] };
 };
 type AlbumImage = { "#text": string; size: string };
 type ArtistImage = { "#text": string; size: string };

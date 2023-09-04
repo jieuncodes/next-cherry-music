@@ -4,11 +4,12 @@ import useArtistImgUrl from "@/hooks/useArtistImgUrl";
 import { Tiles } from "@/styles/Artist/Artist";
 import { SectionGridContainer, SectionTitle } from "@/styles/Section";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import SectionNavigator from "../SectionNavigator";
 import Tile from "./Tile";
 import TileSkeleton from "./TileSkeleton";
 import { SliderItemProps, arrWithType } from "@/types/itemTypes";
+import useWindowSize from "@/hooks/useWindowSize";
 
 interface HorizontalTilesProps {
   sectionTitle?: string;
@@ -26,27 +27,35 @@ function HorizontalTiles({
   isHashtag,
 }: HorizontalTilesProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const router = useRouter();
   const { artistImgUrls, loading } = useArtistImgUrl(arr.items);
-
-  if (arr.items.length === 0) return <></>;
-
+  const router = useRouter();
+  const windowSize = useWindowSize();
   const handleTileClick = (name: string) => {
     router.push(`/${arr.type}/${name}`);
   };
+  const [isOverFlow, setIsOverFlow] = useState(true);
+
+  useEffect(() => {
+    const refSize = ref.current?.getBoundingClientRect();
+    if (refSize) {
+      setIsOverFlow(refSize.width > windowSize.width - 500);
+    }
+  }, [windowSize, ref]);
 
   return (
     <SectionGridContainer>
-      {nav && <SectionNavigator refContainer={ref} scrollAmount={650} />}
+      {nav && isOverFlow && (
+        <SectionNavigator refContainer={ref} scrollAmount={650} />
+      )}
       <SectionTitle>{sectionTitle}</SectionTitle>
       <Tiles
         ref={ref}
-        className={`snap-x ${nav ? "gap-3" : "w-fit gap-10"} ${
-          isCircle ? "gap-5" : ""
-        } row-start-2 col-start-1 col-span-2`}
+        className={`${!isOverFlow ? "w-fit" : "w-full"} ${
+          nav ? "gap-3" : "w-fit gap-10"
+        } ${isCircle ? "gap-5" : ""} snap-x row-start-2 col-start-1 col-span-2`}
       >
         {arr.items
-          .slice(0, arr.items.length - 1)
+          .slice(0, arr.items.length)
           .map((item: SliderItemProps, index) =>
             loading.has(index) ? (
               <TileSkeleton key={index} isCircle={isCircle} />
