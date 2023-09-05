@@ -14,6 +14,7 @@ export async function GET() {
     tableName: string;
   }) => {
     const { error: deleteError } = await supabase.from(tableName).delete();
+    if (deleteError) throw Error(deleteError.message);
 
     const partOfWholeData = await fetchCherryMusicTracks({
       query,
@@ -25,15 +26,14 @@ export async function GET() {
       .insert([...partOfWholeData])
       .select();
 
-    console.warn("data has added to supabase", data);
+    console.info("data has added to supabase", data);
 
-    if (deleteError) throw Error(deleteError.message);
     if (insertError) throw Error(insertError.message);
 
-    console.warn(`** ${partOfWholeData.length} has uploaded on the Supabase`);
+    console.info(`** ${partOfWholeData.length} has uploaded on the Supabase`);
   };
 
-  await Promise.all([
+  await Promise.allSettled([
     replaceWithNewData({ query: "top", tableName: "todayTop" }),
     replaceWithNewData({ query: "koreatop", tableName: "koreaTop" }),
     replaceWithNewData({ query: "ustop", tableName: "usTop" }),

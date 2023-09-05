@@ -26,7 +26,6 @@ export async function fetchCherryMusicTracks({
       : process.env.NEXT_PUBLIC_VERCEL_URL;
 
   let url = new URL(`/api/cherryMusic/track?query=${query}`, baseURL);
-
   if (count) url.searchParams.append("count", count.toString());
   if (offset) url.searchParams.append("offset", offset.toString());
   if (artist) url.searchParams.append("artist", artist);
@@ -37,6 +36,7 @@ export async function fetchCherryMusicTracks({
   if (keyword) url.searchParams.append("keyword", keyword);
 
   const response = await fetch(url);
+  console.log("url", url);
 
   if (!response.ok)
     throw new Error(
