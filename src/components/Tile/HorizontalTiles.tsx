@@ -4,7 +4,7 @@ import useArtistImgUrl from "@/hooks/useArtistImgUrl";
 import { Tiles } from "@/styles/Artist/Artist";
 import { SectionGridContainer, SectionTitle } from "@/styles/Section";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SectionNavigator from "../SectionNavigator";
 import Tile from "./Tile";
 import TileSkeleton from "./TileSkeleton";
@@ -30,8 +30,16 @@ function HorizontalTiles({
   const { artistImgUrls, loading } = useArtistImgUrl(arr.items);
   const router = useRouter();
   const windowSize = useWindowSize();
-  const handleTileClick = (name: string) => {
-    router.push(`/${arr.type}/${name}`);
+  const handleTileClick = ({
+    albumArtist,
+    name,
+  }: {
+    albumArtist?: string;
+    name: string;
+  }) => {
+    router.push(
+      albumArtist ? `/artist/${albumArtist}/${name}` : `/${arr.type}/${name}}`
+    );
   };
   const [isOverFlow, setIsOverFlow] = useState(true);
 
@@ -63,7 +71,12 @@ function HorizontalTiles({
               <Tile
                 key={index}
                 item={item}
-                handleTileClick={() => handleTileClick(item.name)}
+                handleTileClick={() =>
+                  handleTileClick({
+                    name: item.name,
+                    albumArtist: item.artist?.name,
+                  })
+                }
                 isCircle={isCircle}
                 artistImgUrl={artistImgUrls.get(item.name!)}
                 isHashtag={isHashtag}

@@ -6,7 +6,6 @@ import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import TopTracks from "@/components/TopTracks";
 import { TrackArrayWithType } from "@/types/itemTypes";
 import { useEffect, useState } from "react";
-import TrackCardSkeleton from "../TrackCard/TrackCardsSkeleton";
 import TrackCardsSkeleton from "../TrackCard/TrackCardsSkeleton";
 import { lastFmFetcher } from "../../app/api/lastFm/fetcher";
 import { Track } from "@/lib/server/database.types";
@@ -29,6 +28,10 @@ function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
         type: "album",
         items: tagTopAlbumsData.albums.album,
       };
+      console.log(
+        "tagTopAlbumsData.albums.album",
+        tagTopAlbumsData.albums.album
+      );
       setTagTopAlbums(tagTopAlbumsDataWithType);
 
       const tagTopArtistsData = await lastFmFetcher.fetchTagTopArtists(hashtag);
@@ -45,6 +48,7 @@ function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
       setTrackList(tagTopTracksData);
     };
     fetchData();
+    console.log(tagTopAlbums);
   }, [hashtag]);
 
   return (
