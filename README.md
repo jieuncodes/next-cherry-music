@@ -39,32 +39,6 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 ├─ src
 │  ├─ animations
 │  ├─ app
-│  │  ├─ Icons.tsx
-│  │  ├─ api
-│  │  ├─ layout.tsx
-│  │  ├─ login.tsx
-│  │  └─ page.tsx
-│  ├─ atoms.ts
-│  ├─ components
-│  ├─ hooks
-│  ├─ lib
-│  ├─ middleware.ts
-│  ├─ providers
-│  ├─ styles
-│  └─ types
-├─ supabase
-```
-```
-next-cherry-music
-│ 
-├─ package-lock.json
-├─ package.json
-├─ postcss.config.js
-├─ public
-│  └─ images
-├─ src
-│  ├─ animations
-│  ├─ app
 │  │  ├─ layout.tsx
 │  │  ├─ (site)
 │  │  │  ├─ error.tsx
@@ -72,73 +46,24 @@ next-cherry-music
 │  │  │  └─ page.tsx
 │  │  ├─ api
 │  │  │  ├─ auth
-│  │  │  │  └─ callback
-│  │  │  │     └─ route.ts
 │  │  │  ├─ cherryMusic
 │  │  │  │  └─ track
-│  │  │  │     ├─ helper.ts
-│  │  │  │     ├─ route.ts
-│  │  │  │     └─ service.ts
 │  │  │  ├─ cron
-│  │  │  │  └─ route.ts
 │  │  │  ├─ lastFm
 │  │  │  ├─ spotify
 │  │  ├─ artist
-│  │  │  └─ [artist]
-│  │  │     ├─ [album]
-│  │  │     │  ├─ error.tsx
-│  │  │     │  └─ page.tsx
-│  │  │     ├─ error.tsx
-│  │  │     └─ page.tsx
 │  │  ├─ chart
-│  │  │  ├─ error.tsx
-│  │  │  └─ page.tsx
-│  │  ├─ favicon.ico
 │  │  ├─ geo
-│  │  │  ├─ error.tsx
-│  │  │  └─ page.tsx
 │  │  ├─ global-error.tsx
-│  │  ├─ globals.css
 │  │  ├─ hashtag
-│  │  │  └─ [hashtag]
-│  │  │     ├─ error.tsx
-│  │  │     └─ page.tsx
 │  │  └─ login.tsx
 │  ├─ atoms.ts
 │  ├─ components
 │  │  
 │  ├─ hooks
-│  │  ├─ useArtistImgUrl.ts
-│  │  ├─ useCarouselItems.ts
-│  │  ├─ useCenterArtistImg.ts
-│  │  ├─ useCountryTopArtists.ts
-│  │  ├─ useDebounce.ts
-│  │  ├─ useDropdownHandlers.ts
-│  │  ├─ useLocalStoragePlaylist.ts
-│  │  ├─ useMaxListeners.ts
-│  │  ├─ useMouseAction.ts
-│  │  ├─ usePlayerControls.ts
-│  │  ├─ usePlayerProgress.ts
-│  │  ├─ useRefinedArtists.ts
-│  │  └─ useSyncedLocalStorage.ts
 │  ├─ lib
-
 │  ├─ providers
-│  │  ├─ ModalProvider.tsx
-│  │  ├─ NextUIProvider.tsx
-│  │  ├─ PlayerProvider.tsx
-│  │  ├─ Providers.tsx
-│  │  ├─ RecoilProvider.tsx
-│  │  └─ SupabaseProvider.tsx
 │  ├─ styles
-│  │  
 │  └─ types
-│     ├─ itemTypes.ts
-│     ├─ lastFmTypes.ts
-│     └─ spotifyTypes.ts
-├─ 
-├─ tailwind.config.js
-├─ tsconfig.json
-└─ vercel.json
 
 ```
