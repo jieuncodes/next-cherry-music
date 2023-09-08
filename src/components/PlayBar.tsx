@@ -39,7 +39,7 @@ function PlayBar() {
         <PlayBarTrackInfo track={currTrack} />
         <Btns>
           <LikeTrackBtn track={currTrack} user={user} />
-          <Icons.moreVertical style={{ marginLeft: 10, marginBottom: 3 }} />
+          <Icons.moreVertical style={{ marginLeft: 10, marginTop: 7 }} />
         </Btns>
 
         <PlayListBtn>
