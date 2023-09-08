@@ -24,7 +24,7 @@ export default function RootLayout({
             <ContentsContainer>
               <Contents>
                 {children}
-                <div className="w-full h-10"></div>
+                <div className="w-full h-10 bottom-0"></div>
               </Contents>
             </ContentsContainer>
             <Panel />

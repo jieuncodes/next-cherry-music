@@ -2,7 +2,7 @@ import { Card, CardHeader } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import tw from "tailwind-styled-components";
 
-export const AlbumContainer = tw.div`p-6 pr-12 `;
+export const AlbumContainer = tw.div`p-6 pr-12 min-h-fit`;
 export const HeaderAlbumInfo = tw.div` text-black absolute grid grid-cols-[1fr_2fr] mt-7`;
 export const AlbumDetailsContainer = tw.div`flex flex-col pl-10 justify-center`;
 export const AlbumTitle = tw.h1`w-96 text-xl font-bold mb-2 text-stroke `;
