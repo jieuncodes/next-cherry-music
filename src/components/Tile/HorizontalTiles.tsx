@@ -37,8 +37,9 @@ function HorizontalTiles({
     albumArtist?: string;
     name: string;
   }) => {
+    console.log("name", name, arr);
     router.push(
-      albumArtist ? `/artist/${albumArtist}/${name}` : `/${arr.type}/${name}}`
+      albumArtist ? `/artist/${albumArtist}/${name}` : `/${arr.type}/${name}`
     );
   };
   const [isOverFlow, setIsOverFlow] = useState(true);
