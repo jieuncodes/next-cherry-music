@@ -3,12 +3,10 @@
 import { SearchForm, SearchInput } from "@/styles/Search";
 import { Icons } from "../app/Icons";
 import { FormEvent, useEffect, useState } from "react";
-import useDebounce from "@/hooks/useDebounce";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { searchModalState } from "@/atoms";
 import SearchModal from "./Modals/SearchModal";
 import { Track } from "@/lib/server/database.types";
-import { Artist, TrackSearchResult } from "@/types/lastFmTypes";
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 
 export default function Search() {
@@ -40,6 +38,7 @@ export default function Search() {
   };
 
   useEffect(() => {
+    setRes([]);
     searchValue && search(searchValue);
   }, [searchValue]);
 
