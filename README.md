@@ -32,6 +32,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] beautiful dnd - drag cards to move position
 - [x] Error handling using Next13 app router
 - [ ] useLayoutEffect to prevent flickering
+- [ ] CDN
 - [x] Deploy
 
 

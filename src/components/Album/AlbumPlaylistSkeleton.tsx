@@ -1,6 +1,5 @@
 import { StyledCard, StyledHeader, TrackTitle } from "@/styles/Album/album";
 import { Skeleton } from "@nextui-org/react";
-import AlbumTrackCardDetails from "./AlbumTrackCardDetails";
 
 function AlbumPlaylistSkeleton() {
   return (
