@@ -46,7 +46,6 @@ function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
       setTrackList(tagTopTracksData);
     };
     fetchData();
-    console.log(tagTopAlbums);
   }, [hashtag]);
 
   return (

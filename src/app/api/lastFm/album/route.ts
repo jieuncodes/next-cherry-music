@@ -18,6 +18,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     };
 
     const data = await fetchFromLastFM(params);
+    console.log(data);
     return NextResponse.json(data);
   } catch (error) {
     handleError({ context: `lastFm API album.${method}`, error });

@@ -21,7 +21,11 @@ export interface FetchFromLastFMParamsProps {
 async function fetchFromLastFM(params: FetchFromLastFMParamsProps) {
   try {
     const url = new URL(process.env.LAST_FM_BASE_URL!);
-    const searchParams = new URLSearchParams(params as any);
+    const validParams = Object.fromEntries(
+      Object.entries(params).filter(([_, value]) => value !== undefined)
+    );
+
+    const searchParams = new URLSearchParams(validParams);
     url.search = searchParams.toString();
 
     const response = await fetch(url);

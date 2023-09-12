@@ -17,7 +17,6 @@ function TopTags() {
         type: "hashtag",
         items: data.tags.tag,
       };
-      console.log("dataWithType", dataWithType);
       setTagTopAlbumsDataWithType(dataWithType);
     };
     fetchTopTags();

@@ -35,6 +35,7 @@ const opts = {
     iv_load_policy: 3,
     autohide: 1,
     rel: 0,
+    origin: "https://next-cherry-music.vercel.app/",
   },
 };
 
