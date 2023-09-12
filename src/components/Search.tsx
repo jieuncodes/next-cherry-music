@@ -3,18 +3,15 @@
 import { SearchForm, SearchInput } from "@/styles/Search";
 import { Icons } from "../app/Icons";
 import { FormEvent, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { searchModalState } from "@/atoms";
-import SearchModal from "./Modals/SearchModal";
 import { Track } from "@/lib/server/database.types";
 import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
+import { useRouter } from "next/navigation";
 
 export default function Search() {
-  const [isOpen, setIsOpen] = useRecoilState(searchModalState);
   const [value, setValue] = useState<string>("");
-  const [searchValue, setSearchValue] = useState<string | null>(null);
   const [res, setRes] = useState<Track[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   const search = async (keyword: string) => {
     try {
@@ -30,25 +27,20 @@ export default function Search() {
     }
   };
 
-  const handleSearchFormSubmit = (e: FormEvent) => {
+  const handleSearchFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsOpen(true);
-    setSearchValue(value);
+    search(value);
+    router.push(`/search?keyword=${value}`);
     setValue("");
   };
-
-  useEffect(() => {
-    setRes([]);
-    searchValue && search(searchValue);
-  }, [searchValue]);
 
   return (
     <SearchForm onSubmit={handleSearchFormSubmit}>
       <Icons.searchIcon
         size={20}
-        className="absolute font-bold ml-2 2xl:mt-[0.7rem] mt-2.5 hover:cursor-pointer "
+        className="absolute font-bold ml-2 2xl:mt-[0.7rem] mt-2.5 hover:cursor-pointer"
         onClick={() => {
-          setIsOpen(true);
+          router.push(`/search?keyword=${value}`);
         }}
       />
       <SearchInput
@@ -56,13 +48,6 @@ export default function Search() {
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      {
-        <SearchModal
-          keyword={searchValue}
-          results={res}
-          isLoading={isLoading}
-        />
-      }
     </SearchForm>
   );
 }

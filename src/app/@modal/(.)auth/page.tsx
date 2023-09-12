@@ -1,4 +1,5 @@
 "use client";
+
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
@@ -9,7 +10,6 @@ import { useRouter } from "next/navigation";
 function AuthModal({}) {
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
-  console.log("here");
   return (
     <Modal isOpen={true} onOpenChange={() => router.back()} size="lg">
       <ModalContent>
