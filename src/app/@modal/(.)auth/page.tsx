@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 function AuthModal({}) {
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
+
   return (
     <Modal isOpen={true} onOpenChange={() => router.back()} size="lg">
       <ModalContent>
