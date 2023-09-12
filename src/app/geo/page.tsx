@@ -1,7 +1,7 @@
 import Geo from "@/components/Geo";
 import { supabase } from "@/lib/server/client";
 
-async function geo() {
+async function GeoPage() {
   const getCountryTopFromSupabase = async ({
     tableName,
   }: {
@@ -34,4 +34,4 @@ async function geo() {
     </>
   );
 }
-export default geo;
+export default GeoPage;

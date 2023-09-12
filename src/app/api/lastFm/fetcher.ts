@@ -1,5 +1,4 @@
 import { ensureEncoded } from "@/lib/helpers";
-import { TrackWithTitleAndArtist } from "@/types/spotifyTypes";
 import { AlbumTrack } from "@/types/lastFmTypes";
 import { CherryTrack } from "@/types/itemTypes";
 
@@ -8,10 +7,7 @@ const baseURL =
     ? process.env.NEXT_PUBLIC_URL
     : process.env.NEXT_PUBLIC_VERCEL_URL;
 
-async function fetchResource(
-  endpoint: string,
-  queryParams?: string
-): Promise<any> {
+async function fetchResource(endpoint: string, queryParams?: string) {
   const response = await fetch(
     `${baseURL}${endpoint}${`?${queryParams}` || ""}`
   );
@@ -20,7 +16,8 @@ async function fetchResource(
       `Failed to fetch from ${endpoint}. Status: ${response.status}`
     );
   }
-  return await response.json();
+  const data = await response.json();
+  return data;
 }
 
 export const lastFmFetcher = {

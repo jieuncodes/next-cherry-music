@@ -5,17 +5,13 @@ export interface DropdownItemData {
   label: string;
   icon: JSX.Element;
 }
-export interface arrWithType {
+export interface ArrWithType<T> {
   type: string;
-  items: any[];
+  items: T[];
 }
 export interface SliderItemProps {
   name: string;
   artist?: { name: string };
-}
-export interface TrackArrayWithType {
-  type: string;
-  items: CherryTrack[];
 }
 
 export interface CherryTrack {

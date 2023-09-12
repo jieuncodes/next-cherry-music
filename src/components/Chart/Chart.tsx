@@ -3,7 +3,7 @@
 import BubbleChart from "@/components/BubbleChart/BubbleChart";
 import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 import { useEffect, useState } from "react";
-import { TrackArrayWithType } from "@/types/itemTypes";
+import { ArrWithType, CherryTrack } from "@/types/itemTypes";
 import LoadingSpinner from "../LoadingSpinner";
 import { ArtistDetail } from "@/types/lastFmTypes";
 
@@ -14,7 +14,7 @@ function TopArtistsChart() {
   }>();
 
   const [tagTopAlbumsDataWithType, setTagTopAlbumsDataWithType] =
-    useState<TrackArrayWithType>();
+    useState<ArrWithType<CherryTrack>>();
 
   useEffect(() => {
     const fetchTopArtists = async () => {
@@ -33,7 +33,7 @@ function TopArtistsChart() {
     <>
       {topArtistsDataWithType ? (
         <div className="-pl-12 mb-12">
-          <BubbleChart arr={topArtistsDataWithType} />
+          <BubbleChart data={topArtistsDataWithType} />
         </div>
       ) : (
         <LoadingSpinner />

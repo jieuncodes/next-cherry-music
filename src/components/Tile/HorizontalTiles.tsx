@@ -8,12 +8,12 @@ import { useEffect, useRef, useState } from "react";
 import SectionNavigator from "../SectionNavigator";
 import Tile from "./Tile";
 import TileSkeleton from "./TileSkeleton";
-import { SliderItemProps, arrWithType } from "@/types/itemTypes";
+import { SliderItemProps, ArrWithType } from "@/types/itemTypes";
 import useWindowSize from "@/hooks/useWindowSize";
 
 interface HorizontalTilesProps {
   sectionTitle?: string;
-  arr: arrWithType;
+  arr: ArrWithType<SliderItemProps>;
   isCircle?: boolean;
   nav?: boolean;
   isHashtag?: boolean;

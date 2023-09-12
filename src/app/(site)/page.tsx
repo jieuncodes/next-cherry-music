@@ -3,6 +3,7 @@ import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import { lastFmFetcher } from "../api/lastFm/fetcher";
 import { supabase } from "@/lib/server/client";
 import TopTracksContainer from "@/components/TopTracksContainer";
+import { ArrWithType, SliderItemProps } from "@/types/itemTypes";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +14,7 @@ async function Home() {
     console.warn(error);
   }
   const [topArtistsData] = await Promise.all([lastFmFetcher.fetchTopArtists()]);
-  const topArtistsDataWithType = {
+  const topArtistsDataWithType: ArrWithType<SliderItemProps> = {
     type: "artist",
     items: topArtistsData.artists.artist,
   };

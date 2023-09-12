@@ -326,5 +326,5 @@ export type Track = Database["public"]["Tables"]["todayTop"]["Row"];
 export type LikeTrackData =
   Database["public"]["Tables"]["favoriteTracks"]["Row"];
 
-export type likeArtistData =
+export type LikeArtistData =
   Database["public"]["Tables"]["favoriteArtists"]["Row"];

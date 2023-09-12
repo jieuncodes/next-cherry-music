@@ -15,7 +15,7 @@ export const handleError = ({
   error,
 }: {
   context: string;
-  error: any;
+  error: unknown;
 }) => {
   console.error(
     `Error on ${context}:`,

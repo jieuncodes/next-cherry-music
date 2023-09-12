@@ -9,10 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
     "@nextui-org/react": "^2.1.10",
-    "@prisma/client": "^4.15.0",
     "@supabase/auth-helpers-nextjs": "^0.7.4",
     "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/auth-ui-react": "^0.4.2",

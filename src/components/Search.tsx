@@ -3,7 +3,7 @@
 import { SearchForm, SearchInput } from "@/styles/Search";
 import { Icons } from "../app/Icons";
 import { FormEvent, useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { searchModalState } from "@/atoms";
 import SearchModal from "./Modals/SearchModal";
 import { Track } from "@/lib/server/database.types";

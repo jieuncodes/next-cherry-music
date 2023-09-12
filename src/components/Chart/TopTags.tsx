@@ -1,13 +1,13 @@
 "use client";
 
 import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
-import { TrackArrayWithType } from "@/types/itemTypes";
+import { ArrWithType } from "@/types/itemTypes";
 import { useEffect, useState } from "react";
 import HorizontalTiles from "../Tile/HorizontalTiles";
 
 function TopTags() {
   const [tagTopAlbumsDataWithType, setTagTopAlbumsDataWithType] =
-    useState<TrackArrayWithType>();
+    useState<ArrWithType>();
 
   useEffect(() => {
     const fetchTopTags = async () => {

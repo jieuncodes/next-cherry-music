@@ -10,23 +10,20 @@ import LoadingSpinner from "../LoadingSpinner";
 import renderBubbleChart from "./RenderBubbleChart";
 import { CHART_HEIGHT, CHART_WIDTH, enrichArtists } from "./bubbleChartHelpers";
 import { useRouter } from "next/navigation";
-import useWindowSize from "@/hooks/useWindowSize";
 
 function BubbleChart({
-  arr,
+  data,
 }: {
-  arr: { type: string; items: ArtistDetail[] };
+  data: { type: string; items: ArtistDetail[] };
 }) {
   const chartRef = useRef<SVGSVGElement>(null);
-  const [centerArtist, setCenterArtist] = useState<ArtistDetail>(arr.items[0]);
+  const [centerArtist, setCenterArtist] = useState<ArtistDetail>(data.items[0]);
   const { refinedSimilarArtists } = useRefinedSimilarArtists(centerArtist);
   const maxListenersVal = useMaxListeners(refinedSimilarArtists);
   const [chartLoading, setChartLoading] = useState<boolean>(true);
   const [isTopArtistChart, setIsTopArtistChart] = useState<boolean>(true);
   useState<boolean>(true);
   const router = useRouter();
-
-  const windowSize = useWindowSize();
 
   useEffect(() => {
     const fetchEnrichedArtists = async () => {
@@ -42,7 +39,7 @@ function BubbleChart({
 
       try {
         const enrichedArtists = await enrichArtists(
-          isTopArtistChart ? arr.items : refinedSimilarArtists,
+          isTopArtistChart ? data.items : refinedSimilarArtists,
           centerArtist
         );
         const img = new Image();

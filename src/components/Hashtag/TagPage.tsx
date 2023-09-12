@@ -4,7 +4,7 @@ import { fetchCherryMusicTracks } from "@/app/api/cherryMusic/track/service";
 import GradientHeader from "@/components/GradientHeader";
 import HorizontalTiles from "@/components/Tile/HorizontalTiles";
 import TopTracks from "@/components/TopTracks";
-import { TrackArrayWithType } from "@/types/itemTypes";
+import { ArrWithType, SliderItemProps } from "@/types/itemTypes";
 import { useEffect, useState } from "react";
 import TrackCardsSkeleton from "../TrackCard/TrackCardsSkeleton";
 import { lastFmFetcher } from "../../app/api/lastFm/fetcher";
@@ -17,8 +17,10 @@ interface TagPageProps {
 }
 
 function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
-  const [tagTopAlbums, setTagTopAlbums] = useState<TrackArrayWithType>();
-  const [tagTopArtists, setTagTopArtists] = useState<TrackArrayWithType>();
+  const [tagTopAlbums, setTagTopAlbums] =
+    useState<ArrWithType<SliderItemProps>>();
+  const [tagTopArtists, setTagTopArtists] =
+    useState<ArrWithType<SliderItemProps>>();
   const [trackList, setTrackList] = useState<Track[]>();
 
   useEffect(() => {
