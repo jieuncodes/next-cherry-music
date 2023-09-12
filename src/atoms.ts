@@ -40,10 +40,6 @@ export const PlaylistModalState = atom<boolean>({
   key: "PlaylistModalState",
   default: false,
 });
-export const authModalState = atom<boolean>({
-  key: "authModalState",
-  default: false,
-});
 export const searchModalState = atom<boolean>({
   key: "searchModalState",
   default: false,

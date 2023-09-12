@@ -1,15 +1,14 @@
-import { authModalState } from "@/atoms";
 import { CustomerPanelContainer } from "@/styles/Panel/Panel";
 import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import { useUser } from "@supabase/auth-helpers-react";
-import { useRecoilState } from "recoil";
 import { Icons } from "../../app/Icons";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function CustomerPanel() {
   const user = useUser();
-  const [isOpen, setIsOpen] = useRecoilState(authModalState);
-
+  const router = useRouter();
   return (
     <CustomerPanelContainer>
       <Icons.bell />
@@ -27,7 +26,7 @@ function CustomerPanel() {
           variant="ghost"
           radius="full"
           isIconOnly
-          onPress={() => setIsOpen(true)}
+          onPress={() => router.push("/auth")}
         />
       )}
     </CustomerPanelContainer>

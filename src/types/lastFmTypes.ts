@@ -143,19 +143,6 @@ export interface Tag {
   wiki: {};
 }
 
-export interface TrackSearchResult {
-  results: {
-    "@attr": any;
-    openSearchQuery: {
-      "#text": string;
-      role: string;
-      startPage: string;
-    };
-    opensearchStartIndex: string;
-    opensearchTotalResults: string;
-    trackmatches: { track: LastFmTrack[] };
-  };
-}
 export interface LastFmSearchResTrack {
   name: string;
   artist: string;

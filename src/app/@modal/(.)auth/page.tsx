@@ -1,39 +1,17 @@
 "use client";
-
-import React, { useEffect, FC } from "react";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import {
-  useSessionContext,
-  useSupabaseClient,
-} from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+
+import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/modal";
 import { useRouter } from "next/navigation";
 
-import { useRecoilState } from "recoil";
-import { authModalState } from "@/atoms";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@nextui-org/modal";
-
 function AuthModal({}) {
-  const [isOpen, setIsOpen] = useRecoilState(authModalState);
-  const { session } = useSessionContext();
-  const router = useRouter();
   const supabaseClient = useSupabaseClient();
-
-  useEffect(() => {
-    if (session) {
-      router.refresh();
-      setIsOpen(false);
-    }
-  }, [session, router, isOpen]);
-
+  const router = useRouter();
+  console.log("here");
   return (
-    <Modal isOpen={isOpen} onOpenChange={() => setIsOpen(!isOpen)} size="lg">
+    <Modal isOpen={true} onOpenChange={() => router.back()} size="lg">
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">
           🍒 Welcome to Cherry!
@@ -57,7 +35,6 @@ function AuthModal({}) {
             theme="light"
           />
         </ModalBody>
-        <ModalFooter></ModalFooter>
       </ModalContent>
     </Modal>
   );

@@ -12,14 +12,17 @@ export const metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <html lang="en" className="light">
       <body className="antialiased">
         <Providers>
           <main>
+            {modal}
             <Nav />
             <ContentsContainer>
               <Contents>

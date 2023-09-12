@@ -5,7 +5,6 @@ import CustomerPanel from "./CustomerPanel";
 import PanelPlayer from "./PanelPlayer/PanelPlayer";
 import Playlist from "../Playlist/Playlist";
 import useLocalStoragePlaylist from "@/hooks/useLocalStoragePlaylist";
-import useMeasure from "react-use-measure";
 import { useEffect, useState } from "react";
 
 export default function Panel() {
