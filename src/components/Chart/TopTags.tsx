@@ -4,10 +4,11 @@ import { lastFmFetcher } from "@/app/api/lastFm/fetcher";
 import { ArrWithType } from "@/types/itemTypes";
 import { useEffect, useState } from "react";
 import HorizontalTiles from "../Tile/HorizontalTiles";
+import { Tag } from "@/types/lastFmTypes";
 
 function TopTags() {
   const [tagTopAlbumsDataWithType, setTagTopAlbumsDataWithType] =
-    useState<ArrWithType>();
+    useState<ArrWithType<Tag>>();
 
   useEffect(() => {
     const fetchTopTags = async () => {
@@ -16,6 +17,7 @@ function TopTags() {
         type: "hashtag",
         items: data.tags.tag,
       };
+      console.log("dataWithType", dataWithType);
       setTagTopAlbumsDataWithType(dataWithType);
     };
     fetchTopTags();

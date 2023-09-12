@@ -12,7 +12,6 @@ async function ChartPage() {
       <div className="-mt-10">
         <TopTracksContainer query={"top"} top20={top20 || []} />
       </div>
-
       <TopTags />
     </>
   );

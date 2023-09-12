@@ -36,7 +36,6 @@ export async function fetchCherryMusicTracks({
   if (keyword) url.searchParams.append("keyword", keyword);
 
   const response = await fetch(url);
-  console.log("url", url);
 
   if (!response.ok)
     throw new Error(

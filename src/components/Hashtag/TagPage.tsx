@@ -30,10 +30,6 @@ function TagPage({ hashtag, firstArtistImgUrl }: TagPageProps) {
         type: "album",
         items: tagTopAlbumsData.albums.album,
       };
-      console.log(
-        "tagTopAlbumsData.albums.album",
-        tagTopAlbumsData.albums.album
-      );
       setTagTopAlbums(tagTopAlbumsDataWithType);
 
       const tagTopArtistsData = await lastFmFetcher.fetchTagTopArtists(hashtag);

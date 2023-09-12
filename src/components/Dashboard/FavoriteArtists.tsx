@@ -7,14 +7,14 @@ import { ArrWithType } from "@/types/itemTypes";
 
 function FavoriteArtists() {
   const user = useUser();
-  const [userFavoriteArtists, setUserFavoriteArtists] = useState<ArrWithType>();
+  const [userFavoriteArtists, setUserFavoriteArtists] =
+    useState<ArrWithType<LikeArtistData>>();
 
   useEffect(() => {
     if (!user) return;
     const fetchData = async () => {
       const favorites = await fetchUserFavoriteArtists(user.id);
-      console.log("favorites", favorites);
-      const userFavoriteArtistsWithType: ArrWithType = {
+      const userFavoriteArtistsWithType: ArrWithType<LikeArtistData> = {
         type: "artist",
         items: favorites,
       };
