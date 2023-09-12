@@ -16,19 +16,24 @@ import { FormEvent, useState } from "react";
 
 function SearchModal({ params: { keyword } }: { params: { keyword: string } }) {
   const router = useRouter();
+  const [backCount, setBackCount] = useState(0);
   const { searchedData, setSearchedData, isLoading, queryKey } = useSearch();
   const [inputKeyword, setInputKeyword] = useState(keyword || "");
 
   const handleSearchFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     setSearchedData([]);
+    setBackCount((prevCount) => prevCount - 1);
     router.push(`/search?keyword=${inputKeyword}`);
   };
 
   return (
     <Modal
       isOpen={true}
-      onOpenChange={() => router.back()}
+      onOpenChange={() => {
+        window.history.go(backCount - 1);
+        setBackCount(0);
+      }}
       scrollBehavior="inside"
     >
       <ModalContent>
