@@ -4,6 +4,7 @@ import PlayBar from "@/components/PlayBar";
 import Providers from "@/providers/Providers";
 import { Contents, ContentsContainer } from "@/styles/Contents";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Cherry Music",
@@ -28,6 +29,7 @@ export default function RootLayout({
               <Contents>
                 {children}
                 <div className="w-full h-10 bottom-0"></div>
+                <Analytics />
               </Contents>
             </ContentsContainer>
             <Panel />
