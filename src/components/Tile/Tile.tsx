@@ -41,6 +41,7 @@ function Tile({
           height={isCircle ? 120 : 170}
           alt={`${item} image`}
           placeholder="blur"
+          loading="lazy"
           blurDataURL="/images/default_user_avatar.jpeg"
         />
       </div>

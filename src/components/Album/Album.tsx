@@ -65,6 +65,8 @@ function Album({ albumTitle, artist, isSingleAlbum, singleTrack }: AlbumProps) {
           width={200}
           height={200}
           className="rounded-md"
+          loading="lazy"
+          placeholder="blur"
         />
         {albumTracks && (
           <AlbumDetails

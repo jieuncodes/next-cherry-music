@@ -8,8 +8,6 @@ import { Track } from "@/lib/server/database.types";
 
 interface TrackCardProps {
   track: Track;
-  // addToTopOfCurrPlaylist: (track: Track) => void;
-  // removeFromPlaylist: (trackId: number) => void;
 }
 
 export function TrackCard({ track }: TrackCardProps) {
