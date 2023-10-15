@@ -16,7 +16,6 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
   <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white">
   <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
   <img src="https://img.shields.io/badge/Vercel-000000.svg?style=for-the-badge&logo=Vercel&logoColor=white">
-
   <img src="https://img.shields.io/badge/Spotify-1DB954.svg?style=for-the-badge&logo=Spotify&logoColor=white">
   <img src="https://img.shields.io/badge/Last.fm-D51007.svg?style=for-the-badge&logo=lastdotfm&logoColor=white">
   <img src="https://img.shields.io/badge/YouTube-FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white">
@@ -25,6 +24,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 
 <br>
 <br>
+
 
 ## Game Plan
 - [x] Basic setup
@@ -42,7 +42,7 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
     - [x] Shrink nav bar when md, sm window
 - [x] Framer Motion
     - [x] Carousel
-    - [] Nav shifting animation
+    - [ ] Nav shifting animation
 - [x] Infinite scrolling for dynamically loading 
 - [ ] Profile uploads (Avatar, nickname..)
 - [ ] User's Playlist Upload
@@ -56,9 +56,11 @@ Built with the Next.js App Router, TypeScript, Tailwind & Supabase.
 - [ ] beautiful dnd - drag cards to move position
 - [x] Error handling using Next13 app router
 - [ ] useLayoutEffect to prevent flickering
-- [-] CDN
+- [] CDN
 - [x] Deploy
 
+
+## Folder Tree
 
 ``` FolderTree
 ├─ src
